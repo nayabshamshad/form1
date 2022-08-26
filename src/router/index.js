@@ -7,7 +7,7 @@ const routes = [
     redirect: "/signUp",
     name: "home",
     // component: HomeView,
-  },
+   },
   {
     path: "/signUp",
     name: "signUp",
