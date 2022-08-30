@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/HomeView.vue";
 
 const routes = [
   {
     path: "/",
-    redirect: "/signUp",
+    // redirect: "/signUp",
     name: "home",
-    // component: HomeView,
+    component: HomeView,
   },
   {
     path: "/signUp",
@@ -17,6 +17,21 @@ const routes = [
     path: "/signIn",
     name: "signIn",
     component: () => import("../views/signIn.vue"),
+  },
+  {
+    path: "/lists",
+    name: "lists",
+    component: () => import("../views/lists.vue"),
+  },
+  {
+    path: "/Eventlist",
+    name: "Eventlist",
+    component: () => import("../views/Eventlist.vue"),
+  },
+  {
+    path: "/CategoryList",
+    name: "CategoryList",
+    component: () => import("../views/CategoryList.vue"),
   },
 ];
 

@@ -1,5 +1,11 @@
 <template>
-  <div class="home"></div>
+  <div class="top-bar">
+    <div class="a-page">
+      Attendence Page
+          <button type="button" class="btn">Sign in</button>
+          <button type="button" class="btn">Sign Up</button>
+      </div>
+    </div>
 </template>
 
 <script>

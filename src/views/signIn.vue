@@ -1,28 +1,20 @@
 <template>
-  <form>
-    <div class="container">
+
+  <div class="container">
+    <form class="form">
       <h2>Log In</h2>
       <label for="uname"><b>Username</b></label>
-      <input
-        v-model="userEmail"
-        type="text"
-        placeholder="Enter Email Address"
-        name="uname"
-      />
+      <input v-model="userEmail" type="text" placeholder="Enter Email Address" name="uname" />
 
       <label for="pwd"><b>Password</b></label>
-      <input
-        type="password"
-        placeholder="Enter Password"
-        name="pwd"
-        v-model="userPass"
-      />
-
-      <button @click="loginUser" type="button">Login</button>
-      <button type="button" class="cancelbtn">Cancel</button>
+      <input type="password" placeholder="Enter Password" name="pwd" v-model="userPass" />
+      <div class="btn1">
+        <button @click="loginUser" type="button">Login</button>
+      </div>
       <span class="pwd">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
+
+    </form>
+  </div>
 </template>
 
 <script>
@@ -45,4 +37,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
