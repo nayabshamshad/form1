@@ -1,24 +1,43 @@
 <template>
   <div class="container">
     <form class="form">
-
       <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
       <div>
         <label for="F-name"><b>Fisrt Name</b></label>
-        <input v-model="firstName" type="text" placeholder="Enter First Name" name="F-name" />
+        <input
+          v-model="firstName"
+          type="text"
+          placeholder="Enter First Name"
+          name="F-name"
+        />
 
         <label for="L-name"><b>Last Name</b></label>
-        <input type="text" v-model="lastName" placeholder="Enter Last Name" name="L-name" />
+        <input
+          type="text"
+          v-model="lastName"
+          placeholder="Enter Last Name"
+          name="L-name"
+        />
       </div>
 
       <label for="email"><b>Email</b></label>
-      <input type="text" v-model="emailInput" placeholder="Enter Email" name="email" />
+      <input
+        type="text"
+        v-model="emailInput"
+        placeholder="Enter Email"
+        name="email"
+      />
 
       <label for="pwd"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" v-model="passInput" name="pwd">
+      <input
+        type="password"
+        placeholder="Enter Password"
+        v-model="passInput"
+        name="pwd"
+      />
       <div class="btn1">
-        <button type="button">Submit</button>
+        <button @click="submit" type="button">Submit</button>
       </div>
     </form>
   </div>
@@ -34,9 +53,17 @@ export default {
       passInput: "",
     };
   },
-  methods: {},
+  methods: {
+    submit() {
+      let form = {
+        name: this.firstName + this.lastName,
+        email: this.emailInput,
+        password: this.passInput,
+      };
+      this.$store.dispatch("signUp", form);
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
