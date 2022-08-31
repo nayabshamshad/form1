@@ -9,7 +9,7 @@ $bgcolor: black;
 @mixin input {
     width: 100%;
     padding: .5rem;
-    display: block;
+    // display: block;
     border: none;
     background: $input;
 }
@@ -107,14 +107,15 @@ label {
     color: $color ;
     background-color: $bgcolor;
     color: $input;
-
+    position: sticky;
+    top: 0;
+    z-index: 1;
     .btn {
         float: right;
         padding: 0.5rem 0.5rem;
         margin: 0 .5rem;
     }
 }
-
 .home-detail {
     margin: 5% 30% 0;
 
@@ -163,8 +164,9 @@ label {
 
 // categorylist
 
-.radio {
+.cate-list {
     margin-top: 1rem;
+
 }
 
 .btn1 {
@@ -172,19 +174,6 @@ label {
     display: flex;
 }
 
-.input {
-    position: relative;
-
-    .btn {
-        position: absolute;
-        top: 0;
-        right: 1rem;
-        margin: 0;
-        border-radius: 50%;
-        height: 1.8rem;
-        width: 1.8rem;
-    }
-}
 // eventlist
 .eventlist{
     text-align: center;
@@ -200,6 +189,12 @@ label {
 
         .form {
             margin: 5% 20% 0;
+        }
+        .home-detail{
+          margin: 0 10% 0;
+          h2{
+            font-size: 2rem;
+          }
         }
 
     }

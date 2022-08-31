@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-      <h2>Event List</h2>
-  
-      
+      <div class="eventlist">
+    <span>Event List</span>
+     <span><button type="button" class="btn">Add Event</button></span>
+  </div>
         <table class="table">
           <thead class="thead">
             <tr>
               <th>Event Name</th>
-              <th>Time</th>
               <th>Date</th>
               <th>View detail</th>
             </tr>
@@ -15,15 +15,13 @@
           <tbody class="tbody">
             <tr>
               <td>code sync</td>
-              <td>1.30pm</td>
               <td>02/08/2022</td>
-          <td></td>
+          <td><button>btn</button></td>
             </tr>
             <tr>
               <td>code sync</td>
-              <td>2:00am</td>
               <td>02/08/2022</td>
-              <td></td>
+              <td><button>btn</button></td>
             </tr>
           </tbody>
         </table>

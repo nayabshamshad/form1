@@ -2,24 +2,24 @@
   <div class="container">
     <form class="form">
       <h2>Step 2</h2>
-      <div>
+      <div class="cate-list">
         <label for="club"><b>Club:</b></label>
         <input type="text" v-model="clubInput" placeholder="Club" name="Club" />
       </div>
-      <div>
-        <label for="date"><b>Date.</b></label>
+      <div class="cate-list">
+        <label for="date"><b>Date of Birth:</b></label>
         <input type="date" id="date" name="date" />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="tags"><b>Tags:</b></label>
         <input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
       </div>
-      <div class="radio">
+      <div class="cate-list">
         <label for="status"><b>Status:</b></label> &nbsp; &nbsp;
         <input type="radio" name="status" value="active" /> Active
         <input type="radio" name="status" value="deactive" />Inactive
       </div>
-      <div>
+      <div class="cate-list">
         <label for="telephone no."><b>Telephone No.</b></label>
         <input
           type="text"
@@ -28,7 +28,7 @@
           name="phone number"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="state"><b>State:</b></label>
         <input
           type="text"
@@ -37,7 +37,7 @@
           name="State"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Region"><b>Region:</b></label>
         <input
           type="text"
@@ -46,12 +46,12 @@
           name="region"
         />
       </div>
-      <div class="radio">
+      <div class="cate-list">
         <label for="Gender"><b>Gender:</b></label> &nbsp;
         <input type="radio" name="gender" value="male" /> Male
         <input type="radio" name="gender" value="female" /> Female
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Etnic"><b>Etnic:</b></label>
         <select>
           <option value="Etnic">Etnic</option>
@@ -59,7 +59,7 @@
           <option value="b">b</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Category"><b>Category:</b></label>
         <select>
           <option value="Category">Category</option>
@@ -68,7 +68,7 @@
           <option value="c">c</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Size"><b>Size:</b></label>
         <select class="select">
           <option value="Size">Size</option>
@@ -80,7 +80,7 @@
           <option value="XXXLarge">XXXLarge</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Instructor"><b>Instructor:</b></label>
         <input
           type="text"
@@ -89,11 +89,11 @@
           name="Instructor"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Ghid"><b>Ghid:</b></label>
         <input type="text" v-model="yearInput" placeholder="Ghid" name="Ghid" />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Master Ghid"><b>Master Ghid:</b></label>
         <input
           type="text"
@@ -102,15 +102,13 @@
           name="Master Ghid"
         />
       </div>
-      <div class="input">
+      <div class="cate-list">
         <label for="list"><b>List:</b></label>
-
         <input type="text" v-model="Input" placeholder="wasiq" name="wasiq" />
-        <button class="btn">+</button>
-      </div>
-      <div class="btn1">
+        <button class="btn">+</button></div>
+
         <button type="button" class="signupbtn">Submit</button>
-      </div>
+
     </form>
   </div>
 </template>
