@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div class="a-page">
-      Attendence Page {{ $store.getters.userData }}
+      Attendence Page
       <button type="button" class="btn">Sign in</button>
       <button type="button" class="btn">Sign Up</button>
     </div>

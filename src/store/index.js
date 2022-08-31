@@ -45,6 +45,9 @@ export default store(function () {
               eventList: [],
               teamList: [],
               dateOfBirth: "",
+              Instructor: "",
+              Ghid: "",
+              masterGhid: "",
               region: "",
               state: "",
               gender: "",
@@ -55,6 +58,7 @@ export default store(function () {
               status: "",
               category: "",
               size: "",
+              isUpdated: false,
             });
             firestore
               .doc(res.user.uid)
@@ -63,9 +67,22 @@ export default store(function () {
                 commit("setUserData", res.data());
               });
             commit("setCurrentUser", auth.currentUser);
-
-            this.$router.push("/");
+            this.$router.push("/category-list");
           });
+      },
+      async updateUserProfile({ commit }, payload) {
+        if (auth.currentUser) {
+          await firestore.doc(auth.currentUser.uid).update(payload);
+          await firestore
+            .doc(auth.currentUser.uid)
+            .get()
+            .then((res) => {
+              console.log(res.data());
+              commit("setUserData", res.data());
+            });
+        } else {
+          this.$router.push("/sign-in");
+        }
       },
     },
 
