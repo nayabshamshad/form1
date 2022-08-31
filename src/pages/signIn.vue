@@ -1,18 +1,29 @@
 <template>
-
   <div class="container">
     <form class="form">
       <h2>Log In</h2>
       <label for="uname"><b>Username</b></label>
-      <input v-model="userEmail" type="text" placeholder="Enter Email Address" name="uname" />
+      <input
+        v-model="userEmail"
+        type="text"
+        placeholder="Enter Email Address"
+        name="uname"
+      />
 
       <label for="pwd"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="pwd" v-model="userPass" />
+      <input
+        type="password"
+        placeholder="Enter Password"
+        name="pwd"
+        v-model="userPass"
+      />
       <div class="btn1">
         <button @click="loginUser" type="button">Login</button>
       </div>
-      <span class="pwd">Forgot <a href="#">password?</a></span>
-
+      <span class="pwd"
+        >Don't have an account?
+        <router-link to="/sign-up">Register Now</router-link></span
+      >
     </form>
   </div>
 </template>
@@ -25,17 +36,20 @@ export default {
       userPass: "",
     };
   },
+  mounted() {
+      if (this.$store.getters.isAuthenticated) {
+        this.$router.push("/");
+      }
+  },
   methods: {
-    loginUser() {
-      this.$swal({
-        title: "Pending",
-        icon: "success",
-        text: "Your request is pending approval",
+    async loginUser() {
+      await this.$store.dispatch("signInUser", {
+        email: this.userEmail,
+        password: this.userPass,
       });
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

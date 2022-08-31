@@ -53,6 +53,7 @@ export default {
       passInput: "",
     };
   },
+  mounted() {},
   methods: {
     submit() {
       let form = {

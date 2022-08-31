@@ -15,8 +15,8 @@ export default store(function () {
       currentUser(state) {
         return state.currentUser;
       },
-      isAuthenticated(state) {
-        if (state.currentUser) {
+      isAuthenticated() {
+        if (auth.currentUser) {
           return true;
         } else {
           return false;
@@ -32,6 +32,20 @@ export default store(function () {
       },
     },
     actions: {
+      async signOutUser({ commit }) {
+        await auth.signOut();
+        commit("setUserData", null);
+        commit("setCurrentUser", null);
+        this.$router.push("/sign-in");
+      },
+      async getUserData({ commit }) {
+        firestore
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((res) => {
+            this.commit("setUserData", res.data());
+          });
+      },
       async signUp({ commit }, payload) {
         await auth
           .createUserWithEmailAndPassword(payload.email, payload.password)
@@ -39,7 +53,7 @@ export default store(function () {
             auth.currentUser.updateProfile({
               displayName: payload.name,
             });
-            firestore.doc(res.user.uid).set({
+            firestore.doc(auth.currentUser.uid).set({
               name: payload.name,
               isAuthorized: true,
               eventList: [],
@@ -61,10 +75,10 @@ export default store(function () {
               isUpdated: false,
             });
             firestore
-              .doc(res.user.uid)
+              .doc(auth.currentUser.uid)
               .get()
-              .then((res) => {
-                commit("setUserData", res.data());
+              .then((response) => {
+                commit("setUserData", response.data());
               });
             commit("setCurrentUser", auth.currentUser);
             this.$router.push("/category-list");
@@ -77,12 +91,25 @@ export default store(function () {
             .doc(auth.currentUser.uid)
             .get()
             .then((res) => {
-              console.log(res.data());
               commit("setUserData", res.data());
             });
         } else {
           this.$router.push("/sign-in");
         }
+      },
+      async signInUser({ commit }, payload) {
+        auth
+          .signInWithEmailAndPassword(payload.email, payload.password)
+          .then((res) => {
+            firestore
+              .doc(res.user.uid)
+              .get()
+              .then((response) => {
+                commit("setUserData", response.data());
+              });
+            commit("setCurrentUser", auth.currentUser);
+            this.$router.push("/");
+          });
       },
     },
 

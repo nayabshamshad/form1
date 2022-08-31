@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <button type="button" class="btn">Sign Out</button>
     <form class="form">
       <h2>Step 2</h2>
 
@@ -25,7 +26,7 @@
         <label for="tags"><b>Tags: </b>(comma separated, max 5)</label>
         <input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
       </div>
-      <div class="radio">
+      <div class="cate-list">
         <label for="status"><b>Status:</b></label> &nbsp; &nbsp;
         <input
           type="radio"
@@ -41,7 +42,7 @@
           :value="false"
         />Inactive
       </div>
-      <div>
+      <div class="cate-list">
         <label for="telephone no."><b>Telephone No.</b></label>
         <input
           type="text"
@@ -50,7 +51,7 @@
           name="phone number"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="state"><b>State:</b></label>
         <input
           type="text"
@@ -59,7 +60,7 @@
           name="State"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Region"><b>Region:</b></label>
         <input
           type="text"
@@ -68,24 +69,24 @@
           name="region"
         />
       </div>
-      <div class="radio">
+      <div class="cate-list">
         <label for="Gender"><b>Gender:</b></label> &nbsp;
         <input
           v-model="userInfo.gender"
           type="radio"
           name="gender"
-          value="male"
+          value="Male"
         />
         Male
         <input
           v-model="userInfo.gender"
           type="radio"
           name="gender"
-          value="female"
+          value="Female"
         />
         Female
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Etnic"><b>Etnic:</b></label>
         <select v-model="userInfo.etnic">
           <option value="Etnic">Etnic</option>
@@ -93,7 +94,7 @@
           <option value="b">b</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Category"><b>Category:</b></label>
         <select v-model="userInfo.category">
           <option value="Category">Category</option>
@@ -102,7 +103,7 @@
           <option value="c">c</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Size"><b>Size:</b></label>
         <select class="select" v-model="userInfo.size">
           <option value="Size">Size</option>
@@ -114,7 +115,7 @@
           <option value="XXXLarge">XXXLarge</option>
         </select>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Instructor"><b>Instructor:</b></label>
         <input
           type="text"
@@ -123,7 +124,7 @@
           name="Instructor"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Ghid"><b>Ghid:</b></label>
         <input
           type="text"
@@ -132,7 +133,7 @@
           name="Ghid"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="Master Ghid"><b>Master Ghid:</b></label>
         <input
           type="text"
@@ -141,10 +142,13 @@
           name="Master Ghid"
         />
       </div>
-      <div class="input">
+      <div class="cate-list">
         <label for="list"><b>List:</b></label>
-        <input type="text" placeholder="wasiq" name="wasiq" />
-        <button class="btn">+</button>
+
+        <div v-for="(item, index) in userInfo.teamList" :key="index">
+          <input type="text" v-model="item.name" placeholder="" name="" />
+        </div>
+        <button @click="addMember" type="button" class="btn">+</button>
       </div>
       <div class="btn1">
         <button type="button" @click="submit" class="signupbtn">Submit</button>
@@ -160,7 +164,7 @@ export default {
     return {
       userInfo: {
         isAuthorized: false,
-        teamList: [],
+        teamList: [{ name: "" }],
         dateOfBirth: "",
         Instructor: "",
         Ghid: "",
@@ -188,11 +192,20 @@ export default {
       profile.isUpdated = true;
       this.$store.dispatch("updateUserProfile", profile);
     },
+    addMember() {
+      this.userInfo.teamList.push({ name: "" });
+    },
+  },
+  mounted() {
+    if (this.storeUserInfo?.isUpdated) {
+      this.$router.push("/");
+    }
   },
   watch: {
     storeUserInfo: {
       handler: function () {
-        if (this.storeUserInfo.isUpdated) {
+        console.log(this.storeUserInfo.isUpdated);
+        if (this.storeUserInfo?.isUpdated) {
           this.$router.push("/");
         }
       },
@@ -200,7 +213,7 @@ export default {
   },
   computed: {
     storeUserInfo() {
-      return { ...this.$store.getters.userData };
+      return this.$store.getters.userData;
     },
   },
 };

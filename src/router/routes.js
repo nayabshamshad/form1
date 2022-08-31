@@ -2,27 +2,27 @@ const routes = [
   {
     path: "/",
     name: "HomePage",
-    component: import("../pages/HomeView.vue"),
+    component: () => import("../pages/HomeView.vue"),
   },
   {
     path: "/sign-in",
     name: "signIn",
-    component: import("../pages/signIn.vue"),
+    component: () => import("../pages/signIn.vue"),
   },
   {
     path: "/sign-up",
     name: "signUp",
-    component: import("../pages/signUp.vue"),
+    component: () => import("../pages/signUp.vue"),
   },
   {
     path: "/event-list",
     name: "eventList",
-    component: import("../pages/Eventlist.vue"),
+    component: () => import("../pages/Eventlist.vue"),
   },
   {
     path: "/category-list",
     name: "categoryList",
-    component: import("../pages/CategoryList.vue"),
+    component: () => import("../pages/CategoryList.vue"),
   },
 
   // Always leave this as last one,

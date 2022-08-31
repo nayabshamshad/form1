@@ -6,6 +6,8 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
+import { auth } from "../store/firebase";
+import { nextTick } from "vue";
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -32,6 +34,25 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
+  });
+  Router.beforeEach((to, from, next) => {
+    if (auth.currentUser) {
+      if (to.name == "signIn" || to.name == "signUp") {
+        next("/");
+        return;
+      } else {
+        next();
+        return;
+      }
+    } else {
+      if (to.name != "signIn" && to.name != "signUp") {
+        next("/sign-in");
+        return;
+      } else {
+        next();
+        return;
+      }
+    }
   });
   return Router;
 });
