@@ -24,6 +24,16 @@ const routes = [
     name: "categoryList",
     component: () => import("../pages/CategoryList.vue"),
   },
+  {
+    path: "/add-event",
+    name: "addevent",
+    component: () => import("../pages/addevent.vue"),
+  },
+  {
+    path: "/view-event",
+    name: "viewevent",
+    component: () => import("../pages/viewevent.vue"),
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -148,9 +148,9 @@
         <div v-for="(item, index) in userInfo.teamList" :key="index">
           <input type="text" v-model="item.name" placeholder="" name="" />
         </div>
-        <button @click="addMember" type="button" class="btn">+</button>
+        <button @click="addMember" type="button" class="btnplus">+</button>
       </div>
-      <div class="btn1">
+      <div class="submit">
         <button type="button" @click="submit" class="signupbtn">Submit</button>
       </div>
     </form>
@@ -188,18 +188,24 @@ export default {
     submit() {
       let profile;
       profile = { ...this.userInfo };
-if(this.tagsInput != '') {
-  profile.tagList = this.tagsInput.split(",");
-}
+      if (this.tagsInput != "") {
+        profile.tagList = this.tagsInput.split(",");
+      }
       profile.isUpdated = true;
       // Checks before forwarding the request
+      var err = false;
       profile.teamList.forEach((x) => {
         if (x.name == "") {
           console.log("list error");
+          err = true;
         }
       });
+      if (err) {
+        return;
+      }
       if (profile.tagList.length < 1) {
         console.log("taglist error");
+        return;
       }
       if (
         profile.dateOfBirth == "" ||
@@ -216,8 +222,9 @@ if(this.tagsInput != '') {
         profile.size == ""
       ) {
         console.log("string error");
+        return;
       }
-      // this.$store.dispatch("updateUserProfile", profile);
+      this.$store.dispatch("updateUserProfile", profile);
     },
     addMember() {
       this.userInfo.teamList.push({ name: "" });

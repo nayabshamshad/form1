@@ -9,7 +9,7 @@ $bgcolor: black;
 @mixin input {
   width: 100%;
   padding: 0.5rem;
-  // display: block;
+  margin-top: 0.5rem;
   border: none;
   background: $input;
 }
@@ -167,9 +167,17 @@ label {
 
 .cate-list {
   margin-top: 1rem;
-  input {
-    margin-bottom: 10px;
-  }
+  .input{
+    float: left;
+    width: 94%;
+   }
+   .btnplus{
+    float: left;
+    width: 1.75rem;
+   }
+}
+.submit {
+  text-align: center;
 }
 .cate-list-home {
   margin-top: 1rem;
@@ -239,17 +247,18 @@ form.form.category-form {
   }
 }
 // media quiry
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 828px) {
   .container {
     padding: 0%;
 
     .form {
-      margin: 5% 20% 0;
+      margin: 5% 15% 0;
+
     }
     .home-detail {
       margin: 0 10% 0;
       h2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
     }
   }

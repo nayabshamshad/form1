@@ -13,7 +13,6 @@
         <label for="club"><b>Name:</b></label>
         <span>{{ userData.name }}</span>
       </div>
-
       <div class="cate-list-home">
         <label for="club"><b>Club:</b></label>
         <span>{{ userData.clubName }}</span>
@@ -23,7 +22,6 @@
         <label for="date"><b>DoB:</b></label>
         <span>{{ userData?.dateOfBirth ? userData.dateOfBirth : "" }}</span>
       </div>
-
       <div class="cate-list-home">
         <label for="status"><b>Status:</b></label>
         <span>{{ userData.status ? "Active" : "InActive" }}</span>
