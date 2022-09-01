@@ -6,9 +6,6 @@
     </div>
     <table class="table">
       <thead class="thead">
-        {{
-          userInfo
-        }}
         <tr>
           <th>Event Name</th>
           <th>Date</th>
