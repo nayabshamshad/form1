@@ -6,16 +6,13 @@
     </div>
     <table class="table">
       <thead class="thead">
-        {{
-          userInfo
-        }}
         <tr>
           <th>Event Name</th>
           <th>Date</th>
           <th>View detail</th>
         </tr>
       </thead>
-      <tbody v-if="userInfo.eventList.length > 0" class="tbody">
+      <tbody v-if="userInfo?.eventList.length > 0" class="tbody">
         <tr v-for="(event, i) in userInfo.eventList" :key="i">
           <td>{{ event.name }}</td>
           <td>{{ event.date }}</td>
