@@ -11,6 +11,8 @@ export default defineComponent({
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch("getUserData");
+        if (this.$route.path == "/sign-in" || this.$route.path == "/sign-up")
+          this.$router.push("/");
       } else {
         this.$router.push("/sign-in");
       }

@@ -188,9 +188,36 @@ export default {
     submit() {
       let profile;
       profile = { ...this.userInfo };
-      profile.tagList = this.tagsInput.split(",");
+if(this.tagsInput != '') {
+  profile.tagList = this.tagsInput.split(",");
+}
       profile.isUpdated = true;
-      this.$store.dispatch("updateUserProfile", profile);
+      // Checks before forwarding the request
+      profile.teamList.forEach((x) => {
+        if (x.name == "") {
+          console.log("list error");
+        }
+      });
+      if (profile.tagList.length < 1) {
+        console.log("taglist error");
+      }
+      if (
+        profile.dateOfBirth == "" ||
+        profile.Instructor == "" ||
+        profile.Ghid == "" ||
+        profile.masterGhid == "" ||
+        profile.region == "" ||
+        profile.state == "" ||
+        profile.gender == "" ||
+        profile.etnic == "" ||
+        profile.phoneNumber == "" ||
+        profile.clubName == "" ||
+        profile.category == "" ||
+        profile.size == ""
+      ) {
+        console.log("string error");
+      }
+      // this.$store.dispatch("updateUserProfile", profile);
     },
     addMember() {
       this.userInfo.teamList.push({ name: "" });
@@ -204,7 +231,6 @@ export default {
   watch: {
     storeUserInfo: {
       handler: function () {
-        console.log(this.storeUserInfo.isUpdated);
         if (this.storeUserInfo?.isUpdated) {
           this.$router.push("/");
         }

@@ -50,39 +50,56 @@ export default store(function () {
         await auth
           .createUserWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {
-            auth.currentUser.updateProfile({
-              displayName: payload.name,
-            });
-            firestore.doc(auth.currentUser.uid).set({
-              name: payload.name,
-              isAuthorized: true,
-              eventList: [],
-              teamList: [],
-              dateOfBirth: "",
-              Instructor: "",
-              Ghid: "",
-              masterGhid: "",
-              region: "",
-              state: "",
-              gender: "",
-              etnic: "",
-              phoneNumber: "",
-              tagList: [],
-              clubName: "",
-              status: "",
-              category: "",
-              size: "",
-              isUpdated: false,
-            });
+            auth.currentUser
+              .updateProfile({
+                displayName: payload.name,
+              })
+              .catch((err) => {
+                alert(err.message);
+              });
             firestore
               .doc(auth.currentUser.uid)
-              .get()
-              .then((response) => {
-                commit("setUserData", response.data());
+              .set({
+                name: payload.name,
+                isAuthorized: true,
+                eventList: [],
+                teamList: [],
+                dateOfBirth: "",
+                Instructor: "",
+                Ghid: "",
+                masterGhid: "",
+                region: "",
+                state: "",
+                gender: "",
+                etnic: "",
+                phoneNumber: "",
+                tagList: [],
+                clubName: "",
+                status: "",
+                category: "",
+                size: "",
+                isUpdated: false,
+              })
+              .catch((err) => {
+                alert(err.message);
+                return err.message;
               });
             commit("setCurrentUser", auth.currentUser);
-            this.$router.push("/category-list");
+          })
+          .catch((err) => {
+            alert(err.message);
           });
+        await firestore
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((response) => {
+            commit("setUserData", response.data());
+          })
+          .catch((err) => {
+            alert(err.message);
+            return err.message;
+          });
+        this.$router.push("/category-list");
       },
       async updateUserProfile({ commit }, payload) {
         if (auth.currentUser) {
@@ -98,18 +115,29 @@ export default store(function () {
         }
       },
       async signInUser({ commit }, payload) {
-        auth
+        await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {
-            firestore
-              .doc(res.user.uid)
-              .get()
-              .then((response) => {
-                commit("setUserData", response.data());
-              });
             commit("setCurrentUser", auth.currentUser);
-            this.$router.push("/");
+          })
+          .catch((err) => {
+            alert(err.message);
+
+            console.log(err.message);
+            return err.message;
           });
+        await firestore
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((response) => {
+            commit("setUserData", response.data());
+          })
+          .catch((err) => {
+            alert(err.message);
+            console.log(err.message);
+            return err.message;
+          });
+        this.$router.push("/");
       },
     },
 

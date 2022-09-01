@@ -2,7 +2,9 @@
   <div class="top-bar">
     <span>Attendence Page</span>
     <button to="/" type="button" @click="logOut" class="btn">Sign Out</button>
-    <router-link to="/event-list" class="btn">Reports</router-link>
+    <button type="button" @click="$router.push('/event-list')" class="btn">
+      Reports
+    </button>
   </div>
   <div class="container">
     <h2>Details</h2>
@@ -93,10 +95,17 @@ export default {
       this.$store.dispatch("signOutUser");
     },
   },
-  mounted() {
-    if (!this.$store.getters.isAuthenticated) {
-      this.$router.push("/sign-in");
-    }
+  mounted() {},
+  watch: {
+    userData: {
+      handler: function () {
+        if (this.userData?.isUpdated == true) {
+          return;
+        } else if (this.userData?.isUpdated == false) {
+          this.$router.push("/category-list");
+        }
+      },
+    },
   },
   computed: {
     userData() {
