@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar">
-    <span>Attendence Page</span>
+    <span>Attendence Page </span>
     <button to="/" type="button" @click="logOut" class="btn">Sign Out</button>
     <button type="button" @click="$router.push('/event-list')" class="btn">
       Reports
@@ -10,6 +10,11 @@
     <h2>Details</h2>
     <form class="form category-form">
       <div class="cate-list-home">
+        <label for="club"><b>Name:</b></label>
+        <span>{{ userData.name }}</span>
+      </div>
+
+      <div class="cate-list-home">
         <label for="club"><b>Club:</b></label>
         <span>{{ userData.clubName }}</span>
       </div>
@@ -18,6 +23,11 @@
         <label for="date"><b>DoB:</b></label>
         <span>{{ userData?.dateOfBirth ? userData.dateOfBirth : "" }}</span>
       </div>
+
+      <div class="cate-list-home">
+        <label for="status"><b>Status:</b></label>
+        <span>{{ userData.status ? "Active" : "InActive" }}</span>
+      </div>
       <div class="cate-list-home chip-container">
         <label for="tags"><b>Tags:</b></label>
         <div v-if="userData.tagList">
@@ -25,10 +35,6 @@
             {{ item }}
           </span>
         </div>
-      </div>
-      <div class="cate-list-home">
-        <label for="status"><b>Status:</b></label>
-        <span>{{ userData.status ? "Active" : "InActive" }}</span>
       </div>
       <div class="cate-list-home">
         <label for="telephone no."><b>Phone:</b></label>
