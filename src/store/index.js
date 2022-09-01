@@ -7,6 +7,12 @@ export default store(function () {
     state: {
       currentUser: null,
       userData: null,
+      selectedEvent: {
+        name: "",
+        date: "",
+        desc: "",
+        attendanceList: [],
+      },
     },
     getters: {
       userData(state) {
@@ -22,6 +28,9 @@ export default store(function () {
           return false;
         }
       },
+      selectedEvent(state) {
+        return state.selectedEvent;
+      },
     },
     mutations: {
       setCurrentUser(state, payload) {
@@ -29,6 +38,9 @@ export default store(function () {
       },
       setUserData(state, payload) {
         state.userData = payload;
+      },
+      selectEvent(state, payload) {
+        state.selectedEvent = payload;
       },
     },
     actions: {
@@ -138,6 +150,39 @@ export default store(function () {
             return err.message;
           });
         this.$router.push("/");
+      },
+      async addEvent({ dispatch, state }, payload) {
+        let eventList = []
+        state.userData.eventList.forEach(x => {
+          eventList.push(x)
+        })
+        eventList.push(payload)
+        firestore.doc(auth.currentUser.uid).update({
+          eventList: eventList,
+        });
+       await dispatch('getUserData')
+       this.$router.push('/event-list')
+
+      },
+      selectEvent({ commit }, payload) {
+        commit("selectEvent", payload);
+        this.$router.push("/view-event");
+      },
+      async updateEvent({ dispatch, state }, payload) {
+        let index = state.userData.eventList.findIndex((x) => {
+          return x.name == payload.name;
+        });
+        let eventList = [...state.userData.eventList];
+
+        eventList.splice(index, 1);
+        eventList.push(payload);
+        await firestore
+          .doc(auth.currentUser.uid)
+          .update({
+            eventList: eventList,
+          })
+        await  dispatch('getUserData')
+this.$router.push('/event-list')
       },
     },
 

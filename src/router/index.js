@@ -24,26 +24,26 @@ export default route(function (/* { store, ssrContext } */) {
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   });
-  Router.beforeEach((to, from, next) => {
-    setTimeout(() => {
-      if (auth.currentUser) {
-        if (to.name == "signIn" || to.name == "signUp") {
-          next("/");
-          return;
-        } else {
-          next();
-          return;
-        }
-      } else {
-        if (to.name != "signIn" && to.name != "signUp") {
-          next("/sign-in");
-          return;
-        } else {
-          next();
-          return;
-        }
-      }
-    }, 500);
-  });
+  // Router.beforeEach((to, from, next) => {
+  //   setTimeout(() => {
+  //     if (auth.currentUser) {
+  //       if (to.path == "/sign-in" || to.path == "/sign-up") {
+  //         next("/");
+  //         return;
+  //       } else {
+  //         next();
+  //         return;
+  //       }
+  //     } else {
+  //       if (to.path != "/sign-in" && to.path != "/sign-up") {
+  //         next("/sign-in");
+  //         return;
+  //       } else {
+  //         next();
+  //         return;
+  //       }
+  //     }
+  //   }, 500);
+  // });
   return Router;
 });

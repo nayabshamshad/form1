@@ -110,10 +110,17 @@ label {
   position: sticky;
   top: 0;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   .btn {
     float: right;
     padding: 0.5rem 0.5rem;
     margin: 0 0.5rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    display: inline;
   }
 }
 .home-detail {
@@ -162,19 +169,54 @@ label {
   }
 }
 
-
 // categorylist
-
+form.category-form.event-form {
+  grid-template-columns: 1fr 1fr;
+  display: grid;
+.teamMember {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    span {
+      margin: 0;
+      padding: 0;
+      width: 30%;
+    }
+}
+  .cate-list-home.img-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    grid-column: 1/3;
+    width: 75%;
+    .img-container {
+      width: 30%;
+      max-height: 100%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  + .btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .cate-list {
   margin-top: 1rem;
-  .input{
+  .input {
     float: left;
     width: 94%;
-   }
-   .btnplus{
+  }
+  .btnplus {
     float: left;
     width: 1.75rem;
-   }
+  }
 }
 .submit {
   text-align: center;
@@ -253,7 +295,6 @@ form.form.category-form {
 
     .form {
       margin: 5% 15% 0;
-
     }
     .home-detail {
       margin: 0 10% 0;

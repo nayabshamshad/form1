@@ -1,11 +1,5 @@
 <template>
-  <div class="top-bar">
-    <span>Attendence Page </span>
-    <button to="/" type="button" @click="logOut" class="btn">Sign Out</button>
-    <button type="button" @click="$router.push('/event-list')" class="btn">
-      Reports
-    </button>
-  </div>
+
   <div class="container">
     <h2>Details</h2>
     <form class="form category-form">
@@ -95,9 +89,6 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
-    logOut() {
-      this.$store.dispatch("signOutUser");
-    },
   },
   mounted() {},
   watch: {
