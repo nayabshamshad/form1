@@ -34,7 +34,7 @@
           v-model="userInfo.status"
           :value="true"
         />
-        Active
+        Active &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <input
           type="radio"
           name="status"
@@ -77,7 +77,7 @@
           name="gender"
           value="Male"
         />
-        Male
+        Male &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <input
           v-model="userInfo.gender"
           type="radio"
@@ -146,7 +146,7 @@
         <label for="list"><b>List:</b></label>
 
         <div v-for="(item, index) in userInfo.teamList" :key="index">
-          <input type="text" v-model="item.name" placeholder="" name="" />
+          <input class="input" type="text" v-model="item.name" placeholder="list" name="" />
         </div>
         <button @click="addMember" type="button" class="btnplus">+</button>
       </div>

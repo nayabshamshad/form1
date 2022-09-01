@@ -13,7 +13,8 @@
       </div>
       <div class="cate-list">
         <label for="date"><b>Date:</b></label>
-        <input type="date" id="date" name="date" />
+        <input type="date" id="date" name="date"
+       min="2018-03" value="2018-05"/>
       </div>
       <div class="cate-list">
         <label for="description"><b>Description:</b></label>
@@ -24,11 +25,13 @@
           placeholder="Enter Description"
         ></textarea>
       </div>
+
       <div class="cate-list">
         <label for="img"><b>Select image:</b></label>
         <input type="file" id="img" name="img" accept="image/*" />
       </div>
-      <div class="cate-list">
+
+      <!-- <div class="cate-list">
         <label for="listofstudent"><b>List of Student:</b></label>
         <select>
           <option value="List of Student">List of Student</option>
@@ -36,7 +39,10 @@
           <option value="b">nimra</option>
           <option value="c">sana</option>
         </select>
-      </div>
+      </div> -->
+
+
+
     </form>
   </div>
 </template>
