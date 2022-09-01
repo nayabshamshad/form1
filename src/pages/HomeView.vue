@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar">
-    <span>Attendence Page</span>
+    <span>Attendence Page </span>
     <button to="/" type="button" @click="logOut" class="btn">Sign Out</button>
     <button type="button" @click="$router.push('/event-list')" class="btn">
       Reports
