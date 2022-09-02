@@ -39,6 +39,7 @@ body {
   h2 {
     margin-bottom: 1rem;
     text-align: center;
+    font-size: 2.7rem;
   }
 }
 
@@ -50,10 +51,11 @@ input[type="text"] {
     outline: none;
   }
 }
-
+label{
+  width: 100%;
+}
 input[type="date"] {
   @include input;
-  margin: 0;
 
   &:focus {
     background-color: $color;
@@ -73,7 +75,13 @@ input[type="password"] {
     outline: none;
   }
 }
-
+textarea {
+  @include input;
+  &:focus {
+    background-color: #d7f5d7;
+    outline: none;
+  }
+}
 button {
   background-color: $btnbg;
   color: $btncolor;
@@ -129,7 +137,7 @@ label {
   .grid {
     display: grid;
     gap: 1px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     .grid-cell {
       padding: 10px;
       background-color: $color;
@@ -274,7 +282,13 @@ form.form.category-form {
     border: 1px solid;
   }
 }
-
+.view-form {
+  margin: 5% 30% 0;
+  display: grid;
+  > * {
+    border: 1px solid;
+  }
+}
 .btn1 {
   justify-content: center;
   display: flex;
@@ -285,7 +299,7 @@ form.form.category-form {
   text-align: center;
   font-size: 1rem;
   .btn {
-    margin-left: 12rem;
+    margin-left: 24rem;
   }
 }
 // media quiry
