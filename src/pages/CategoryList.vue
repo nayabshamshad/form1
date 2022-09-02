@@ -41,17 +41,17 @@
           id="radio1"
           :value="true"
         />
-        Active
+         <label for="radio1"> Active</label>
         <input
           type="radio"
           name="status"
           id="radio2"
           v-model="userInfo.status"
           :value="false"
-        />Inactive
+        /> <label for="radio2"> Inactive</label>
       </div>
       <div class="cate-list">
-        <label for="telephone no."><b>Telephone No.</b></label>
+        <label for="telephone no."><b> Telephone No.</b></label>
         <q-input
           type="text"
           v-model="userInfo.phoneNumber"
@@ -82,19 +82,20 @@
         <input
           v-model="userInfo.gender"
           type="radio"
-          id="Gender"
+          id="maleradio"
           name="gender"
           value="Male"
         />
-        <label for="maleRadio"> Male </label>
+        <label for="maleradio"> Male </label>
         <input
           v-model="userInfo.gender"
           type="radio"
           name="gender"
-          id="maleRadio"
+          id="femaleradio"
           value="Female"
         />
-        Female
+        <label for="femaleradio"> Female</label>
+
       </div>
       <div class="cate-list">
         <label for="Etnic"><b>Etnic:</b></label>
