@@ -3,27 +3,34 @@
     <form class="form">
       <h2>Step 2</h2>
 
-      <div>
+      <div class="cate-list">
         <label for="club"><b>Club:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.clubName"
           placeholder="Club"
           name="Club"
         />
       </div>
-      <div>
+      <div class="cate-list">
         <label for="date"><b>Date:</b></label>
-        <input
-          type="date"
-          v-model="userInfo.dateOfBirth"
-          id="date"
-          name="date"
-        />
+        <q-input class="q-input" filled v-model="eventDate" mask="date" :rules="['date']">
+      <template  v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="eventDate" minimal>
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
       </div>
-      <div>
+      <div class="cate-list">
         <label for="tags"><b>Tags: </b>(comma separated, max 5)</label>
-        <input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
+        <q-input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
       </div>
       <div class="cate-list">
         <label for="status"><b>Status:</b></label>
@@ -38,13 +45,14 @@
         <input
           type="radio"
           name="status"
+          id="radio2"
           v-model="userInfo.status"
           :value="false"
         />Inactive
       </div>
       <div class="cate-list">
         <label for="telephone no."><b>Telephone No.</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.phoneNumber"
           placeholder="+40......."
@@ -53,7 +61,7 @@
       </div>
       <div class="cate-list">
         <label for="state"><b>State:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.state"
           placeholder="State"
@@ -62,7 +70,7 @@
       </div>
       <div class="cate-list">
         <label for="Region"><b>Region:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.region"
           placeholder="Region"
@@ -74,7 +82,7 @@
         <input
           v-model="userInfo.gender"
           type="radio"
-          id="maleRadio"
+          id="Gender"
           name="gender"
           value="Male"
         />
@@ -83,6 +91,7 @@
           v-model="userInfo.gender"
           type="radio"
           name="gender"
+          id="maleRadio"
           value="Female"
         />
         Female
@@ -118,7 +127,7 @@
       </div>
       <div class="cate-list">
         <label for="Instructor"><b>Instructor:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.Instructor"
           placeholder="Instructor"
@@ -127,7 +136,7 @@
       </div>
       <div class="cate-list">
         <label for="Ghid"><b>Ghid:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.Ghid"
           placeholder="Ghid"
@@ -136,7 +145,7 @@
       </div>
       <div class="cate-list">
         <label for="Master Ghid"><b>Master Ghid:</b></label>
-        <input
+        <q-input
           type="text"
           v-model="userInfo.masterGhid"
           placeholder="Master Ghid"
@@ -147,7 +156,7 @@
         <label for="list"><b>List:</b></label>
 
         <div v-for="(item, index) in userInfo.teamList" :key="index">
-          <input
+          <q-input
             class="input"
             type="text"
             v-model="item.name"

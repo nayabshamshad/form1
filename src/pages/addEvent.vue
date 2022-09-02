@@ -2,9 +2,9 @@
   <div class="container">
     <form class="form">
       <h2>Add Event</h2>
-      <div>
+      <div class="cate-list">
         <label for="name"><b>Name:</b></label>
-        <input
+        <q-input
           v-model="eventName"
           type="text"
           placeholder="Enter Name"
@@ -12,20 +12,30 @@
         />
       </div>
       <div class="cate-list">
-        <q-input filled v-model="eventDate" mask="date" :rules="['date']">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="eventDate" minimal>
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-
+        <label><b>Date:</b></label>
+        <q-input
+          class="q-input"
+          filled
+          v-model="eventDate"
+          mask="date"
+          :rules="['date']"
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="eventDate" minimal>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <label for="description"><b>Description:</b></label>
@@ -39,7 +49,7 @@
 
       <div class="cate-list">
         <label for="img"><b>Select image:</b></label>
-        <input
+        <q-input
           @change="handleImageUpload"
           type="file"
           id="img"
@@ -48,15 +58,6 @@
           multiple
         />
       </div>
-      <!-- <div class="cate-list">
-        <label for="listofstudent"><b>List of Student:</b></label>
-        <select>
-          <option value="List of Student">List of Student</option>
-          <option value="a">amna</option>
-          <option value="b">nimra</option>
-          <option value="c">sana</option>
-        </select>
-      </div> -->
       <button type="button" class="btn" @click="addEvent">Submit</button>
     </form>
   </div>
@@ -89,7 +90,7 @@ export default {
       console.log(files.length);
       if (files.length == 0) {
         alert("You need to upload atleast one image!");
-        this.isFetching = false
+        this.isFetching = false;
         return;
       } else if (files.length < 4) {
         let img_name_1 = new Date() + "-" + files[0].name;
@@ -130,7 +131,7 @@ export default {
         console.log(urlList);
       } else {
         alert("Please select a valid number of images");
-        this.isFetching = false
+        this.isFetching = false;
         return;
       }
       await this.$store.dispatch("addEvent", {

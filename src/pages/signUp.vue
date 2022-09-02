@@ -3,39 +3,42 @@
     <form class="form">
       <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
-      <div>
+      <div class="cate-list">
         <label for="F-name"><b>Fisrt Name</b></label>
-        <input
+        <q-input
           v-model="firstName"
           type="text"
           placeholder="Enter First Name"
           name="F-name"
         />
-
+      </div>
+      <div class="cate-list">
         <label for="L-name"><b>Last Name</b></label>
-        <input
+        <q-input
           type="text"
           v-model="lastName"
           placeholder="Enter Last Name"
           name="L-name"
         />
       </div>
-
-      <label for="email"><b>Email</b></label>
-      <input
-        type="text"
-        v-model="emailInput"
-        placeholder="Enter Email"
-        name="email"
-      />
-
-      <label for="pwd"><b>Password</b></label>
-      <input
-        type="password"
-        placeholder="Enter Password"
-        v-model="passInput"
-        name="pwd"
-      />
+      <div class="cate-list">
+        <label for="email"><b>Email</b></label>
+        <q-input
+          type="text"
+          v-model="emailInput"
+          placeholder="Enter Email"
+          name="email"
+        />
+      </div>
+      <div class="cate-list">
+        <label for="pwd"><b>Password</b></label>
+        <q-input
+          type="password"
+          placeholder="Enter Password"
+          v-model="passInput"
+          name="pwd"
+        />
+      </div>
       <div class="btn1">
         <button @click="submit" type="button">Submit</button>
       </div>

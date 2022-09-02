@@ -9,7 +9,6 @@
         <tr>
           <th>Event Name</th>
           <th>Date</th>
-          <th>View detail</th>
         </tr>
       </thead>
       <tbody v-if="userInfo?.eventList.length > 0" class="tbody">
