@@ -12,8 +12,20 @@
         />
       </div>
       <div class="cate-list">
-        <label for="date"><b>Date:</b></label>
-        <input type="date" v-model="eventDate" id="date" name="date"  min="2018-03"/>
+        <q-input filled v-model="eventDate" mask="date" :rules="['date']">
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="eventDate" minimal>
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+
       </div>
       <div class="cate-list">
         <label for="description"><b>Description:</b></label>
