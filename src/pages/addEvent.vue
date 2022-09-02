@@ -13,7 +13,7 @@
       </div>
       <div class="cate-list">
         <label for="date"><b>Date:</b></label>
-        <input type="date" v-model="eventDate" id="date" name="date"  min="2018-03" value="2018-05"/>/>
+        <input type="date" v-model="eventDate" id="date" name="date"  min="2018-03"/>
       </div>
       <div class="cate-list">
         <label for="description"><b>Description:</b></label>

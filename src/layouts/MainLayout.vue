@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="top-bar" v-else>
-    <h3>{{$route.name}} </h3>
+    <h3>{{ $route.name }}</h3>
     <div>
       <button @click="$router.push('/sign-in')" type="button" class="btn">
         Sign In
@@ -21,6 +21,7 @@
   </div>
   <router-view />
 </template>
+<!-- <router-link  to="/sign-in">reda</router-link> -->
 
 <script>
 import { defineComponent } from "vue";

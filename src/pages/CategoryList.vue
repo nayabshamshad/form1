@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <button type="button" class="btn">Sign Out</button>
     <form class="form">
       <h2>Step 2</h2>
 
@@ -27,14 +26,15 @@
         <input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
       </div>
       <div class="cate-list">
-        <label for="status"><b>Status:</b></label> &nbsp; &nbsp;
+        <label for="status"><b>Status:</b></label>
         <input
           type="radio"
           name="status"
           v-model="userInfo.status"
+          id="radio1"
           :value="true"
         />
-        Active &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        Active
         <input
           type="radio"
           name="status"
@@ -70,14 +70,15 @@
         />
       </div>
       <div class="cate-list">
-        <label for="Gender"><b>Gender:</b></label> &nbsp;
+        <label for="Gender"><b>Gender:</b></label>
         <input
           v-model="userInfo.gender"
           type="radio"
+          id="maleRadio"
           name="gender"
           value="Male"
         />
-        Male &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        <label for="maleRadio"> Male </label>
         <input
           v-model="userInfo.gender"
           type="radio"
@@ -146,7 +147,13 @@
         <label for="list"><b>List:</b></label>
 
         <div v-for="(item, index) in userInfo.teamList" :key="index">
-          <input class="input" type="text" v-model="item.name" placeholder="list" name="" />
+          <input
+            class="input"
+            type="text"
+            v-model="item.name"
+            placeholder="list"
+            name=""
+          />
         </div>
         <button @click="addMember" type="button" class="btnplus">+</button>
       </div>
