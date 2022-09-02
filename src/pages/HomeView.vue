@@ -1,5 +1,4 @@
 <template>
-
   <div class="container">
     <h2>Details</h2>
     <form class="form category-form">
