@@ -49,6 +49,7 @@ label {
 }
 select {
   @include input;
+  border-bottom: 1px solid #827d7d;
 }
 input[type="radio"] {
   margin-left: 2rem;

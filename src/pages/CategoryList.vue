@@ -14,11 +14,11 @@
       </div>
       <div class="cate-list">
         <label for="date"><b>Date:</b></label>
-        <q-input class="q-input" filled v-model="eventDate" mask="date" :rules="['date']">
+        <q-input class="q-input" filled v-model="userInfo.dateOfBirth" mask="date" :rules="['date']">
       <template  v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="eventDate" minimal>
+            <q-date v-model="userInfo.dateOfBirth" minimal>
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="Close" color="primary" flat />
               </div>
@@ -116,7 +116,7 @@
       </div>
       <div class="cate-list">
         <label for="Size"><b>Size:</b></label>
-        <select class="select" v-model="userInfo.size">
+        <select class="select" v-model="userInfo.size" :options="options">
           <option value="Size">Size</option>
           <option value="Xsmall">Xsmall</option>
           <option value="small">Small</option>
@@ -267,4 +267,5 @@ export default {
     },
   },
 };
+
 </script>
