@@ -4,17 +4,32 @@
       <h2>Step 2</h2>
 
       <div class="cate-list">
-        <label for="club"><b>Club:</b></label>
         <q-input
           type="text"
           v-model="userInfo.clubName"
           placeholder="Club"
           name="Club"
+          label="Club"
+          label-color="black"
         />
       </div>
       <div class="cate-list">
-        <label for="date"><b>Date:</b></label>
-        <q-input class="q-input" filled v-model="userInfo.dateOfBirth" mask="date" :rules="['date']">
+        <label
+          style="
+            margin-bottom: 0;
+            margin-top: 1rem;
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+          "
+          >Date of Birth</label
+        >
+        <q-input
+          type="date"
+          label-color="black"
+          v-model="userInfo.dateOfBirth"
+        ></q-input>
+        <!-- <q-input class="q-input" filled v-model="userInfo.dateOfBirth" mask="date" :rules="['date']">
       <template  v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -26,152 +41,211 @@
           </q-popup-proxy>
         </q-icon>
       </template>
-    </q-input>
+    </q-input> -->
       </div>
       <div class="cate-list">
         <label for="tags"><b>Tags: </b>(comma separated, max 5)</label>
-        <q-input type="text" v-model="tagsInput" placeholder="Tags" name="tags" />
-      </div>
-      <div class="cate-list">
-        <label for="status"><b>Status:</b></label>
-        <input
-          type="radio"
-          name="status"
-          v-model="userInfo.status"
-          id="radio1"
-          :value="true"
-        />
-         <label for="radio1"> Active</label>
-        <input
-          type="radio"
-          name="status"
-          id="radio2"
-          v-model="userInfo.status"
-          :value="false"
-        /> <label for="radio2"> Inactive</label>
-      </div>
-      <div class="cate-list">
-        <label for="telephone no."><b> Telephone No.</b></label>
         <q-input
           type="text"
+          v-model="tagsInput"
+          placeholder="Tags"
+          name="tags"
+        />
+      </div>
+
+      <div class="cate-list">
+        <q-input
+          type="tel"
           v-model="userInfo.phoneNumber"
           placeholder="+40......."
           name="phone number"
+          mask="phone"
+          label="Phone Number"
+          label-color="black"
         />
       </div>
       <div class="cate-list">
-        <label for="state"><b>State:</b></label>
         <q-input
           type="text"
           v-model="userInfo.state"
-          placeholder="State"
+          placeholder="State Name"
           name="State"
+          label="State"
+          label-color="black"
         />
       </div>
       <div class="cate-list">
-        <label for="Region"><b>Region:</b></label>
         <q-input
           type="text"
           v-model="userInfo.region"
-          placeholder="Region"
-          name="region"
+          placeholder="Enter Region Name"
+          label="Region"
+          label-color="black"
         />
       </div>
-      <div class="cate-list">
-        <label for="Gender"><b>Gender:</b></label>
-        <input
-          v-model="userInfo.gender"
-          type="radio"
-          id="maleradio"
-          name="gender"
-          value="Male"
-        />
-        <label for="maleradio"> Male </label>
-        <input
-          v-model="userInfo.gender"
-          type="radio"
-          name="gender"
-          id="femaleradio"
-          value="Female"
-        />
-        <label for="femaleradio"> Female</label>
 
+      <div class="cate-list">
+        <q-select
+          :options="['a', 'b']"
+          label="Etnic"
+          label-color="black"
+          v-model="userInfo.etnic"
+        />
       </div>
       <div class="cate-list">
-        <label for="Etnic"><b>Etnic:</b></label>
-        <select v-model="userInfo.etnic">
-          <option value="Etnic">Etnic</option>
-          <option value="a">a</option>
-          <option value="b">b</option>
-        </select>
+        <q-select
+          v-model="userInfo.category"
+          label="Category"
+          label-color="black"
+          :options="['a', 'b', 'c']"
+        />
       </div>
       <div class="cate-list">
-        <label for="Category"><b>Category:</b></label>
-        <select v-model="userInfo.category">
-          <option value="Category">Category</option>
-          <option value="a">a</option>
-          <option value="b">b</option>
-          <option value="c">c</option>
-        </select>
+        <q-select
+          v-model="userInfo.size"
+          :options="sizeOptions"
+          label-color="black"
+          label="Size"
+        />
       </div>
       <div class="cate-list">
-        <label for="Size"><b>Size:</b></label>
-        <select class="select" v-model="userInfo.size" :options="options">
-          <option value="Size">Size</option>
-          <option value="Xsmall">Xsmall</option>
-          <option value="small">Small</option>
-          <option value="Large">Large</option>
-          <option value="XLarge">XLarge</option>
-          <option value="XXLarge">XXLarge</option>
-          <option value="XXXLarge">XXXLarge</option>
-        </select>
-      </div>
-      <div class="cate-list">
-        <label for="Instructor"><b>Instructor:</b></label>
         <q-input
           type="text"
           v-model="userInfo.Instructor"
-          placeholder="Instructor"
+          label-color="black"
+          label="Instructor"
+          placeholder="YYYY"
           name="Instructor"
+          mask="####"
         />
       </div>
       <div class="cate-list">
-        <label for="Ghid"><b>Ghid:</b></label>
         <q-input
           type="text"
           v-model="userInfo.Ghid"
-          placeholder="Ghid"
-          name="Ghid"
+          placeholder="YYYY"
+          label="Ghid"
+          label-color="black"
+          mask="####"
         />
       </div>
       <div class="cate-list">
-        <label for="Master Ghid"><b>Master Ghid:</b></label>
         <q-input
           type="text"
           v-model="userInfo.masterGhid"
-          placeholder="Master Ghid"
-          name="Master Ghid"
+          placeholder="YYYY"
+          mask="####"
+          label-color="black"
+          label="Master Ghid"
         />
       </div>
-      <div class="cate-list">
-        <label for="list"><b>List:</b></label>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-right: 2rem;
+          margin: 1rem 0;
+        "
+      >
+        <div>
+          <label for="status"><b>Status:</b></label>
+          <div>
+            <q-radio
+              v-model="userInfo.status"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              :val="true"
+              label="Active"
+            />
+            <q-radio
+              v-model="userInfo.status"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              :val="false"
+              label="InActive"
+            />
+          </div>
+        </div>
+        <div>
+          <label for="Gender"><b>Gender:</b></label>
+          <div>
+            <q-radio
+              v-model="userInfo.gender"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              val="Male"
+              label="Male"
+            />
+            <q-radio
+              v-model="userInfo.gender"
+              checked-icon="task_alt"
+              unchecked-icon="panorama_fish_eye"
+              val="Female"
+              label="Female"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-if="userInfo.status" class="cate-list">
+        <div style="flex-wrap: nowrap" class="flex justify-space-between">
+          <label for="list"><b>Team Members:</b></label>
+          <q-btn @click="addMember" type="button" round color="purple">+</q-btn>
+        </div>
 
-        <div v-for="(item, index) in userInfo.teamList" :key="index">
+        <div
+          v-for="(item, index) in userInfo.teamList"
+          :key="index"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
           <q-input
-            class="input"
             type="text"
             v-model="item.name"
-            placeholder="list"
-            name=""
+            placeholder="Member Name"
+            style="width: 70%"
           />
+          <q-btn
+            @click="removeMember(index)"
+            type="button"
+            round
+            color="red"
+            style="width: 35px; height: 35px"
+            >-</q-btn
+          >
         </div>
-        <button @click="addMember" type="button" class="btnplus">+</button>
       </div>
       <div class="submit">
-        <button type="button" @click="submit" class="signupbtn">Submit</button>
+        <q-btn
+          type="button"
+          :loading="isSubmitting"
+          @click="submit"
+          color="purple"
+          class="signupbtn"
+          >Submit</q-btn
+        >
       </div>
     </form>
   </div>
+
+  <!-- Error Dialog -->
+  <q-dialog v-model="errorDialog">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{ error }}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 export default {
@@ -199,29 +273,59 @@ export default {
         isUpdated: false,
       },
       tagsInput: "",
+      isSubmitting: false,
+      sizeOptions: [
+        "x-Small",
+        "Small",
+        "Medium",
+        "Large",
+        "X-Large",
+        "XX-Large",
+        "XXX-Large",
+      ],
+      error: "There was an unexpected error",
+      errorDialog: false,
     };
   },
   methods: {
-    submit() {
+    async submit() {
+      if (this.isSubmitting) {
+        return;
+      }
+      this.isSubmitting = true;
       let profile;
+
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
+        if (this.tagsInput.split(",").length > 5) {
+          this.error = "You can not select more than five tags!";
+          this.errorDialog = true;
+          this.isSubmitting = false;
+          return;
+        }
         profile.tagList = this.tagsInput.split(",");
       }
       profile.isUpdated = true;
+      if(!profile.status) {
+        profile.teamList = []
+      }
       // Checks before forwarding the request
       var err = false;
       profile.teamList.forEach((x) => {
         if (x.name == "") {
-          console.log("list error");
           err = true;
         }
       });
       if (err) {
+        this.isSubmitting = false;
+        this.errorDialog = true;
+        this.error = "Please format your team member list correctly";
         return;
       }
       if (profile.tagList.length < 1) {
-        console.log("taglist error");
+        this.errorDialog = true;
+        this.error = "You need atleast one tag";
+        this.isSubmitting = false;
         return;
       }
       if (
@@ -238,13 +342,24 @@ export default {
         profile.category == "" ||
         profile.size == ""
       ) {
-        console.log("string error");
+        this.errorDialog = true;
+        this.error = "Please recheck your form and fill all details correctly";
+        this.isSubmitting = false;
         return;
       }
-      this.$store.dispatch("updateUserProfile", profile);
+      await this.$store.dispatch("updateUserProfile", profile);
+      this.isSubmitting = false;
     },
     addMember() {
       this.userInfo.teamList.push({ name: "" });
+    },
+    removeMember(i) {
+      if (this.userInfo.teamList.length > 1) {
+        this.userInfo.teamList.splice(i, 1);
+      } else {
+        this.errorDialog = true;
+        this.error = "Must have at least one team member";
+      }
     },
   },
   mounted() {
@@ -267,5 +382,4 @@ export default {
     },
   },
 };
-
 </script>

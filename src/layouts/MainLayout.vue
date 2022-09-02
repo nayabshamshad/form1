@@ -1,22 +1,68 @@
 <template>
   <div class="top-bar" v-if="isAuthenticated">
-    <h3 class="heading">{{ $route.name }}</h3>
+    <q-btn
+      no-caps
+      @click="$router.go(-1)"
+      round
+      style="transform: rotate(-90deg)"
+      icon="navigation"
+    />
+    <h3 class="heading" style="">{{ $route.name }}</h3>
     <div>
-      <button to="/" type="button" @click="logOut" class="btn">Sign Out</button>
-      <button type="button" @click="$router.push('/event-list')" class="btn">
+      <q-btn
+        no-caps
+        color="grey"
+        text-color="black"
+        to="/"
+        type="button"
+        @click="logOut"
+        class="btn"
+        >Sign Out</q-btn
+      >
+      <q-btn
+        no-caps
+        color="grey"
+        text-color="black"
+        type="button"
+        @click="$router.push('/event-list')"
+        class="btn"
+      >
         Reports
-      </button>
+      </q-btn>
     </div>
   </div>
   <div class="top-bar" v-else>
+    <q-btn
+      no-caps
+      @click="$router.go(-1)"
+      round
+      style="transform: rotate(-90deg)"
+      icon="navigation"
+    />
     <h3>{{ $route.name }}</h3>
     <div>
-      <button @click="$router.push('/sign-in')" type="button" class="btn">
+      <q-btn
+        v-if="$route.path != '/sign-in'"
+        no-caps
+        color="grey"
+        text-color="black"
+        @click="$router.push('/sign-in')"
+        type="button"
+        class="btn"
+      >
         Sign In
-      </button>
-      <button type="button" @click="$router.push('/sign-up')" class="btn">
+      </q-btn>
+      <q-btn
+        v-if="$route.path != '/sign-up'"
+        no-caps
+        color="grey"
+        text-color="black"
+        type="button"
+        @click="$router.push('/sign-up')"
+        class="btn"
+      >
         Sign Up
-      </button>
+      </q-btn>
     </div>
   </div>
   <router-view />

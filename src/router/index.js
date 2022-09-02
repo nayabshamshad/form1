@@ -38,6 +38,9 @@ export default route(function (/* { store, ssrContext } */) {
         }
       }, 1000);
     } else {
+      if(to.path == '/sign-in' || to.path == '/sign-up') {
+        return
+      }
       next();
     }
   });

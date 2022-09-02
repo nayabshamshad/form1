@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2>Details</h2>
-    <form class="form category-form">
+    <form class="form category-form home-only">
       <div class="cate-list-home">
         <label for="club"><b>Name:</b></label>
         <span>{{ userData.name }}</span>

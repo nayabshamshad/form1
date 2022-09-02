@@ -1,31 +1,6 @@
 <template>
   <div class="container">
     <form class="form category-form event-form">
-      <!-- <div class="cate-list-home">
-        <label for="club"><b>Name:</b></label>
-        <span>{{ userData.name }}</span>
-      </div>
-      <div class="cate-list-home">
-        <label for="club"><b>Club:</b></label>
-        <span>{{ userData.clubName }}</span>
-      </div>
-
-      <div class="cate-list-home">
-        <label for="date"><b>DoB:</b></label>
-        <span>{{ userData?.dateOfBirth ? userData.dateOfBirth : "" }}</span>
-      </div>
-      <div class="cate-list-home">
-        <label for="status"><b>Status:</b></label>
-        <span>{{ userData.status ? "Active" : "InActive" }}</span>
-      </div>
-      <div class="cate-list-home chip-container">
-        <label for="tags"><b>Tags:</b></label>
-        <div v-if="userData.tagList">
-          <span v-for="(item, index) in userData.tagList" :key="index">
-            {{ item }}
-          </span>
-        </div>
-      </div> -->
       <div class="cate-list-home">
         <label for="name"><b>Name:</b></label>
         <span>{{ currentEvent.name }}</span>
@@ -42,18 +17,35 @@
       <div class="cate-list-home">
         <label><b>List of Students:</b></label>
         <div class="teamMember" v-for="(student, i) in memberList" :key="i">
-          <span>
+          <span
+            style="
+              text-transform: capitalize;
+              font-style: italic;
+              margin: 5px 0;
+              width: 30%;
+            "
+          >
             {{ student }}
           </span>
-          <input
+          <span style="font-size: 20px; color: #000">
+            {{
+              currentEvent.attendanceList.includes(student)
+                ? "&check;"
+                : "&times;"
+            }}
+          </span>
+          <!-- <input
             :value="student"
             :checked="currentEvent.attendanceList.includes(student)"
             type="checkbox"
             @change="addAttendance"
-          />
+          /> -->
         </div>
       </div>
-      <div class="cate-list-home img-holder">
+      <div
+        class="cate-list-home img-holder"
+        style="min-height: 120px; max-height: 200px"
+      >
         <div
           v-for="(src, i) in currentEvent.imageList"
           :key="i"
@@ -63,9 +55,9 @@
         </div>
       </div>
     </form>
-    <div class="btn-container">
+    <!-- <div class="btn-container">
       <button class="btn" type="button" @click="submit">Submit</button>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -97,9 +89,6 @@ export default {
         let index = this.currentEvent.attendanceList.indexOf(e.target.value);
         this.currentEvent.attendanceList.splice(index, 1);
       }
-    },
-    submit() {
-      this.$store.dispatch("updateEvent", this.currentEvent);
     },
   },
   mounted() {

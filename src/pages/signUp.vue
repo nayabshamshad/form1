@@ -40,10 +40,25 @@
         />
       </div>
       <div class="btn1">
-        <button @click="submit" type="button">Submit</button>
+        <q-btn rounded color="purple" @click="submit" type="button">Submit</q-btn>
       </div>
     </form>
   </div>
+  <q-dialog v-model="errorDialog">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{ error }}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>

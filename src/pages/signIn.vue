@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="form">
+    <form class="form" autocomplete="off">
       <h2>Log In</h2>
       <div class="cate-list">
         <label for="uname"><b>Username</b></label>
@@ -21,7 +21,7 @@
         />
       </div>
       <div class="btn1">
-        <button @click="loginUser" type="button">Login</button>
+        <q-btn @click="loginUser" type="button" color="purple" rounded>Login</q-btn>
       </div>
       <span class="pwd"
         >Don't have an account?
