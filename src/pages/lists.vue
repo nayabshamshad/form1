@@ -1,8 +1,6 @@
 <template>
   <div class="container">
     <h2>Pending Team Leaders</h2>
-
-    
       <table class="table">
         <thead class="thead">
           <tr>

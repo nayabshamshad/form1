@@ -2,21 +2,24 @@
   <div class="container">
     <form class="form">
       <h2>Log In</h2>
-      <label for="uname"><b>Username</b></label>
-      <input
-        v-model="userEmail"
-        type="text"
-        placeholder="Enter Email Address"
-        name="uname"
-      />
-
-      <label for="pwd"><b>Password</b></label>
-      <input
-        type="password"
-        placeholder="Enter Password"
-        name="pwd"
-        v-model="userPass"
-      />
+      <div class="cate-list">
+        <label for="uname"><b>Username</b></label>
+        <q-input
+          v-model="userEmail"
+          type="text"
+          placeholder="Enter Email Address"
+          name="uname"
+        />
+      </div>
+      <div class="cate-list">
+        <label for="pwd"><b>Password</b></label>
+        <q-input
+          type="password"
+          placeholder="Enter Password"
+          name="pwd"
+          v-model="userPass"
+        />
+      </div>
       <div class="btn1">
         <button @click="loginUser" type="button">Login</button>
       </div>

@@ -11,7 +11,8 @@ $bgcolor: black;
   padding: 0.5rem;
   margin-top: 0.5rem;
   border: none;
-  background: $input;
+  background: none;
+  margin-top: 0.5rem;
 }
 
 body {
@@ -26,10 +27,10 @@ body {
 }
 
 .container {
-  padding: 5rem;
+  padding: 3.5rem;
 
   form {
-    margin: 5% 30% 0;
+    margin: 0 30% 0;
   }
 
   p {
@@ -43,42 +44,29 @@ body {
   }
 }
 
-input[type="text"] {
-  @include input;
-
-  &:focus {
-    background-color: $color;
-    outline: none;
-  }
-}
-label{
+label {
   width: 100%;
 }
-input[type="date"] {
-  @include input;
-
-  &:focus {
-    background-color: $color;
-    outline: none;
-  }
-}
-
 select {
   @include input;
+  border-bottom: 1px solid #827d7d;
 }
-
-input[type="password"] {
-  @include input;
+input[type="radio"] {
+  margin-left: 2rem;
 
   &:focus {
     background-color: $color;
     outline: none;
   }
+}
+.no-wrap {
+  height: 2rem;
 }
 textarea {
   @include input;
+  border: 1px solid black;
+  opacity: 0.9;
   &:focus {
-    background-color: #d7f5d7;
     outline: none;
   }
 }
@@ -112,7 +100,6 @@ label {
 .top-bar {
   padding: 1rem;
   height: 4rem;
-  color: $color;
   background-color: $bgcolor;
   color: $input;
   position: sticky;
@@ -181,7 +168,7 @@ label {
 form.category-form.event-form {
   grid-template-columns: 1fr 1fr;
   display: grid;
-.teamMember {
+  .teamMember {
     display: flex;
     justify-content: space-around;
     width: 100%;
@@ -193,7 +180,7 @@ form.category-form.event-form {
       padding: 0;
       width: 30%;
     }
-}
+  }
   .cate-list-home.img-holder {
     display: flex;
     justify-content: center;
@@ -209,7 +196,7 @@ form.category-form.event-form {
       }
     }
   }
-  + .btn-container {
+  .btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,8 +209,9 @@ form.category-form.event-form {
     width: 94%;
   }
   .btnplus {
-    float: left;
-    width: 1.75rem;
+    margin: 0;
+    padding: 0.35rem;
+    width: 1.5rem;
   }
 }
 .submit {
@@ -299,7 +287,7 @@ form.form.category-form {
   text-align: center;
   font-size: 1rem;
   .btn {
-    margin-left: 24rem;
+    margin-left: 12rem;
   }
 }
 // media quiry
