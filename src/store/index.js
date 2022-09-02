@@ -51,11 +51,12 @@ export default store(function () {
         this.$router.push("/sign-in");
       },
       async getUserData({ commit }) {
-        firestore
+      await  firestore
           .doc(auth.currentUser.uid)
           .get()
           .then((res) => {
-            this.commit("setUserData", res.data());
+            commit("setCurrentUser", auth.currentUser);
+            commit("setUserData", res.data());
           });
       },
       async signUp({ commit }, payload) {
@@ -111,7 +112,7 @@ export default store(function () {
             alert(err.message);
             return err.message;
           });
-        this.$router.push("/category-list");
+        // this.$router.push("/category-list");
       },
       async updateUserProfile({ commit }, payload) {
         if (auth.currentUser) {
@@ -143,26 +144,30 @@ export default store(function () {
           .get()
           .then((response) => {
             commit("setUserData", response.data());
+            if (!response.data()?.isUpdated) {
+              this.$router.push("/category-list");
+            }
+            else {
+              this.$router.push('/')
+            }
           })
           .catch((err) => {
             alert(err.message);
             console.log(err.message);
             return err.message;
           });
-        this.$router.push("/");
       },
       async addEvent({ dispatch, state }, payload) {
-        let eventList = []
-        state.userData.eventList.forEach(x => {
-          eventList.push(x)
-        })
-        eventList.push(payload)
+        let eventList = [];
+        state.userData.eventList.forEach((x) => {
+          eventList.push(x);
+        });
+        eventList.push(payload);
         firestore.doc(auth.currentUser.uid).update({
           eventList: eventList,
         });
-       await dispatch('getUserData')
-       this.$router.push('/event-list')
-
+        await dispatch("getUserData");
+        this.$router.push("/event-list");
       },
       selectEvent({ commit }, payload) {
         commit("selectEvent", payload);
@@ -176,13 +181,11 @@ export default store(function () {
 
         eventList.splice(index, 1);
         eventList.push(payload);
-        await firestore
-          .doc(auth.currentUser.uid)
-          .update({
-            eventList: eventList,
-          })
-        await  dispatch('getUserData')
-this.$router.push('/event-list')
+        await firestore.doc(auth.currentUser.uid).update({
+          eventList: eventList,
+        });
+        await dispatch("getUserData");
+        this.$router.push("/event-list");
       },
     },
 

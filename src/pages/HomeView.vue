@@ -84,18 +84,20 @@
 </template>
 
 <script>
+import { auth } from "../store/firebase";
 export default {
   name: "HomeView",
   components: {},
-  methods: {
+  methods: {},
+  mounted() {
+    if (auth.currentUser && this.$store.getters.userData?.isUpdated == false) {
+      this.$router.push("/category-list");
+    }
   },
-  mounted() {},
   watch: {
     userData: {
       handler: function () {
-        if (this.userData?.isUpdated == true) {
-          return;
-        } else if (this.userData?.isUpdated == false) {
+        if (this.$store.getters.userData?.isUpdated == false) {
           this.$router.push("/category-list");
         }
       },
