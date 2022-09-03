@@ -7,27 +7,10 @@
         </q-btn></span
       >
     </div>
-    <!-- <table style="width: 80%" class="table">
-      <thead class="thead">
-        <tr>
-          <th>Event Name</th>
-          <th>Date</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody v-if="userInfo?.eventList.length > 0" class="tbody">
-        <tr v-for="(e, i) in userInfo.eventList" :key="i">
-          <td>{{ e.name }}</td>
-          <td>{{ e.date }}</td>
-          <td><button @click="showEventDetails(e)">View Details</button></td>
-        </tr>
-      </tbody>
-      <div v-else>No events found, add some events and they will show here</div>
-    </table> -->
     <div style="margin-top: 1rem;" class=" flex justify-center">
       <q-table
         v-if="userInfo.eventList?.length > 0"
-        style="width: 60%"
+        style="width: 80%"
         title="Event List"
         :rows="userInfo.eventList"
         :columns="[

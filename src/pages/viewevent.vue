@@ -23,23 +23,20 @@
               font-style: italic;
               margin: 5px 0;
               width: 30%;
+              border-bottom: 1px solid #555;
             "
           >
             {{ student }}
           </span>
-          <span style="font-size: 20px; color: #000">
-            {{
-              currentEvent.attendanceList.includes(student)
-                ? "&check;"
-                : "&times;"
-            }}
+          <span
+            v-if="currentEvent.attendanceList.includes(student)"
+            style="font-size: 20px; color: rgb(21, 76, 143)"
+          >
+            &check;
           </span>
-          <!-- <input
-            :value="student"
-            :checked="currentEvent.attendanceList.includes(student)"
-            type="checkbox"
-            @change="addAttendance"
-          /> -->
+          <span v-else style="font-size: 20px; color: rgb(153, 29, 44)"
+            >&times;</span
+          >
         </div>
       </div>
       <div
@@ -75,22 +72,7 @@ export default {
       },
     };
   },
-  methods: {
-    addAttendance(e) {
-      if (
-        e.target.checked &&
-        !this.currentEvent.attendanceList.includes(e.target.value)
-      ) {
-        this.currentEvent.attendanceList.push(e.target.value);
-      } else if (
-        !e.target.checked &&
-        this.currentEvent.attendanceList.includes(e.target.value)
-      ) {
-        let index = this.currentEvent.attendanceList.indexOf(e.target.value);
-        this.currentEvent.attendanceList.splice(index, 1);
-      }
-    },
-  },
+  methods: {},
   mounted() {
     this.currentEvent = {
       name: this.selectedEvent.name,

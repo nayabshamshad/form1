@@ -1,7 +1,7 @@
 <template>
   <div class="container">
+    <h2>Sign Up</h2>
     <form class="form">
-      <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
       <div class="cate-list">
         <label for="F-name"><b>Fisrt Name</b></label>
@@ -44,7 +44,7 @@
       </div>
     </form>
   </div>
-  <q-dialog v-model="errorDialog">
+  <!-- <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
         <div class="text-h6">Alert</div>
@@ -58,7 +58,7 @@
         <q-btn flat label="OK" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script>

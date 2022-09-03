@@ -8,9 +8,13 @@ import { auth } from "./store/firebase";
 export default defineComponent({
   name: "App",
   mounted() {
+    if (auth.currentUser) {
+      this.$store.dispatch("getUserData");
+    }
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.isAuth = user;
+        this.$store.dispatch('getUserData')
       } else {
         this.isAuth = null;
       }

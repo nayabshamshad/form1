@@ -31,7 +31,7 @@
         <div
           v-for="(user, i) in userData.teamList"
           :key="i"
-          style="display: flex"
+          style="display: flex; justify-content: space-around"
         >
           <span
             style="
@@ -39,6 +39,8 @@
               font-style: italic;
               text-transform: capitalize;
               display: block;
+              border-bottom: 1px solid;
+              text-align: center;
             "
           >
             {{ user.name }}
@@ -69,16 +71,10 @@
         </div>
         <div
           v-if="previewImages.length > 0"
-          style="
-            height: 175px;
-            display: flex;
-            justify-content: space-around;
-            flex-direction: row;
-            padding: 1rem;
-          "
+          class="img_holder"
         >
           <div v-for="(img, i) in previewImages" :key="i" style="width: 30%">
-            <img style="width: 100%" :src="img" alt="" />
+            <img style="width: 100%;" :src="img" alt="" />
           </div>
         </div>
         <div v-else style="height: 175px" class="flex justify-center">

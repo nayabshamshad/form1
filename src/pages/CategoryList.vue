@@ -44,12 +44,13 @@
     </q-input> -->
       </div>
       <div class="cate-list">
-        <label for="tags"><b>Tags: </b>(comma separated, max 5)</label>
         <q-input
           type="text"
           v-model="tagsInput"
-          placeholder="Tags"
+          placeholder="Comma seperated"
           name="tags"
+          label="Speicalizations you can teach (Max 5)"
+          label-color="black"
         />
       </div>
 
@@ -68,9 +69,8 @@
         <q-input
           type="text"
           v-model="userInfo.state"
-          placeholder="State Name"
-          name="State"
-          label="State"
+          placeholder="Community Name"
+          label="Community"
           label-color="black"
         />
       </div>
@@ -78,16 +78,16 @@
         <q-input
           type="text"
           v-model="userInfo.region"
-          placeholder="Enter Region Name"
-          label="Region"
+          placeholder="Enter Area Name"
+          label="Area"
           label-color="black"
         />
       </div>
 
       <div class="cate-list">
         <q-select
-          :options="['a', 'b']"
-          label="Etnic"
+          :options="['Romanian', 'Hungarian']"
+          label="Ethnicity"
           label-color="black"
           v-model="userInfo.etnic"
         />
@@ -97,7 +97,7 @@
           v-model="userInfo.category"
           label="Category"
           label-color="black"
-          :options="['a', 'b', 'c']"
+          :options="['Licurici', 'Companioni', 'Exploratori']"
         />
       </div>
       <div class="cate-list">
@@ -113,7 +113,7 @@
           type="text"
           v-model="userInfo.Instructor"
           label-color="black"
-          label="Instructor"
+          label="Year of investment as Instructor"
           placeholder="YYYY"
           name="Instructor"
           mask="####"
@@ -124,7 +124,7 @@
           type="text"
           v-model="userInfo.Ghid"
           placeholder="YYYY"
-          label="Ghid"
+          label="Year of investment as Ghid"
           label-color="black"
           mask="####"
         />
@@ -136,7 +136,7 @@
           placeholder="YYYY"
           mask="####"
           label-color="black"
-          label="Master Ghid"
+          label="Year of investment as Master Guide"
         />
       </div>
       <div
@@ -256,13 +256,13 @@ export default {
       userInfo: {
         isAuthorized: false,
         teamList: [{ name: "" }],
-        dateOfBirth: "",
+        dateOfBirth: "2022-03-21",
         Instructor: "",
         Ghid: "",
         masterGhid: "",
         region: "",
         state: "",
-        gender: "",
+        gender: "Male",
         etnic: "",
         phoneNumber: "",
         tagList: [],
@@ -311,11 +311,13 @@ export default {
       }
       // Checks before forwarding the request
       var err = false;
-      profile.teamList.forEach((x) => {
-        if (x.name == "") {
-          err = true;
-        }
-      });
+      if(profile.status) {
+        profile.teamList.forEach((x) => {
+          if (x.name == "") {
+            err = true;
+          }
+        });
+      }
       if (err) {
         this.isSubmitting = false;
         this.errorDialog = true;

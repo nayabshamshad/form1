@@ -10,6 +10,9 @@ body {
   font-family: Arial, sans-serif;
   background: $background;
 }
+form {
+  margin-bottom: 2rem !important;
+}
 
 * {
   box-sizing: border-box;
@@ -81,9 +84,10 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media(max-width: 550px) {
+  @media (max-width: 850px) {
     margin-bottom: 3rem;
   }
+
   .btn {
     float: right;
     padding: 0.5rem 0.5rem;
@@ -96,7 +100,7 @@ label {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    @media(max-width: 550px) {
+    @media (max-width: 550px) {
       display: none;
     }
   }
@@ -147,7 +151,7 @@ label {
 
 // categorylist
 form.category-form.event-form.form {
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
     display: grid;
     > :nth-child(odd) {
@@ -157,7 +161,10 @@ form.category-form.event-form.form {
       justify-self: start;
     }
   }
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   .teamMember {
     display: flex;
     justify-content: space-around;
@@ -165,6 +172,9 @@ form.category-form.event-form.form {
     margin: 0;
     padding: 0;
     text-align: start;
+    > span:last-child {
+      text-align: center;
+    }
     span {
       margin: 0;
       padding: 0;
@@ -213,12 +223,15 @@ form.category-form.event-form.form {
 .cate-list-home {
   margin-top: 1rem;
   width: 50%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
   display: flex;
   flex-direction: column;
   padding: 1rem;
   text-align: start;
-> div {
-}
+  > div {
+  }
   @media (min-width: 768px) {
     &.chip-container {
     }
@@ -254,17 +267,32 @@ form.category-form.event-form.form {
 }
 form.form.category-form {
   display: grid;
+  @media (max-width: 767px) {
+    > div {
+      justify-self: center;
+      span {
+        padding-left: 5px;
+      }
+    }
+    label {
+      b {
+        font-size: 12px;
+      }
+    }
+  }
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
     margin: 0;
     &.home-only {
-
+      > div {
+        justify-self: center;
+      }
       > div:nth-child(even) {
-      justify-self: start;
-    }
-    > div:nth-child(odd) {
-      justify-self: end;
-    }
+        justify-self: start;
+      }
+      > div:nth-child(odd) {
+        justify-self: end;
+      }
     }
   }
   > * {
@@ -306,4 +334,27 @@ form.form.category-form {
       }
     }
   }
+}
+
+.img_holder {
+  height: 175px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+
+  padding: 1rem;
+  > img {
+    width: 30%;
+    max-height: 175px;
+  }
+  @media(max-width: 500px) {
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    align-items: center;
+    img {
+      width: 80%;
+    }
+  }
+
 }
