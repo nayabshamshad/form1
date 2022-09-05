@@ -2,12 +2,18 @@
   <div class="container">
     <div class="eventlist">
       <span
-        ><q-btn color="purple" rounded type="button" class="btn" @click="$router.push('/add-event')">
+        ><q-btn
+          color="purple"
+          rounded
+          type="button"
+          class="btn"
+          @click="$router.push('/add-event')"
+        >
           Add Event
         </q-btn></span
       >
     </div>
-    <div style="margin-top: 1rem;" class=" flex justify-center">
+    <div style="margin-top: 1rem" class="flex justify-center">
       <q-table
         v-if="userInfo.eventList?.length > 0"
         style="width: 80%"
@@ -29,9 +35,9 @@
             field: (item) => item.date,
           },
         ]"
-        row-key="name"
+        flat
         dark
-        color="amber"
+        bordered
         @row-click="showEventDetails"
       />
       <div v-else style="width: 60%">Your Events will show here</div>

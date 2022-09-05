@@ -19,10 +19,14 @@
         <q-input
           label="Description"
           v-model="eventDesc"
-          type="textarea"
+          type="text"
           label-color="black"
           placeholder="Enter Description Here..."
-          :rules="[ val => val.length <= 50 || 'Please use maximum 50 characters in description']"
+          :rules="[
+            (val) =>
+              val.length <= 50 ||
+              'Please use maximum 50 characters in description',
+          ]"
         />
       </div>
       <div class="cate-list">
@@ -56,7 +60,7 @@
             <label style="display: block; font-size: 16px; margin-bottom: 1rem"
               >Upload Images (Max 3)</label
             >
-            <q-btn color="purple" @click="$refs.imgInput.click()" round
+            <q-btn color="purple" @click="openInput" round
               >+</q-btn
             >
           </div>
@@ -67,15 +71,18 @@
             style="display: none"
             name="img"
             accept="image/*"
-            multiple
           />
         </div>
-        <div
-          v-if="previewImages.length > 0"
-          class="img_holder"
-        >
-          <div v-for="(img, i) in previewImages" :key="i" style="width: 30%">
-            <img style="width: 100%;" :src="img" alt="" />
+        <div v-if="previewImages.length > 0" class="img_holder">
+          <div class='add-img' v-for="(img, i)  in previewImages" :key="i" style="width: 30%">
+            <q-btn @click="removeImg(img)" color="red" round size="sm">-</q-btn>
+            <img
+              style="width: 100%; cursor: pointer;"
+              class="add-event-img"
+              :src="img"
+              alt=""
+            />
+            <div></div>
           </div>
         </div>
         <div v-else style="height: 175px" class="flex justify-center">
@@ -131,15 +138,26 @@ export default {
     };
   },
   methods: {
+    openInput() {
+      if(this.previewImages.length < 3) {
+        this.$refs.imgInput.click()
+      }
+      else {
+        this.$q.notify({
+          message: 'You cannot upload more than three images at a time',
+          color: 'red'
+        })
+      }
+    },
     async addEvent() {
       if (this.isFetching) {
         return;
       }
       this.isFetching = true;
       let urlList = [];
-      if(this.eventDesc.length > 50) {
+      if (this.eventDesc.length > 50) {
         this.isFetching = false;
-        return
+        return;
       }
       const files = this.localImageList;
       if (files.length == 0) {
@@ -209,23 +227,24 @@ export default {
       this.isFetching = false;
     },
     handleImageUpload(e) {
-      if (e.target.files.length < 4) {
-        var imgList = [];
-        var previewImages = [];
-        Object.entries(e.target.files).forEach((x) => {
-          const file = x[1];
-          previewImages.push(URL.createObjectURL(file));
-          imgList.push(file);
-        });
-        this.localImageList = imgList;
-        this.previewImages = previewImages;
-      } else {
+      // this.localImageList, this.previewImages
+      if (this.previewImages.length < 3) {
+        const file = e.target.files[0];
+        this.previewImages.push(URL.createObjectURL(file));
+        this.localImageList.push(file);
+      } else if (this.previewImages.length >= 3) {
         this.$q.notify({
-          message: 'You cannot upload more than 3 files'
-        })
-        this.localImageList = [];
-        this.previewImages = [];
+          message: "You cannot upload more than 3 files",
+          color: 'red',
+        });
       }
+    },
+    removeImg(e) {
+      const index = this.previewImages.findIndex((x) => {
+        return x === e;
+      });
+      this.previewImages.splice(index, 1);
+      this.localImageList.splice(index, 1);
     },
     addUser(e) {
       if (this.attendanceList.includes(e.target.value) && !e.target.checked) {

@@ -1,12 +1,13 @@
 <template>
-  <teamHome />
-  <!-- <adminHome v-else /> -->
+  <teamHome v-if="userData.role !== 'admin'" />
+  <adminHome v-else />
 </template>
 
 <script>
 import teamHome from "../components/teamHome.vue";
+import adminHome from '../components/adminHome.vue'
 export default {
-  components: { teamHome },
+  components: { teamHome, adminHome },
   computed: {
     userData() {
       return this.$store.getters.userData;

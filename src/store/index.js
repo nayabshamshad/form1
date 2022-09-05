@@ -15,6 +15,7 @@ export default store(function () {
         desc: "",
         attendanceList: [],
       },
+      userList: [],
     },
     getters: {
       userData(state) {
@@ -33,6 +34,9 @@ export default store(function () {
       selectedEvent(state) {
         return state.selectedEvent;
       },
+      userList(state) {
+        return state.userList;
+      },
     },
     mutations: {
       setCurrentUser(state, payload) {
@@ -43,6 +47,9 @@ export default store(function () {
       },
       selectEvent(state, payload) {
         state.selectedEvent = payload;
+      },
+      setUserList(state, payload) {
+        state.userList = payload;
       },
     },
     actions: {
@@ -68,7 +75,7 @@ export default store(function () {
           .createUserWithEmailAndPassword(payload.email, payload.password)
           .then(() => {})
           .catch((err) => {
-            error = true
+            error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
                 message: "Email address already in use",
@@ -77,7 +84,7 @@ export default store(function () {
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
                 message: "Please enter a valid email address",
-                color: 'red'
+                color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
@@ -86,9 +93,9 @@ export default store(function () {
               });
             }
           });
-          if(error) {
-            return
-          }
+        if (error) {
+          return;
+        }
         await auth.currentUser
           .updateProfile({
             displayName: payload.name,
@@ -107,11 +114,11 @@ export default store(function () {
           .doc(auth.currentUser.uid)
           .set({
             name: payload.name,
-            isAuthorized: "true",
+            isAuthorized: "pending",
             eventList: [],
             teamList: [],
-            role: "admin",
-            dateOfBirth: "01/01/01",
+            role: "teamLead",
+            dateOfBirth: "",
             Instructor: "",
             Ghid: "",
             masterGhid: "",
@@ -122,24 +129,24 @@ export default store(function () {
             phoneNumber: "",
             tagList: [],
             clubName: "",
-            status: "Active",
+            status: "",
             category: "",
             size: "",
-            isUpdated: true,
+            isUpdated: false,
             uid: auth.currentUser.uid,
             email: payload.email,
           })
           .catch((err) => {
-            error = true
-          Notify.create({
-            message: err.message,
-            color: 'red'
-          })
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
             return err.message;
           });
-          if(error) {
-            return
-          }
+        if (error) {
+          return;
+        }
         commit("setCurrentUser", auth.currentUser);
 
         await firestore
@@ -149,15 +156,15 @@ export default store(function () {
             commit("setUserData", response.data());
           })
           .catch((err) => {
-            error = true
+            error = true;
             Notify.create({
               message: err.message,
-              color: 'red'
-            })
+              color: "red",
+            });
           });
-          if(error) {
-            return
-          }
+        if (error) {
+          return;
+        }
         this.$router.push("/category-list");
       },
       async updateUserProfile({ commit, dispatch }, payload) {
@@ -177,20 +184,18 @@ export default store(function () {
           })
           .catch((err) => {
             error = true;
-            console.log(err.code)
+            console.log(err.code);
             if (err.code == "auth/wrong-password") {
               Notify.create({
                 color: "red",
                 message: "Please recheck your password and try again",
               });
-            }
-            else if (err.code == 'auth/invalid-email') {
+            } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                color: 'red',
-                message: 'Please enter a valid email address'
-              })
-            }
-             else if (err.code == "auth/too-many-requests") {
+                color: "red",
+                message: "Please enter a valid email address",
+              });
+            } else if (err.code == "auth/too-many-requests") {
               Notify.create({
                 color: "red",
                 message:
@@ -201,12 +206,11 @@ export default store(function () {
                 color: "red",
                 message: "We cannot find a user with this email address",
               });
-            }
-            else {
+            } else {
               Notify.create({
-                color: 'red',
-                message: err.message
-              })
+                color: "red",
+                message: err.message,
+              });
             }
           });
         if (error) {
@@ -227,8 +231,8 @@ export default store(function () {
             error = true;
             Notify.create({
               message: err.message,
-              color: 'red'
-            })
+              color: "red",
+            });
             return err.message;
           });
         if (error) {
@@ -264,6 +268,15 @@ export default store(function () {
         });
         await dispatch("getUserData");
         this.$router.push("/event-list");
+      },
+      async getUserList({ commit }) {
+        var userList = [];
+        await firestore.get().then((res) => {
+          res.forEach((x) => {
+            userList.push(x.data());
+          });
+          commit("setUserList", userList);
+        });
       },
     },
     plugins: [createPersistedState()],

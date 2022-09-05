@@ -382,3 +382,33 @@ form.form.category-form {
     font-size: 1.5rem;
   }
 }
+
+span.q-table__bottom-item:first-of-type {
+  white-space: nowrap;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  table {
+    thead {
+      background: red;
+    }
+    th {
+    }
+    th,
+    td {
+      padding: 5px 12px;
+      text-align: left;
+    }
+  }
+}
+
+.add-img {
+  position: relative;
+  .q-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
