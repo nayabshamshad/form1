@@ -9,11 +9,11 @@ const routes = [
         name: "Welcome",
         component: () => import("../pages/HomeView.vue"),
       },
-    {
-      path: '/sign-in',
-      name: 'Sign In',
-      component: () => import('../pages/signIn.vue')
-    },
+      {
+        path: "/sign-in",
+        name: "Sign In",
+        component: () => import("../pages/signIn.vue"),
+      },
       {
         path: "/sign-up",
         name: "Sign Up",
@@ -47,6 +47,11 @@ const routes = [
         component: () => import("pages/ErrorNotFound.vue"),
       },
     ],
+  },
+  {
+    path: "/pending",
+    component: () => import("../pages/waitingView.vue"),
+    name: "Waiting Page",
   },
 ];
 

@@ -21,7 +21,7 @@
         />
       </div>
       <div class="btn1">
-        <q-btn @click="loginUser" type="button" color="purple" rounded>Login</q-btn>
+        <q-btn @click="loginUser" :loading="isSubmitting" type="button" color="purple" rounded>Login</q-btn>
       </div>
       <span class="pwd"
         >Don't have an account?
@@ -37,15 +37,21 @@ export default {
     return {
       userEmail: "",
       userPass: "",
+      isSubmitting: false,
     };
   },
   mounted() {},
   methods: {
     async loginUser() {
+      if(this.isSubmitting) {
+        return
+      }
+      this.isSubmitting = true
       await this.$store.dispatch("signInUser", {
         email: this.userEmail,
         password: this.userPass,
-      });
+      })
+      this.isSubmitting = false;
     },
   },
 };

@@ -24,10 +24,22 @@
         color="grey"
         text-color="black"
         type="button"
+        v-if="$route.path != '/'"
+        @click="$router.push('/')"
+        class="btn"
+      >
+        Dashboard
+      </q-btn>
+      <q-btn
+        no-caps
+        color="grey"
+        text-color="black"
+        type="button"
+        v-if="$route.path != '/event-list' && userData?.status"
         @click="$router.push('/event-list')"
         class="btn"
       >
-        Reports
+        Events
       </q-btn>
     </div>
   </div>
@@ -67,8 +79,6 @@
   </div>
   <router-view />
 </template>
-<!-- <router-link  to="/sign-in">reda</router-link> -->
-
 <script>
 import { defineComponent } from "vue";
 import { auth } from "../store/firebase";
@@ -78,22 +88,19 @@ export default defineComponent({
 
   components: {},
   data() {
-    return {
-      isAuthenticated: false,
-    };
-  },
-  mounted() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.isAuthenticated = true;
-      } else {
-        this.isAuthenticated = false;
-      }
-    });
+    return {};
   },
   methods: {
     logOut() {
       this.$store.dispatch("signOutUser");
+    },
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.userData;
+    },
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
     },
   },
 });

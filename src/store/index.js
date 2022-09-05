@@ -1,6 +1,8 @@
 import { store } from "quasar/wrappers";
 import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
+import createPersistedState from "vuex-persistedstate";
+import { Notify } from "quasar";
 
 export default store(function () {
   const Store = createStore({
@@ -21,8 +23,8 @@ export default store(function () {
       currentUser(state) {
         return state.currentUser;
       },
-      isAuthenticated() {
-        if (auth.currentUser) {
+      isAuthenticated(state) {
+        if (state.currentUser) {
           return true;
         } else {
           return false;
@@ -51,7 +53,8 @@ export default store(function () {
         this.$router.push("/sign-in");
       },
       async getUserData({ commit }) {
-      await  firestore
+        // debugger;
+        await firestore
           .doc(auth.currentUser.uid)
           .get()
           .then((res) => {
@@ -60,48 +63,85 @@ export default store(function () {
           });
       },
       async signUp({ commit }, payload) {
+        var error = false;
         await auth
           .createUserWithEmailAndPassword(payload.email, payload.password)
-          .then((res) => {
-            auth.currentUser
-              .updateProfile({
-                displayName: payload.name,
-              })
-              .catch((err) => {
-                alert(err.message);
+          .then(() => {})
+          .catch((err) => {
+            error = true
+            if (err.code == "auth/email-already-in-use") {
+              Notify.create({
+                message: "Email address already in use",
+                color: "red",
               });
-            firestore
-              .doc(auth.currentUser.uid)
-              .set({
-                name: payload.name,
-                isAuthorized: true,
-                eventList: [],
-                teamList: [],
-                dateOfBirth: "",
-                Instructor: "",
-                Ghid: "",
-                masterGhid: "",
-                region: "",
-                state: "",
-                gender: "",
-                etnic: "",
-                phoneNumber: "",
-                tagList: [],
-                clubName: "",
-                status: "",
-                category: "",
-                size: "",
-                isUpdated: false,
-              })
-              .catch((err) => {
-                alert(err.message);
-                return err.message;
+            } else if (err.code == "auth/invalid-email") {
+              Notify.create({
+                message: "Please enter a valid email address",
+                color: 'red'
               });
-            commit("setCurrentUser", auth.currentUser);
+            } else if (err.code == "auth/weak-password") {
+              Notify.create({
+                message: "Password must be atleast 6 characters long",
+                color: "red",
+              });
+            }
+          });
+          if(error) {
+            return
+          }
+        await auth.currentUser
+          .updateProfile({
+            displayName: payload.name,
           })
           .catch((err) => {
-            alert(err.message);
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
           });
+        if (error) {
+          return;
+        }
+        await firestore
+          .doc(auth.currentUser.uid)
+          .set({
+            name: payload.name,
+            isAuthorized: "true",
+            eventList: [],
+            teamList: [],
+            role: "admin",
+            dateOfBirth: "01/01/01",
+            Instructor: "",
+            Ghid: "",
+            masterGhid: "",
+            region: "",
+            state: "",
+            gender: "",
+            etnic: "",
+            phoneNumber: "",
+            tagList: [],
+            clubName: "",
+            status: "Active",
+            category: "",
+            size: "",
+            isUpdated: true,
+            uid: auth.currentUser.uid,
+            email: payload.email,
+          })
+          .catch((err) => {
+            error = true
+          Notify.create({
+            message: err.message,
+            color: 'red'
+          })
+            return err.message;
+          });
+          if(error) {
+            return
+          }
+        commit("setCurrentUser", auth.currentUser);
+
         await firestore
           .doc(auth.currentUser.uid)
           .get()
@@ -109,52 +149,91 @@ export default store(function () {
             commit("setUserData", response.data());
           })
           .catch((err) => {
-            alert(err.message);
-            return err.message;
+            error = true
+            Notify.create({
+              message: err.message,
+              color: 'red'
+            })
           });
-        // this.$router.push("/category-list");
+          if(error) {
+            return
+          }
+        this.$router.push("/category-list");
       },
-      async updateUserProfile({ commit }, payload) {
+      async updateUserProfile({ commit, dispatch }, payload) {
         if (auth.currentUser) {
           await firestore.doc(auth.currentUser.uid).update(payload);
-          await firestore
-            .doc(auth.currentUser.uid)
-            .get()
-            .then((res) => {
-              commit("setUserData", res.data());
-            });
+          await dispatch("getUserData");
         } else {
           this.$router.push("/sign-in");
         }
       },
       async signInUser({ commit }, payload) {
+        var error = false;
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {
             commit("setCurrentUser", auth.currentUser);
           })
           .catch((err) => {
-            alert(err.message);
-            console.log(err.message);
-            return err.message;
+            error = true;
+            console.log(err.code)
+            if (err.code == "auth/wrong-password") {
+              Notify.create({
+                color: "red",
+                message: "Please recheck your password and try again",
+              });
+            }
+            else if (err.code == 'auth/invalid-email') {
+              Notify.create({
+                color: 'red',
+                message: 'Please enter a valid email address'
+              })
+            }
+             else if (err.code == "auth/too-many-requests") {
+              Notify.create({
+                color: "red",
+                message:
+                  "Too many failed attempts, this account has been temporarily disabled",
+              });
+            } else if (err.code == "auth/user-not-found") {
+              Notify.create({
+                color: "red",
+                message: "We cannot find a user with this email address",
+              });
+            }
+            else {
+              Notify.create({
+                color: 'red',
+                message: err.message
+              })
+            }
           });
+        if (error) {
+          return;
+        }
         await firestore
           .doc(auth.currentUser.uid)
           .get()
           .then((response) => {
             commit("setUserData", response.data());
-            if (!response.data()?.isUpdated) {
+            if (response.data()?.isUpdated == false) {
               this.$router.push("/category-list");
-            }
-            else {
-              this.$router.push('/')
+            } else {
+              this.$router.push("/");
             }
           })
           .catch((err) => {
-            alert(err.message);
-            console.log(err.message);
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: 'red'
+            })
             return err.message;
           });
+        if (error) {
+          return;
+        }
       },
       async addEvent({ dispatch, state }, payload) {
         let eventList = [];
@@ -187,9 +266,9 @@ export default store(function () {
         this.$router.push("/event-list");
       },
     },
+    plugins: [createPersistedState()],
 
     strict: process.env.DEBUGGING,
   });
-
   return Store;
 });

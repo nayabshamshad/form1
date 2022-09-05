@@ -8,13 +8,9 @@ import { auth } from "./store/firebase";
 export default defineComponent({
   name: "App",
   mounted() {
-    if (auth.currentUser) {
-      this.$store.dispatch("getUserData");
-    }
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.isAuth = user;
-        this.$store.dispatch('getUserData')
       } else {
         this.isAuth = null;
       }
@@ -28,21 +24,23 @@ export default defineComponent({
   watch: {
     isAuth: {
       handler: async function () {
-        if (this.isAuth) {
+        if(this.isAuth) {
           await this.$store.dispatch("getUserData");
-          if (
-            this.$route.path == "/sign-in" &&
-            this.$store.getters.userData?.isUpdated
-          ) {
-            this.$router.push("/");
-          } else if (!this.$store.getters.userData.isUpdated) {
-            this.$router.push("/category-list");
-          }
-        } else {
-          if (this.$route.path != "/sign-in") {
-            this.$router.push("/sign-in");
-          }
         }
+        // if (this.isAuth) {
+        //   if (
+        //     this.$route.path == "/sign-in" &&
+        //     this.$store.getters.userData?.isUpdated
+        //   ) {
+        //     this.$router.push("/");
+        //   } else if (!this.$store.getters.userData.isUpdated) {
+        //     this.$router.push("/category-list");
+        //   }
+        // } else {
+        //   if (this.$route.path != "/sign-in") {
+        //     this.$router.push("/sign-in");
+        //   }
+        // }
       },
     },
   },

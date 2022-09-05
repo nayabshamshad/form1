@@ -22,6 +22,7 @@
           type="textarea"
           label-color="black"
           placeholder="Enter Description Here..."
+          :rules="[ val => val.length <= 50 || 'Please use maximum 50 characters in description']"
         />
       </div>
       <div class="cate-list">
@@ -136,9 +137,11 @@ export default {
       }
       this.isFetching = true;
       let urlList = [];
-      // let img_name = new Date() + "-" + x.name;
+      if(this.eventDesc.length > 50) {
+        this.isFetching = false;
+        return
+      }
       const files = this.localImageList;
-      console.log(files.length);
       if (files.length == 0) {
         this.error = "You need to upload atleast one image!";
         this.errorDialog = true;
@@ -180,7 +183,6 @@ export default {
           }
         }
         this.imageList = urlList;
-        console.log(urlList);
       } else {
         this.error = "Please select a valid number of images";
         this.errorDialog = true;
@@ -218,7 +220,9 @@ export default {
         this.localImageList = imgList;
         this.previewImages = previewImages;
       } else {
-        alert("You can not upload more than 3 files");
+        this.$q.notify({
+          message: 'You cannot upload more than 3 files'
+        })
         this.localImageList = [];
         this.previewImages = [];
       }
@@ -235,7 +239,6 @@ export default {
       ) {
         this.attendanceList.push(e.target.value);
       }
-      console.log(this.attendanceList);
     },
   },
   computed: {

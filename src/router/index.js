@@ -9,7 +9,7 @@ import routes from "./routes";
 import { auth } from "../store/firebase";
 import { nextTick } from "vue";
 
-export default route(function (/* { store, ssrContext } */) {
+export default route(function ({ store }) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
@@ -25,23 +25,28 @@ export default route(function (/* { store, ssrContext } */) {
     ),
   });
   Router.beforeEach((to, from, next) => {
-    if (!auth.currentUser) {
-      setTimeout(() => {
-        if (
-          !auth.currentUser &&
-          to.path != "/sign-in" &&
-          to.path != "/sign-up"
-        ) {
-          next("/sign-in");
-        } else {
-          next();
-        }
-      }, 1000);
-    } else {
-      if(to.path == '/sign-in' || to.path == '/sign-up') {
-        return
+    if (!store.getters.isAuthenticated) {
+      if (to.path != "/sign-in" && to.path != "/sign-up") {
+        next("/sign-in");
+      } else {
+        next();
       }
-      next();
+    } else {
+      if (to.path == "/sign-in" || to.path == "/sign-up") {
+        if (store.getters.userData?.isUpdated ) {
+          next("/");
+          return
+        } else {
+          next("/category-list");
+          return;
+        }
+      } else {
+        if(store.getters.userData?.isUpdated == false && to.path !='/category-list') {
+          next('/category-list')
+          return;
+        }
+        next();
+      }
     }
   });
   return Router;

@@ -48,14 +48,20 @@
           :key="i"
           class="img-container"
         >
-          <img :src="src" alt="" />
+          <img :src="src" alt="" @click="showImg(src)" />
         </div>
       </div>
     </form>
-    <!-- <div class="btn-container">
-      <button class="btn" type="button" @click="submit">Submit</button>
-    </div> -->
   </div>
+
+  <!-- IMG view dialog -->
+  <q-dialog v-model="dialogBox">
+    <q-card style="width: 100%;">
+      <q-card-section style="background: #ccc;" class="q-pt-none q-pb-none">
+          <q-img :src="imgSrc"></q-img>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 export default {
@@ -69,10 +75,17 @@ export default {
         date: "",
         attendanceList: [],
         imageList: [],
+        imgSrc: '',
       },
+      dialogBox: false,
     };
   },
-  methods: {},
+  methods: {
+    showImg(src) {
+      this.dialogBox = true;
+      this.imgSrc = src
+    }
+  },
   mounted() {
     this.currentEvent = {
       name: this.selectedEvent.name,
