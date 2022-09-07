@@ -15,9 +15,14 @@ export default store(function () {
         desc: "",
         attendanceList: [],
       },
+      dateList: {},
       userList: [],
+      selectedUser: [],
     },
     getters: {
+      selectedUser(state) {
+        return state.selectedUser;
+      },
       userData(state) {
         return state.userData;
       },
@@ -30,6 +35,9 @@ export default store(function () {
         } else {
           return false;
         }
+      },
+      dateList(state) {
+        return state.dateList;
       },
       selectedEvent(state) {
         return state.selectedEvent;
@@ -51,6 +59,25 @@ export default store(function () {
       setUserList(state, payload) {
         state.userList = payload;
       },
+      approveUser(state, uid) {
+        const index = state.userList.findIndex((x) => {
+          return x.uid == uid;
+        });
+        state.userList[index].isAuthorized = true;
+      },
+      declineUser(state, uid) {
+        const index = state.userList.findIndex((x) => {
+          return x.uid == uid;
+        });
+        state.userList[index].isAuthorized = false;
+      },
+      setSelectedUser(state, user) {
+        console.log(user);
+        state.selectedUser = user;
+      },
+      setDateList(state, payload) {
+        state.dateList = payload
+      }
     },
     actions: {
       async signOutUser({ commit }) {
@@ -68,6 +95,11 @@ export default store(function () {
             commit("setCurrentUser", auth.currentUser);
             commit("setUserData", res.data());
           });
+          await firestore.doc('dateRange').get().then(res => {
+            commit('setDateList', res.data())
+          }).catch(err => {
+            console.log(err)
+          })
       },
       async signUp({ commit }, payload) {
         var error = false;
@@ -235,6 +267,11 @@ export default store(function () {
             });
             return err.message;
           });
+          await firestore.doc('dateRange').get().then(res => {
+            commit('setDateList', res.data())
+          }).catch(err => {
+            console.log(err)
+          })
         if (error) {
           return;
         }
@@ -277,6 +314,45 @@ export default store(function () {
           });
           commit("setUserList", userList);
         });
+      },
+
+      // Admin Functions
+      async approveUser({ commit }, uid) {
+        await firestore
+          .doc(uid)
+          .update({
+            isAuthorized: true,
+          })
+          .then(() => {})
+          .catch((err) => {
+            Notify.create({
+              color: "red",
+              message: err.message,
+            });
+          });
+        commit("approveUser", uid);
+      },
+      async declineUser({ commit }, uid) {
+        await firestore
+          .doc(uid)
+          .update({
+            isAuthorized: false,
+          })
+          .then(() => {})
+          .catch((err) => {
+            Notify.create({
+              color: "red",
+              message: err.message,
+            });
+          });
+        commit("declineUser", uid);
+      },
+      setSelectedUser({ commit }, payload) {
+        commit("setSelectedUser", payload);
+      },
+      async setDateRange({ commit }, payload) {
+        await firestore.doc("dateRange").update(payload);
+        commit('setDateList', payload)
       },
     },
     plugins: [createPersistedState()],

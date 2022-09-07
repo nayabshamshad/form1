@@ -1,5 +1,5 @@
 <template>
-  <teamHome v-if="userData.role !== 'admin'" />
+  <teamHome v-if="userData?.role !== 'admin'" />
   <adminHome v-else />
 </template>
 

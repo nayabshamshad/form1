@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isEdit" class="container">
-    <div class="flex" style="justify-content: flex-end;max-width: 75%;">
+    <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn
         v-if="dateContained"
         round
@@ -91,7 +91,7 @@
     </div>
   </div>
   <div v-else class="container">
-    <div class="flex" style="justify-content: flex-end;max-width: 75%;">
+    <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn round @click="isEdit = !isEdit" color="green" icon="edit"></q-btn>
     </div>
     <form class="form">
@@ -140,7 +140,7 @@
           v-model="dataUser.phoneNumber"
           placeholder="+40......."
           name="phone number"
-          mask="phone"
+          mask="+40 #### #####"
           label="Phone Number"
           label-color="black"
         />
@@ -370,8 +370,7 @@ export default {
         }
         if (profile.phoneNumber.length !== 14) {
           this.$q.notify({
-
-            color: 'red',
+            color: "red",
             message: "Phone Number must be formatted correctly",
           });
           this.isSubmitting = false;
@@ -431,7 +430,7 @@ export default {
         profile.masterGhid.length !== 4
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message: "Years must be formatted correctly",
         });
         this.isSubmitting = false;
@@ -443,7 +442,7 @@ export default {
         profile.Instructor > profile.masterGhid
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message:
             "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
         });
@@ -483,8 +482,8 @@ export default {
   },
   mounted() {
     if (
-      new Date(this.editDate.start).getTime() <= new Date().getTime() &&
-      new Date(this.editDate.end).getTime() >= new Date().getTime()
+      new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
+      new Date(this.dateList?.to).getTime() >= new Date().getTime()
     ) {
       this.dateContained = true;
     } else {
@@ -515,6 +514,20 @@ export default {
         });
         this.teamList = teamList;
       },
+      watch: {
+        dateList: {
+          handler: function () {
+            if (
+              new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
+              new Date(this.dateList?.to).getTime() >= new Date().getTime()
+            ) {
+              this.dateContained = true;
+            } else {
+              this.dateContained = false;
+            }
+          },
+        },
+      },
     },
   },
   computed: {
@@ -524,6 +537,9 @@ export default {
       } else {
         return {};
       }
+    },
+    dateList() {
+      return this.$store.getters.dateList;
     },
   },
 };

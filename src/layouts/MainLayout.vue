@@ -24,7 +24,7 @@
         color="grey"
         text-color="black"
         type="button"
-        v-if="$route.path != '/'"
+        v-if="$route.path != '/' && (userData?.isUpdated == false || userData?.role == 'admin') && userData?.isAuthorized == true"
         @click="$router.push('/')"
         class="btn"
       >
@@ -35,7 +35,7 @@
         color="grey"
         text-color="black"
         type="button"
-        v-if="$route.path != '/event-list' && userData?.status"
+        v-if="$route.path != '/event-list' && userData?.status && userData?.role != 'admin' && userData?.isAuthorized == true"
         @click="$router.push('/event-list')"
         class="btn"
       >

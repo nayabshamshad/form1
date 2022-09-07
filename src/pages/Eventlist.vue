@@ -1,5 +1,21 @@
 <template>
   <div class="container">
+    <div class="attendance-container">
+      <div class="attendance-summary">
+        <h5 style="font-size: 18px"><span>Summary</span></h5>
+        <div v-for="(student, index) in listOfAttendance" :key="index">
+          <div class="flex justify-space-around">
+            <span>
+              {{ student.name }}
+            </span>
+            <span>
+              {{ student.attendance }} / {{ userInfo.eventList.length }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="eventlist">
       <span
         ><q-btn
@@ -7,6 +23,7 @@
           rounded
           type="button"
           class="btn"
+          size='sm'
           @click="$router.push('/add-event')"
         >
           Add Event
@@ -48,6 +65,11 @@
 export default {
   name: "EventlistView",
   components: {},
+  beforeMount() {
+    if (this.userInfo.role == "admin") {
+      this.$router.push("/");
+    }
+  },
   methods: {
     showEventDetails(e, i, d) {
       this.$store.dispatch("selectEvent", i);
@@ -56,6 +78,25 @@ export default {
   computed: {
     userInfo() {
       return this.$store.getters.userData;
+    },
+    listOfAttendance() {
+      let arr = [];
+      console.log(this.userInfo);
+      this.userInfo.teamList.forEach((x) => {
+        arr.push({
+          name: x.name,
+          attendance: 0,
+        });
+      });
+      this.userInfo.eventList.forEach((x) => {
+        x.attendanceList.forEach((y) => {
+          const index = arr.findIndex((st) => {
+            return st.name == y;
+          });
+          arr[index].attendance = arr[index].attendance + 1;
+        });
+      });
+      return arr;
     },
   },
 };

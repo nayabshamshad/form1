@@ -33,19 +33,61 @@ export default route(function ({ store }) {
       }
     } else {
       if (to.path == "/sign-in" || to.path == "/sign-up") {
-        if (store.getters.userData?.isUpdated ) {
+        if (
+          store.getters.userData?.isUpdated &&
+          store.getters.userData?.isAuthorized == true &&
+          to.path != "/"
+        ) {
           next("/");
-          return
-        } else {
+          return;
+        } else if (
+          store.getters.userData?.isUpdated == false &&
+          store.state.userData?.isAuthorized == true &&
+          to.path != "/category-list"
+        ) {
           next("/category-list");
           return;
-        }
-      } else {
-        if(store.getters.userData?.isUpdated == false && to.path !='/category-list') {
-          next('/category-list')
+        } else if (store.getters.userData?.isAuthorized == "pending") {
+          next("/pending");
+          return;
+        } else if (store.state.userData?.isAuthorized == false) {
+          next("/rejected");
           return;
         }
-        next();
+      } else if (
+        store.getters.userData?.isUpdated == false &&
+        to.path != "/category-list" &&
+        store.getters.userData?.isAuthorized == true
+      ) {
+        next("/category-list");
+        return;
+      } else if (
+        store.state.userData?.isUpdated == true &&
+        store.state.userData?.isAuthorized == true
+      ) {
+        if (to.path != "/category-list") {
+          next();
+          return;
+        } else {
+          next("/");
+          return;
+        }
+      } else if (
+        store.state.userData?.isAuthorized == "pending" &&
+        to.path != "/pending"
+      ) {
+        next("/pending");
+        return;
+      } else if (
+        store.state.userData?.isAuthorized == false &&
+        to.path != "/rejected"
+      ) {
+        next("/rejected");
+        return;
+      }
+      else {
+        next()
+        return
       }
     }
   });

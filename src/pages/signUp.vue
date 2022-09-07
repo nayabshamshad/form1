@@ -84,7 +84,7 @@ export default {
         return
       }
       let form = {
-        name: this.firstName + this.lastName,
+        name: this.firstName + " " + this.lastName,
         email: this.emailInput,
         password: this.passInput,
       };
