@@ -15,6 +15,17 @@
     <q-tab-panels v-model="tabs">
       <!-- Approved User Listing -->
       <q-tab-panel name="approved">
+        <div
+          class="flex"
+          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+        >
+          <q-btn
+            round
+            @click="exportFile(approvedUsers, 'Approved')"
+            color="green"
+            icon="download"
+          ></q-btn>
+        </div>
         <div class="table-container">
           <table class="user-list-table">
             <thead>
@@ -27,7 +38,9 @@
             <tbody>
               <tr v-for="(user, i) in approvedUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
+                <td class="hideMobile" @click="viewUser(user)">
+                  {{ user.phoneNumber }}
+                </td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
               </tr>
             </tbody>
@@ -37,6 +50,17 @@
 
       <!-- Pending User Listing -->
       <q-tab-panel name="pending">
+        <div
+          class="flex"
+          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+        >
+          <q-btn
+            round
+            @click="exportFile(pendingUsers, 'Pending')"
+            color="green"
+            icon="download"
+          ></q-btn>
+        </div>
         <div class="table-container">
           <table class="user-list-table">
             <thead>
@@ -50,7 +74,9 @@
             <tbody>
               <tr v-for="(user, i) in pendingUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
+                <td class="hideMobile" @click="viewUser(user)">
+                  {{ user.phoneNumber }}
+                </td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
                 <td>
                   <q-btn
@@ -77,6 +103,17 @@
 
       <!-- Declined Users -->
       <q-tab-panel name="declined">
+        <div
+          class="flex"
+          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+        >
+          <q-btn
+            round
+            @click="exportFile(declinedUsers, 'Declined')"
+            color="green"
+            icon="download"
+          ></q-btn>
+        </div>
         <div class="table-container">
           <table class="user-list-table">
             <thead>
@@ -89,9 +126,10 @@
             <tbody>
               <tr v-for="(user, i) in declinedUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
+                <td class="hideMobile" @click="viewUser(user)">
+                  {{ user.phoneNumber }}
+                </td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
-
               </tr>
             </tbody>
           </table>
@@ -126,6 +164,8 @@
 </template>
 
 <script>
+import writeXlsxFile from "write-excel-file";
+
 export default {
   mounted() {
     this.getData();
@@ -147,12 +187,153 @@ export default {
       },
     },
     tabs: {
-    handler: function() {
-      this.getData()
-    }
-  }
+      handler: function () {
+        this.getData();
+      },
+    },
   },
   methods: {
+    exportFile(users, fileName) {
+      const header_row = [
+        {
+          value: "Numele și prenumele",
+          fontWeight: "bold",
+        },
+        {
+          value: "E-mail",
+          fontWeight: "bold",
+        },
+        {
+          value: "Număr de telefon",
+          fontWeight: "bold",
+        },
+        {
+          value: "Data nașterii",
+          fontWeight: "bold",
+        },
+        {
+          value: "Etnie",
+          fontWeight: "bold",
+        },
+        {
+          value: "Sex",
+          fontWeight: "bold",
+        },
+        {
+          value: "Marime tricou",
+          fontWeight: "bold",
+        },
+        {
+          value: "Zona",
+          fontWeight: "bold",
+        },
+        {
+          value: "Comunitatea",
+          fontWeight: "bold",
+        },
+        {
+          value: "Categoria",
+          fontWeight: "bold",
+        },
+        {
+          value: "Club",
+          fontWeight: "bold",
+        },
+        {
+          value: "Instructor - anul investirii",
+          fontWeight: "bold",
+        },
+        {
+          value: "Ghid - anul investirii",
+          fontWeight: "bold",
+        },
+        {
+          value: "Master Ghid - anul investirii",
+          fontWeight: "bold",
+        },
+        {
+          value: "Specializările",
+          fontWeight: "bold",
+        },
+        {
+          value: "Status",
+          fontWeight: "bold",
+        },
+      ];
+      let arr = [header_row];
+      users.forEach((x) => {
+        let newDate = "";
+        if (x.dateOfBirth != "") {
+          let date = new Date(x.dateOfBirth);
+          const monthList = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const month = monthList[date.getMonth()];
+          newDate = date.getDate() + " " + month + ", " + date.getFullYear();
+        }
+        let userArr = [];
+
+        userArr.push(
+          {
+            value: x.name,
+          },
+          {
+            value: x.email,
+          },
+          {
+            value: x.phoneNumber,
+          },
+          {
+            value: newDate,
+          },
+          {
+            value: x.etnic,
+          },
+          { value: x.gender },
+          { value: x.size },
+          { value: x.region },
+          {
+            value: x.state,
+          },
+          {
+            value: x.category,
+          },
+          {
+            value: x.clubName,
+          },
+          {
+            value: x.Instructor,
+          },
+          {
+            value: x.Ghid,
+          },
+          {
+            value: x.masterGhid,
+          },
+          {
+            value: x?.tagList ? x.tagList.join(", ") : "",
+          },
+          {
+            value: x.status ? "Active" : "InActive",
+          }
+        );
+        arr.push(userArr);
+      });
+      writeXlsxFile(arr, {
+        fileName: fileName + ".xlsx",
+      });
+    },
     async getData() {
       await this.$store.dispatch("getUserList");
     },
