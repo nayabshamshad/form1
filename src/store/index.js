@@ -72,12 +72,11 @@ export default store(function () {
         state.userList[index].isAuthorized = false;
       },
       setSelectedUser(state, user) {
-        console.log(user);
         state.selectedUser = user;
       },
       setDateList(state, payload) {
-        state.dateList = payload
-      }
+        state.dateList = payload;
+      },
     },
     actions: {
       async signOutUser({ commit }) {
@@ -87,7 +86,6 @@ export default store(function () {
         this.$router.push("/sign-in");
       },
       async getUserData({ commit }) {
-        // debugger;
         await firestore
           .doc(auth.currentUser.uid)
           .get()
@@ -95,11 +93,15 @@ export default store(function () {
             commit("setCurrentUser", auth.currentUser);
             commit("setUserData", res.data());
           });
-          await firestore.doc('dateRange').get().then(res => {
-            commit('setDateList', res.data())
-          }).catch(err => {
-            console.log(err)
+        await firestore
+          .doc("dateRange")
+          .get()
+          .then((res) => {
+            commit("setDateList", res.data());
           })
+          .catch((err) => {
+            console.log(err);
+          });
       },
       async signUp({ commit }, payload) {
         var error = false;
@@ -158,7 +160,7 @@ export default store(function () {
             state: "",
             gender: "",
             etnic: "",
-            phoneNumber: "",
+            phoneNumber: payload.phoneNumber,
             tagList: [],
             clubName: "",
             status: "",
@@ -200,12 +202,19 @@ export default store(function () {
         this.$router.push("/category-list");
       },
       async updateUserProfile({ commit, dispatch }, payload) {
-        if (auth.currentUser) {
-          await firestore.doc(auth.currentUser.uid).update(payload);
-          await dispatch("getUserData");
-        } else {
-          this.$router.push("/sign-in");
-        }
+        await firestore.doc(payload.uid).update(payload);
+        await firestore.doc(payload.uid).get().then(res => {
+          dispatch('setSelectedUser', res.data())
+        }).catch(err => {
+          Notify.create({
+            color: 'red',
+            message: err.message
+          })
+        })
+      },
+      async updateUserProfileAdmin({ commit, dispatch }, payload) {
+        await firestore.doc(payload.uid).update(payload);
+        await dispatch("getUserData");
       },
       async signInUser({ commit }, payload) {
         var error = false;
@@ -267,11 +276,15 @@ export default store(function () {
             });
             return err.message;
           });
-          await firestore.doc('dateRange').get().then(res => {
-            commit('setDateList', res.data())
-          }).catch(err => {
-            console.log(err)
+        await firestore
+          .doc("dateRange")
+          .get()
+          .then((res) => {
+            commit("setDateList", res.data());
           })
+          .catch((err) => {
+            console.log(err);
+          });
         if (error) {
           return;
         }
@@ -352,7 +365,7 @@ export default store(function () {
       },
       async setDateRange({ commit }, payload) {
         await firestore.doc("dateRange").update(payload);
-        commit('setDateList', payload)
+        commit("setDateList", payload);
       },
     },
     plugins: [createPersistedState()],

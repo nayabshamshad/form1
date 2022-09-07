@@ -502,3 +502,8 @@ span.q-table__bottom-item:first-of-type {
     }
   }
 }
+.hideMobile {
+  @media(max-width: 650px) {
+    display: none;
+  }
+}

@@ -81,7 +81,6 @@ export default {
     },
     listOfAttendance() {
       let arr = [];
-      console.log(this.userInfo);
       this.userInfo.teamList.forEach((x) => {
         arr.push({
           name: x.name,

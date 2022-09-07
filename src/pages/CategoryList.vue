@@ -54,17 +54,7 @@
         />
       </div>
 
-      <div class="cate-list">
-        <q-input
-          type="tel"
-          v-model="userInfo.phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label="Phone Number"
-          label-color="black"
-        />
-      </div>
+     
       <div class="cate-list">
         <q-input
           type="text"
@@ -263,7 +253,6 @@ export default {
         state: "",
         gender: "Male",
         etnic: "",
-        phoneNumber: "+40",
         tagList: [],
         clubName: "",
         status: false,
@@ -304,15 +293,7 @@ export default {
         }
         profile.tagList = this.tagsInput.split(",");
       }
-      if (profile.phoneNumber.length !== 14) {
-        this.$q.notify({
 
-          message: "Phone Number must be formatted correctly",
-          color: 'red'
-        });
-        this.isSubmitting = false;
-        return;
-      }
 
       profile.isUpdated = true;
       if (!profile.status) {

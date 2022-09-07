@@ -20,28 +20,15 @@
             <thead>
               <tr>
                 <th>Member Name</th>
-                <!-- <th>Club Name</th> -->
+                <th class="hideMobile">Phone</th>
                 <th>Member Email</th>
-                <!-- <th>Phone Number</th> -->
-                <!-- <th>Actions</th> -->
               </tr>
             </thead>
             <tbody>
               <tr v-for="(user, i) in approvedUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.clubName }}</td> -->
+                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.phoneNumber }}</td> -->
-                <!-- <td>
-                  <q-btn
-                    @click="declineUser(user.uid)"
-                    color="red"
-                    size="xs"
-                    text-color="white"
-                    round
-                    icon="close"
-                  ></q-btn>
-                </td> -->
               </tr>
             </tbody>
           </table>
@@ -55,18 +42,16 @@
             <thead>
               <tr>
                 <th>Member Name</th>
-                <!-- <th>Club Name</th> -->
+                <th class="hideMobile">Phone</th>
                 <th>Member Email</th>
-                <!-- <th>Phone Number</th> -->
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(user, i) in pendingUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.clubName }}</td> -->
+                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.phoneNumber }}</td> -->
                 <td>
                   <q-btn
                     color="green"
@@ -97,27 +82,16 @@
             <thead>
               <tr>
                 <th>Member Name</th>
-                <!-- <th>Club Name</th> -->
+                <th class="hideMobile">Number</th>
                 <th>Member Email</th>
-                <!-- <th>Phone Number</th> -->
-                <!-- <th>Actions</th> -->
               </tr>
             </thead>
             <tbody>
               <tr v-for="(user, i) in declinedUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.clubName }}</td> -->
+                <td class="hideMobile" @click="viewUser(user)">{{ user.phoneNumber }}</td>
                 <td @click="viewUser(user)">{{ user.email }}</td>
-                <!-- <td @click="viewUser(user)">{{ user.phoneNumber }}</td> -->
-                <!-- <td>
-                  <q-btn
-                    size="xs"
-                    round
-                    color="green"
-                    icon="check"
-                    @click="approveUser(user.uid)"
-                  ></q-btn>
-                </td> -->
+
               </tr>
             </tbody>
           </table>
@@ -172,6 +146,11 @@ export default {
         this.dateModel = this.dateList;
       },
     },
+    tabs: {
+    handler: function() {
+      this.getData()
+    }
+  }
   },
   methods: {
     async getData() {

@@ -22,7 +22,9 @@
 
       <div class="cate-list-home">
         <label for="date"><b>Birth Date:</b></label>
-        <span>{{ dataUser?.dateOfBirth ? dataUser.dateOfBirth : "" }}</span>
+        <span>{{
+          dataUser?.dateOfBirth ? getBirthDate(dataUser.dateOfBirth) : ""
+        }}</span>
       </div>
       <div class="cate-list-home">
         <label for="status"><b>Status:</b></label>
@@ -90,6 +92,7 @@
       </div>
     </div>
   </div>
+
   <div v-else class="container">
     <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn round @click="isEdit = !isEdit" color="green" icon="edit"></q-btn>
@@ -118,9 +121,9 @@
           >Date of Birth</label
         >
         <q-input
-          type="date"
           label-color="black"
           v-model="dataUser.dateOfBirth"
+          type="date"
         ></q-input>
       </div>
       <div class="cate-list">
@@ -341,6 +344,28 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
+    getBirthDate(val) {
+      let date = new Date(val);
+      let newDate;
+      const monthList = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const month = monthList[date.getMonth()];
+
+      newDate = date.getDate() + " " + month + ", " + date.getFullYear()
+      return newDate;
+    },
     addMember() {
       this.teamList.push({ name: "" });
     },
@@ -514,18 +539,16 @@ export default {
         });
         this.teamList = teamList;
       },
-      watch: {
-        dateList: {
-          handler: function () {
-            if (
-              new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
-              new Date(this.dateList?.to).getTime() >= new Date().getTime()
-            ) {
-              this.dateContained = true;
-            } else {
-              this.dateContained = false;
-            }
-          },
+      dateList: {
+        handler: function () {
+          if (
+            new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
+            new Date(this.dateList?.to).getTime() >= new Date().getTime()
+          ) {
+            this.dateContained = true;
+          } else {
+            this.dateContained = false;
+          }
         },
       },
     },
