@@ -157,11 +157,48 @@
               "
               >Date of Birth</label
             >
-            <q-input
+            <!-- <q-input
+
               label-color="black"
               v-model="dataUser.dateOfBirth"
               type="date"
-            ></q-input>
+            ></q-input> -->
+
+            <q-input
+              filled
+              v-model="dateOfBirth"
+              mask="##/##/####"
+              @focus="openModal"
+            >
+              <template v-slot:append>
+                <q-icon
+                  @click="openModal"
+                  ref="dateIcon"
+                  name="event"
+                  class="cursor-pointer"
+                >
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="dataUser.dateOfBirth"
+                      @update:model-value="handleDateChange"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
           </div>
           <div class="cate-list">
             <q-input
@@ -374,6 +411,7 @@
           </div>
         </div>
         <div class="eventlist"></div>
+        <span><q-btn size="sm" color="green" icon="download" @click="exportFile(selectedUser.eventList, 'events')"></q-btn></span>
         <div style="margin-top: 1rem" class="flex justify-center">
           <q-table
             v-if="selectedUser.eventList?.length > 0"
@@ -393,7 +431,7 @@
                 label: 'Date of Event',
                 required: true,
                 align: 'center',
-                field: (item) => item.date,
+                field: (item) => getBirthDate(item.date),
               },
             ]"
             flat
@@ -432,6 +470,7 @@ export default {
   data() {
     return {
       tabs: "user",
+      dateOfBirth: "",
       dataUser: {},
       isEdit: false,
       isSubmitting: false,
@@ -460,8 +499,64 @@ export default {
       teamList.push(x);
     });
     this.teamList = teamList;
+    if (this.dataUser?.dateOfBirth) {
+      let dateArr = this.dataUser.dateOfBirth.split("/");
+      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    }
   },
   methods: {
+        exportFile(data, fileName) {
+      let header_row = [
+        {
+          value: "Event Name",
+          fontWeight: "bold",
+        },
+        {
+          value: "Event Description",
+          fontWeight: "bold",
+        },
+        {
+          value: "Event Date",
+          fontWeight: "bold",
+        },
+        {
+          value: "Attendance Count",
+          fontWeight: "bold",
+        },
+      ];
+      this.selectedUser.teamList.forEach((x) => {
+        header_row.push({
+          fontWeight: "bold",
+          value: x.name,
+        });
+      });
+      let arr = [header_row];
+      data.forEach((x) => {
+        let eventArr = [
+          { value: x.name },
+          { value: x.desc },
+          { value: x.date ? this.formatDate(x.date) : "" },
+          { value: x.attendanceList.length },
+        ];
+        this.selectedUser.teamList.forEach(y =>{
+          eventArr.push({
+            value: x.attendanceList.includes(y.name) ? 'Present' : 'Absent'
+          })
+        })
+        arr.push(eventArr);
+      });
+      writeXlsxFile(arr, {
+        fileName: fileName + ".xlsx",
+      });
+    },
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
     getBirthDate(val) {
       let date = new Date(val);
       let newDate;
@@ -501,7 +596,6 @@ export default {
           return;
         }
         profile.tagList = this.tagsInput.split(",");
- 
       }
       if (profile.phoneNumber.length !== 14) {
         this.$q.notify({
@@ -623,6 +717,10 @@ export default {
     selectedUser: {
       handler: function () {
         this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
+        if (this.dataUser?.dateOfBirth) {
+          let dateArr = this.dataUser.dateOfBirth.split("/");
+          this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+        }
       },
     },
   },

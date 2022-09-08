@@ -201,16 +201,9 @@ export default store(function () {
         }
         this.$router.push("/category-list");
       },
-      async updateUserProfile({ commit, dispatch }, payload) {
-        await firestore.doc(payload.uid).update(payload);
-        await firestore.doc(payload.uid).get().then(res => {
-          dispatch('setSelectedUser', res.data())
-        }).catch(err => {
-          Notify.create({
-            color: 'red',
-            message: err.message
-          })
-        })
+      async updateUserProfile({ state, commit, dispatch }, payload) {
+        await firestore.doc(state.currentUser.uid).update(payload);
+        await dispatch('getUserData')
       },
       async updateUserProfileAdmin({ commit, dispatch }, payload) {
         await firestore.doc(payload.uid).update(payload);

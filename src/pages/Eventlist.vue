@@ -17,13 +17,21 @@
     </div>
 
     <div class="eventlist">
-      <span
-        ><q-btn
+      <span>
+        <q-btn
+          round
+          color="green"
+          size="sm"
+          icon="download"
+          v-if="userInfo?.eventList?.length > 0"
+          @click="exportFile(userInfo.eventList, 'events')"
+        ></q-btn>
+        <q-btn
           color="purple"
           rounded
           type="button"
           class="btn"
-          size='sm'
+          size="sm"
           @click="$router.push('/add-event')"
         >
           Add Event
@@ -49,7 +57,7 @@
             label: 'Date of Event',
             required: true,
             align: 'center',
-            field: (item) => item.date,
+            field: (item) => formatDate(item.date),
           },
         ]"
         flat
@@ -62,6 +70,8 @@
   </div>
 </template>
 <script>
+import writeXlsxFile from "write-excel-file";
+
 export default {
   name: "EventlistView",
   components: {},
@@ -71,6 +81,76 @@ export default {
     }
   },
   methods: {
+    exportFile(data, fileName) {
+      let header_row = [
+        {
+          value: "Event Name",
+          fontWeight: "bold",
+        },
+        {
+          value: "Event Description",
+          fontWeight: "bold",
+        },
+        {
+          value: "Event Date",
+          fontWeight: "bold",
+        },
+        {
+          value: "Attendance Count",
+          fontWeight: "bold",
+        },
+      ];
+      this.userInfo.teamList.forEach((x) => {
+        header_row.push({
+          fontWeight: "bold",
+          value: x.name,
+        });
+      });
+      let arr = [header_row];
+      data.forEach((x) => {
+        let eventArr = [
+          { value: x.name },
+          { value: x.desc },
+          { value: x.date ? this.formatDate(x.date) : "" },
+          { value: x.attendanceList.length },
+        ];
+        this.userInfo.teamList.forEach(y =>{
+          eventArr.push({
+            value: x.attendanceList.includes(y.name) ? 'Present' : 'Absent'
+          })
+        })
+        arr.push(eventArr);
+      });
+      writeXlsxFile(arr, {
+        fileName: fileName + ".xlsx",
+      });
+    },
+    formatDate(e) {
+      if (e && new Date(e)) {
+        let date = new Date(e);
+        let newDate;
+        const monthList = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        const month = monthList[date.getMonth()];
+
+        newDate = date.getDate() + " " + month + ", " + date.getFullYear();
+        return newDate;
+      } else {
+        return "";
+      }
+    },
     showEventDetails(e, i, d) {
       this.$store.dispatch("selectEvent", i);
     },

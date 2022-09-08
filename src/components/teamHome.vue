@@ -120,11 +120,36 @@
           "
           >Date of Birth</label
         >
-        <q-input
+        <!-- <q-input
           label-color="black"
           v-model="dataUser.dateOfBirth"
           type="date"
-        ></q-input>
+        ></q-input> -->
+        <q-input
+          filled
+          v-model="dateOfBirth"
+          mask="##/##/####"
+          @focus="openModal"
+        >
+          <template v-slot:append>
+            <q-icon @click="openModal" ref="dateIcon" name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="dataUser.dateOfBirth"
+                  @update:model-value="handleDateChange"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <q-input
@@ -344,6 +369,14 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
     getBirthDate(val) {
       let date = new Date(val);
       let newDate;
@@ -363,7 +396,7 @@ export default {
       ];
       const month = monthList[date.getMonth()];
 
-      newDate = date.getDate() + " " + month + ", " + date.getFullYear()
+      newDate = date.getDate() + " " + month + ", " + date.getFullYear();
       return newDate;
     },
     addMember() {
@@ -489,6 +522,7 @@ export default {
         start: "09/01/2022",
         end: "10/01/2022",
       },
+      dateOfBirth: "",
       errorDialog: false,
       error: "",
       isSubmitting: false,
@@ -524,6 +558,10 @@ export default {
       teamList.push(x);
     });
     this.teamList = teamList;
+    if (this.dataUser?.dateOfBirth) {
+      let dateArr = this.dataUser.dateOfBirth.split("/");
+      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    }
   },
   watch: {
     userData: {
@@ -538,6 +576,10 @@ export default {
           teamList.push(x);
         });
         this.teamList = teamList;
+        if (this.dataUser?.dateOfBirth) {
+      let dateArr = this.dataUser.dateOfBirth.split("/");
+      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    }
       },
       dateList: {
         handler: function () {
