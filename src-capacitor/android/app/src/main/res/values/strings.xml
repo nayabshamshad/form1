@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">User Info Form</string>
+    <string name="title_activity_main">User Info Form</string>
+    <string name="package_name">attendace.quasar.app</string>
+    <string name="custom_url_scheme">attendace.quasar.app</string>
+</resources>

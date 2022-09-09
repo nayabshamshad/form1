@@ -176,6 +176,8 @@ export default {
   methods: {
     openModal() {
       this.$refs.dateIcon.$el.click();
+      this.$refs.dateIcon.$el.focus();
+
     },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;

@@ -79,6 +79,65 @@ export default store(function () {
       },
     },
     actions: {
+      async finalizeReset({}, payload) {
+        let error = { err: false };
+        await auth
+          .confirmPasswordReset(payload.code, payload.pass)
+          .then(() => {})
+          .catch((err) => {
+            error.err = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+          });
+        return error;
+      },
+      async verifyReset({}, payload) {
+        let error = { err: false };
+        await auth
+          .verifyPasswordResetCode(payload)
+          .then((res) => {})
+          .catch(() => {
+            error.err = true;
+            Notify.create({
+              message:
+                "Your reset code is invalid, it may have already been used or expired. Please send a reset request again.",
+              color: "red",
+            });
+            this.$router.push("/");
+          });
+        return error;
+      },
+      async sendResetEmail({}, payload) {
+        let error = {
+          err: false,
+        };
+        await auth
+          .sendPasswordResetEmail(payload)
+          .then(() => {})
+          .catch((err) => {
+            error.err = true;
+            if (err.code == "auth/user-not-found") {
+              console.log(err);
+              Notify.create({
+                message: "Unable to find user with this email address",
+                color: "red",
+              });
+            } else if (err.code == "auth/invalid-email") {
+              Notify.create({
+                message: "Please enter a valid email address",
+                color: "red",
+              });
+            } else {
+              Notify.create({
+                message: err.message,
+                color: "red",
+              });
+            }
+          });
+        return error;
+      },
       async signOutUser({ commit }) {
         await auth.signOut();
         commit("setUserData", null);
@@ -123,6 +182,11 @@ export default store(function () {
             } else if (err.code == "auth/weak-password") {
               Notify.create({
                 message: "Password must be atleast 6 characters long",
+                color: "red",
+              });
+            } else {
+              Notify.create({
+                message: err.message,
                 color: "red",
               });
             }
@@ -203,7 +267,7 @@ export default store(function () {
       },
       async updateUserProfile({ state, commit, dispatch }, payload) {
         await firestore.doc(state.currentUser.uid).update(payload);
-        await dispatch('getUserData')
+        await dispatch("getUserData");
       },
       async updateUserProfileAdmin({ commit, dispatch }, payload) {
         await firestore.doc(payload.uid).update(payload);

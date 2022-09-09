@@ -1,0 +1,10 @@
+{
+  "appId": "attendace.quasar.app",
+  "appName": "User Info Form",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.44.95:8080"
+  }
+}
