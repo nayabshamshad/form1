@@ -45,24 +45,28 @@ const routes = [
         name: "Waiting Page",
       },
       {
-        path: '/user-details',
+        path: "/user-details",
         component: () => import("../pages/userDetails"),
-        name: 'User Details'
+        name: "User Details",
       },
       {
-        path: '/rejected',
-        component: () => import('../pages/rejectedView'),
-        name: 'Rejected'
+        path: "/rejected",
+        component: () => import("../pages/rejectedView"),
+        name: "Rejected",
       },
       // Always leave this as last one,
       // but you can also remove it
-      {
-        path: "/:catchAll(.*)*",
-        component: () => import("pages/ErrorNotFound.vue"),
-      },
     ],
   },
-
+  {
+    path: "/reset_password",
+    component: () => import("../pages/resetPassword"),
+    name: "Reset Password",
+  },
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
 ];
 
 export default routes;

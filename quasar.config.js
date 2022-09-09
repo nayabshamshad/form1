@@ -41,7 +41,10 @@ module.exports = configure(function (ctx) {
       "roboto-font", // optional, you are not bound to it
       "material-icons", // optional, you are not bound to it
     ],
-
+    bin: {
+      linuxAndroidStudio:
+        "/media/wasiq/01D86AE721474C60/Work/android-studio/android-studio/bin/studio.sh",
+    },
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: "hash", // available values: 'hash', 'history'
@@ -97,9 +100,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [
-        'Notify'
-      ],
+      plugins: ["Notify"],
     },
 
     // animations: 'all', // --- includes all animations

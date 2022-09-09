@@ -26,7 +26,11 @@ export default route(function ({ store }) {
   });
   Router.beforeEach((to, from, next) => {
     if (!store.getters.isAuthenticated) {
-      if (to.path != "/sign-in" && to.path != "/sign-up") {
+      if (
+        to.path != "/sign-in" &&
+        to.path != "/sign-up" &&
+        to.path != "/reset_password"
+      ) {
         next("/sign-in");
       } else {
         next();
@@ -84,10 +88,9 @@ export default route(function ({ store }) {
       ) {
         next("/rejected");
         return;
-      }
-      else {
-        next()
-        return
+      } else {
+        next();
+        return;
       }
     }
   });

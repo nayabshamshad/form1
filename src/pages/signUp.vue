@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2>Sign Up</h2>
-    <form class="form">
+    <form class="form" @submit.prevent="submit">
       <p>Please fill in this form to create an account.</p>
       <div class="cate-list">
         <q-input
@@ -78,7 +78,7 @@ export default {
       emailInput: "",
       passInput: "",
       isSubmitting: false,
-      phoneNumber: '+40'
+      phoneNumber: "+40",
     };
   },
   mounted() {},
@@ -93,14 +93,13 @@ export default {
           color: "red",
           message: "Please enter a valid name",
         });
-        this.isSubmitting = false
-        return
+        this.isSubmitting = false;
+        return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-
           message: "Phone Number must be formatted correctly",
-          color: 'red'
+          color: "red",
         });
         this.isSubmitting = false;
         return;
@@ -109,7 +108,7 @@ export default {
         name: this.firstName + " " + this.lastName,
         email: this.emailInput,
         password: this.passInput,
-        phoneNumber: this.phoneNumber
+        phoneNumber: this.phoneNumber,
       };
       await this.$store.dispatch("signUp", form);
       this.isSubmitting = false;
