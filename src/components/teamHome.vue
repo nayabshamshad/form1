@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isEdit" class="container">
-    <div class="flex" style="justify-content: flex-end;max-width: 75%;">
+    <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn
         v-if="dateContained"
         round
@@ -22,7 +22,9 @@
 
       <div class="cate-list-home">
         <label for="date"><b>Birth Date:</b></label>
-        <span>{{ dataUser?.dateOfBirth ? dataUser.dateOfBirth : "" }}</span>
+        <span>{{
+          dataUser?.dateOfBirth ? getBirthDate(dataUser.dateOfBirth) : ""
+        }}</span>
       </div>
       <div class="cate-list-home">
         <label for="status"><b>Status:</b></label>
@@ -90,8 +92,9 @@
       </div>
     </div>
   </div>
+
   <div v-else class="container">
-    <div class="flex" style="justify-content: flex-end;max-width: 75%;">
+    <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn round @click="isEdit = !isEdit" color="green" icon="edit"></q-btn>
     </div>
     <form class="form">
@@ -117,11 +120,36 @@
           "
           >Date of Birth</label
         >
-        <q-input
-          type="date"
+        <!-- <q-input
           label-color="black"
           v-model="dataUser.dateOfBirth"
-        ></q-input>
+          type="date"
+        ></q-input> -->
+        <q-input
+          filled
+          v-model="dateOfBirth"
+          mask="##/##/####"
+          @focus="openModal"
+        >
+          <template v-slot:append>
+            <q-icon @click="openModal" ref="dateIcon" name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="dataUser.dateOfBirth"
+                  @update:model-value="handleDateChange"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <q-input
@@ -140,7 +168,7 @@
           v-model="dataUser.phoneNumber"
           placeholder="+40......."
           name="phone number"
-          mask="phone"
+          mask="+40 #### #####"
           label="Phone Number"
           label-color="black"
         />
@@ -341,6 +369,36 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
+    getBirthDate(val) {
+      let date = new Date(val);
+      let newDate;
+      const monthList = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const month = monthList[date.getMonth()];
+
+      newDate = date.getDate() + " " + month + ", " + date.getFullYear();
+      return newDate;
+    },
     addMember() {
       this.teamList.push({ name: "" });
     },
@@ -370,8 +428,7 @@ export default {
         }
         if (profile.phoneNumber.length !== 14) {
           this.$q.notify({
-
-            color: 'red',
+            color: "red",
             message: "Phone Number must be formatted correctly",
           });
           this.isSubmitting = false;
@@ -431,7 +488,7 @@ export default {
         profile.masterGhid.length !== 4
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message: "Years must be formatted correctly",
         });
         this.isSubmitting = false;
@@ -443,7 +500,7 @@ export default {
         profile.Instructor > profile.masterGhid
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message:
             "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
         });
@@ -465,6 +522,7 @@ export default {
         start: "09/01/2022",
         end: "10/01/2022",
       },
+      dateOfBirth: "",
       errorDialog: false,
       error: "",
       isSubmitting: false,
@@ -483,8 +541,8 @@ export default {
   },
   mounted() {
     if (
-      new Date(this.editDate.start).getTime() <= new Date().getTime() &&
-      new Date(this.editDate.end).getTime() >= new Date().getTime()
+      new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
+      new Date(this.dateList?.to).getTime() >= new Date().getTime()
     ) {
       this.dateContained = true;
     } else {
@@ -500,6 +558,10 @@ export default {
       teamList.push(x);
     });
     this.teamList = teamList;
+    if (this.dataUser?.dateOfBirth) {
+      let dateArr = this.dataUser.dateOfBirth.split("/");
+      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    }
   },
   watch: {
     userData: {
@@ -514,6 +576,22 @@ export default {
           teamList.push(x);
         });
         this.teamList = teamList;
+        if (this.dataUser?.dateOfBirth) {
+      let dateArr = this.dataUser.dateOfBirth.split("/");
+      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    }
+      },
+      dateList: {
+        handler: function () {
+          if (
+            new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
+            new Date(this.dateList?.to).getTime() >= new Date().getTime()
+          ) {
+            this.dateContained = true;
+          } else {
+            this.dateContained = false;
+          }
+        },
       },
     },
   },
@@ -524,6 +602,9 @@ export default {
       } else {
         return {};
       }
+    },
+    dateList() {
+      return this.$store.getters.dateList;
     },
   },
 };

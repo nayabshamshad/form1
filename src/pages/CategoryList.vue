@@ -25,23 +25,30 @@
           >Date of Birth</label
         >
         <q-input
-          type="date"
-          label-color="black"
-          v-model="userInfo.dateOfBirth"
-        ></q-input>
-        <!-- <q-input class="q-input" filled v-model="userInfo.dateOfBirth" mask="date" :rules="['date']">
-      <template  v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="userInfo.dateOfBirth" minimal>
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input> -->
+          filled
+          v-model="dateOfBirth"
+          mask="##/##/####"
+          @focus="openModal"
+        >
+          <template v-slot:append>
+            <q-icon @click="openModal" ref="dateIcon" name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="userInfo.dateOfBirth"
+                  @update:model-value="handleDateChange"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <q-input
@@ -54,17 +61,6 @@
         />
       </div>
 
-      <div class="cate-list">
-        <q-input
-          type="tel"
-          v-model="userInfo.phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label="Phone Number"
-          label-color="black"
-        />
-      </div>
       <div class="cate-list">
         <q-input
           type="text"
@@ -255,7 +251,7 @@ export default {
     return {
       userInfo: {
         teamList: [{ name: "" }],
-        dateOfBirth: "2022-03-21",
+        dateOfBirth: "2022/03/21",
         Instructor: "",
         Ghid: "",
         masterGhid: "",
@@ -263,7 +259,6 @@ export default {
         state: "",
         gender: "Male",
         etnic: "",
-        phoneNumber: "+40",
         tagList: [],
         clubName: "",
         status: false,
@@ -271,6 +266,7 @@ export default {
         size: "",
         isUpdated: false,
       },
+      dateOfBirth: "21/03/2022",
       tagsInput: "",
       isSubmitting: false,
       sizeOptions: [
@@ -287,6 +283,14 @@ export default {
     };
   },
   methods: {
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
     async submit() {
       if (this.isSubmitting) {
         return;
@@ -303,15 +307,6 @@ export default {
           return;
         }
         profile.tagList = this.tagsInput.split(",");
-      }
-      if (profile.phoneNumber.length !== 14) {
-        this.$q.notify({
-
-          message: "Phone Number must be formatted correctly",
-          color: 'red'
-        });
-        this.isSubmitting = false;
-        return;
       }
 
       profile.isUpdated = true;
@@ -360,7 +355,7 @@ export default {
         profile.masterGhid.length !== 4
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message: "Years must be formatted correctly",
         });
         this.isSubmitting = false;
@@ -372,7 +367,7 @@ export default {
         profile.Instructor > profile.masterGhid
       ) {
         this.$q.notify({
-          color: 'red',
+          color: "red",
           message:
             "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
         });
@@ -381,6 +376,7 @@ export default {
       }
       await this.$store.dispatch("updateUserProfile", profile);
       this.isSubmitting = false;
+
       this.$router.push("/");
     },
     addMember() {

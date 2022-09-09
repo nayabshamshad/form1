@@ -101,9 +101,17 @@ export default {
     },
     memberList() {
       let list = [];
-      this.$store.getters.userData?.teamList.forEach((x) => {
-        list.push(x.name);
-      });
+      if(this.$store.getters.userData?.role != 'admin') {
+
+        this.$store.getters.userData?.teamList.forEach((x) => {
+          list.push(x.name);
+        });
+      }
+      else {
+        this.$store.getters.selectedUser?.teamList.forEach((x) => {
+          list.push(x.name);
+        });
+      }
       return list;
     },
   },

@@ -39,7 +39,21 @@ const routes = [
         name: "Event Details",
         component: () => import("../pages/viewevent.vue"),
       },
-
+      {
+        path: "/pending",
+        component: () => import("../pages/waitingView.vue"),
+        name: "Waiting Page",
+      },
+      {
+        path: '/user-details',
+        component: () => import("../pages/userDetails"),
+        name: 'User Details'
+      },
+      {
+        path: '/rejected',
+        component: () => import('../pages/rejectedView'),
+        name: 'Rejected'
+      },
       // Always leave this as last one,
       // but you can also remove it
       {
@@ -48,11 +62,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/pending",
-    component: () => import("../pages/waitingView.vue"),
-    name: "Waiting Page",
-  },
+
 ];
 
 export default routes;

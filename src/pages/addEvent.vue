@@ -13,7 +13,42 @@
       </div>
       <div class="cate-list">
         <label style="font-size: 16px">Event Date</label>
-        <q-input v-model="eventDate" mask="date" type="date"> </q-input>
+        <!-- <q-input v-model="eventDate" mask="date" type="date"> </q-input> -->
+        <q-input
+              filled
+              v-model="eventDateView"
+              mask="##/##/####"
+              @focus="openModal"
+            >
+              <template v-slot:append>
+                <q-icon
+                  @click="openModal"
+                  ref="dateIcon"
+                  name="event"
+                  class="cursor-pointer"
+                >
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="eventDate"
+                      @update:model-value="handleDateChange"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
       </div>
       <div class="cate-list">
         <q-input
@@ -126,7 +161,7 @@ export default {
   data() {
     return {
       eventName: "",
-      eventDate: "2022-08-02",
+      eventDate: "2022/08/02",
       eventDesc: "",
       imageList: [],
       localImageList: [],
@@ -135,9 +170,18 @@ export default {
       errorDialog: false,
       error: "There was an unexpected error",
       attendanceList: [],
+      eventDateView: '02/08/2022',
     };
   },
   methods: {
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.eventDateView = day + "/" + month + "/" + c.year;
+    },
     openInput() {
       if(this.previewImages.length < 3) {
         this.$refs.imgInput.click()
