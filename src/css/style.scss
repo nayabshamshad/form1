@@ -503,7 +503,22 @@ span.q-table__bottom-item:first-of-type {
   }
 }
 .hideMobile {
-  @media(max-width: 650px) {
+  @media (max-width: 650px) {
     display: none;
+  }
+}
+
+form.reset_form {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h2 {
+    margin-bottom: 2rem;
+  }
+  .q-input {
+    min-width: 30vw;
+    margin-bottom: 1rem;
   }
 }
