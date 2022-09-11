@@ -2,9 +2,9 @@
   <div class="container">
     <form class="form reset_form" autocomplete="off">
       <div>
-        <h2>Reset Password</h2>
+        <h2>Reset Password </h2>
         <div class="cate-list">
-          <label for="pwd"><b>Password</b></label>
+          <label for="pwd"><b>Password </b></label>
           <q-input
             type="password"
             placeholder="Enter Password"
