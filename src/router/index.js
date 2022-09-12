@@ -6,8 +6,6 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
-import { auth } from "../store/firebase";
-import { nextTick } from "vue";
 
 export default route(function ({ store }) {
   const createHistory = process.env.SERVER
@@ -18,7 +16,14 @@ export default route(function ({ store }) {
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+    routes: [
+      {
+        path: "/",
+        name: "Layout",
+        component: () => import("../layouts/MainLayout.vue"),
+        children: routes,
+      },
+    ],
 
     history: createHistory(
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE

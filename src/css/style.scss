@@ -73,6 +73,34 @@ label {
 
 // homepage
 .top-bar {
+  .admin-nav {
+    flex-wrap: nowrap;
+    button {
+      border: none;
+      outline: none;
+      background: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 250ms;
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      @media (max-width: 600px) {
+        padding: 5px;
+      }
+      @media (max-width: 500px) {
+        font-size: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      @media(max-width: 370px) {
+        padding: 2px;
+      }
+    }
+  }
   position: relative;
 
   padding: 1rem;
@@ -503,7 +531,7 @@ span.q-table__bottom-item:first-of-type {
   }
 }
 .hideMobile {
-  @media(max-width: 650px) {
+  @media (max-width: 650px) {
     display: none;
   }
 }

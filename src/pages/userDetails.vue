@@ -410,8 +410,18 @@
             </div>
           </div>
         </div>
-        <div class="eventlist"></div>
-        <span><q-btn size="sm" color="green" icon="download" @click="exportFile(selectedUser.eventList, 'events')"></q-btn></span>
+        <div class="eventlist">
+
+          <span>
+            <q-btn
+            size="sm"
+            color="green"
+            icon="download"
+            @click="exportFile(selectedUser.eventList, 'events')"
+            round
+          ></q-btn
+        ></span>
+          </div>
         <div style="margin-top: 1rem" class="flex justify-center">
           <q-table
             v-if="selectedUser.eventList?.length > 0"
@@ -466,6 +476,8 @@
 </template>
 
 <script>
+import writeXlsxFile from "write-excel-file";
+
 export default {
   data() {
     return {
@@ -505,7 +517,7 @@ export default {
     }
   },
   methods: {
-        exportFile(data, fileName) {
+    exportFile(data, fileName) {
       let header_row = [
         {
           value: "Event Name",
@@ -535,14 +547,14 @@ export default {
         let eventArr = [
           { value: x.name },
           { value: x.desc },
-          { value: x.date ? this.formatDate(x.date) : "" },
+          { value: x.date ? this.getBirthDate(x.date) : "" },
           { value: x.attendanceList.length },
         ];
-        this.selectedUser.teamList.forEach(y =>{
+        this.selectedUser.teamList.forEach((y) => {
           eventArr.push({
-            value: x.attendanceList.includes(y.name) ? 'Present' : 'Absent'
-          })
-        })
+            value: x.attendanceList.includes(y.name) ? "Present" : "Absent",
+          });
+        });
         arr.push(eventArr);
       });
       writeXlsxFile(arr, {
@@ -552,7 +564,6 @@ export default {
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();
-
     },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
