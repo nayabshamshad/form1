@@ -487,8 +487,7 @@ export default {
         this.error = "Please recheck your form and fill all details correctly";
         this.isSubmitting = false;
         return;
-      }
-      debugger;
+      } 
       // if (
       //   profile.Instructor.length !== 4 ||
       //   profile.Ghid.length !== 4 ||
