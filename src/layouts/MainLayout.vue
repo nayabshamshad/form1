@@ -28,8 +28,8 @@
         type="button"
         v-if="
           $route.path != '/' &&
-          (userData?.isUpdated == false || userData?.role == 'admin') &&
-          userData?.isAuthorized == true
+          userData?.isAuthorized == true &&
+          userData?.isUpdated == true
         "
         @click="$router.push('/')"
         class="btn"
@@ -101,18 +101,16 @@
     />
     <div v-else></div>
     <div class="flex admin-nav">
-      <button class="heading"  @click="$router.push('/?q=approved')"
-        >Approved</button
-      >
-      <button class="heading"  @click="$router.push('/?q=pending')"
-        >Pending</button
-      >
-      <button class="heading"  @click="$router.push('/?q=declined')"
-        >Declined</button
-      >
-      <button class="heading"  @click="$router.push('/?q=date')"
-        >Date</button
-      >
+      <button class="heading" @click="$router.push('/?q=approved')">
+        Approved
+      </button>
+      <button class="heading" @click="$router.push('/?q=pending')">
+        Pending
+      </button>
+      <button class="heading" @click="$router.push('/?q=declined')">
+        Declined
+      </button>
+      <button class="heading" @click="$router.push('/?q=date')">Date</button>
     </div>
     <div>
       <q-btn
