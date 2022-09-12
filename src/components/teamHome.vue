@@ -132,7 +132,12 @@
           @focus="openModal"
         >
           <template v-slot:append>
-            <q-icon @click="openModal" ref="dateIcon" name="event" class="cursor-pointer">
+            <q-icon
+              @click="openModal"
+              ref="dateIcon"
+              name="event"
+              class="cursor-pointer"
+            >
               <q-popup-proxy
                 cover
                 transition-show="scale"
@@ -483,18 +488,19 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      if (
-        profile.Instructor.length !== 4 ||
-        profile.Ghid.length !== 4 ||
-        profile.masterGhid.length !== 4
-      ) {
-        this.$q.notify({
-          color: "red",
-          message: "Years must be formatted correctly",
-        });
-        this.isSubmitting = false;
-        return;
-      }
+      debugger;
+      // if (
+      //   profile.Instructor.length !== 4 ||
+      //   profile.Ghid.length !== 4 ||
+      //   profile.masterGhid.length !== 4
+      // ) {
+      //   this.$q.notify({
+      //     color: "red",
+      //     message: "Years must be formatted correctly",
+      //   });
+      //   this.isSubmitting = false;
+      //   return;
+      // }
       if (
         profile.Instructor > profile.Ghid ||
         profile.Ghid > profile.masterGhid ||
@@ -578,9 +584,9 @@ export default {
         });
         this.teamList = teamList;
         if (this.dataUser?.dateOfBirth) {
-      let dateArr = this.dataUser.dateOfBirth.split("/");
-      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
-    }
+          let dateArr = this.dataUser.dateOfBirth.split("/");
+          this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+        }
       },
       dateList: {
         handler: function () {

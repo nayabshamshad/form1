@@ -659,18 +659,18 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      if (
-        profile.Instructor.length !== 4 ||
-        profile.Ghid.length !== 4 ||
-        profile.masterGhid.length !== 4
-      ) {
-        this.$q.notify({
-          color: "red",
-          message: "Years must be formatted correctly",
-        });
-        this.isSubmitting = false;
-        return;
-      }
+      // if (
+      //   profile.Instructor.length !== 4 ||
+      //   profile.Ghid.length !== 4 ||
+      //   profile.masterGhid.length !== 4
+      // ) {
+      //   this.$q.notify({
+      //     color: "red",
+      //     message: "Years must be formatted correctly",
+      //   });
+      //   this.isSubmitting = false;
+      //   return;
+      // }
       if (
         profile.Instructor > profile.Ghid ||
         profile.Ghid > profile.masterGhid ||
