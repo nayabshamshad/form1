@@ -1,12 +1,14 @@
 <template>
-  <div class="top-bar" v-if="isAuthenticated">
+  <div class="top-bar" v-if="isAuthenticated && userData?.role != 'admin'">
     <q-btn
       no-caps
       @click="$router.go(-1)"
       round
       style="transform: rotate(-90deg)"
       icon="navigation"
+      v-if="$route.path != '/sign-in'"
     />
+    <div v-else></div>
     <h3 class="heading" style="">{{ $route.name }}</h3>
     <div>
       <q-btn
@@ -24,7 +26,11 @@
         color="grey"
         text-color="black"
         type="button"
-        v-if="$route.path != '/' && (userData?.isUpdated == false || userData?.role == 'admin') && userData?.isAuthorized == true"
+        v-if="
+          $route.path != '/' &&
+          userData?.isAuthorized == true &&
+          userData?.isUpdated == true
+        "
         @click="$router.push('/')"
         class="btn"
       >
@@ -35,7 +41,12 @@
         color="grey"
         text-color="black"
         type="button"
-        v-if="$route.path != '/event-list' && userData?.status && userData?.role != 'admin' && userData?.isAuthorized == true"
+        v-if="
+          $route.path != '/event-list' &&
+          userData?.status &&
+          userData?.role != 'admin' &&
+          userData?.isAuthorized == true
+        "
         @click="$router.push('/event-list')"
         class="btn"
       >
@@ -43,14 +54,16 @@
       </q-btn>
     </div>
   </div>
-  <div class="top-bar" v-else>
+  <div class="top-bar" v-else-if="!isAuthenticated">
     <q-btn
       no-caps
       @click="$router.go(-1)"
       round
       style="transform: rotate(-90deg)"
       icon="navigation"
+      v-if="$route.path != '/sign-in'"
     />
+    <div v-else></div>
     <h3>{{ $route.name }}</h3>
     <div>
       <q-btn
@@ -77,11 +90,61 @@
       </q-btn>
     </div>
   </div>
+  <div class="top-bar" v-else-if="isAuthenticated && userData?.role == 'admin'">
+    <q-btn
+      no-caps
+      @click="$router.go(-1)"
+      round
+      style="transform: rotate(-90deg)"
+      icon="navigation"
+      v-if="$route.path != '/sign-in'"
+    />
+    <div v-else></div>
+    <div class="flex admin-nav">
+      <button class="heading" @click="$router.push('/?q=approved')">
+        Approved
+      </button>
+      <button class="heading" @click="$router.push('/?q=pending')">
+        Pending
+      </button>
+      <button class="heading" @click="$router.push('/?q=declined')">
+        Declined
+      </button>
+      <button class="heading" @click="$router.push('/?q=date')">Date</button>
+    </div>
+    <div>
+      <q-btn
+        no-caps
+        color="grey"
+        text-color="black"
+        to="/"
+        type="button"
+        @click="logOut"
+        class="btn"
+        >Sign Out</q-btn
+      >
+      <q-btn
+        no-caps
+        color="grey"
+        text-color="black"
+        type="button"
+        v-if="
+          $route.path != '/event-list' &&
+          userData?.status &&
+          userData?.role != 'admin' &&
+          userData?.isAuthorized == true
+        "
+        @click="$router.push('/event-list')"
+        class="btn"
+      >
+        Events
+      </q-btn>
+    </div>
+  </div>
   <router-view />
 </template>
 <script>
 import { defineComponent } from "vue";
-import { auth } from "../store/firebase";
 
 export default defineComponent({
   name: "MainLayout",

@@ -1,9 +1,4 @@
 const routes = [
-  {
-    path: "/",
-    name: "MainLayout",
-    component: () => import("../layouts/MainLayout.vue"),
-    children: [
       {
         path: "/",
         name: "Welcome",
@@ -56,8 +51,6 @@ const routes = [
       },
       // Always leave this as last one,
       // but you can also remove it
-    ],
-  },
   {
     path: "/reset_password",
     component: () => import("../pages/resetPassword"),

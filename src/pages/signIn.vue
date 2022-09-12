@@ -50,6 +50,7 @@
       </span>
     </form>
   </div>
+
   <!-- Forgot Dialog -->
   <q-dialog v-model="forgotDialog">
     <q-card style="width: 100%">
@@ -145,4 +146,4 @@ export default {
 };
 </script>
 
-<style></style>
+

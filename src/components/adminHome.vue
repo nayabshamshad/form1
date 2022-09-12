@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <q-tabs
+    <!-- <q-tabs
       active-color="red"
       indicator-color="red"
       class="text-black"
@@ -11,7 +11,7 @@
       <q-tab name="pending" label="Pending"></q-tab>
       <q-tab name="declined" label="Declined"></q-tab>
       <q-tab name="date" label="Edit Date"></q-tab>
-    </q-tabs>
+    </q-tabs> -->
     <q-tab-panels v-model="tabs">
       <!-- Approved User Listing -->
       <q-tab-panel name="approved">
@@ -168,6 +168,9 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (this.$route?.query?.q) {
+      this.tabs = this.$route?.query?.q;
+    }
     this.getData();
     if (this.dateList) {
       this.dateModel = this.dateList;
@@ -181,6 +184,17 @@ export default {
     };
   },
   watch: {
+    "$route.query.q": {
+      handler: function () {
+        if (this.$route?.query?.q) {
+          this.tabs = this.$route.query.q;
+        } else {
+          this.tabs = 'approved';
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
     dateList: {
       handler: function () {
         this.dateModel = this.dateList;

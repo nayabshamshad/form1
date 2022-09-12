@@ -1,27 +1,25 @@
 <template>
   <div class="container">
-    <form class="form reset_form" autocomplete="off">
-      <div>
-        <h2>Reset Password </h2>
-        <div class="cate-list">
-          <label for="pwd"><b>Password </b></label>
-          <q-input
-            type="password"
-            placeholder="Enter Password"
-            name="pwd"
-            v-model="newPass"
-          />
-        </div>
-        <div class="btn1">
-          <q-btn
-            @click="resetPassword"
-            :loading="isSubmitting"
-            type="button"
-            color="purple"
-            rounded
-            >Reset Password</q-btn
-          >
-        </div>
+    <form class="form" autocomplete="off">
+      <h2>Reset Password</h2>
+      <div class="cate-list">
+        <label for="pwd"><b>Password</b></label>
+        <q-input
+          type="password"
+          placeholder="Enter Password"
+          name="pwd"
+          v-model="newPass"
+        />
+      </div>
+      <div class="btn1">
+        <q-btn
+          @click="resetPassword"
+          :loading="isSubmitting"
+          type="button"
+          color="purple"
+          rounded
+          >Reset Password</q-btn
+        >
       </div>
     </form>
   </div>
@@ -57,7 +55,7 @@ export default {
       this.isSubmitting = true;
       let reset = await this.$store.dispatch("finalizeReset", {
         pass: this.newPass,
-        code: this.$route.query.oobCode,
+        code: this.$route.query.oobCode
       });
       if (reset.err) {
         this.isSubmitting = false;
