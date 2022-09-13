@@ -83,7 +83,7 @@
       </div>
 
       <div class="cate-list-home">
-        <label for="Instructor"><b>Anul investirii ca:</b></label>
+        <label for="Instructor"><b>Anul investiturii ca:</b></label>
         <span><b>Instructor:</b> {{ dataUser.Instructor }}</span>
         <span><b>Ghid:</b> {{ dataUser.Ghid }}</span>
         <span><b>Master Ghid:</b> {{ dataUser.masterGhid }}</span>
@@ -277,7 +277,7 @@
           type="text"
           v-model="dataUser.Instructor"
           label-color="black"
-          label="Anul investirii ca Instructor:"
+          label="Anul investiturii ca Instructor:"
           placeholder="YYYY"
           name="Instructor"
           mask="####"
@@ -288,7 +288,7 @@
           type="text"
           v-model="dataUser.Ghid"
           placeholder="YYYY"
-          label="Anul investirii ca Ghid:"
+          label="Anul investiturii ca Ghid:"
           label-color="black"
           mask="####"
         />
@@ -300,7 +300,7 @@
           placeholder="YYYY"
           mask="####"
           label-color="black"
-          label="Anul investirii ca Master Ghid:"
+          label="Anul investiturii ca Master Ghid:"
         />
       </div>
       <div

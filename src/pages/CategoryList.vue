@@ -140,7 +140,7 @@
           type="text"
           v-model="userInfo.Instructor"
           label-color="black"
-          label="Anul investirii ca Instructor:"
+          label="Anul investiturii ca Instructor:"
           placeholder="YYYY"
           name="Instructor"
           mask="####"
@@ -151,7 +151,7 @@
           type="text"
           v-model="userInfo.Ghid"
           placeholder="YYYY"
-          label="Anul investirii ca Ghid:"
+          label="Anul investiturii ca Ghid:"
           label-color="black"
           mask="####"
         />
@@ -163,7 +163,7 @@
           placeholder="YYYY"
           mask="####"
           label-color="black"
-          label="Anul investirii ca Master Ghid:"
+          label="Anul investiturii ca Master Ghid:"
         />
       </div>
       <div
