@@ -30,18 +30,26 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Member Name</th>
-                <th class="hideMobile">Phone</th>
-                <th>Member Email</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(user, i) in approvedUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">
+                <td class="hideMobile" @click="callUser(user.phoneNumber)">
                   {{ user.phoneNumber }}
                 </td>
-                <td @click="viewUser(user)">{{ user.email }}</td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="mailUser(user.email)" class="hideMobile last">
+                  {{ user.email }}
+                </td>
+                <td @click="mailUser(user.email)" class="showMobile last">
+                  <q-icon name="email"></q-icon>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -65,19 +73,28 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Member Name</th>
+                <th>Name</th>
                 <th class="hideMobile">Phone</th>
-                <th>Member Email</th>
+                <th>Email</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(user, i) in pendingUsers" :key="i">
                 <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">
+                <td class="hideMobile" @click="callUser(user.phoneNumber)">
                   {{ user.phoneNumber }}
                 </td>
-                <td @click="viewUser(user)">{{ user.email }}</td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="mailUser(user.email)" class="hideMobile last">
+                  {{ user.email }}
+                </td>
+                <td @click="mailUser(user.email)" class="showMobile last">
+                  <q-icon name="email"></q-icon>
+                </td>
+
                 <td>
                   <q-btn
                     color="green"
@@ -118,9 +135,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Member Name</th>
+                <th>Name</th>
                 <th class="hideMobile">Number</th>
-                <th>Member Email</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>
@@ -129,7 +146,15 @@
                 <td class="hideMobile" @click="viewUser(user)">
                   {{ user.phoneNumber }}
                 </td>
-                <td @click="viewUser(user)">{{ user.email }}</td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="mailUser(user.email)" class="hideMobile last">
+                  {{ user.email }}
+                </td>
+                <td @click="mailUser(user.email)" class="showMobile last">
+                  <q-icon name="email" />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -189,7 +214,7 @@ export default {
         if (this.$route?.query?.q) {
           this.tabs = this.$route.query.q;
         } else {
-          this.tabs = 'approved';
+          this.tabs = "approved";
         }
       },
       deep: true,
@@ -207,6 +232,16 @@ export default {
     },
   },
   methods: {
+    mailUser(email) {
+      if (email != "") {
+        window.open(`mailto: ${email}`);
+      }
+    },
+    callUser(number) {
+      if (number != "") {
+        window.open(`tel: ${number}`);
+      }
+    },
     exportFile(users, fileName) {
       const header_row = [
         {
