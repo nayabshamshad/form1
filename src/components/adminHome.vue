@@ -74,7 +74,7 @@
             <thead>
               <tr>
                 <th>Nume/Prenume</th>
-                <th class="hideMobile">Nr. de telefon</th>
+                <th>Nr. de telefon</th>
                 <th>E-mail</th>
                 <th>Acțiune</th>
               </tr>
@@ -136,7 +136,7 @@
             <thead>
               <tr>
                 <th>Nume/Prenume</th>
-                <th class="hideMobile">Nr. de telefon</th>
+                <th>Nr. de telefon</th>
                 <th>E-mail</th>
               </tr>
             </thead>
