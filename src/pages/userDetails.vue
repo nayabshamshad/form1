@@ -411,17 +411,16 @@
           </div>
         </div>
         <div class="eventlist">
-
           <span>
             <q-btn
-            size="sm"
-            color="green"
-            icon="download"
-            @click="exportFile(selectedUser.eventList, 'events')"
-            round
-          ></q-btn
-        ></span>
-          </div>
+              size="sm"
+              color="green"
+              icon="download"
+              @click="exportFile('events')"
+              round
+            ></q-btn
+          ></span>
+        </div>
         <div style="margin-top: 1rem" class="flex justify-center">
           <q-table
             v-if="selectedUser.eventList?.length > 0"
@@ -517,45 +516,39 @@ export default {
     }
   },
   methods: {
-    exportFile(data, fileName) {
-      let header_row = [
-        {
-          value: "Event Name",
-          fontWeight: "bold",
-        },
-        {
-          value: "Event Description",
-          fontWeight: "bold",
-        },
-        {
-          value: "Event Date",
-          fontWeight: "bold",
-        },
-        {
-          value: "Attendance Count",
-          fontWeight: "bold",
-        },
+    exportFile(fileName) {
+      let arr = [
+        [],
+        [],
+        [
+          {
+            value: "Short Summary - " + this.selectedUser.name,
+            span: 2,
+            align: "center",
+            borderColor: "#000000",
+            rightBorderColor: "#58eb34",
+          },
+        ],
+        [
+          { value: "Numele copilului", borderColor: "#000000" },
+          {
+            value: "Numar de prezențe/Numar de întâlniri",
+            borderColor: "#000000",
+          },
+        ],
       ];
-      this.selectedUser.teamList.forEach((x) => {
-        header_row.push({
-          fontWeight: "bold",
-          value: x.name,
-        });
-      });
-      let arr = [header_row];
-      data.forEach((x) => {
-        let eventArr = [
-          { value: x.name },
-          { value: x.desc },
-          { value: x.date ? this.getBirthDate(x.date) : "" },
-          { value: x.attendanceList.length },
-        ];
-        this.selectedUser.teamList.forEach((y) => {
-          eventArr.push({
-            value: x.attendanceList.includes(y.name) ? "Present" : "Absent",
-          });
-        });
-        arr.push(eventArr);
+
+      this.listOfAttendance.forEach((x) => {
+        arr.push([
+          {
+            value: x.name,
+            borderColor: "#000000",
+          },
+          {
+            value: x.attendance + "/" + this.selectedUser.eventList.length,
+            borderColor: "#000000",
+          },
+        ]);
       });
       writeXlsxFile(arr, {
         fileName: fileName + ".xlsx",

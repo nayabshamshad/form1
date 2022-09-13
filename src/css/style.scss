@@ -449,6 +449,20 @@ span.q-table__bottom-item:first-of-type {
           transition: 250ms;
           padding: 6px 0;
           text-align: center;
+          &:not(.last) {
+            position: relative;
+            &::after {
+              position: absolute;
+              content: '';
+              right: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              height: 60%;
+              width: 1px;
+              background-color: #fff;
+              border-radius: 50%;
+            }
+          }
           &:first-of-type {
             // border-radius: 10px 0 0 10px;
             padding-left: 20px;
@@ -530,8 +544,14 @@ span.q-table__bottom-item:first-of-type {
     }
   }
 }
+.showMobile {
+  display: none !important;
+}
+@media (max-width: 650px) {
 .hideMobile {
-  @media (max-width: 650px) {
-    display: none;
+    display: none !important;
+  }
+  .showMobile {
+    display: table-cell !important;
   }
 }
