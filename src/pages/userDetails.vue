@@ -1,6 +1,6 @@
 <template>
   <q-tabs v-model="tabs">
-    <q-tab name="user" label="User Information"></q-tab>
+    <q-tab name="user" label="Informații utilizator"></q-tab>
     <q-tab
       v-if="
         selectedUser.status &&
@@ -8,7 +8,7 @@
         selectedUser.isAuthorized == true
       "
       name="events"
-      label="Events"
+      label="Întâlnirile"
     ></q-tab>
   </q-tabs>
   <q-tab-panels v-model="tabs">
@@ -29,91 +29,101 @@
         <h2>
           {{
             selectedUser.isAuthorized == "pending"
-              ? "Pending"
+              ? "În așteptare"
               : selectedUser.isAuthorized == true
-              ? "Authorized"
-              : "Rejected"
+              ? "Autorizat"
+              : "Refuzat"
           }}
         </h2>
+
         <form class="form category-form home-only">
           <div v-if="selectedUser.name != ''" class="cate-list-home">
-            <label for="club"><b>Name:</b></label>
+            <label for="club"><b>Nume/Prenume:</b></label>
             <span>{{ selectedUser.name }}</span>
           </div>
-          <div v-if="selectedUser.clubName != ''" class="cate-list-home">
-            <label for="club"><b>Club:</b></label>
-            <span>{{ selectedUser.clubName }}</span>
+
+          <div v-if="selectedUser.email != ''" class="cate-list-home">
+            <label for="email"><b>E-mail:</b></label>
+            <span>{{ selectedUser.email }}</span>
+          </div>
+
+          <div v-if="selectedUser.phoneNumber != ''" class="cate-list-home">
+            <label for="telephone no."><b>Număr de telefon:</b></label>
+            <span>{{ selectedUser.phoneNumber }}</span>
+          </div>
+
+          <div v-if="selectedUser.etnic != ''" class="cate-list-home">
+            <label for="Etnic"><b>Etnie:</b></label>
+            <span>{{ selectedUser.etnic }}</span>
+          </div>
+
+          <div v-if="selectedUser.gender != ''" class="cate-list-home">
+            <label for="Gender"><b>Sex:</b></label>
+            <span>{{ selectedUser.gender }}</span>
           </div>
 
           <div v-if="selectedUser.dateOfBirth != ''" class="cate-list-home">
-            <label for="date"><b>Birth Date:</b></label>
+            <label for="date"><b>Data nașterii:</b></label>
             <span>{{
               selectedUser?.dateOfBirth
                 ? getBirthDate(selectedUser.dateOfBirth)
                 : ""
             }}</span>
           </div>
+
+          <div v-if="selectedUser.size != ''" class="cate-list-home">
+            <label for="Size"><b>Mărime tricou:</b></label>
+            <span>{{ selectedUser.size }}</span>
+          </div>
+
+          <div v-if="selectedUser.category != ''" class="cate-list-home">
+            <label for="Category"><b>Categorie:</b></label>
+            <span>{{ selectedUser.category }}</span>
+          </div>
+
+          <div v-if="selectedUser.region != ''" class="cate-list-home">
+            <label for="Region"><b>Zona:</b></label>
+            <span>{{ selectedUser.region }} </span>
+          </div>
+
+          <div v-if="selectedUser.state != ''" class="cate-list-home">
+            <label for="state"><b>Comunitate:</b></label>
+            <span>{{ selectedUser.state }}</span>
+          </div>
+
+          <div v-if="selectedUser.clubName != ''" class="cate-list-home">
+            <label for="club"><b>Clubul:</b></label>
+            <span>{{ selectedUser.clubName }}</span>
+          </div>
+
           <div class="cate-list-home">
             <label for="status"><b>Status:</b></label>
-            <span>{{ selectedUser.status ? "Active" : "InActive" }}</span>
+            <span>{{ selectedUser.status ? "Activ" : "InActiv" }}</span>
           </div>
           <div
             v-if="selectedUser.tagList.length > 0"
             class="cate-list-home chip-container"
           >
-            <label for="tags"><b>Specializations:</b></label>
+            <label for="tags"><b>Specializări:</b></label>
             <div v-if="selectedUser.tagList">
               <span v-for="(item, index) in selectedUser.tagList" :key="index">
                 {{ item }}
               </span>
             </div>
           </div>
-          <div v-if="selectedUser.phoneNumber != ''" class="cate-list-home">
-            <label for="telephone no."><b>Phone:</b></label>
-            <span>{{ selectedUser.phoneNumber }}</span>
-          </div>
-          <div v-if="selectedUser.state != ''" class="cate-list-home">
-            <label for="state"><b>Community:</b></label>
-            <span>{{ selectedUser.state }}</span>
-          </div>
-          <div v-if="selectedUser.region != ''" class="cate-list-home">
-            <label for="Region"><b>Area:</b></label>
-            <span>{{ selectedUser.region }} </span>
-          </div>
-          <div v-if="selectedUser.gender != ''" class="cate-list-home">
-            <label for="Gender"><b>Gender:</b></label>
-            <span>{{ selectedUser.gender }}</span>
-          </div>
-          <div v-if="selectedUser.etnic != ''" class="cate-list-home">
-            <label for="Etnic"><b>Ethnicity:</b></label>
-            <span>{{ selectedUser.etnic }}</span>
-          </div>
-          <div v-if="selectedUser.category != ''" class="cate-list-home">
-            <label for="Category"><b>Category:</b></label>
-            <span>{{ selectedUser.category }}</span>
-          </div>
-          <div v-if="selectedUser.size != ''" class="cate-list-home">
-            <label for="Size"><b>Size:</b></label>
-            <span>{{ selectedUser.size }}</span>
-          </div>
+
           <div v-if="selectedUser.Instructor != ''" class="cate-list-home">
-            <label for="Instructor"><b>Year Instructor:</b></label>
-            <span>{{ selectedUser.Instructor }}</span>
-          </div>
-          <div v-if="selectedUser.Ghid != ''" class="cate-list-home">
-            <label for="Ghid"><b>Year Ghid:</b></label>
-            <span>{{ selectedUser.Ghid }}</span>
-          </div>
-          <div v-if="selectedUser.masterGhid != ''" class="cate-list-home">
-            <label for="Master Ghid"><b>Year Master Ghid:</b></label>
-            <span>{{ selectedUser.masterGhid }}</span>
+            <label for="Instructor"><b>Anul investirii ca:</b></label>
+            <span><b>Instructor:</b> {{ selectedUser.Instructor }}</span>
+            <span><b>Ghid:</b> {{ selectedUser.Ghid }}</span>
+            <span><b>Master Ghid:</b> {{ selectedUser.masterGhid }}</span>
           </div>
         </form>
         <div
           v-if="selectedUser.status && selectedUser.teamList.length > 0"
           class="home-detail"
         >
-          <h2>Student List</h2>
+          <h2>Lista copiilor</h2>
           <div class="grid">
             <div
               class="grid-cell"
@@ -135,17 +145,60 @@
           ></q-btn>
         </div>
         <form class="form">
-          <h2>Edit Details</h2>
+          <h2>Editare informații</h2>
+
           <div class="cate-list">
             <q-input
               type="text"
-              v-model="dataUser.clubName"
-              placeholder="Club"
-              name="Club"
-              label="Club"
+              v-model="dataUser.name"
+              placeholder="Nume/Prenume"
+              name="name"
+              label="Nume/Prenume:"
               label-color="black"
             />
           </div>
+
+          <div class="cate-list">
+            <q-input
+              type="tel"
+              v-model="dataUser.phoneNumber"
+              placeholder="+40......."
+              name="phone number"
+              mask="+40 #### #####"
+              label="Număr de telefon:"
+              label-color="black"
+            />
+          </div>
+
+          <div class="cate-list">
+            <q-select
+              :options="['Romanian', 'Hungarian']"
+              label="Etnie:"
+              label-color="black"
+              v-model="dataUser.etnic"
+            />
+          </div>
+
+          <div>
+            <label for="Gender"><b>Sex:</b></label>
+            <div>
+              <q-radio
+                v-model="dataUser.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Male"
+                label="Masculin"
+              />
+              <q-radio
+                v-model="dataUser.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Female"
+                label="Femenin"
+              />
+            </div>
+          </div>
+
           <div class="cate-list">
             <label
               style="
@@ -155,7 +208,7 @@
                 font-size: 16px;
                 font-weight: 500;
               "
-              >Date of Birth</label
+              >Data nașterii:</label
             >
             <!-- <q-input
 
@@ -200,77 +253,73 @@
               </template>
             </q-input>
           </div>
+
+          <div class="cate-list">
+            <q-select
+              v-model="dataUser.size"
+              :options="sizeOptions"
+              label-color="black"
+              label="Mărime tricou:"
+            />
+          </div>
+
+          <div class="cate-list">
+            <q-select
+              v-model="dataUser.category"
+              label="Categorie:"
+              label-color="black"
+              :options="['Licurici', 'Companioni', 'Exploratori']"
+            />
+          </div>
+
+          <div class="cate-list">
+            <q-input
+              type="text"
+              v-model="dataUser.region"
+              placeholder="ex. Târgu Mureș"
+              label="Zona:"
+              label-color="black"
+            />
+          </div>
+
+          <div class="cate-list">
+            <q-input
+              type="text"
+              v-model="dataUser.state"
+              placeholder="Comunitate"
+              label="Comunitate:"
+              label-color="black"
+            />
+          </div>
+
+          <div class="cate-list">
+            <q-input
+              type="text"
+              v-model="dataUser.clubName"
+              placeholder="Clubul"
+              name="Club"
+              label="Clubul:"
+              label-color="black"
+            />
+          </div>
+
           <div class="cate-list">
             <q-input
               type="text"
               v-model="tagsInput"
               placeholder="Comma seperated"
               name="tags"
-              label="Speicalizations you can teach (Max 5)"
+              label="Specializări (max 5):"
               label-color="black"
             />
           </div>
 
-          <div class="cate-list">
-            <q-input
-              type="tel"
-              v-model="dataUser.phoneNumber"
-              placeholder="+40......."
-              name="phone number"
-              mask="+40 #### #####"
-              label="Phone Number"
-              label-color="black"
-            />
-          </div>
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.state"
-              placeholder="Community Name"
-              label="Community"
-              label-color="black"
-            />
-          </div>
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.region"
-              placeholder="Enter Area Name"
-              label="Area"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-select
-              :options="['Romanian', 'Hungarian']"
-              label="Ethnicity"
-              label-color="black"
-              v-model="dataUser.etnic"
-            />
-          </div>
-          <div class="cate-list">
-            <q-select
-              v-model="dataUser.category"
-              label="Category"
-              label-color="black"
-              :options="['Licurici', 'Companioni', 'Exploratori']"
-            />
-          </div>
-          <div class="cate-list">
-            <q-select
-              v-model="dataUser.size"
-              :options="sizeOptions"
-              label-color="black"
-              label="Size"
-            />
-          </div>
           <div class="cate-list">
             <q-input
               type="text"
               v-model="dataUser.Instructor"
               label-color="black"
-              label="Year of investment as Instructor"
+              label="Anul investirii ca Instructor:"
               placeholder="YYYY"
               name="Instructor"
               mask="####"
@@ -281,7 +330,7 @@
               type="text"
               v-model="dataUser.Ghid"
               placeholder="YYYY"
-              label="Year of investment as Ghid"
+              label="Anul investirii ca Ghid:"
               label-color="black"
               mask="####"
             />
@@ -293,7 +342,7 @@
               placeholder="YYYY"
               mask="####"
               label-color="black"
-              label="Year of investment as Master Guide"
+              label="Anul investirii ca Master Ghid:"
             />
           </div>
           <div
@@ -303,53 +352,36 @@
               padding-right: 2rem;
               margin: 1rem 0;
             "
-          >
+          ></div>
+
+          <div>
+            <label for="status"><b>Status:</b></label>
             <div>
-              <label for="status"><b>Status:</b></label>
-              <div>
-                <q-radio
-                  v-model="dataUser.status"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  :val="true"
-                  label="Active"
-                />
-                <q-radio
-                  v-model="dataUser.status"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  :val="false"
-                  label="InActive"
-                />
-              </div>
-            </div>
-            <div>
-              <label for="Gender"><b>Gender:</b></label>
-              <div>
-                <q-radio
-                  v-model="dataUser.gender"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  val="Male"
-                  label="Male"
-                />
-                <q-radio
-                  v-model="dataUser.gender"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  val="Female"
-                  label="Female"
-                />
-              </div>
+              <q-radio
+                v-model="dataUser.status"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                :val="true"
+                label="Activ"
+              />
+              <q-radio
+                v-model="dataUser.status"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                :val="false"
+                label="InActiv"
+              />
             </div>
           </div>
+
           <div v-if="dataUser.status" class="cate-list">
             <div
               class="flex"
               style="justify-content: flex-end; padding: 0 30%"
             ></div>
+
             <div style="flex-wrap: nowrap" class="flex justify-space-between">
-              <label for="list"><b>Team Members:</b></label>
+              <label for="list"><b>Lista copiilor:</b></label>
               <q-btn @click="addMember" type="button" round color="purple"
                 >+</q-btn
               >
@@ -387,7 +419,7 @@
               @click="submit"
               color="purple"
               class="signupbtn"
-              >Submit</q-btn
+              >Trimite</q-btn
             >
           </div>
         </form>
@@ -397,7 +429,7 @@
       <div class="container">
         <div class="attendance-container">
           <div class="attendance-summary">
-            <h5 style="font-size: 18px"><span>Summary</span></h5>
+            <h5 style="font-size: 18px"><span>Prezența</span></h5>
             <div v-for="(student, index) in listOfAttendance" :key="index">
               <div class="flex justify-space-around">
                 <span>
@@ -425,19 +457,19 @@
           <q-table
             v-if="selectedUser.eventList?.length > 0"
             style="width: 80%"
-            title="Event List"
+            title="Lista întâlnirilor"
             :rows="selectedUser.eventList"
             :columns="[
               {
                 name: 'name',
-                label: 'Event Name',
+                label: 'Tema întâlnirii',
                 required: true,
                 align: 'center',
                 field: (item) => item.name,
               },
               {
                 name: 'date',
-                label: 'Date of Event',
+                label: 'Data întâlnirii',
                 required: true,
                 align: 'center',
                 field: (item) => getBirthDate(item.date),
@@ -449,7 +481,7 @@
             @row-click="showEventDetails"
           />
           <div v-else style="width: 60%" class="flex justify-center">
-            This user does not have any events
+            Acest utilizator nu are nicio întâlnirea inregistrată
           </div>
         </div>
       </div>

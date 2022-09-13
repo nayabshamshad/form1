@@ -19,7 +19,7 @@
         type="button"
         @click="logOut"
         class="btn"
-        >Sign Out</q-btn
+        >Deconectare</q-btn
       >
       <q-btn
         no-caps
@@ -34,7 +34,7 @@
         @click="$router.push('/')"
         class="btn"
       >
-        Dashboard
+        Panou de bord
       </q-btn>
       <q-btn
         no-caps
@@ -50,7 +50,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-        Events
+        Întâlniri
       </q-btn>
     </div>
   </div>
@@ -75,7 +75,7 @@
         type="button"
         class="btn"
       >
-        Sign In
+        Conectare
       </q-btn>
       <q-btn
         v-if="$route.path != '/sign-up'"
@@ -86,7 +86,7 @@
         @click="$router.push('/sign-up')"
         class="btn"
       >
-        Sign Up
+        Înregistrare
       </q-btn>
     </div>
   </div>
@@ -102,15 +102,15 @@
     <div v-else></div>
     <div class="flex admin-nav">
       <button class="heading" @click="$router.push('/?q=approved')">
-        Approved
+        Aprobat
       </button>
       <button class="heading" @click="$router.push('/?q=pending')">
-        Pending
+        În așteptare
       </button>
       <button class="heading" @click="$router.push('/?q=declined')">
-        Declined
+        Refuzat
       </button>
-      <button class="heading" @click="$router.push('/?q=date')">Date</button>
+      <button class="heading" @click="$router.push('/?q=date')">Data</button>
     </div>
     <div>
       <q-btn
@@ -121,7 +121,7 @@
         type="button"
         @click="logOut"
         class="btn"
-        >Sign Out</q-btn
+        >Deconectare</q-btn
       >
       <q-btn
         no-caps
@@ -137,7 +137,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-        Events
+        Întâlnirile
       </q-btn>
     </div>
   </div>

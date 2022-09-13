@@ -1,15 +1,10 @@
 <template>
   <div class="container">
     <form class="form" autocomplete="off">
-      <h2>Reset Password</h2>
+      <h2>Resetarea parolei</h2>
       <div class="cate-list">
-        <label for="pwd"><b>Password</b></label>
-        <q-input
-          type="password"
-          placeholder="Enter Password"
-          name="pwd"
-          v-model="newPass"
-        />
+        <label for="pwd"><b>Parola</b></label>
+        <q-input type="password" name="pwd" v-model="newPass" />
       </div>
       <div class="btn1">
         <q-btn
@@ -18,7 +13,7 @@
           type="button"
           color="purple"
           rounded
-          >Reset Password</q-btn
+          >Resetare parolă</q-btn
         >
       </div>
     </form>
@@ -55,7 +50,7 @@ export default {
       this.isSubmitting = true;
       let reset = await this.$store.dispatch("finalizeReset", {
         pass: this.newPass,
-        code: this.$route.query.oobCode
+        code: this.$route.query.oobCode,
       });
       if (reset.err) {
         this.isSubmitting = false;

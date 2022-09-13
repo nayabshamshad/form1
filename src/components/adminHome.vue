@@ -30,9 +30,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
+                <th>Nume/Prenume</th>
+                <th>Nr. de telefon</th>
+                <th>E-mail</th>
               </tr>
             </thead>
             <tbody>
@@ -73,10 +73,10 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th>Nume/Prenume</th>
+                <th class="hideMobile">Nr. de telefon</th>
+                <th>E-mail</th>
+                <th>Acțiune</th>
               </tr>
             </thead>
             <tbody>
@@ -135,9 +135,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Email</th>
+                <th>Nume/Prenume</th>
+                <th class="hideMobile">Nr. de telefon</th>
+                <th>E-mail</th>
               </tr>
             </thead>
             <tbody>

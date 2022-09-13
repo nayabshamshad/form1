@@ -2,10 +2,10 @@
   <div class="flex justify-center waiting-container">
     <q-card style="width: 100%; height: 100%" class="flex justify-center">
       <q-card-section>
-        <h2>Request Denied</h2>
+        <h2>Cerere respinsă</h2>
         <p>
-          Your request has been declined, however you can ask the admins to
-          reconsider your request.
+          Cererea ta a fost respinsă, dacă crezi ca este o greșeală, poți
+          retrimite o cerere administratorului.
         </p>
         <q-btn
           rounded
@@ -13,7 +13,7 @@
           :loading="isFetching"
           @click="requestReconsideration"
         >
-          Request
+          Retrimite
         </q-btn>
       </q-card-section>
     </q-card>

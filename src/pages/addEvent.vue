@@ -1,62 +1,55 @@
 <template>
   <div class="container">
     <form class="form">
-      <h2>Add Event</h2>
+      <h2>Adaugare întâlnire</h2>
       <div class="cate-list">
         <q-input
           v-model="eventName"
           type="text"
-          label="Event Name"
+          label="Tema întâlnirii:"
           label-color="black"
-          placeholder="Enter Name"
         />
       </div>
       <div class="cate-list">
-        <label style="font-size: 16px">Event Date</label>
+        <label style="font-size: 16px">Data întâlnirii:</label>
         <!-- <q-input v-model="eventDate" mask="date" type="date"> </q-input> -->
         <q-input
-              filled
-              v-model="eventDateView"
-              mask="##/##/####"
-              @focus="openModal"
+          filled
+          v-model="eventDateView"
+          mask="##/##/####"
+          @focus="openModal"
+        >
+          <template v-slot:append>
+            <q-icon
+              @click="openModal"
+              ref="dateIcon"
+              name="event"
+              class="cursor-pointer"
             >
-              <template v-slot:append>
-                <q-icon
-                  @click="openModal"
-                  ref="dateIcon"
-                  name="event"
-                  class="cursor-pointer"
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="eventDate"
+                  @update:model-value="handleDateChange"
                 >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date
-                      v-model="eventDate"
-                      @update:model-value="handleDateChange"
-                    >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <q-input
-          label="Description"
+          label="Descriere (max. 50 de caractere)"
           v-model="eventDesc"
           type="text"
           label-color="black"
-          placeholder="Enter Description Here..."
           :rules="[
             (val) =>
               val.length <= 50 ||
@@ -65,9 +58,7 @@
         />
       </div>
       <div class="cate-list">
-        <label style="font-size: 16px; display: block">
-          Present Members:
-        </label>
+        <label style="font-size: 16px; display: block"> Prezența: </label>
         <div
           v-for="(user, i) in userData.teamList"
           :key="i"
@@ -93,11 +84,9 @@
         <div>
           <div>
             <label style="display: block; font-size: 16px; margin-bottom: 1rem"
-              >Upload Images (Max 3)</label
+              >Încarcă imaginile (max. 3)</label
             >
-            <q-btn color="purple" @click="openInput" round
-              >+</q-btn
-            >
+            <q-btn color="purple" @click="openInput" round>+</q-btn>
           </div>
           <input
             @change="handleImageUpload"
@@ -109,10 +98,15 @@
           />
         </div>
         <div v-if="previewImages.length > 0" class="img_holder">
-          <div class='add-img' v-for="(img, i)  in previewImages" :key="i" style="width: 30%">
+          <div
+            class="add-img"
+            v-for="(img, i) in previewImages"
+            :key="i"
+            style="width: 30%"
+          >
             <q-btn @click="removeImg(img)" color="red" round size="sm">-</q-btn>
             <img
-              style="width: 100%; cursor: pointer;"
+              style="width: 100%; cursor: pointer"
               class="add-event-img"
               :src="img"
               alt=""
@@ -121,7 +115,7 @@
           </div>
         </div>
         <div v-else style="height: 175px" class="flex justify-center">
-          Uploaded Images will show here.
+          Imaginiile incărcate vor apărea aici
         </div>
       </div>
       <div class="flex justify-center">
@@ -131,7 +125,7 @@
           :loading="isFetching"
           color="purple"
           @click="addEvent"
-          >Submit</q-btn
+          >Trimite</q-btn
         >
       </div>
     </form>
@@ -170,14 +164,13 @@ export default {
       errorDialog: false,
       error: "There was an unexpected error",
       attendanceList: [],
-      eventDateView: '02/08/2022',
+      eventDateView: "02/08/2022",
     };
   },
   methods: {
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();
-
     },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
@@ -185,14 +178,13 @@ export default {
       this.eventDateView = day + "/" + month + "/" + c.year;
     },
     openInput() {
-      if(this.previewImages.length < 3) {
-        this.$refs.imgInput.click()
-      }
-      else {
+      if (this.previewImages.length < 3) {
+        this.$refs.imgInput.click();
+      } else {
         this.$q.notify({
-          message: 'You cannot upload more than three images at a time',
-          color: 'red'
-        })
+          message: "You cannot upload more than three images at a time",
+          color: "red",
+        });
       }
     },
     async addEvent() {
@@ -281,7 +273,7 @@ export default {
       } else if (this.previewImages.length >= 3) {
         this.$q.notify({
           message: "You cannot upload more than 3 files",
-          color: 'red',
+          color: "red",
         });
       }
     },

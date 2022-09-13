@@ -1,38 +1,27 @@
 <template>
   <div class="container">
-    <h2>Sign Up</h2>
+    <h2>Înregistrare</h2>
     <form class="form" @submit.prevent="submit">
-      <p>Please fill in this form to create an account.</p>
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="emailInput"
-          placeholder="Enter Email"
-          name="email"
-          label="Email Address"
-          label-color="black"
-        />
-      </div>
       <div class="cate-list">
         <q-input
           v-model="firstName"
           type="text"
-          placeholder="Enter First Name"
           name="F-name"
-          label="First Name"
+          label="Nume"
           label-color="black"
         />
       </div>
+
       <div class="cate-list">
         <q-input
           type="text"
-          label="Last Name"
+          label="Prenume"
           label-color="black"
           v-model="lastName"
-          placeholder="Enter Last Name"
           name="L-name"
         />
       </div>
+
       <div class="cate-list">
         <q-input
           type="tel"
@@ -40,7 +29,17 @@
           placeholder="+40"
           name="phone number"
           mask="+40 #### #####"
-          label="Phone Number"
+          label="Număr de telefon"
+          label-color="black"
+        />
+      </div>
+
+      <div class="cate-list">
+        <q-input
+          type="text"
+          v-model="emailInput"
+          name="email"
+          label="Adresă de E-mail"
           label-color="black"
         />
       </div>
@@ -48,8 +47,7 @@
       <div class="cate-list">
         <q-input
           type="password"
-          placeholder="Enter Password"
-          label="Password"
+          label="Parolă"
           label-color="black"
           v-model="passInput"
           name="pwd"
@@ -62,7 +60,7 @@
           color="purple"
           @click="submit"
           type="button"
-          >Submit</q-btn
+          >Trimite</q-btn
         >
       </div>
     </form>
