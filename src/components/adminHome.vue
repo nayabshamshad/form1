@@ -74,7 +74,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th class="hideMobile">Phone</th>
+                <th>Phone</th>
                 <th>Email</th>
                 <th>Actions</th>
               </tr>
@@ -136,7 +136,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th class="hideMobile">Number</th>
+                <th>Number</th>
                 <th>Email</th>
               </tr>
             </thead>
