@@ -446,7 +446,7 @@ export default {
         this.teamList.splice(i, 1);
       } else {
         this.errorDialog = true;
-        this.error = "Must have at least one team member";
+        this.error = "Te rugăm să completezi lista cu copii.";
       }
     },
     async submit() {
@@ -460,7 +460,7 @@ export default {
       profile.teamList = this.teamList;
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
-          this.error = "You can not select more than five tags!";
+          this.error = "Nu poți să introduci mai mult de 5 specializări.";
           this.errorDialog = true;
           this.isSubmitting = false;
           return;
@@ -468,7 +468,7 @@ export default {
         if (profile.phoneNumber.length !== 14) {
           this.$q.notify({
             color: "red",
-            message: "Phone Number must be formatted correctly",
+            message: "Te rugăm să introduci număr de telefon valid",
           });
           this.isSubmitting = false;
           return;
@@ -483,7 +483,7 @@ export default {
       var err = false;
       if (profile.status) {
         if (profile.teamList.length < 1) {
-          this.error = "You need atleast one team member";
+          this.error = "Te rugăm să completezi lista cu copii.";
           this.errorDialog = true;
           this.isSubmitting = false;
           return;
@@ -497,12 +497,12 @@ export default {
       if (err) {
         this.isSubmitting = false;
         this.errorDialog = true;
-        this.error = "Please format your team member list correctly";
+        this.error = "Verificați lista cu copii.";
         return;
       }
       if (profile.tagList.length < 1) {
         this.errorDialog = true;
-        this.error = "You need atleast one tag";
+        this.error = "Te rugăm să introduci minim o specializare.";
         this.isSubmitting = false;
         return;
       }
@@ -517,7 +517,7 @@ export default {
         profile.size == ""
       ) {
         this.errorDialog = true;
-        this.error = "Please recheck your form and fill all details correctly";
+        this.error = "Te rugăm să reverifici datele introduse.";
         this.isSubmitting = false;
         return;
       }
@@ -528,7 +528,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Years must be formatted correctly",
+          message: "Formatul anului introdus este incorect",
         });
         this.isSubmitting = false;
         return;
@@ -547,7 +547,7 @@ export default {
         this.$q.notify({
           color: "red",
           message:
-            "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
+            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
         });
         this.isSubmitting = false;
         return;

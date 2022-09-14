@@ -53,7 +53,7 @@
           :rules="[
             (val) =>
               val.length <= 50 ||
-              'Please use maximum 50 characters in description',
+              'Descrierea nu poate fi mai lungă de 50 de caractere.',
           ]"
         />
       </div>
@@ -162,7 +162,7 @@ export default {
       isFetching: false,
       previewImages: [],
       errorDialog: false,
-      error: "There was an unexpected error",
+      error: "Te rugăm să reverifici datele introduse. ",
       attendanceList: [],
       eventDateView: "02/08/2022",
     };
@@ -182,7 +182,7 @@ export default {
         this.$refs.imgInput.click();
       } else {
         this.$q.notify({
-          message: "You cannot upload more than three images at a time",
+          message: "Nu poți adauga mai mult de 3 (trei) fotografii.",
           color: "red",
         });
       }
@@ -199,7 +199,7 @@ export default {
       }
       const files = this.localImageList;
       if (files.length == 0) {
-        this.error = "You need to upload atleast one image!";
+        this.error = "Trebuie încărcată cel puțin o fotografie!";
         this.errorDialog = true;
         this.isFetching = false;
         return;
@@ -240,18 +240,18 @@ export default {
         }
         this.imageList = urlList;
       } else {
-        this.error = "Please select a valid number of images";
+        this.error = "Poți încărca între 1-3 fotografii.";
         this.errorDialog = true;
         this.isFetching = false;
         return;
       }
       if (this.eventDate == "") {
-        this.error = "Please select a date for the event";
+        this.error = "Te rugăm sa selectează data întâlnirii.";
         this.errorDialog = true;
         return;
       }
       if (this.eventDesc == "") {
-        this.error = "Please enter a description for the event";
+        this.error = "Te rugăm sa adaugi descrierea întâlnirii.";
         this.errorDialog = true;
         return;
       }
@@ -272,7 +272,7 @@ export default {
         this.localImageList.push(file);
       } else if (this.previewImages.length >= 3) {
         this.$q.notify({
-          message: "You cannot upload more than 3 files",
+          message: "Nu poți incărca mai mult de 3 fotografii.",
           color: "red",
         });
       }

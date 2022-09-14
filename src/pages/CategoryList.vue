@@ -5,7 +5,7 @@
 
       <div class="cate-list">
         <q-select
-          :options="['Romănă', 'Maghiară']"
+          :options="['Română', 'Maghiară']"
           label="Etnie"
           label-color="black"
           v-model="userInfo.etnic"
@@ -290,7 +290,7 @@ export default {
         "XX-Large",
         "XXX-Large",
       ],
-      error: "There was an unexpected error",
+      error: "Te rugăm să reverifici datele introduse.",
       errorDialog: false,
     };
   },
@@ -314,7 +314,7 @@ export default {
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
-          this.error = "You can not select more than five tags!";
+          this.error = "Nu poți să introduci mai mult de 5 specializări.";
           this.errorDialog = true;
           this.isSubmitting = false;
           return;
@@ -338,12 +338,12 @@ export default {
       if (err) {
         this.isSubmitting = false;
         this.errorDialog = true;
-        this.error = "Please format your team member list correctly";
+        this.error = "Verificați lista cu copii";
         return;
       }
       if (profile.tagList.length < 1) {
         this.errorDialog = true;
-        this.error = "You need atleast one tag";
+        this.error = "Te rugăm să introduci minim o specializare";
         this.isSubmitting = false;
         return;
       }
@@ -358,7 +358,7 @@ export default {
         profile.size == ""
       ) {
         this.errorDialog = true;
-        this.error = "Please recheck your form and fill all details correctly";
+        this.error = "Te rugăm să reverifici datele introduse.";
         this.isSubmitting = false;
         return;
       }
@@ -369,7 +369,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Years must be formatted correctly",
+          message: "Formatul anului introdus este incorect",
         });
         this.isSubmitting = false;
         return;
@@ -388,7 +388,7 @@ export default {
         this.$q.notify({
           color: "red",
           message:
-            "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
+            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
         });
         this.isSubmitting = false;
         return;
@@ -406,7 +406,7 @@ export default {
         this.userInfo.teamList.splice(i, 1);
       } else {
         this.errorDialog = true;
-        this.error = "Must have at least one team member";
+        this.error = "Te rugăm să completezi lista cu copii.";
       }
     },
   },

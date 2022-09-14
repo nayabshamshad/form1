@@ -117,7 +117,7 @@ export default {
       } else {
         this.$q.notify({
           message:
-            "Password reset email has been sent, please be sure to check your spam folder as well",
+            "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
           color: "green",
         });
         setTimeout(() => {

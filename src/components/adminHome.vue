@@ -406,7 +406,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: "Please set a valid date",
+          message: "Te rugăm să introduci corect data.",
         });
         return;
       }

@@ -89,14 +89,14 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Please enter a valid name",
+          message: "Te rugăm să introduci un nume valid.",
         });
         this.isSubmitting = false;
         return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-          message: "Phone Number must be formatted correctly",
+          message: "Te rugăm să introduci un număr de telefon valid.",
           color: "red",
         });
         this.isSubmitting = false;

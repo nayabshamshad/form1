@@ -42,7 +42,7 @@ export default {
       }
       if (this.newPass.length < 6) {
         this.$q.notify({
-          message: "Password must be atleast 6 characters long",
+          message: "Parola trebuie să aibă minim 6 caaractere.",
           color: "red",
         });
         return;
@@ -57,8 +57,7 @@ export default {
         return;
       } else {
         this.$q.notify({
-          message:
-            "Password Reset Complete, you are being redirected to login page",
+          message: "Parola a fost resetata, te rugăm să te autentifici.",
           color: "green",
         });
         this.$router.push("/");
