@@ -362,22 +362,28 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      // if (
-      //   profile.Instructor.length !== 4 ||
-      //   profile.Ghid.length !== 4 ||
-      //   profile.masterGhid.length !== 4
-      // ) {
-      //   this.$q.notify({
-      //     color: "red",
-      //     message: "Years must be formatted correctly",
-      //   });
-      //   this.isSubmitting = false;
-      //   return;
-      // }
       if (
-        profile.Instructor > profile.Ghid ||
-        profile.Ghid > profile.masterGhid ||
-        profile.Instructor > profile.masterGhid
+        (profile.Instructor.length !== 4 && profile.Instructor != "") ||
+        (profile.Ghid.length !== 4 && profile.Ghid != "") ||
+        (profile.masterGhid.length !== 4 && profile.masterGhid != "")
+      ) {
+        this.$q.notify({
+          color: "red",
+          message: "Years must be formatted correctly",
+        });
+        this.isSubmitting = false;
+        return;
+      }
+      if (
+        (profile.Instructor > profile.Ghid &&
+          profile.Instructor != "" &&
+          profile.Ghid != "") ||
+        (profile.Ghid > profile.masterGhid &&
+          profile.Ghid != "" &&
+          profile.masterGhid != "") ||
+        (profile.Instructor > profile.masterGhid &&
+          profile.instructor != "" &&
+          profile.masterGhid != "")
       ) {
         this.$q.notify({
           color: "red",
