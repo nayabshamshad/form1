@@ -242,7 +242,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">Alertă</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">

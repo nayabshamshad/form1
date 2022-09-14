@@ -387,7 +387,7 @@
           class="flex"
           style="justify-content: flex-end; padding: 0 30%"
         ></div>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">Alertă</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
