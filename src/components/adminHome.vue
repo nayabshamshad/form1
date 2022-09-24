@@ -1,24 +1,24 @@
 <template>
   <div class="container">
-    <!-- <q-tabs
-      active-color="red"
-      indicator-color="red"
-      class="text-black"
-      v-model="tabs"
-      no-caps
-    >
-      <q-tab name="approved" label="Approved"></q-tab>
-      <q-tab name="pending" label="Pending"></q-tab>
-      <q-tab name="declined" label="Declined"></q-tab>
-      <q-tab name="date" label="Edit Date"></q-tab>
-    </q-tabs> -->
     <q-tab-panels v-model="tabs">
       <!-- Approved User Listing -->
       <q-tab-panel name="approved">
         <div
           class="flex"
-          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+          style="
+            justify-content: flex-end;
+            max-width: 90%;
+            margin-bottom: 2rem;
+            gap: 5%;
+          "
         >
+          <div style="width: 30%; min-width: 150px">
+            <q-select
+              v-if="$store.getters.userData.role == 'admin'"
+              :options="departmentList"
+              v-model="departmentName"
+            ></q-select>
+          </div>
           <q-btn
             round
             @click="exportFile(approvedUsers, 'Approved')"
@@ -60,8 +60,20 @@
       <q-tab-panel name="pending">
         <div
           class="flex"
-          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+          style="
+            justify-content: flex-end;
+            max-width: 90%;
+            gap: 5%;
+            margin-bottom: 2rem;
+          "
         >
+          <div style="width: 30%; min-width: 150px">
+            <q-select
+              v-if="$store.getters.userData.role == 'admin'"
+              :options="departmentList"
+              v-model="departmentName"
+            ></q-select>
+          </div>
           <q-btn
             round
             @click="exportFile(pendingUsers, 'Pending')"
@@ -122,8 +134,20 @@
       <q-tab-panel name="declined">
         <div
           class="flex"
-          style="justify-content: flex-end; max-width: 90%; margin-bottom: 2rem"
+          style="
+            justify-content: flex-end;
+            max-width: 90%;
+            gap: 5%;
+            margin-bottom: 2rem;
+          "
         >
+          <div style="width: 30%; min-width: 150px">
+            <q-select
+              v-if="$store.getters.userData.role == 'admin'"
+              :options="departmentList"
+              v-model="departmentName"
+            ></q-select>
+          </div>
           <q-btn
             round
             @click="exportFile(declinedUsers, 'Declined')"
@@ -184,8 +208,120 @@
           </div>
         </div>
       </q-tab-panel>
+      <!-- Departments Listing -->
+      <q-tab-panel name="departments">
+        <div
+          class="flex"
+          style="
+            justify-content: flex-end;
+            max-width: 90%;
+            gap: 5%;
+            margin-bottom: 2rem;
+          "
+        >
+          <q-btn
+            no-caps
+            rounded
+            color="secondary"
+            @click="showDepartmentDialog = true"
+            >Add Department</q-btn
+          >
+          <q-btn
+            round
+            @click="exportFile(departmentUsers, 'Departments')"
+            color="green"
+            icon="download"
+          ></q-btn>
+        </div>
+        <div class="table-container">
+          <table class="user-list-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Department</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(user, i) in departmentUsers" :key="i">
+                <td @click="viewUser(user)">{{ user.name }}</td>
+                <td class="hideMobile" @click="viewUser(user)">
+                  {{ user.phoneNumber }}
+                </td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="viewUser(user)" class="last">
+                  {{ user.departmentName }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </q-tab-panel>
     </q-tab-panels>
   </div>
+  <q-dialog v-model="showDepartmentDialog">
+    <q-card style="width: 100%; min-width: 300px">
+      <q-card-section
+        class="q-px-md p-py-lg flex column department-input-container"
+      >
+        <div><h4>Add Department</h4></div>
+        <div>
+          <q-input
+            color="black"
+            label-color="black"
+            label="Department Name"
+            v-model="departmentDetails.departmentName"
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            color="black"
+            label-color="black"
+            label="User Name"
+            v-model="departmentDetails.name"
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            color="black"
+            label-color="black"
+            label="Email"
+            type="email"
+            v-model="departmentDetails.email"
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            color="black"
+            label-color="black"
+            label="Phone Number"
+            v-model="departmentDetails.phone"
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            color="black"
+            label-color="black"
+            label="Password"
+            type="password"
+            v-model="departmentDetails.password"
+          ></q-input>
+        </div>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn v-close-popup flat color="secondary" no-caps> Close </q-btn>
+        <q-btn
+          no-caps
+          @click="submitDepartment"
+          :loading="loading"
+          color="secondary"
+          >Submit</q-btn
+        >
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -194,25 +330,52 @@ import writeXlsxFile from "write-excel-file";
 export default {
   mounted() {
     if (this.$route?.query?.q) {
-      this.tabs = this.$route?.query?.q;
+      if (
+        this.$route?.query?.q == "departments" &&
+        this.$store.getters.userData?.role != "admin"
+      ) {
+        this.tabs = "approved";
+      } else {
+        this.tabs = this.$route?.query?.q;
+      }
     }
     this.getData();
     if (this.dateList) {
       this.dateModel = this.dateList;
+    }
+    if (this.$store.getters.userData?.role == "department") {
+      this.departmentName = this.$store.getters.userData?.departmentName;
     }
   },
   data() {
     return {
       tabs: "approved",
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
+      loading: false,
       dateSetting: false,
+      departmentName: "All",
+      showDepartmentDialog: false,
+      departmentDetails: {
+        name: "",
+        phone: "",
+        password: "",
+        email: "",
+        departmentName: "",
+      },
     };
   },
   watch: {
     "$route.query.q": {
       handler: function () {
         if (this.$route?.query?.q) {
-          this.tabs = this.$route.query.q;
+          if (
+            this.$route?.query?.q == "departments" &&
+            this.$store.getters.userData?.role != "admin"
+          ) {
+            this.tabs = "approved";
+          } else {
+            this.tabs = this.$route.query.q;
+          }
         } else {
           this.tabs = "approved";
         }
@@ -232,6 +395,31 @@ export default {
     },
   },
   methods: {
+    async submitDepartment() {
+      // let err = [];
+      // for (const key in this.departmentDetails) {
+      //   if (this.departmentDetails[key] == "") {
+      //     err.push(key);
+      //   }
+      // }
+      // if (err.length > 0) {
+      //   this.$q.notify({
+      //     message: `The following inputs cannot be left empty: ${err.join(
+      //       ", "
+      //     )}`,
+      //     color: "red",
+      //   });
+      //   return;
+      // }
+      // if (this.departmentDetails.password.length < 6) {
+      //   this.$q.notify({
+      //     message: "Password must be atleast 6 characters long",
+      //     color: "red",
+      //   });
+      //   return;
+      // }
+      await this.$store.dispatch("createNewDepartment", this.departmentDetails);
+    },
     mailUser(email) {
       if (email != "") {
         window.open(`mailto: ${email}`);
@@ -416,23 +604,79 @@ export default {
     },
   },
   computed: {
+    departmentUsers() {
+      return this.$store.getters.userList.filter((x) => {
+        return x.role == "department";
+      });
+    },
     userList() {
       return this.$store.getters.userList;
     },
     approvedUsers() {
-      return this.userList.filter((x) => {
-        return x.isAuthorized == true && x.role != "admin";
+      const arr = this.userList.filter((x) => {
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == true &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == true &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
       });
+      return arr;
     },
     declinedUsers() {
       return this.userList.filter((x) => {
-        return x.isAuthorized == false && x.role != "admin";
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == false &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == false &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
       });
     },
     pendingUsers() {
       return this.userList.filter((x) => {
-        return x.isAuthorized == "pending" && x.role != "admin";
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == "pending" &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == "pending" &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
       });
+    },
+    departmentList() {
+      let arr = this.$store.getters.userList
+        .filter((x) => {
+          return x.role == "department";
+        })
+        .map((x) => {
+          return x.departmentName;
+        });
+      arr.unshift("All");
+      return arr;
     },
     dateList() {
       return this.$store.getters.dateList;

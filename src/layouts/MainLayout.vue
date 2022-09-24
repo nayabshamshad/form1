@@ -1,5 +1,12 @@
 <template>
-  <div class="top-bar" v-if="isAuthenticated && userData?.role != 'admin'">
+  <div
+    class="top-bar"
+    v-if="
+      isAuthenticated &&
+      userData?.role != 'admin' &&
+      userData?.role != 'department'
+    "
+  >
     <q-btn
       no-caps
       @click="$router.go(-1)"
@@ -90,7 +97,13 @@
       </q-btn>
     </div>
   </div>
-  <div class="top-bar" v-else-if="isAuthenticated && userData?.role == 'admin'">
+  <div
+    class="top-bar"
+    v-else-if="
+      isAuthenticated &&
+      (userData?.role == 'admin' || userData?.role == 'department')
+    "
+  >
     <q-btn
       no-caps
       @click="$router.go(-1)"
@@ -111,6 +124,9 @@
         Declined
       </button>
       <button class="heading" @click="$router.push('/?q=date')">Date</button>
+      <button class="heading" @click="$router.push('/?q=departments')">
+        Departments
+      </button>
     </div>
     <div>
       <q-btn

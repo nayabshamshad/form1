@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
 import { Notify } from "quasar";
+import axios from "axios";
 
 export default store(function () {
   const Store = createStore({
@@ -233,6 +234,7 @@ export default store(function () {
             isUpdated: false,
             uid: auth.currentUser.uid,
             email: payload.email,
+            department: payload.department,
           })
           .catch((err) => {
             error = true;
@@ -264,6 +266,16 @@ export default store(function () {
           return;
         }
         this.$router.push("/category-list");
+      },
+      async createNewDepartment({}, payload) {
+        await axios
+          .post("http://localhost:9090/abc", payload)
+          .then((res) => {
+            console.log(1, res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
       async updateUserProfile({ state, commit, dispatch }, payload) {
         await firestore.doc(state.currentUser.uid).update(payload);

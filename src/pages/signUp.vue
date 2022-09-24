@@ -35,13 +35,20 @@
       </div>
       <div class="cate-list">
         <q-input
-          type="tel"
-          v-model="phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label="Phone Number"
+          type="text"
+          label="Last Name"
           label-color="black"
+          v-model="lastName"
+          placeholder="Enter Last Name"
+          name="L-name"
+        />
+      </div>
+      <div class="cate-list">
+        <q-select
+          v-model="departmentName"
+          label="Department"
+          label-color="black"
+          :options="departmentList"
         />
       </div>
 
@@ -79,9 +86,12 @@ export default {
       passInput: "",
       isSubmitting: false,
       phoneNumber: "+40",
+      departmentName: "",
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     async submit() {
       if (this.isSubmitting) {
@@ -109,9 +119,24 @@ export default {
         email: this.emailInput,
         password: this.passInput,
         phoneNumber: this.phoneNumber,
+        department: this.departmentName,
       };
       await this.$store.dispatch("signUp", form);
       this.isSubmitting = false;
+    },
+    async getData() {
+      await this.$store.dispatch("getUserList");
+    },
+  },
+  computed: {
+    departmentList() {
+      return this.$store.getters.userList
+        .filter((x) => {
+          return x.role === "department";
+        })
+        .map((x) => {
+          return x.departmentName;
+        });
     },
   },
 };
