@@ -256,6 +256,7 @@ export default store(function () {
             uid: auth.currentUser.uid,
             email: payload.email,
             department: payload.department,
+            imgUrl: payload.imgUrl,
           })
           .catch((err) => {
             error = true;
@@ -356,10 +357,10 @@ export default store(function () {
             status: "",
             category: "",
             size: "",
-            isUpdated: false,
+            isUpdated: true,
             uid: auth.currentUser.uid,
             email: payload.email,
-            departmentName: payload.department,
+            departmentName: payload.name,
           })
           .catch((err) => {
             error = true;

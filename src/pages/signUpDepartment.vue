@@ -35,12 +35,13 @@
       </div>
       <div class="cate-list">
         <q-input
-          v-model="departmentName"
-          label="Department"
+          mask="+40 #### #####"
+          color="black"
+          label="Phone Number"
           label-color="black"
-        />
+          v-model="phoneNumber"
+        ></q-input>
       </div>
-
       <div class="cate-list">
         <q-input
           type="password"
@@ -79,16 +80,7 @@ export default {
       phoneNumber: "",
     };
   },
-  async mounted() {
-    this.$q.loading.show({
-      message: "Verifying your identity",
-    });
-    await this.$store.dispatch("getDepartmentPassword");
-    if (this.$route?.query?.pass !== this.departmentPassword) {
-      this.$router.push("/");
-    }
-    this.$q.loading.hide();
-  },
+  async mounted() {},
   methods: {
     async submit() {
       if (this.isSubmitting) {

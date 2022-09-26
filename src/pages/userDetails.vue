@@ -19,6 +19,7 @@
             round
             @click="isEdit = !isEdit"
             color="green"
+            v-show="selectedUser.role !== 'department'"
             icon="edit"
           ></q-btn>
         </div>
@@ -28,21 +29,34 @@
         ></div>
         <h2>
           {{
-            selectedUser.isAuthorized == "pending"
+            selectedUser.isAuthorized === "pending"
               ? "Pending"
+              : selectedUser.role === "department"
+              ? "Department Admin"
               : selectedUser.isAuthorized == true
               ? "Authorized"
               : "Rejected"
           }}
         </h2>
+        <div class="add-img" v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''">
+          <img :src="selectedUser.imgUrl" />
+        </div>
         <form class="form category-form home-only">
           <div v-if="selectedUser.name != ''" class="cate-list-home">
             <label for="club"><b>Name:</b></label>
             <span>{{ selectedUser.name }}</span>
           </div>
+          <div v-if="selectedUser.email !== ''" class="cate-list-home">
+            <label for="club"><b>Name:</b></label>
+            <span  style="padding-left: 0; word-wrap: break-word;" class="text-primary cursor-pointer link-text" @click="mailUser(selectedUser.email)">{{ selectedUser.email }}</span>
+          </div>
           <div v-if="selectedUser.clubName != ''" class="cate-list-home">
             <label for="club"><b>Club:</b></label>
             <span>{{ selectedUser.clubName }}</span>
+          </div>
+          <div v-if="selectedUser.role !== 'department'" class="cate-list-home">
+            <label for="club"><b>Department:</b></label>
+            <span>{{ selectedUser.department }}</span>
           </div>
 
           <div v-if="selectedUser.dateOfBirth != ''" class="cate-list-home">
@@ -53,7 +67,7 @@
                 : ""
             }}</span>
           </div>
-          <div class="cate-list-home">
+          <div v-if="selectedUser.role !== 'department'" class="cate-list-home">
             <label for="status"><b>Status:</b></label>
             <span>{{ selectedUser.status ? "Active" : "InActive" }}</span>
           </div>
@@ -109,8 +123,47 @@
             <span>{{ selectedUser.masterGhid }}</span>
           </div>
         </form>
+        <div class="table-container">
+          <table
+            v-if="
+              selectedUser.role === 'department' &&
+              departmentUserList.length > 0
+            "
+            class="user-list-table"
+          >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(user, i) in departmentUserList" :key="i">
+                <td>{{ user.name }}</td>
+                <td class="hideMobile" @click="callUser(user.phoneNumber)">
+                  {{ user.phoneNumber }}
+                </td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="mailUser(user.email)" class="hideMobile last">
+                  {{ user.email }}
+                </td>
+                <td @click="mailUser(user.email)" class="showMobile last">
+                  <q-icon name="email"></q-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div
-          v-if="selectedUser.status && selectedUser.teamList.length > 0"
+          v-if="
+            selectedUser.status &&
+            selectedUser.teamList.length > 0 &&
+            selectedUser.role !== 'department'
+          "
           class="home-detail"
         >
           <h2>Student List</h2>
@@ -516,6 +569,16 @@ export default {
     }
   },
   methods: {
+    callUser(number) {
+      if (number != "") {
+        window.open(`tel: ${number}`);
+      }
+    },
+    mailUser(email) {
+      if (email != "") {
+        window.open(`mailto: ${email}`);
+      }
+    },
     exportFile(fileName) {
       let arr = [
         [],
@@ -697,6 +760,15 @@ export default {
     },
   },
   computed: {
+    departmentUserList() {
+      if (this.selectedUser.role === "department") {
+        return this.$store.getters.userList.filter((x) => {
+          return x.department === this.selectedUser.departmentName;
+        });
+      } else {
+        return [];
+      }
+    },
     selectedUser() {
       return this.$store.getters.selectedUser;
     },

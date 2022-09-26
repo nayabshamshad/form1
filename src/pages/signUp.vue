@@ -41,7 +41,15 @@
           :options="departmentList"
         />
       </div>
-
+      <div class="cate-list">
+        <q-input
+          mask="+40 #### #####"
+          color="black"
+          label="Phone Number"
+          label-color="black"
+          v-model="phoneNumber"
+        ></q-input>
+      </div>
       <div class="cate-list">
         <q-input
           type="password"
@@ -51,6 +59,32 @@
           v-model="passInput"
           name="pwd"
         />
+        <input
+          ref="imgInput"
+          accept="image/*"
+          @change="handleImageUpload"
+          type="file"
+          style="display: none"
+        />
+        <div class="profile-img-holder q-my-lg">
+          <q-card-actions align="right" class="q-mb-md">
+            <q-btn rounded @click="selectImage" no-caps color="secondary"
+              >Add Profile Picture</q-btn
+            >
+          </q-card-actions>
+          <div
+            v-if="previewImage"
+            class="add-img q-mx-auto"
+
+          >
+            <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
+            <img
+              class="add-event-img"
+              :src="previewImage"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
       <div class="btn1">
         <q-btn
@@ -67,6 +101,7 @@
 </template>
 
 <script>
+import { storage } from "../store/firebase.js";
 export default {
   data() {
     return {
@@ -78,17 +113,46 @@ export default {
       phoneNumber: "+40",
       departmentName: "",
       imgUrl: "",
+      previewImage: "",
+      file: null,
     };
   },
   mounted() {
     this.getData();
   },
   methods: {
+    handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    selectImage() {
+      this.$refs.imgInput.click();
+    },
+    removeImg() {
+      this.imgUrl = "";
+      this.previewImage = "";
+      this.file = null;
+    },
     async submit() {
       if (this.isSubmitting) {
         return;
       }
       this.isSubmitting = true;
+      if (this.previewImage !== "") {
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.imgUrl = url;
+          });
+      }
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
@@ -111,6 +175,7 @@ export default {
         password: this.passInput,
         phoneNumber: this.phoneNumber,
         department: this.departmentName,
+        imgUrl: this.imgUrl,
       };
       await this.$store.dispatch("signUp", form);
       this.isSubmitting = false;

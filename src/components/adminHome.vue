@@ -224,7 +224,7 @@
             rounded
             color="secondary"
             @click="showDepartmentDialog = true"
-            >Add Department</q-btn
+            >Add</q-btn
           >
         </div>
         <div class="table-container">
@@ -256,23 +256,22 @@
     </q-tab-panels>
     <q-dialog v-model="showDepartmentDialog">
       <q-card class="q-px-md q-py-lg">
-        <q-card-section>
-          <h5>Set Department Password</h5>
-          <p>{{ departmentSignupLink }}</p>
-        </q-card-section>
-        <q-card-section>
-          <q-input v-model="departmentPassword"></q-input>
+        <q-card-section class="text-center">
+          <h5 class="q-mb-lg">You can add department admins using this link</h5>
+          <p @click="copyLink" class="text-primary link-text cursor-pointer">
+            {{ departmentLink }}
+          </p>
+          <q-card-actions align="right">
+            <q-btn @click="copyLink" no-caps color="secondary" flat
+              >Copy to Clipboard</q-btn
+            >
+          </q-card-actions>
         </q-card-section>
         <q-card-actions align="right">
           <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
-          <q-btn
-            rounded
-            flat
-            color="secondary"
-            @click="setDepartmentPassword"
-          ></q-btn>
-        </q-card-actions> </q-card
-    ></q-dialog>
+        </q-card-actions>
+      </q-card></q-dialog
+    >
   </div>
 </template>
 
@@ -342,6 +341,12 @@ export default {
     },
   },
   methods: {
+    copyLink() {
+      navigator.clipboard.writeText(this.departmentLink);
+      this.$q.notify({
+        message: "Text copied to clipboard",
+      });
+    },
     setDepartmentPassword() {
       this.$store.dispatch("setDepartmentPassword", this.departmentPassword);
     },
@@ -530,13 +535,6 @@ export default {
     },
   },
   computed: {
-    departmentSignupLink() {
-      return (
-        window.location.origin +
-        "/#/signup_department/?pass=" +
-        this.$store.getters.departmentPassword
-      );
-    },
     departmentUsers() {
       return this.$store.getters.userList.filter((x) => {
         return x.role == "department";
@@ -613,6 +611,9 @@ export default {
     },
     dateList() {
       return this.$store.getters.dateList;
+    },
+    departmentLink() {
+      return window.location.host + "/#/signup_department";
     },
   },
 };

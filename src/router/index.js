@@ -35,7 +35,7 @@ export default route(function ({ store }) {
         to.path != "/sign-in" &&
         to.path != "/sign-up" &&
         to.path != "/reset_password" &&
-        to.path != "/signup_department/"
+        to.name != "Create Department"
       ) {
         next("/sign-in");
       } else {
@@ -45,7 +45,7 @@ export default route(function ({ store }) {
       if (
         to.path == "/sign-in" ||
         to.path == "/sign-up" ||
-        to.path == "/signup_department/"
+        to.name == "Create Department"
       ) {
         if (
           store.getters.userData?.isUpdated &&
