@@ -221,11 +221,11 @@
         >
           <q-btn
             no-caps
-            rounded
+            round
             color="secondary"
             @click="showDepartmentDialog = true"
-            >Add</q-btn
-          >
+            icon="add"
+            />
         </div>
         <div class="table-container">
           <table class="user-list-table">
@@ -297,7 +297,6 @@ export default {
     if (this.$store.getters.userData?.role == "department") {
       this.departmentName = this.$store.getters.userData?.departmentName;
     }
-    this.departmentPassword = this.$store.getters.departmentPassword;
   },
   data() {
     return {
@@ -307,7 +306,6 @@ export default {
       dateSetting: false,
       departmentName: "All",
       showDepartmentDialog: false,
-      departmentPassword: "",
     };
   },
   watch: {
@@ -346,9 +344,6 @@ export default {
       this.$q.notify({
         message: "Text copied to clipboard",
       });
-    },
-    setDepartmentPassword() {
-      this.$store.dispatch("setDepartmentPassword", this.departmentPassword);
     },
     mailUser(email) {
       if (email != "") {
@@ -503,7 +498,6 @@ export default {
     },
     async getData() {
       await this.$store.dispatch("getUserList");
-      await this.$store.dispatch("getDepartmentPassword");
     },
     async approveUser(uid) {
       await this.$store.dispatch("approveUser", uid);

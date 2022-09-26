@@ -19,7 +19,6 @@ export default store(function () {
       dateList: {},
       userList: [],
       selectedUser: [],
-      departmentPassword: "",
     },
     getters: {
       selectedUser(state) {
@@ -47,14 +46,8 @@ export default store(function () {
       userList(state) {
         return state.userList;
       },
-      departmentPassword(state) {
-        return state.departmentPassword;
-      },
     },
     mutations: {
-      setDepartmentPassword(state, payload) {
-        state.departmentPassword = payload;
-      },
       setCurrentUser(state, payload) {
         state.currentUser = payload;
       },
@@ -87,20 +80,6 @@ export default store(function () {
       },
     },
     actions: {
-      setDepartmentPassword({ commit }, payload) {
-        firestore
-          .doc("departmentPassword")
-          .set({
-            pass: payload,
-          })
-          .then(() => {
-            commit("setDepartmentPassword", payload);
-            Notify.create({
-              message: "Department Pass changed successfully",
-              color: "green",
-            });
-          });
-      },
       async finalizeReset({}, payload) {
         let error = { err: false };
         await auth
@@ -512,14 +491,6 @@ export default store(function () {
           });
           commit("setUserList", userList);
         });
-      },
-      async getDepartmentPassword({ commit }) {
-        await firestore
-          .doc("departmentPassword")
-          .get()
-          .then((res) => {
-            commit("setDepartmentPassword", res.data().pass);
-          });
       },
       // Admin Functions
       async approveUser({ commit }, uid) {

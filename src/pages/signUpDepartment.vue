@@ -80,7 +80,6 @@ export default {
       phoneNumber: "",
     };
   },
-  async mounted() {},
   methods: {
     async submit() {
       if (this.isSubmitting) {
@@ -112,11 +111,6 @@ export default {
       };
       await this.$store.dispatch("signUpDepartment", form);
       this.isSubmitting = false;
-    },
-  },
-  computed: {
-    departmentPassword() {
-      return this.$store.getters.departmentPassword;
     },
   },
 };
