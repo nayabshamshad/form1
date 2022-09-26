@@ -19,6 +19,7 @@ export default store(function () {
       dateList: {},
       userList: [],
       selectedUser: [],
+      departmentPassword: "",
     },
     getters: {
       selectedUser(state) {
@@ -46,8 +47,14 @@ export default store(function () {
       userList(state) {
         return state.userList;
       },
+      departmentPassword(state) {
+        return state.departmentPassword;
+      },
     },
     mutations: {
+      setDepartmentPassword(state, payload) {
+        state.departmentPassword = payload;
+      },
       setCurrentUser(state, payload) {
         state.currentUser = payload;
       },
@@ -80,6 +87,20 @@ export default store(function () {
       },
     },
     actions: {
+      setDepartmentPassword({ commit }, payload) {
+        firestore
+          .doc("departmentPassword")
+          .set({
+            pass: payload,
+          })
+          .then(() => {
+            commit("setDepartmentPassword", payload);
+            Notify.create({
+              message: "Department Pass changed successfully",
+              color: "green",
+            });
+          });
+      },
       async finalizeReset({}, payload) {
         let error = { err: false };
         await auth
@@ -267,15 +288,109 @@ export default store(function () {
         }
         this.$router.push("/category-list");
       },
-      async createNewDepartment({}, payload) {
-        await axios
-          .post("http://localhost:9090/abc", payload)
-          .then((res) => {
-            console.log(1, res.data);
+      async signUpDepartment({ commit }, payload) {
+        var error = false;
+        await auth
+          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .then(() => {})
+          .catch((err) => {
+            error = true;
+            if (err.code == "auth/email-already-in-use") {
+              Notify.create({
+                message: "Email address already in use",
+                color: "red",
+              });
+            } else if (err.code == "auth/invalid-email") {
+              Notify.create({
+                message: "Please enter a valid email address",
+                color: "red",
+              });
+            } else if (err.code == "auth/weak-password") {
+              Notify.create({
+                message: "Password must be atleast 6 characters long",
+                color: "red",
+              });
+            } else {
+              Notify.create({
+                message: err.message,
+                color: "red",
+              });
+            }
+          });
+        if (error) {
+          return;
+        }
+        await auth.currentUser
+          .updateProfile({
+            displayName: payload.name,
           })
           .catch((err) => {
-            console.log(err);
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
           });
+        if (error) {
+          return;
+        }
+        await firestore
+          .doc(auth.currentUser.uid)
+          .set({
+            name: payload.name,
+            isAuthorized: true,
+            eventList: [],
+            teamList: [],
+            role: "department",
+            dateOfBirth: "",
+            Instructor: "",
+            Ghid: "",
+            masterGhid: "",
+            region: "",
+            state: "",
+            gender: "",
+            etnic: "",
+            phoneNumber: payload.phoneNumber,
+            tagList: [],
+            clubName: "",
+            status: "",
+            category: "",
+            size: "",
+            isUpdated: false,
+            uid: auth.currentUser.uid,
+            email: payload.email,
+            departmentName: payload.department,
+          })
+          .catch((err) => {
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+            return err.message;
+          });
+        if (error) {
+          return;
+        }
+        commit("setCurrentUser", auth.currentUser);
+
+        await firestore
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((response) => {
+            commit("setUserData", response.data());
+          })
+          .catch((err) => {
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+          });
+        if (error) {
+          return;
+        }
+        this.$router.push("/category-list");
       },
       async updateUserProfile({ state, commit, dispatch }, payload) {
         await firestore.doc(state.currentUser.uid).update(payload);
@@ -397,7 +512,14 @@ export default store(function () {
           commit("setUserList", userList);
         });
       },
-
+      async getDepartmentPassword({ commit }) {
+        await firestore
+          .doc("departmentPassword")
+          .get()
+          .then((res) => {
+            commit("setDepartmentPassword", res.data().pass);
+          });
+      },
       // Admin Functions
       async approveUser({ commit }, uid) {
         await firestore

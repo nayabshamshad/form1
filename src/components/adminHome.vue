@@ -226,12 +226,6 @@
             @click="showDepartmentDialog = true"
             >Add Department</q-btn
           >
-          <q-btn
-            round
-            @click="exportFile(departmentUsers, 'Departments')"
-            color="green"
-            icon="download"
-          ></q-btn>
         </div>
         <div class="table-container">
           <table class="user-list-table">
@@ -260,68 +254,26 @@
         </div>
       </q-tab-panel>
     </q-tab-panels>
+    <q-dialog v-model="showDepartmentDialog">
+      <q-card class="q-px-md q-py-lg">
+        <q-card-section>
+          <h5>Set Department Password</h5>
+          <p>{{ departmentSignupLink }}</p>
+        </q-card-section>
+        <q-card-section>
+          <q-input v-model="departmentPassword"></q-input>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
+          <q-btn
+            rounded
+            flat
+            color="secondary"
+            @click="setDepartmentPassword"
+          ></q-btn>
+        </q-card-actions> </q-card
+    ></q-dialog>
   </div>
-  <q-dialog v-model="showDepartmentDialog">
-    <q-card style="width: 100%; min-width: 300px">
-      <q-card-section
-        class="q-px-md p-py-lg flex column department-input-container"
-      >
-        <div><h4>Add Department</h4></div>
-        <div>
-          <q-input
-            color="black"
-            label-color="black"
-            label="Department Name"
-            v-model="departmentDetails.departmentName"
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            color="black"
-            label-color="black"
-            label="User Name"
-            v-model="departmentDetails.name"
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            color="black"
-            label-color="black"
-            label="Email"
-            type="email"
-            v-model="departmentDetails.email"
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            color="black"
-            label-color="black"
-            label="Phone Number"
-            v-model="departmentDetails.phone"
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            color="black"
-            label-color="black"
-            label="Password"
-            type="password"
-            v-model="departmentDetails.password"
-          ></q-input>
-        </div>
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn v-close-popup flat color="secondary" no-caps> Close </q-btn>
-        <q-btn
-          no-caps
-          @click="submitDepartment"
-          :loading="loading"
-          color="secondary"
-          >Submit</q-btn
-        >
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -346,6 +298,7 @@ export default {
     if (this.$store.getters.userData?.role == "department") {
       this.departmentName = this.$store.getters.userData?.departmentName;
     }
+    this.departmentPassword = this.$store.getters.departmentPassword;
   },
   data() {
     return {
@@ -355,13 +308,7 @@ export default {
       dateSetting: false,
       departmentName: "All",
       showDepartmentDialog: false,
-      departmentDetails: {
-        name: "",
-        phone: "",
-        password: "",
-        email: "",
-        departmentName: "",
-      },
+      departmentPassword: "",
     };
   },
   watch: {
@@ -395,30 +342,8 @@ export default {
     },
   },
   methods: {
-    async submitDepartment() {
-      // let err = [];
-      // for (const key in this.departmentDetails) {
-      //   if (this.departmentDetails[key] == "") {
-      //     err.push(key);
-      //   }
-      // }
-      // if (err.length > 0) {
-      //   this.$q.notify({
-      //     message: `The following inputs cannot be left empty: ${err.join(
-      //       ", "
-      //     )}`,
-      //     color: "red",
-      //   });
-      //   return;
-      // }
-      // if (this.departmentDetails.password.length < 6) {
-      //   this.$q.notify({
-      //     message: "Password must be atleast 6 characters long",
-      //     color: "red",
-      //   });
-      //   return;
-      // }
-      await this.$store.dispatch("createNewDepartment", this.departmentDetails);
+    setDepartmentPassword() {
+      this.$store.dispatch("setDepartmentPassword", this.departmentPassword);
     },
     mailUser(email) {
       if (email != "") {
@@ -573,6 +498,7 @@ export default {
     },
     async getData() {
       await this.$store.dispatch("getUserList");
+      await this.$store.dispatch("getDepartmentPassword");
     },
     async approveUser(uid) {
       await this.$store.dispatch("approveUser", uid);
@@ -604,6 +530,13 @@ export default {
     },
   },
   computed: {
+    departmentSignupLink() {
+      return (
+        window.location.origin +
+        "/#/signup_department/?pass=" +
+        this.$store.getters.departmentPassword
+      );
+    },
     departmentUsers() {
       return this.$store.getters.userList.filter((x) => {
         return x.role == "department";

@@ -34,14 +34,19 @@ export default route(function ({ store }) {
       if (
         to.path != "/sign-in" &&
         to.path != "/sign-up" &&
-        to.path != "/reset_password"
+        to.path != "/reset_password" &&
+        to.path != "/signup_department/"
       ) {
         next("/sign-in");
       } else {
         next();
       }
     } else {
-      if (to.path == "/sign-in" || to.path == "/sign-up") {
+      if (
+        to.path == "/sign-in" ||
+        to.path == "/sign-up" ||
+        to.path == "/signup_department/"
+      ) {
         if (
           store.getters.userData?.isUpdated &&
           store.getters.userData?.isAuthorized == true &&

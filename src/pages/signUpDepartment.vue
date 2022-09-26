@@ -34,11 +34,10 @@
         />
       </div>
       <div class="cate-list">
-        <q-select
+        <q-input
           v-model="departmentName"
           label="Department"
           label-color="black"
-          :options="departmentList"
         />
       </div>
 
@@ -68,20 +67,27 @@
 
 <script>
 export default {
+  name: "Department SignUp",
   data() {
     return {
+      isSubmitting: false,
       firstName: "",
       lastName: "",
-      emailInput: "",
       passInput: "",
-      isSubmitting: false,
-      phoneNumber: "+40",
+      emailInput: "",
       departmentName: "",
-      imgUrl: "",
+      phoneNumber: "",
     };
   },
-  mounted() {
-    this.getData();
+  async mounted() {
+    this.$q.loading.show({
+      message: "Verifying your identity",
+    });
+    await this.$store.dispatch("getDepartmentPassword");
+    if (this.$route?.query?.pass !== this.departmentPassword) {
+      this.$router.push("/");
+    }
+    this.$q.loading.hide();
   },
   methods: {
     async submit() {
@@ -112,25 +118,14 @@ export default {
         phoneNumber: this.phoneNumber,
         department: this.departmentName,
       };
-      await this.$store.dispatch("signUp", form);
+      await this.$store.dispatch("signUpDepartment", form);
       this.isSubmitting = false;
-    },
-    async getData() {
-      await this.$store.dispatch("getUserList");
     },
   },
   computed: {
-    departmentList() {
-      return this.$store.getters.userList
-        .filter((x) => {
-          return x.role === "department";
-        })
-        .map((x) => {
-          return x.departmentName;
-        });
+    departmentPassword() {
+      return this.$store.getters.departmentPassword;
     },
   },
 };
 </script>
-
-<style></style>
