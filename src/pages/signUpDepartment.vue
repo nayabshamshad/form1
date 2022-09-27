@@ -35,6 +35,16 @@
       </div>
       <div class="cate-list">
         <q-input
+        type="text"
+          label="Department-Name"
+          label-color="black" 
+          placeholder="Enter Department-Name"
+          name="Department-Name"
+          v-model="departmentName"
+        ></q-input>
+      </div>
+      <div class="cate-list">
+        <q-input
           mask="+40 #### #####"
           color="black"
           label="Phone Number"
