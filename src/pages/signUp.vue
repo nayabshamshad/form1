@@ -25,7 +25,7 @@
       <div class="cate-list">
         <q-select
           v-model="departmentName"
-          label="Department"
+          label="Conferința"
           label-color="black"
           :options="departmentList"
         />
@@ -102,7 +102,7 @@ export default {
         this.$q.notify({
           color: "red",
           message: "Te rugăm să introduci un nume valid.",
-          });
+        });
         this.isSubmitting = false;
         return;
       }
@@ -114,12 +114,12 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      if(this.departmentName === "") {
+      if (this.departmentName === "") {
         this.$q.notify({
-          message: 'Please select a department',
-          color: 'red'
-        })
-        return
+          message: "Please select a department",
+          color: "red",
+        });
+        return;
       }
       let form = {
         name: this.firstName + " " + this.lastName,
