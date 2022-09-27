@@ -2,7 +2,7 @@ import { store } from "quasar/wrappers";
 import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
-import { Notify } from "quasar";
+import { Notify } from "quasar"; 
 
 export default store(function () {
   const Store = createStore({
@@ -102,7 +102,7 @@ export default store(function () {
             error.err = true;
             Notify.create({
               message:
-                "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
+              "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
               color: "red",
             });
             this.$router.push("/");
@@ -233,6 +233,112 @@ export default store(function () {
             isUpdated: false,
             uid: auth.currentUser.uid,
             email: payload.email,
+            department: payload.department,
+            imgUrl: payload.imgUrl,
+          })
+          .catch((err) => {
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+            return err.message;
+          });
+        if (error) {
+          return;
+        }
+        commit("setCurrentUser", auth.currentUser);
+
+        await firestore
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((response) => {
+            commit("setUserData", response.data());
+          })
+          .catch((err) => {
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+          });
+        if (error) {
+          return;
+        }
+        this.$router.push("/category-list");
+      },
+      async signUpDepartment({ commit }, payload) {
+        var error = false;
+        await auth
+          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .then(() => {})
+          .catch((err) => {
+            error = true;
+            if (err.code == "auth/email-already-in-use") {
+              Notify.create({
+                message: "Email address already in use",
+                color: "red",
+              });
+            } else if (err.code == "auth/invalid-email") {
+              Notify.create({
+                message: "Please enter a valid email address",
+                color: "red",
+              });
+            } else if (err.code == "auth/weak-password") {
+              Notify.create({
+                message: "Password must be atleast 6 characters long",
+                color: "red",
+              });
+            } else {
+              Notify.create({
+                message: err.message,
+                color: "red",
+              });
+            }
+          });
+        if (error) {
+          return;
+        }
+        await auth.currentUser
+          .updateProfile({
+            displayName: payload.name,
+          })
+          .catch((err) => {
+            error = true;
+            Notify.create({
+              message: err.message,
+              color: "red",
+            });
+          });
+        if (error) {
+          return;
+        }
+        await firestore
+          .doc(auth.currentUser.uid)
+          .set({
+            name: payload.name,
+            isAuthorized: true,
+            eventList: [],
+            teamList: [],
+            role: "department",
+            dateOfBirth: "",
+            Instructor: "",
+            Ghid: "",
+            masterGhid: "",
+            region: "",
+            state: "",
+            gender: "",
+            etnic: "",
+            phoneNumber: payload.phoneNumber,
+            tagList: [],
+            clubName: "",
+            status: "",
+            category: "",
+            size: "",
+            isUpdated: true,
+            uid: auth.currentUser.uid,
+            email: payload.email,
+            departmentName: payload.name,
           })
           .catch((err) => {
             error = true;
@@ -297,7 +403,7 @@ export default store(function () {
               Notify.create({
                 color: "red",
                 message:
-                  "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
+                "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
               });
             } else if (err.code == "auth/user-not-found") {
               Notify.create({
@@ -385,7 +491,7 @@ export default store(function () {
           commit("setUserList", userList);
         });
       },
-
+      
       // Admin Functions
       async approveUser({ commit }, uid) {
         await firestore

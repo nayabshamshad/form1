@@ -1,5 +1,12 @@
 <template>
-  <div class="top-bar" v-if="isAuthenticated && userData?.role != 'admin'">
+  <div
+    class="top-bar"
+    v-if="
+      isAuthenticated &&
+      userData?.role != 'admin' &&
+      userData?.role != 'department'
+    "
+  >
     <q-btn
       no-caps
       @click="$router.go(-1)"
@@ -34,7 +41,7 @@
         @click="$router.push('/')"
         class="btn"
       >
-        Panou de bord
+      Panou de bord
       </q-btn>
       <q-btn
         no-caps
@@ -50,7 +57,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-        Întâlniri
+      Întâlniri
       </q-btn>
     </div>
   </div>
@@ -75,7 +82,7 @@
         type="button"
         class="btn"
       >
-        Conectare
+      Conectare
       </q-btn>
       <q-btn
         v-if="$route.path != '/sign-up'"
@@ -86,11 +93,17 @@
         @click="$router.push('/sign-up')"
         class="btn"
       >
-        Înregistrare
+      Înregistrare
       </q-btn>
     </div>
   </div>
-  <div class="top-bar" v-else-if="isAuthenticated && userData?.role == 'admin'">
+  <div
+    class="top-bar"
+    v-else-if="
+      isAuthenticated &&
+      (userData?.role == 'admin' || userData?.role == 'department')
+    "
+  >
     <q-btn
       no-caps
       @click="$router.go(-1)"
@@ -110,7 +123,10 @@
       <button class="heading" @click="$router.push('/?q=declined')">
         Refuzat
       </button>
-      <button class="heading" @click="$router.push('/?q=date')">Data</button>
+      <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=date')">Data</button>
+      <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=departments')">
+        Departments
+      </button>
     </div>
     <div>
       <q-btn
@@ -137,7 +153,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-        Întâlnirile
+      Întâlnirile
       </q-btn>
     </div>
   </div>

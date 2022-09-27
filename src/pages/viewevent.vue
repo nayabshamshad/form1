@@ -56,9 +56,9 @@
 
   <!-- IMG view dialog -->
   <q-dialog v-model="dialogBox">
-    <q-card style="width: 100%">
-      <q-card-section style="background: #ccc" class="q-pt-none q-pb-none">
-        <q-img :src="imgSrc"></q-img>
+    <q-card style="width: 100%;">
+      <q-card-section style="background: #ccc;" class="q-pt-none q-pb-none">
+          <q-img :src="imgSrc"></q-img>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -75,7 +75,7 @@ export default {
         date: "",
         attendanceList: [],
         imageList: [],
-        imgSrc: "",
+        imgSrc: '',
       },
       dialogBox: false,
     };
@@ -83,8 +83,8 @@ export default {
   methods: {
     showImg(src) {
       this.dialogBox = true;
-      this.imgSrc = src;
-    },
+      this.imgSrc = src
+    }
   },
   mounted() {
     this.currentEvent = {
@@ -101,11 +101,13 @@ export default {
     },
     memberList() {
       let list = [];
-      if (this.$store.getters.userData?.role != "admin") {
+      if(this.$store.getters.userData?.role != 'admin') {
+
         this.$store.getters.userData?.teamList.forEach((x) => {
           list.push(x.name);
         });
-      } else {
+      }
+      else {
         this.$store.getters.selectedUser?.teamList.forEach((x) => {
           list.push(x.name);
         });

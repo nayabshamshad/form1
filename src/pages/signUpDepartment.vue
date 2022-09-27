@@ -1,61 +1,62 @@
 <template>
   <div class="container">
-    <h2>Înregistrare</h2>
+    <h2>Sign Up</h2>
     <form class="form" @submit.prevent="submit">
-      <div class="cate-list">
-        <q-input
-          v-model="firstName"
-          type="text"
-          name="F-name"
-          label="Nume"
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          label="Prenume"
-          label-color="black"
-          v-model="lastName"
-          name="L-name"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-select
-          v-model="departmentName"
-          label="Conferința"
-          label-color="black"
-          :options="departmentList"
-        />
-      </div>
-      <div class="cate-list">
-        <q-input
-          type="tel"
-          v-model="phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label="Număr de telefon"
-          label-color="black"
-        />
-      </div>
-
+      <p>Please fill in this form to create an account.</p>
       <div class="cate-list">
         <q-input
           type="text"
           v-model="emailInput"
+          placeholder="Enter Email"
           name="email"
-          label="Adresă de E-mail"
+          label="Email Address"
           label-color="black"
         />
       </div>
-
+      <div class="cate-list">
+        <q-input
+          v-model="firstName"
+          type="text"
+          placeholder="Enter First Name"
+          name="F-name"
+          label="First Name"
+          label-color="black"
+        />
+      </div>
+      <div class="cate-list">
+        <q-input
+          type="text"
+          label="Last Name"
+          label-color="black"
+          v-model="lastName"
+          placeholder="Enter Last Name"
+          name="L-name"
+        />
+      </div>
+      <div class="cate-list">
+        <q-input
+        type="text"
+          label="Department-Name"
+          label-color="black" 
+          placeholder="Enter Department-Name"
+          name="Department-Name"
+          v-model="departmentName"
+        ></q-input>
+      </div>
+      <div class="cate-list">
+        <q-input
+          mask="+40 #### #####"
+          color="black"
+          label="Phone Number"
+          label-color="black"
+          v-model="phoneNumber"
+        ></q-input>
+      </div>
       <div class="cate-list">
         <q-input
           type="password"
-          label="Parolă"
+          placeholder="Enter Password"
+          label="Password"
           label-color="black"
           v-model="passInput"
           name="pwd"
@@ -68,7 +69,7 @@
           color="purple"
           @click="submit"
           type="button"
-          >Trimite</q-btn
+          >Submit</q-btn
         >
       </div>
     </form>
@@ -77,20 +78,17 @@
 
 <script>
 export default {
+  name: "Department SignUp",
   data() {
     return {
+      isSubmitting: false,
       firstName: "",
       lastName: "",
-      emailInput: "",
       passInput: "",
-      isSubmitting: false,
-      phoneNumber: "+40",
+      emailInput: "",
       departmentName: "",
-      imgUrl: "",
+      phoneNumber: "",
     };
-  },
-  mounted() {
-    this.getData();
   },
   methods: {
     async submit() {
@@ -101,24 +99,17 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci un nume valid.",
+          message: "Please enter a valid name",
         });
         this.isSubmitting = false;
         return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-          message: "Te rugăm să introduci un număr de telefon valid.",
+          message: "Phone Number must be formatted correctly",
           color: "red",
         });
         this.isSubmitting = false;
-        return;
-      }
-      if (this.departmentName === "") {
-        this.$q.notify({
-          message: "Please select a department",
-          color: "red",
-        });
         return;
       }
       let form = {
@@ -127,27 +118,10 @@ export default {
         password: this.passInput,
         phoneNumber: this.phoneNumber,
         department: this.departmentName,
-        imgUrl: this.imgUrl,
       };
-      await this.$store.dispatch("signUp", form);
+      await this.$store.dispatch("signUpDepartment", form);
       this.isSubmitting = false;
-    },
-    async getData() {
-      await this.$store.dispatch("getUserList");
-    },
-  },
-  computed: {
-    departmentList() {
-      return this.$store.getters.userList
-        .filter((x) => {
-          return x.role === "department";
-        })
-        .map((x) => {
-          return x.departmentName;
-        });
     },
   },
 };
 </script>
-
-<style></style>
