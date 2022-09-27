@@ -10,6 +10,9 @@
       ></q-btn>
     </div>
     <h2>Informații utilizator</h2>
+    <div class="add-img" v-if="dataUser.imgUrl && dataUser.imgUrl !== ''">
+          <img :src="dataUser.imgUrl" />
+        </div>
     <form class="form category-form home-only">
       <div class="cate-list-home">
         <label for="club"><b>Nume/Prenume:</b></label>

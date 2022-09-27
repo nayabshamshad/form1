@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: "/signup_department",
-    name: ""/*Create Department"*/,
+    name: "Create Department",
     component: () => import("../pages/signUpDepartment.vue"),
   },
   {

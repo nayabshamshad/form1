@@ -194,6 +194,33 @@
           </div>
         </div>
       </div>
+      <input
+          ref="imgInput"
+          accept="image/*"
+          @change="handleImageUpload"
+          type="file"
+          style="display: none"
+        />
+        <div class="profile-img-holder q-my-lg">
+          <q-card-actions align="right" class="q-mb-md">
+            <q-btn rounded @click="selectImage" no-caps color="secondary"
+              >Add Profile Picture</q-btn
+            >
+          </q-card-actions>
+          <div
+            v-if="previewImage"
+            class="add-img q-mx-auto"
+
+          >
+            <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
+            <img
+              class="add-event-img"
+              :src="previewImage"
+              alt=""
+            />
+          </div>
+        </div>
+
       <div v-if="userInfo.status" class="cate-list">
         <div style="flex-wrap: nowrap" class="flex justify-space-between">
           <label for="list"><b>Lista copiilor:</b></label>
@@ -256,7 +283,9 @@
   </q-dialog>
 </template>
 <script>
+  import { storage } from "../store/firebase.js";
 export default {
+
   name: "CategoryListView",
   components: {},
   data() {
@@ -277,7 +306,11 @@ export default {
         category: "",
         size: "",
         isUpdated: false,
+        imgUrl: ''
       },
+      imgUrl: "",
+      previewImage: "",
+      file: null,
       dateOfBirth: "21/03/2022",
       tagsInput: "",
       isSubmitting: false,
@@ -295,6 +328,19 @@ export default {
     };
   },
   methods: {
+    handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    selectImage() {
+      this.$refs.imgInput.click();
+    },
+    removeImg() {
+      this.imgUrl = "";
+      this.previewImage = "";
+      this.file = null;
+    },
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();
@@ -310,7 +356,20 @@ export default {
       }
       this.isSubmitting = true;
       let profile;
-
+      if (this.previewImage !== "") {
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.userInfo.imgUrl = url;
+          });
+      }
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
