@@ -20,6 +20,11 @@ const routes = [
     component: () => import("../pages/Eventlist.vue"),
   },
   {
+    path: "/signup_department",
+    name: ""/*Create Department"*/,
+    component: () => import("../pages/signUpDepartment.vue"),
+  },
+  {
     path: "/category-list",
     name: "" /* Update Your Profile */,
     component: () => import("../pages/CategoryList.vue"),
