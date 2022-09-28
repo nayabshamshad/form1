@@ -126,7 +126,7 @@ export default {
         email: this.emailInput,
         password: this.passInput,
         phoneNumber: this.phoneNumber,
-        department: this.departmentName,
+        department:   this.departmentName  ,
         imgUrl: this.imgUrl,
       };
       await this.$store.dispatch("signUp", form);
@@ -143,7 +143,7 @@ export default {
           return x.role === "department";
         })
         .map((x) => {
-          return x.departmentName;
+          return x.departmentName
         });
     },
   },
