@@ -225,7 +225,7 @@
             color="secondary"
             @click="showDepartmentDialog = true"
             icon="add"
-            />
+          />
         </div>
         <div class="table-container">
           <table class="user-list-table">
@@ -280,6 +280,7 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    console.log(this.$store.getters.userData);
     if (this.$route?.query?.q) {
       if (
         this.$route?.query?.q == "departments" &&
@@ -524,7 +525,10 @@ export default {
         return;
       }
       this.dateSetting = true;
-      await this.$store.dispatch("setDateRange", this.dateModel);
+      await this.$store.dispatch("setDateRange", {
+        date: this.dateModel,
+        uid: this.$store.getters.userData.uid,
+      });
       this.dateSetting = false;
     },
   },
