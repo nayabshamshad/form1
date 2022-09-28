@@ -2,7 +2,7 @@
   <div class="container">
     <div class="attendance-container">
       <div class="attendance-summary">
-        <h5 style="font-size: 18px"><span>Summary</span></h5>
+        <h5 style="font-size: 18px"><span>Prezența</span></h5>
         <div v-for="(student, index) in listOfAttendance" :key="index">
           <div class="flex justify-space-around">
             <span>
@@ -34,7 +34,7 @@
           size="sm"
           @click="$router.push('/add-event')"
         >
-          Add Event
+          Adaugă întâlnire
         </q-btn></span
       >
     </div>
@@ -42,19 +42,19 @@
       <q-table
         v-if="userInfo.eventList?.length > 0"
         style="width: 80%"
-        title="Event List"
+        title="Lista întâlnirilor"
         :rows="userInfo.eventList"
         :columns="[
           {
             name: 'name',
-            label: 'Event Name',
+            label: 'Tema întâlnirii',
             required: true,
             align: 'center',
             field: (item) => item.name,
           },
           {
             name: 'date',
-            label: 'Date of Event',
+            label: 'Data întâlnirii',
             required: true,
             align: 'center',
             field: (item) => formatDate(item.date),
@@ -65,7 +65,7 @@
         bordered
         @row-click="showEventDetails"
       />
-      <div v-else style="width: 60%">Your Events will show here</div>
+      <div v-else style="width: 60%">Toate întâlnirile vor aparea aici</div>
     </div>
   </div>
 </template>

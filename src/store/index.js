@@ -2,8 +2,7 @@ import { store } from "quasar/wrappers";
 import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
-import { Notify } from "quasar";
-import axios from "axios";
+import { Notify } from "quasar"; 
 
 export default store(function () {
   const Store = createStore({
@@ -103,7 +102,7 @@ export default store(function () {
             error.err = true;
             Notify.create({
               message:
-                "Your reset code is invalid, it may have already been used or expired. Please send a reset request again.",
+              "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
               color: "red",
             });
             this.$router.push("/");
@@ -122,12 +121,12 @@ export default store(function () {
             if (err.code == "auth/user-not-found") {
               console.log(err);
               Notify.create({
-                message: "Unable to find user with this email address",
+                message: "Nu există utilizator cu aceasta adresa de e-mail.",
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: "Please enter a valid email address",
+                message: "Te rugăm să introduci o adresa de e-mail validă.",
                 color: "red",
               });
             } else {
@@ -172,17 +171,17 @@ export default store(function () {
             error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
-                message: "Email address already in use",
+                message: "Adresă de e-mail este deja folosită.",
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: "Please enter a valid email address",
+                message: "Te rugăm să introduci o adresa de e-mail validă.",
                 color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
-                message: "Password must be atleast 6 characters long",
+                message: "Parola trebuie să aibă minim 6 caaractere.",
                 color: "red",
               });
             } else {
@@ -393,23 +392,23 @@ export default store(function () {
             if (err.code == "auth/wrong-password") {
               Notify.create({
                 color: "red",
-                message: "Please recheck your password and try again",
+                message: "Te rugăm să introduci parola din nou.",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
                 color: "red",
-                message: "Please enter a valid email address",
+                message: "Te rugăm să introduci o adresa de e-mail validă.",
               });
             } else if (err.code == "auth/too-many-requests") {
               Notify.create({
                 color: "red",
                 message:
-                  "Too many failed attempts, this account has been temporarily disabled",
+                "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
               });
             } else if (err.code == "auth/user-not-found") {
               Notify.create({
                 color: "red",
-                message: "We cannot find a user with this email address",
+                message: "Nu există utilizator cu aceasta adresa de e-mail.",
               });
             } else {
               Notify.create({
@@ -492,6 +491,7 @@ export default store(function () {
           commit("setUserList", userList);
         });
       },
+      
       // Admin Functions
       async approveUser({ commit }, uid) {
         await firestore
