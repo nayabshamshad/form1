@@ -620,7 +620,6 @@ export default {
   async mounted() {
     if (this.selectedUser) {
       this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
-      console.log(this.selectedUser);
       if (this.selectedUser.date) {
         this.dateModel.to = this.selectedUser.date.to;
         this.dateModel.from = this.selectedUser.date.from;

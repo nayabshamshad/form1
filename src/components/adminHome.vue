@@ -280,7 +280,6 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
-    console.log(this.$store.getters.userData);
     if (this.$route?.query?.q) {
       if (
         this.$route?.query?.q == "departments" &&
