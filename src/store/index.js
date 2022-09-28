@@ -333,6 +333,7 @@ export default store(function () {
             uid: auth.currentUser.uid,
             email: payload.email,
             departmentName: payload.name,
+            date: { from: "03/03/2022", to: "04/04/2022" },
           })
           .catch((err) => {
             error = true;
@@ -531,16 +532,19 @@ export default store(function () {
       setSelectedUser({ commit }, payload) {
         commit("setSelectedUser", payload);
       },
-     async updatedUserDetails({commit}, uid) {
-        await firestore.doc(uid).get().then(res => {
-          commit('setSelectedUser', res.data())
-        })
+      async updatedUserDetails({ commit }, uid) {
+        await firestore
+          .doc(uid)
+          .get()
+          .then((res) => {
+            commit("setSelectedUser", res.data());
+          });
       },
-      async setDateRange({state, commit, dispatch }, payload) {
+      async setDateRange({ state, commit, dispatch }, payload) {
         await firestore.doc(payload.uid).update({ date: payload.date });
         commit("setDateList", payload.date);
-        if(this.state.userData.role == 'admin') {
-          dispatch("getUserList")
+        if (this.state.userData.role == "admin") {
+          dispatch("getUserList");
         }
       },
     },
