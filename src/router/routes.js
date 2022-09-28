@@ -1,22 +1,22 @@
 const routes = [
   {
     path: "/",
-    name: "Welcome",
+    name: "" /* Welcome */,
     component: () => import("../pages/HomeView.vue"),
   },
   {
     path: "/sign-in",
-    name: "Sign In",
+    name: "" /* Sign In*/,
     component: () => import("../pages/signIn.vue"),
   },
   {
     path: "/sign-up",
-    name: "Sign Up",
+    name: "" /* Sign Up */,
     component: () => import("../pages/signUp.vue"),
   },
   {
     path: "/event-list",
-    name: "Events List",
+    name: "" /* Events List */,
     component: () => import("../pages/Eventlist.vue"),
   },
   {
@@ -26,40 +26,40 @@ const routes = [
   },
   {
     path: "/category-list",
-    name: "Update Your Profile",
+    name: "" /* Update Your Profile */,
     component: () => import("../pages/CategoryList.vue"),
   },
   {
     path: "/add-event",
-    name: "Add Event",
+    name: "" /* Add Event */,
     component: () => import("../pages/addEvent.vue"),
   },
   {
     path: "/view-event",
-    name: "Event Details",
+    name: "" /* Event Details */,
     component: () => import("../pages/viewevent.vue"),
   },
   {
     path: "/pending",
     component: () => import("../pages/waitingView.vue"),
-    name: "Waiting Page",
+    name: "" /* Waiting Page */,
   },
   {
     path: "/user-details",
     component: () => import("../pages/userDetails"),
-    name: "User Details",
+    name: "" /* User Details */,
   },
   {
     path: "/rejected",
     component: () => import("../pages/rejectedView"),
-    name: "Rejected",
+    name: "" /* Rejected */,
   },
   // Always leave this as last one,
   // but you can also remove it
   {
     path: "/reset_password",
     component: () => import("../pages/resetPassword"),
-    name: "Reset Password",
+    name: "" /* Reset Password */,
   },
   {
     path: "/:catchAll(.*)*",

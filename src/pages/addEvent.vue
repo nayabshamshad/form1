@@ -1,73 +1,64 @@
 <template>
   <div class="container">
     <form class="form">
-      <h2>Add Event</h2>
+      <h2>Adaugare întâlnire</h2>
       <div class="cate-list">
         <q-input
           v-model="eventName"
           type="text"
-          label="Event Name"
+          label="Tema întâlnirii:"
           label-color="black"
-          placeholder="Enter Name"
         />
       </div>
       <div class="cate-list">
-        <label style="font-size: 16px">Event Date</label>
+        <label style="font-size: 16px">Data întâlnirii:</label>
         <!-- <q-input v-model="eventDate" mask="date" type="date"> </q-input> -->
         <q-input
-              filled
-              v-model="eventDateView"
-              mask="##/##/####"
-              @focus="openModal"
+          filled
+          v-model="eventDateView"
+          mask="##/##/####"
+          @focus="openModal"
+        >
+          <template v-slot:append>
+            <q-icon
+              @click="openModal"
+              ref="dateIcon"
+              name="event"
+              class="cursor-pointer"
             >
-              <template v-slot:append>
-                <q-icon
-                  @click="openModal"
-                  ref="dateIcon"
-                  name="event"
-                  class="cursor-pointer"
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="eventDate"
+                  @update:model-value="handleDateChange"
                 >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date
-                      v-model="eventDate"
-                      @update:model-value="handleDateChange"
-                    >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
       <div class="cate-list">
         <q-input
-          label="Description"
+          label="Descriere (max. 50 de caractere)"
           v-model="eventDesc"
           type="text"
           label-color="black"
-          placeholder="Enter Description Here..."
           :rules="[
             (val) =>
               val.length <= 50 ||
-              'Please use maximum 50 characters in description',
+              'Descrierea nu poate fi mai lungă de 50 de caractere.',
           ]"
         />
       </div>
       <div class="cate-list">
-        <label style="font-size: 16px; display: block">
-          Present Members:
-        </label>
+        <label style="font-size: 16px; display: block"> Prezența: </label>
         <div
           v-for="(user, i) in userData.teamList"
           :key="i"
@@ -93,11 +84,9 @@
         <div>
           <div>
             <label style="display: block; font-size: 16px; margin-bottom: 1rem"
-              >Upload Images (Max 3)</label
+              >Încarcă imaginile (max. 3)</label
             >
-            <q-btn color="purple" @click="openInput" round
-              >+</q-btn
-            >
+            <q-btn color="purple" @click="openInput" round>+</q-btn>
           </div>
           <input
             @change="handleImageUpload"
@@ -109,10 +98,15 @@
           />
         </div>
         <div v-if="previewImages.length > 0" class="img_holder">
-          <div class='add-img' v-for="(img, i)  in previewImages" :key="i" style="width: 30%">
+          <div
+            class="add-img"
+            v-for="(img, i) in previewImages"
+            :key="i"
+            style="width: 30%"
+          >
             <q-btn @click="removeImg(img)" color="red" round size="sm">-</q-btn>
             <img
-              style="width: 100%; cursor: pointer;"
+              style="width: 100%; cursor: pointer"
               class="add-event-img"
               :src="img"
               alt=""
@@ -121,7 +115,7 @@
           </div>
         </div>
         <div v-else style="height: 175px" class="flex justify-center">
-          Uploaded Images will show here.
+          Imaginiile incărcate vor apărea aici
         </div>
       </div>
       <div class="flex justify-center">
@@ -131,7 +125,7 @@
           :loading="isFetching"
           color="purple"
           @click="addEvent"
-          >Submit</q-btn
+          >Trimite</q-btn
         >
       </div>
     </form>
@@ -139,7 +133,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">Alertă</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -168,16 +162,15 @@ export default {
       isFetching: false,
       previewImages: [],
       errorDialog: false,
-      error: "There was an unexpected error",
+      error: "Te rugăm să reverifici datele introduse. ",
       attendanceList: [],
-      eventDateView: '02/08/2022',
+      eventDateView: "02/08/2022",
     };
   },
   methods: {
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();
-
     },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
@@ -185,14 +178,13 @@ export default {
       this.eventDateView = day + "/" + month + "/" + c.year;
     },
     openInput() {
-      if(this.previewImages.length < 3) {
-        this.$refs.imgInput.click()
-      }
-      else {
+      if (this.previewImages.length < 3) {
+        this.$refs.imgInput.click();
+      } else {
         this.$q.notify({
-          message: 'You cannot upload more than three images at a time',
-          color: 'red'
-        })
+          message: "Nu poți adauga mai mult de 3 (trei) fotografii.",
+          color: "red",
+        });
       }
     },
     async addEvent() {
@@ -207,7 +199,7 @@ export default {
       }
       const files = this.localImageList;
       if (files.length == 0) {
-        this.error = "You need to upload atleast one image!";
+        this.error = "Trebuie încărcată cel puțin o fotografie!";
         this.errorDialog = true;
         this.isFetching = false;
         return;
@@ -248,18 +240,18 @@ export default {
         }
         this.imageList = urlList;
       } else {
-        this.error = "Please select a valid number of images";
+        this.error = "Poți încărca între 1-3 fotografii.";
         this.errorDialog = true;
         this.isFetching = false;
         return;
       }
       if (this.eventDate == "") {
-        this.error = "Please select a date for the event";
+        this.error = "Te rugăm sa selectează data întâlnirii.";
         this.errorDialog = true;
         return;
       }
       if (this.eventDesc == "") {
-        this.error = "Please enter a description for the event";
+        this.error = "Te rugăm sa adaugi descrierea întâlnirii.";
         this.errorDialog = true;
         return;
       }
@@ -280,8 +272,8 @@ export default {
         this.localImageList.push(file);
       } else if (this.previewImages.length >= 3) {
         this.$q.notify({
-          message: "You cannot upload more than 3 files",
-          color: 'red',
+          message: "Nu poți incărca mai mult de 3 fotografii.",
+          color: "red",
         });
       }
     },

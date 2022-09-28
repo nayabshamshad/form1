@@ -1,18 +1,46 @@
 <template>
   <div class="container">
     <form class="form">
-      <h2>Step 2</h2>
+      <h2>Completați informațiile</h2>
 
       <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.clubName"
-          placeholder="Club"
-          name="Club"
-          label="Club"
+        <q-select
+          :options="['Română', 'Maghiară']"
+          label="Etnie"
           label-color="black"
+          v-model="userInfo.etnic"
         />
       </div>
+
+      <div>
+        <label for="Gender"><b>Sex:</b></label>
+        <div>
+          <q-radio
+            v-model="userInfo.gender"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="Male"
+            label="Masculin"
+          />
+          <q-radio
+            v-model="userInfo.gender"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="Female"
+            label="Femenin"
+          />
+        </div>
+      </div>
+
+      <div class="cate-list">
+        <q-select
+          v-model="userInfo.size"
+          :options="sizeOptions"
+          label-color="black"
+          label="Mărime tricou:"
+        />
+      </div>
+
       <div class="cate-list">
         <label
           style="
@@ -22,7 +50,7 @@
             font-size: 16px;
             font-weight: 500;
           "
-          >Date of Birth</label
+          >Data nașterii:</label
         >
         <q-input
           filled
@@ -31,7 +59,12 @@
           @focus="openModal"
         >
           <template v-slot:append>
-            <q-icon @click="openModal" ref="dateIcon" name="event" class="cursor-pointer">
+            <q-icon
+              @click="openModal"
+              ref="dateIcon"
+              name="event"
+              class="cursor-pointer"
+            >
               <q-popup-proxy
                 cover
                 transition-show="scale"
@@ -50,13 +83,44 @@
           </template>
         </q-input>
       </div>
+
+      <div class="cate-list">
+        <q-select
+          v-model="userInfo.category"
+          label="Categoria:"
+          label-color="black"
+          :options="['Licurici', 'Companioni', 'Exploratori']"
+        />
+      </div>
+
+      <div class="cate-list">
+        <q-input
+          type="text"
+          v-model="userInfo.clubName"
+          placeholder="Clubul"
+          name="Club"
+          label="Clubul:"
+          label-color="black"
+        />
+      </div>
+
       <div class="cate-list">
         <q-input
           type="text"
           v-model="tagsInput"
-          placeholder="Comma seperated"
+          placeholder="Separate de virgulă"
           name="tags"
-          label="Speicalizations you can teach (Max 5)"
+          label="Specializări pe care le poți preda (max 5):"
+          label-color="black"
+        />
+      </div>
+
+      <div class="cate-list">
+        <q-input
+          type="text"
+          v-model="userInfo.region"
+          placeholder="ex. Târgu Mureș"
+          label="Zona:"
           label-color="black"
         />
       </div>
@@ -65,51 +129,18 @@
         <q-input
           type="text"
           v-model="userInfo.state"
-          placeholder="Community Name"
-          label="Community"
-          label-color="black"
-        />
-      </div>
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.region"
-          placeholder="Enter Area Name"
-          label="Area"
+          placeholder="Comunitate"
+          label="Comunitatea în care activezi: "
           label-color="black"
         />
       </div>
 
       <div class="cate-list">
-        <q-select
-          :options="['Romanian', 'Hungarian']"
-          label="Ethnicity"
-          label-color="black"
-          v-model="userInfo.etnic"
-        />
-      </div>
-      <div class="cate-list">
-        <q-select
-          v-model="userInfo.category"
-          label="Category"
-          label-color="black"
-          :options="['Licurici', 'Companioni', 'Exploratori']"
-        />
-      </div>
-      <div class="cate-list">
-        <q-select
-          v-model="userInfo.size"
-          :options="sizeOptions"
-          label-color="black"
-          label="Size"
-        />
-      </div>
-      <div class="cate-list">
         <q-input
           type="text"
           v-model="userInfo.Instructor"
           label-color="black"
-          label="Year of investment as Instructor"
+          label="Anul investiturii ca Instructor:"
           placeholder="YYYY"
           name="Instructor"
           mask="####"
@@ -120,7 +151,7 @@
           type="text"
           v-model="userInfo.Ghid"
           placeholder="YYYY"
-          label="Year of investment as Ghid"
+          label="Anul investiturii ca Ghid:"
           label-color="black"
           mask="####"
         />
@@ -132,7 +163,7 @@
           placeholder="YYYY"
           mask="####"
           label-color="black"
-          label="Year of investment as Master Guide"
+          label="Anul investiturii ca Master Ghid:"
         />
       </div>
       <div
@@ -151,40 +182,48 @@
               checked-icon="task_alt"
               unchecked-icon="panorama_fish_eye"
               :val="true"
-              label="Active"
+              label="Activ"
             />
             <q-radio
               v-model="userInfo.status"
               checked-icon="task_alt"
               unchecked-icon="panorama_fish_eye"
               :val="false"
-              label="InActive"
-            />
-          </div>
-        </div>
-        <div>
-          <label for="Gender"><b>Gender:</b></label>
-          <div>
-            <q-radio
-              v-model="userInfo.gender"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              val="Male"
-              label="Male"
-            />
-            <q-radio
-              v-model="userInfo.gender"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              val="Female"
-              label="Female"
+              label="InActiv"
             />
           </div>
         </div>
       </div>
+      <input
+          ref="imgInput"
+          accept="image/*"
+          @change="handleImageUpload"
+          type="file"
+          style="display: none"
+        />
+        <div class="profile-img-holder q-my-lg">
+          <q-card-actions align="right" class="q-mb-md">
+            <q-btn rounded @click="selectImage" no-caps color="secondary"
+              >Add Profile Picture</q-btn
+            >
+          </q-card-actions>
+          <div
+            v-if="previewImage"
+            class="add-img q-mx-auto"
+
+          >
+            <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
+            <img
+              class="add-event-img"
+              :src="previewImage"
+              alt=""
+            />
+          </div>
+        </div>
+
       <div v-if="userInfo.status" class="cate-list">
         <div style="flex-wrap: nowrap" class="flex justify-space-between">
-          <label for="list"><b>Team Members:</b></label>
+          <label for="list"><b>Lista copiilor:</b></label>
           <q-btn @click="addMember" type="button" round color="purple">+</q-btn>
         </div>
 
@@ -200,7 +239,7 @@
           <q-input
             type="text"
             v-model="item.name"
-            placeholder="Member Name"
+            placeholder="Nume copil"
             style="width: 70%"
           />
           <q-btn
@@ -220,7 +259,7 @@
           @click="submit"
           color="purple"
           class="signupbtn"
-          >Submit</q-btn
+          >Trimite</q-btn
         >
       </div>
     </form>
@@ -230,7 +269,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">Alertă</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -244,7 +283,9 @@
   </q-dialog>
 </template>
 <script>
+  import { storage } from "../store/firebase.js";
 export default {
+
   name: "CategoryListView",
   components: {},
   data() {
@@ -265,7 +306,11 @@ export default {
         category: "",
         size: "",
         isUpdated: false,
+        imgUrl: ''
       },
+      imgUrl: "",
+      previewImage: "",
+      file: null,
       dateOfBirth: "21/03/2022",
       tagsInput: "",
       isSubmitting: false,
@@ -278,15 +323,27 @@ export default {
         "XX-Large",
         "XXX-Large",
       ],
-      error: "There was an unexpected error",
+      error: "Te rugăm să reverifici datele introduse.",
       errorDialog: false,
     };
   },
   methods: {
+    handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    selectImage() {
+      this.$refs.imgInput.click();
+    },
+    removeImg() {
+      this.imgUrl = "";
+      this.previewImage = "";
+      this.file = null;
+    },
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();
-
     },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
@@ -299,11 +356,24 @@ export default {
       }
       this.isSubmitting = true;
       let profile;
-
+      if (this.previewImage !== "") {
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.userInfo.imgUrl = url;
+          });
+      }
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
-          this.error = "You can not select more than five tags!";
+          this.error = "Nu poți să introduci mai mult de 5 specializări.";
           this.errorDialog = true;
           this.isSubmitting = false;
           return;
@@ -327,12 +397,12 @@ export default {
       if (err) {
         this.isSubmitting = false;
         this.errorDialog = true;
-        this.error = "Please format your team member list correctly";
+        this.error = "Verificați lista cu copii";
         return;
       }
       if (profile.tagList.length < 1) {
         this.errorDialog = true;
-        this.error = "You need atleast one tag";
+        this.error = "Te rugăm să introduci minim o specializare";
         this.isSubmitting = false;
         return;
       }
@@ -347,31 +417,37 @@ export default {
         profile.size == ""
       ) {
         this.errorDialog = true;
-        this.error = "Please recheck your form and fill all details correctly";
+        this.error = "Te rugăm să reverifici datele introduse.";
         this.isSubmitting = false;
         return;
       }
       if (
-        profile.Instructor.length !== 4 ||
-        profile.Ghid.length !== 4 ||
-        profile.masterGhid.length !== 4
+        (profile.Instructor.length !== 4 && profile.Instructor != "") ||
+        (profile.Ghid.length !== 4 && profile.Ghid != "") ||
+        (profile.masterGhid.length !== 4 && profile.masterGhid != "")
       ) {
         this.$q.notify({
           color: "red",
-          message: "Years must be formatted correctly",
+          message: "Formatul anului introdus este incorect",
         });
         this.isSubmitting = false;
         return;
       }
       if (
-        profile.Instructor > profile.Ghid ||
-        profile.Ghid > profile.masterGhid ||
-        profile.Instructor > profile.masterGhid
+        (profile.Instructor > profile.Ghid &&
+          profile.Instructor != "" &&
+          profile.Ghid != "") ||
+        (profile.Ghid > profile.masterGhid &&
+          profile.Ghid != "" &&
+          profile.masterGhid != "") ||
+        (profile.Instructor > profile.masterGhid &&
+          profile.instructor != "" &&
+          profile.masterGhid != "")
       ) {
         this.$q.notify({
           color: "red",
           message:
-            "Please recheck the order of your investments, instructor investment cannot be done before Ghid and master Ghid cannot be completed before Ghid",
+            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
         });
         this.isSubmitting = false;
         return;
@@ -389,7 +465,7 @@ export default {
         this.userInfo.teamList.splice(i, 1);
       } else {
         this.errorDialog = true;
-        this.error = "Must have at least one team member";
+        this.error = "Te rugăm să completezi lista cu copii.";
       }
     },
   },

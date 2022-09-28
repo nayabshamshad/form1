@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <form @submit.prevent="loginUser" class="form" autocomplete="off">
-      <h2>Log In</h2>
+      <h2>Autentificare</h2>
       <div class="cate-list">
-        <label for="uname"><b>Username</b></label>
+        <label for="uname"><b>Adresa ta de E-mail</b></label>
         <q-input
           v-model="userEmail"
           type="text"
-          placeholder="Enter Email Address"
+          placeholder="Adresa de E-mail"
           name="uname"
         />
       </div>
       <div class="cate-list">
-        <label for="pwd"><b>Password</b></label>
+        <label for="pwd"><b>Parola</b></label>
         <q-input
           type="password"
-          placeholder="Enter Password"
+          placeholder="Parola"
           name="pwd"
           v-model="userPass"
         />
@@ -27,12 +27,12 @@
           type="button"
           color="purple"
           rounded
-          >Login</q-btn
+          >Conectare</q-btn
         >
       </div>
       <span class="pwd"
-        >Don't have an account?
-        <router-link to="/sign-up">Register Now</router-link>
+        >Utilizator nou?
+        <router-link to="/sign-up">Înregistrare</router-link>
         <button
           type="button"
           style="
@@ -45,7 +45,7 @@
           "
           @click="forgotPassword"
         >
-          Forgot Password?
+          Am uitat parola
         </button>
       </span>
     </form>
@@ -59,11 +59,11 @@
           class="flex"
           style="justify-content: flex-end; padding: 0 30%"
         ></div>
-        <div class="text-h6">Forgot Your Password?</div>
+        <div class="text-h6">Resetare parolă</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <p>Please enter your email address</p>
+        <p>Introduce adresa de E-mail</p>
         <q-input v-model="forgotEmail" type="email"></q-input>
         <div class="flex justify-center">
           <q-btn
@@ -72,13 +72,13 @@
             style="margin-top: 1rem"
             :loading="sendingEmail"
             color="purple"
-            >Send Reset Email</q-btn
+            >Resetare</q-btn
           >
         </div>
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Close" color="primary" v-close-popup />
+        <q-btn flat label="Ieșire" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -117,7 +117,7 @@ export default {
       } else {
         this.$q.notify({
           message:
-            "Password reset email has been sent, please be sure to check your spam folder as well",
+            "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
           color: "green",
         });
         setTimeout(() => {
@@ -145,5 +145,3 @@ export default {
   },
 };
 </script>
-
-

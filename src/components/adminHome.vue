@@ -30,9 +30,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
+                <th>Nume/Prenume</th>
+                <th>Nr. de telefon</th>
+                <th>E-mail</th>
               </tr>
             </thead>
             <tbody>
@@ -85,10 +85,10 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th>Nume/Prenume</th>
+                <th>Nr. de telefon</th>
+                <th>E-mail</th>
+                <th>Acțiune</th>
               </tr>
             </thead>
             <tbody>
@@ -159,9 +159,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Email</th>
+                <th>Nume/Prenume</th>
+                <th>Nr. de telefon</th>
+                <th>E-mail</th>
               </tr>
             </thead>
             <tbody>
@@ -402,15 +402,15 @@ export default {
           fontWeight: "bold",
         },
         {
-          value: "Instructor - anul investirii",
+          value: "Instructor - anul investiturii:",
           fontWeight: "bold",
         },
         {
-          value: "Ghid - anul investirii",
+          value: "Ghid - anul investiturii:",
           fontWeight: "bold",
         },
         {
-          value: "Master Ghid - anul investirii",
+          value: "Master Ghid - anul investiturii:",
           fontWeight: "bold",
         },
         {
@@ -519,7 +519,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: "Please set a valid date",
+          message: "Te rugăm să introduci corect data.",
         });
         return;
       }

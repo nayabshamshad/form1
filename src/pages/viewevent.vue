@@ -2,20 +2,20 @@
   <div class="container">
     <form class="form category-form event-form">
       <div class="cate-list-home">
-        <label for="name"><b>Name:</b></label>
+        <label for="name"><b>Tema întâlnirii:</b></label>
         <span>{{ currentEvent.name }}</span>
       </div>
       <div class="cate-list-home">
-        <label for="date"><b>Date:</b></label>
+        <label for="date"><b>Data:</b></label>
         <span>{{ currentEvent.date }}</span>
       </div>
       <div class="cate-list-home">
-        <label for="Description"><b>Description:</b></label>
+        <label for="Description"><b>Scurtă descriere:</b></label>
         <span>{{ currentEvent.desc }}</span>
       </div>
 
       <div class="cate-list-home">
-        <label><b>List of Students:</b></label>
+        <label><b>Prezența:</b></label>
         <div class="teamMember" v-for="(student, i) in memberList" :key="i">
           <span
             style="
