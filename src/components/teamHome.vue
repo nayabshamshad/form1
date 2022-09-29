@@ -160,7 +160,7 @@
             checked-icon="task_alt"
             unchecked-icon="panorama_fish_eye"
             val="Female"
-            label="Femenin"
+            label="Feminin"
           />
         </div>
       </div>

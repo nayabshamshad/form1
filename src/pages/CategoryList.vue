@@ -27,7 +27,7 @@
             checked-icon="task_alt"
             unchecked-icon="panorama_fish_eye"
             val="Female"
-            label="Femenin"
+            label="Feminin"
           />
         </div>
       </div>
@@ -195,31 +195,23 @@
         </div>
       </div>
       <input
-          ref="imgInput"
-          accept="image/*"
-          @change="handleImageUpload"
-          type="file"
-          style="display: none"
-        />
-        <div class="profile-img-holder q-my-lg">
-          <q-card-actions align="right" class="q-mb-md">
-            <q-btn rounded @click="selectImage" no-caps color="secondary"
-              >Add Profile Picture</q-btn
-            >
-          </q-card-actions>
-          <div
-            v-if="previewImage"
-            class="add-img q-mx-auto"
-
+        ref="imgInput"
+        accept="image/*"
+        @change="handleImageUpload"
+        type="file"
+        style="display: none"
+      />
+      <div class="profile-img-holder q-my-lg">
+        <q-card-actions align="right" class="q-mb-md">
+          <q-btn rounded @click="selectImage" no-caps color="secondary"
+            >Add Profile Picture</q-btn
           >
-            <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
-            <img
-              class="add-event-img"
-              :src="previewImage"
-              alt=""
-            />
-          </div>
+        </q-card-actions>
+        <div v-if="previewImage" class="add-img q-mx-auto">
+          <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
+          <img class="add-event-img" :src="previewImage" alt="" />
         </div>
+      </div>
 
       <div v-if="userInfo.status" class="cate-list">
         <div style="flex-wrap: nowrap" class="flex justify-space-between">
@@ -283,9 +275,8 @@
   </q-dialog>
 </template>
 <script>
-  import { storage } from "../store/firebase.js";
+import { storage } from "../store/firebase.js";
 export default {
-
   name: "CategoryListView",
   components: {},
   data() {
@@ -306,7 +297,7 @@ export default {
         category: "",
         size: "",
         isUpdated: false,
-        imgUrl: ''
+        imgUrl: "",
       },
       imgUrl: "",
       previewImage: "",
