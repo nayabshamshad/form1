@@ -225,7 +225,7 @@
             color="secondary"
             @click="showDepartmentDialog = true"
             icon="add"
-            />
+          />
         </div>
         <div class="table-container">
           <table class="user-list-table">
@@ -524,7 +524,10 @@ export default {
         return;
       }
       this.dateSetting = true;
-      await this.$store.dispatch("setDateRange", this.dateModel);
+      await this.$store.dispatch("setDateRange", {
+        date: this.dateModel,
+        uid: this.$store.getters.userData.uid,
+      });
       this.dateSetting = false;
     },
   },

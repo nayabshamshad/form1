@@ -2,7 +2,7 @@ import { store } from "quasar/wrappers";
 import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
-import { Notify } from "quasar"; 
+import { Notify } from "quasar";
 
 export default store(function () {
   const Store = createStore({
@@ -102,7 +102,7 @@ export default store(function () {
             error.err = true;
             Notify.create({
               message:
-              "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
+                "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
               color: "red",
             });
             this.$router.push("/");
@@ -144,7 +144,7 @@ export default store(function () {
         commit("setCurrentUser", null);
         this.$router.push("/sign-in");
       },
-      async getUserData({ commit }) {
+      async getUserData({ state, commit }) {
         await firestore
           .doc(auth.currentUser.uid)
           .get()
@@ -152,15 +152,9 @@ export default store(function () {
             commit("setCurrentUser", auth.currentUser);
             commit("setUserData", res.data());
           });
-        await firestore
-          .doc("dateRange")
-          .get()
-          .then((res) => {
-            commit("setDateList", res.data());
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        if (state.userData.date) {
+          commit("setDateList", state.userData.date);
+        }
       },
       async signUp({ commit }, payload) {
         var error = false;
@@ -339,6 +333,7 @@ export default store(function () {
             uid: auth.currentUser.uid,
             email: payload.email,
             departmentName: payload.name,
+            date: { from: "03/03/2022", to: "04/04/2022" },
           })
           .catch((err) => {
             error = true;
@@ -379,7 +374,7 @@ export default store(function () {
         await firestore.doc(payload.uid).update(payload);
         await dispatch("getUserData");
       },
-      async signInUser({ commit }, payload) {
+      async signInUser({ state, commit }, payload) {
         var error = false;
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
@@ -403,7 +398,7 @@ export default store(function () {
               Notify.create({
                 color: "red",
                 message:
-                "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
+                  "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
               });
             } else if (err.code == "auth/user-not-found") {
               Notify.create({
@@ -439,17 +434,28 @@ export default store(function () {
             });
             return err.message;
           });
-        await firestore
-          .doc("dateRange")
-          .get()
-          .then((res) => {
-            commit("setDateList", res.data());
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        if (error) {
-          return;
+        if (
+          state.userData.role != "department" &&
+          state.userData.role != "admin"
+        ) {
+          await firestore
+            .get()
+            .then((res) => {
+              let arr = [];
+              res.forEach((x) => {
+                arr.push(x.data());
+              });
+              const b = arr.filter((x) => {
+                return state.userData.department == x.departmentName;
+              });
+              commit("setDateList", b[0].date);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          if (error) {
+            return;
+          }
         }
       },
       async addEvent({ dispatch, state }, payload) {
@@ -491,7 +497,7 @@ export default store(function () {
           commit("setUserList", userList);
         });
       },
-      
+
       // Admin Functions
       async approveUser({ commit }, uid) {
         await firestore
@@ -526,9 +532,20 @@ export default store(function () {
       setSelectedUser({ commit }, payload) {
         commit("setSelectedUser", payload);
       },
-      async setDateRange({ commit }, payload) {
-        await firestore.doc("dateRange").update(payload);
-        commit("setDateList", payload);
+      async updatedUserDetails({ commit }, uid) {
+        await firestore
+          .doc(uid)
+          .get()
+          .then((res) => {
+            commit("setSelectedUser", res.data());
+          });
+      },
+      async setDateRange({ state, commit, dispatch }, payload) {
+        await firestore.doc(payload.uid).update({ date: payload.date });
+        commit("setDateList", payload.date);
+        if (this.state.userData.role == "admin") {
+          dispatch("getUserList");
+        }
       },
     },
     plugins: [createPersistedState()],

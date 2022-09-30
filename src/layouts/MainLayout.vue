@@ -123,7 +123,7 @@
       <button class="heading" @click="$router.push('/?q=declined')">
         Refuzat
       </button>
-      <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=date')">Data</button>
+      <button class="heading" v-show="userData.role == 'department'" @click="$router.push('/?q=date')">Data</button>
       <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=departments')">
         Departments
       </button>
