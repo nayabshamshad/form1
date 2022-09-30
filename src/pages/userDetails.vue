@@ -74,7 +74,7 @@
                 : ""
             }}</span>
           </div>
-          
+
           <div v-if="selectedUser.size != ''" class="cate-list-home">
             <label for="Size"><b>Mărime tricou:</b></label>
             <span>{{ selectedUser.size }}</span>
@@ -115,7 +115,7 @@
               </span>
             </div>
           </div>
-  
+
           <div v-if="selectedUser.Instructor !== '' || selectedUser.Ghid !== '' || selectedUser.masterGhid !== ''" class="cate-list-home">
             <label for="Instructor"><b>Anul investiturii ca:</b></label>
             <span><b>Instructor:</b> {{ selectedUser.Instructor }}</span>

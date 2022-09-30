@@ -1,270 +1,263 @@
 <template>
-  <div class="container">
-    <form class="form">
-      <h2>Completați informațiile</h2>
+  <q-card class="my-card">
+    <q-card-section>
+      <div class="container">
+        <form class="form">
+          <h4>Completați informațiile</h4>
 
-      <div class="cate-list">
-        <q-select
-          :options="['Română', 'Maghiară']"
-          label="Etnie"
-          label-color="black"
-          v-model="userInfo.etnic"
-        />
-      </div>
+          <div class="cate-list left">
+            <label for="uname"><b>Etnie</b></label>
+            <q-select
+              :options="['Română', 'Maghiară']"
+              v-model="userInfo.etnic"
+            />
+          </div>
 
-      <div>
-        <label for="Gender"><b>Sex:</b></label>
-        <div>
-          <q-radio
-            v-model="userInfo.gender"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="Male"
-            label="Masculin"
-          />
-          <q-radio
-            v-model="userInfo.gender"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="Female"
-            label="Femenin"
-          />
-        </div>
-      </div>
-
-      <div class="cate-list">
-        <q-select
-          v-model="userInfo.size"
-          :options="sizeOptions"
-          label-color="black"
-          label="Mărime tricou:"
-        />
-      </div>
-
-      <div class="cate-list">
-        <label
-          style="
-            margin-bottom: 0;
-            margin-top: 1rem;
-            display: block;
-            font-size: 16px;
-            font-weight: 500;
-          "
-          >Data nașterii:</label
-        >
-        <q-input
-          filled
-          v-model="dateOfBirth"
-          mask="##/##/####"
-          @focus="openModal"
-        >
-          <template v-slot:append>
-            <q-icon
-              @click="openModal"
-              ref="dateIcon"
-              name="event"
-              class="cursor-pointer"
+          <div class="right gender">
+            <label for="Gender"><b>Sex:</b></label>
+            <div>
+              <q-radio
+                v-model="userInfo.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Male"
+                label="Masculin"
+              />
+              <q-radio
+                v-model="userInfo.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Female"
+                label="Femenin"
+              />
+            </div>
+          </div>
+          <!--
+          <div class="cate-list right">
+            <label for="uname"><b>Mărimea tricou</b></label>
+            <q-select v-model="userInfo.size" :options="sizeOptions" />
+          </div> -->
+          <div class="cate-list right gender margin">
+            <label for="uname"><b>Data nașterii:</b></label>
+            <q-input
+              filled
+              v-model="dateOfBirth"
+              mask="##/##/####"
+              @focus="openModal"
             >
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date
-                  v-model="userInfo.dateOfBirth"
-                  @update:model-value="handleDateChange"
+              <template v-slot:append>
+                <q-icon
+                  @click="openModal"
+                  ref="dateIcon"
+                  name="event"
+                  class="cursor-pointer"
                 >
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-      </div>
-
-      <div class="cate-list">
-        <q-select
-          v-model="userInfo.category"
-          label="Categoria:"
-          label-color="black"
-          :options="['Licurici', 'Companioni', 'Exploratori']"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.clubName"
-          placeholder="Clubul"
-          name="Club"
-          label="Clubul:"
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="tagsInput"
-          placeholder="Separate de virgulă"
-          name="tags"
-          label="Specializări pe care le poți preda (max 5):"
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.region"
-          placeholder="ex. Târgu Mureș"
-          label="Zona:"
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.state"
-          placeholder="Comunitate"
-          label="Comunitatea în care activezi: "
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.Instructor"
-          label-color="black"
-          label="Anul investiturii ca Instructor:"
-          placeholder="YYYY"
-          name="Instructor"
-          mask="####"
-        />
-      </div>
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.Ghid"
-          placeholder="YYYY"
-          label="Anul investiturii ca Ghid:"
-          label-color="black"
-          mask="####"
-        />
-      </div>
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="userInfo.masterGhid"
-          placeholder="YYYY"
-          mask="####"
-          label-color="black"
-          label="Anul investiturii ca Master Ghid:"
-        />
-      </div>
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          padding-right: 2rem;
-          margin: 1rem 0;
-        "
-      >
-        <div>
-          <label for="status"><b>Status:</b></label>
-          <div>
-            <q-radio
-              v-model="userInfo.status"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              :val="true"
-              label="Activ"
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="userInfo.dateOfBirth"
+                      @update:model-value="handleDateChange"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+          <div class="cate-list right gender">
+            <label for="uname"><b>Mărimea tricou</b></label>
+            <q-select v-model="userInfo.size" :options="sizeOptions" />
+          </div>
+          <!-- <div class="cate-list">
+            <label for="uname"><b>Categoria</b></label>
+            <q-select
+              v-model="userInfo.category"
+              :options="['Licurici', 'Companioni', 'Exploratori']"
             />
-            <q-radio
-              v-model="userInfo.status"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              :val="false"
-              label="InActiv"
+          </div> -->
+
+          <div class="cate-list">
+            <label for="uname"><b>Categoria</b></label>
+            <div>
+              <q-radio
+                v-model="userInfo.category"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Male"
+                label="Licurici"
+              />
+              <q-radio
+                v-model="userInfo.category"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Female"
+                label="Exploratori"
+              />
+              <q-radio
+                v-model="userInfo.category"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="trans"
+                label="Companioni"
+              />
+            </div>
+          </div>
+          <div class="cate-list left">
+            <label for="uname"><b>Clubul</b></label>
+            <q-input
+              type="text"
+              v-model="userInfo.clubName"
+              placeholder="Denumirea clubului"
             />
           </div>
-        </div>
-      </div>
-      <input
-          ref="imgInput"
-          accept="image/*"
-          @change="handleImageUpload"
-          type="file"
-          style="display: none"
-        />
-        <div class="profile-img-holder q-my-lg">
-          <q-card-actions align="right" class="q-mb-md">
-            <q-btn rounded @click="selectImage" no-caps color="secondary"
-              >Add Profile Picture</q-btn
-            >
-          </q-card-actions>
-          <div
-            v-if="previewImage"
-            class="add-img q-mx-auto"
-
-          >
-            <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
-            <img
-              class="add-event-img"
-              :src="previewImage"
-              alt=""
+          <div class="cate-list right">
+            <label for="uname"><b>Zona</b></label>
+            <q-input
+              type="text"
+              v-model="userInfo.region"
+              placeholder="Zona în care activezi"
             />
           </div>
-        </div>
+          <div class="cate-list">
+            <label for="uname"><b>Comunitate</b></label>
+            <q-input
+              type="text"
+              v-model="userInfo.state"
+              placeholder="Comunitatea în care activezi"
+            />
+          </div>
+          <div class="cate-list">
+            <label for="uname"><b>Specializări pe care le poți preda</b></label>
+            <q-input
+              type="text"
+              v-model="tagsInput"
+              placeholder="Separați cu virgula"
+              name="tags"
 
-      <div v-if="userInfo.status" class="cate-list">
-        <div style="flex-wrap: nowrap" class="flex justify-space-between">
-          <label for="list"><b>Lista copiilor:</b></label>
-          <q-btn @click="addMember" type="button" round color="purple">+</q-btn>
-        </div>
+            />
+          </div>
 
-        <div
-          v-for="(item, index) in userInfo.teamList"
-          :key="index"
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          "
-        >
-          <q-input
-            type="text"
-            v-model="item.name"
-            placeholder="Nume copil"
-            style="width: 70%"
+          <div class="cate-list left-1">
+            <label for="uname"><b>Anii investiturii:</b></label>
+            <q-input
+              type="text"
+              v-model="userInfo.Instructor"
+              placeholder="Instructor"
+              name="Instructor"
+              mask="####"
+            />
+          </div>
+
+          <div class="cate-list right-1">
+            <q-input
+              type="text"
+              v-model="userInfo.masterGhid"
+              placeholder="Master Ghid"
+              mask="####"
+              />
+          </div>
+          <div class="cate-list between">
+            <q-input
+              type="text"
+              v-model="userInfo.Ghid"
+              placeholder="Ghid"
+              mask="####"
+            />
+          </div>
+            <div class="cate-list">
+              <label for="status"><b>Status:</b></label>
+              <div>
+                <q-radio
+                  v-model="userInfo.status"
+                  checked-icon="task_alt"
+                  unchecked-icon="panorama_fish_eye"
+                  :val="true"
+                  label="Active"
+                />
+                <q-radio
+                  v-model="userInfo.status"
+                  checked-icon="task_alt"
+                  unchecked-icon="panorama_fish_eye"
+                  :val="false"
+                  label="InActive"
+                />
+              </div>
+            </div>
+          <!-- <input
+            ref="imgInput"
+            accept="image/*"
+            @change="handleImageUpload"
+            type="file"
+            style="display: none"
           />
-          <q-btn
-            @click="removeMember(index)"
-            type="button"
-            round
-            color="red"
-            style="width: 35px; height: 35px"
-            >-</q-btn
-          >
-        </div>
-      </div>
-      <div class="submit">
-        <q-btn
-          type="button"
-          :loading="isSubmitting"
-          @click="submit"
-          color="purple"
-          class="signupbtn"
-          >Trimite</q-btn
-        >
-      </div>
-    </form>
-  </div>
+          <div class="profile-img-holder q-my-lg">
+            <q-card-actions align="right" class="q-mb-md">
+              <q-btn rounded @click="selectImage" no-caps color="secondary"
+                >Add Profile Picture</q-btn
+              >
+            </q-card-actions>
+            <div v-if="previewImage" class="add-img q-mx-auto">
+              <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
+              <img class="add-event-img" :src="previewImage" alt="" />
+            </div>
+          </div> -->
 
+          <div v-if="userInfo.status" class="cate-list">
+            <div style="flex-wrap: nowrap" class="flex justify-space-between">
+              <label for="list"><b>Lista copiilor:</b></label>
+              <q-btn @click="addMember" type="button" round color="green"
+                >+</q-btn
+              >
+            </div>
+
+            <div
+              v-for="(item, index) in userInfo.teamList"
+              :key="index"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <q-input
+                type="text"
+                v-model="item.name"
+                placeholder="Nume copil"
+              />
+              <q-btn
+                @click="removeMember(index)"
+                type="button"
+                round
+                color="red"
+                style="width: 35px; height: 35px"
+                >-</q-btn
+              >
+            </div>
+          </div>
+          <div class="submit">
+            <q-btn
+              type="button"
+              :loading="isSubmitting"
+              @click="submit"
+              class="signupbtn"
+              >Trimite</q-btn
+            >
+          </div>
+        </form>
+      </div>
+    </q-card-section>
+  </q-card>
   <!-- Error Dialog -->
   <q-dialog v-model="errorDialog">
     <q-card>
@@ -283,9 +276,8 @@
   </q-dialog>
 </template>
 <script>
-  import { storage } from "../store/firebase.js";
+import { storage } from "../store/firebase.js";
 export default {
-
   name: "CategoryListView",
   components: {},
   data() {
@@ -306,7 +298,7 @@ export default {
         category: "",
         size: "",
         isUpdated: false,
-        imgUrl: ''
+        imgUrl: "",
       },
       imgUrl: "",
       previewImage: "",

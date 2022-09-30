@@ -1,23 +1,26 @@
 <template>
+  <q-card class="my-card">
+      <q-card-section>
   <div class="container">
     <form class="form" autocomplete="off">
-      <h2>Resetarea parolei</h2>
+      <h4>Resetare parola</h4>
       <div class="cate-list">
-        <label for="pwd"><b>Parola</b></label>
-        <q-input type="password" name="pwd" v-model="newPass" />
+        <label for="pwd" ><b>E-mail</b></label>
+        <q-input type="password" name="pwd" v-model="newPass"   placeholder="Adresa de E-mail" />
       </div>
       <div class="btn1">
         <q-btn
           @click="resetPassword"
           :loading="isSubmitting"
           type="button"
-          color="purple"
           rounded
-          >Resetare parolă</q-btn
+          >Trimite</q-btn
         >
       </div>
     </form>
   </div>
+</q-card-section>
+    </q-card>
 </template>
 
 <script>
@@ -66,5 +69,4 @@ export default {
   },
 };
 </script>
-
 <style></style>

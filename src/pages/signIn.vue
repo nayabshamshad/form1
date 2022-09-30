@@ -1,9 +1,14 @@
 <template>
+   <q-card class="my-card">
+      <q-card-section>
   <div class="container">
+    <!-- <q-card class="my-card">
+      <q-card-section> -->
     <form @submit.prevent="loginUser" class="form" autocomplete="off">
-      <h2>Autentificare</h2>
+      <h4>Autentificare</h4>
+      <p>nu ai ica cont?<router-link to="/sign-up" class="link">inregistreaza-te</router-link> </p>
       <div class="cate-list">
-        <label for="uname"><b>Adresa ta de E-mail</b></label>
+        <label for="uname"><b> E-mail</b></label>
         <q-input
           v-model="userEmail"
           type="text"
@@ -18,31 +23,22 @@
           placeholder="Parola"
           name="pwd"
           v-model="userPass"
-        />
+ />
       </div>
       <div class="btn1">
         <q-btn
           @click="loginUser"
           :loading="isSubmitting"
+          class="q-btn-item"
           type="button"
-          color="purple"
-          rounded
           >Conectare</q-btn
         >
       </div>
       <span class="pwd"
-        >Utilizator nou?
-        <router-link to="/sign-up">Înregistrare</router-link>
+        >
         <button
           type="button"
-          style="
-            background: none;
-            outline: none;
-            border: none;
-            display: block;
-            color: blue;
-            cursor: pointer;
-          "
+          class="link"
           @click="forgotPassword"
         >
           Am uitat parola
@@ -50,7 +46,8 @@
       </span>
     </form>
   </div>
-
+</q-card-section>
+    </q-card>
   <!-- Forgot Dialog -->
   <q-dialog v-model="forgotDialog">
     <q-card style="width: 100%">
@@ -71,7 +68,6 @@
             rounder
             style="margin-top: 1rem"
             :loading="sendingEmail"
-            color="purple"
             >Resetare</q-btn
           >
         </div>

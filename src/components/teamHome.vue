@@ -1,4 +1,6 @@
 <template>
+<q-card class="my-card info">
+      <q-card-section>
   <div v-if="!isEdit" class="container">
     <div class="flex" style="justify-content: flex-end; max-width: 75%">
       <q-btn
@@ -9,6 +11,7 @@
         icon="edit"
       ></q-btn>
     </div>
+
     <h2>Informații utilizator</h2>
     <div class="add-img" v-if="dataUser.imgUrl && dataUser.imgUrl !== ''">
           <img :src="dataUser.imgUrl" />
@@ -402,6 +405,8 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+</q-card-section>
+  </q-card>
 </template>
 
 <script>
