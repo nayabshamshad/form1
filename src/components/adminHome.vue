@@ -231,9 +231,9 @@
           <table class="user-list-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Department</th>
+                <th>Nume</th>
+                <th>Număr de telefon</th>
+                <th>Conferința</th>
               </tr>
             </thead>
             <tbody>
@@ -279,7 +279,7 @@
 import writeXlsxFile from "write-excel-file";
 
 export default {
-  mounted() { 
+  mounted() {
     if (this.$route?.query?.q) {
       if (
         this.$route?.query?.q == "departments" &&
@@ -373,12 +373,12 @@ export default {
           value: "Data nașterii",
           fontWeight: "bold",
         },
+        // {
+        //   value: "Etnie",
+        //   fontWeight: "bold",
+        // },
         {
-          value: "Etnie",
-          fontWeight: "bold",
-        },
-        {
-          value: "Sex",
+          value: "Gen",
           fontWeight: "bold",
         },
         {

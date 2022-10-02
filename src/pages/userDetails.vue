@@ -33,7 +33,7 @@
             selectedUser.isAuthorized === "pending"
               ? "În așteptare"
               : selectedUser.role === "department"
-              ? "Department Admin"
+              ? "Lider de Conferința"
               : selectedUser.isAuthorized == true
               ? "Autorizat"
               : "Refuzat"
@@ -65,13 +65,13 @@
             <span>{{ selectedUser.phoneNumber }}</span>
           </div>
 
-          <div v-if="selectedUser.etnic != ''" class="cate-list-home">
+          <!-- <div v-if="selectedUser.etnic != ''" class="cate-list-home">
             <label for="Etnic"><b>Etnie:</b></label>
             <span>{{ selectedUser.etnic }}</span>
-          </div>
+          </div> -->
 
           <div v-if="selectedUser.gender != ''" class="cate-list-home">
-            <label for="Gender"><b>Sex:</b></label>
+            <label for="Gender"><b>Gen:</b></label>
             <span>{{ selectedUser.gender }}</span>
           </div>
 
@@ -229,17 +229,17 @@
             />
           </div>
 
-          <div class="cate-list">
+          <!-- <div class="cate-list">
             <q-select
               :options="['Română', 'Maghiară']"
               label="Etnie:"
               label-color="black"
               v-model="dataUser.etnic"
             />
-          </div>
+          </div> -->
 
           <div>
-            <label for="Gender"><b>Sex:</b></label>
+            <label for="Gender"><b>Gen:</b></label>
             <div>
               <q-radio
                 v-model="dataUser.gender"
@@ -253,7 +253,7 @@
                 checked-icon="task_alt"
                 unchecked-icon="panorama_fish_eye"
                 val="Female"
-                label="Femenin"
+                label="Feminin"
               />
             </div>
           </div>

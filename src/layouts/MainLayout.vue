@@ -41,7 +41,7 @@
         @click="$router.push('/')"
         class="btn"
       >
-      Panou de bord
+        Panou de bord
       </q-btn>
       <q-btn
         no-caps
@@ -57,7 +57,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-      Întâlniri
+        Întâlniri
       </q-btn>
     </div>
   </div>
@@ -82,7 +82,7 @@
         type="button"
         class="btn"
       >
-      Conectare
+        Conectare
       </q-btn>
       <q-btn
         v-if="$route.path != '/sign-up'"
@@ -93,7 +93,7 @@
         @click="$router.push('/sign-up')"
         class="btn"
       >
-      Înregistrare
+        Înregistrare
       </q-btn>
     </div>
   </div>
@@ -123,9 +123,19 @@
       <button class="heading" @click="$router.push('/?q=declined')">
         Refuzat
       </button>
-      <button class="heading" v-show="userData.role == 'department'" @click="$router.push('/?q=date')">Data</button>
-      <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=departments')">
-        Departments
+      <button
+        class="heading"
+        v-show="userData.role == 'department'"
+        @click="$router.push('/?q=date')"
+      >
+        Data
+      </button>
+      <button
+        class="heading"
+        v-show="userData.role == 'admin'"
+        @click="$router.push('/?q=departments')"
+      >
+        Conferințe
       </button>
     </div>
     <div>
@@ -153,7 +163,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-      Întâlnirile
+        Întâlnirile
       </q-btn>
     </div>
   </div>

@@ -531,16 +531,19 @@ export default store(function () {
       setSelectedUser({ commit }, payload) {
         commit("setSelectedUser", payload);
       },
-     async updatedUserDetails({commit}, uid) {
-        await firestore.doc(uid).get().then(res => {
-          commit('setSelectedUser', res.data())
-        })
+      async updatedUserDetails({ commit }, uid) {
+        await firestore
+          .doc(uid)
+          .get()
+          .then((res) => {
+            commit("setSelectedUser", res.data());
+          });
       },
-      async setDateRange({state, commit, dispatch }, payload) {
+      async setDateRange({ state, commit, dispatch }, payload) {
         await firestore.doc(payload.uid).update({ date: payload.date });
         commit("setDateList", payload.date);
-        if(this.state.userData.role == 'admin') {
-          dispatch("getUserList")
+        if (this.state.userData.role == "admin") {
+          dispatch("getUserList");
         }
       },
     },

@@ -3,17 +3,17 @@
     <form class="form">
       <h2>Completați informațiile</h2>
 
-      <div class="cate-list">
+      <!-- <div class="cate-list">
         <q-select
           :options="['Română', 'Maghiară']"
           label="Etnie"
           label-color="black"
           v-model="userInfo.etnic"
         />
-      </div>
+      </div> -->
 
       <div>
-        <label for="Gender"><b>Sex:</b></label>
+        <label for="Gender"><b>Gen:</b></label>
         <div>
           <q-radio
             v-model="userInfo.gender"

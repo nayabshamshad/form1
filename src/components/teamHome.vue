@@ -29,13 +29,13 @@
         <span>{{ dataUser.phoneNumber }}</span>
       </div>
 
-      <div class="cate-list-home">
+      <!-- <div class="cate-list-home">
         <label for="Etnic"><b>Etnie:</b></label>
         <span>{{ dataUser.etnic }}</span>
-      </div>
+      </div> -->
 
       <div class="cate-list-home">
-        <label for="Gender"><b>Sex:</b></label>
+        <label for="Gender"><b>Gen:</b></label>
         <span>{{ dataUser.gender }}</span>
       </div>
 
@@ -136,17 +136,17 @@
         />
       </div>
 
-      <div class="cate-list">
+      <!-- <div class="cate-list">
         <q-select
           :options="['Romanian', 'Hungarian']"
           label="Etnie:"
           label-color="black"
           v-model="dataUser.etnic"
         />
-      </div>
+      </div> -->
 
       <div>
-        <label for="Gender"><b>Sex:</b></label>
+        <label for="Gender"><b>Gen:</b></label>
         <div>
           <q-radio
             v-model="dataUser.gender"
