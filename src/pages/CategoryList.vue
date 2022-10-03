@@ -290,7 +290,7 @@ export default {
         region: "",
         state: "",
         gender: "Male",
-        etnic: "",
+        // etnic: "",
         tagList: [],
         clubName: "",
         status: false,
@@ -402,7 +402,7 @@ export default {
         profile.region == "" ||
         profile.state == "" ||
         profile.gender == "" ||
-        profile.etnic == "" ||
+        // profile.etnic == "" ||
         profile.clubName == "" ||
         profile.category == "" ||
         profile.size == ""
