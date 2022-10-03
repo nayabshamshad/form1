@@ -1,7 +1,0 @@
-{
-  "appId": "attendace.quasar.app",
-  "appName": "User Info Form",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}
