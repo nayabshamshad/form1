@@ -4,64 +4,64 @@
     v-if="
       isAuthenticated &&
       userData?.role != 'admin' &&
-      userData?.role != 'department'
+      userData?.role != 'department' &&
+      $route.path != '/sign-up' &&
+      $route.path != '/category-list' &&
+      $route.path != '/sign-in'
     "
   >
-    <q-btn
-      no-caps
-      @click="$router.go(-1)"
-      round
-      style="transform: rotate(-90deg)"
-      icon="navigation"
-      v-if="$route.path != '/sign-in'"
-    />
-    <div v-else></div>
-    <h3 class="heading" style="">{{ $route.name }}</h3>
-    <div>
+    <div class="top-center">
       <q-btn
         no-caps
-        color="grey"
-        text-color="black"
+        color="black"
+        flat
+        type="button"
+        @click="$router.push('/')"
+        class="btn"
+        :class="$route.path === '/' ? 'add-border' : ''"
+      >
+        Panou de bord
+      </q-btn>
+      <q-btn
+        no-caps
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/event-list')"
+        class="btn"
+        :class="$route.path === '/event-list' ? 'add-border' : ''"
+      >
+        Întâlniri
+      </q-btn>
+    </div>
+    <div class="q-ml-auto">
+      <q-btn
+        no-caps
+        color="black"
+        flat
         to="/"
         type="button"
         @click="logOut"
-        class="btn"
-        >Deconectare</q-btn
-      >
-      <q-btn
-        no-caps
-        color="grey"
-        text-color="black"
-        type="button"
-        v-if="
-          $route.path != '/' &&
-          userData?.isAuthorized == true &&
-          userData?.isUpdated == true
-        "
-        @click="$router.push('/')"
-        class="btn"
-      >
-      Panou de bord
-      </q-btn>
-      <q-btn
-        no-caps
-        color="grey"
-        text-color="black"
-        type="button"
-        v-if="
-          $route.path != '/event-list' &&
-          userData?.status &&
-          userData?.role != 'admin' &&
-          userData?.isAuthorized == true
-        "
-        @click="$router.push('/event-list')"
-        class="btn"
-      >
-      Întâlniri
-      </q-btn>
+        class="btn log-out"
+        style="font-size: 12px; font-weight: 300"
+        >Deconectare
+        <q-icon
+          class="q-pl-md"
+          style="font-size: 30px; color: rgba(150, 150, 150, 1)"
+          name="exit_to_app"
+        ></q-icon
+      ></q-btn>
     </div>
   </div>
-  <div class="top-bar" v-else-if="!isAuthenticated">
+  <div
+    class="top-bar"
+    v-else-if="
+      !isAuthenticated &&
+      $route.path != '/sign-up' &&
+      $route.path != '/category-list' &&
+      $route.path !== '/sign-in'
+    "
+  >
     <q-btn
       no-caps
       @click="$router.go(-1)"
@@ -82,7 +82,7 @@
         type="button"
         class="btn"
       >
-      Conectare
+        Conectare
       </q-btn>
       <q-btn
         v-if="$route.path != '/sign-up'"
@@ -93,7 +93,7 @@
         @click="$router.push('/sign-up')"
         class="btn"
       >
-      Înregistrare
+        Înregistrare
       </q-btn>
     </div>
   </div>
@@ -123,8 +123,18 @@
       <button class="heading" @click="$router.push('/?q=declined')">
         Refuzat
       </button>
-      <button class="heading" v-show="userData.role == 'department'" @click="$router.push('/?q=date')">Data</button>
-      <button class="heading" v-show="userData.role == 'admin'" @click="$router.push('/?q=departments')">
+      <button
+        class="heading"
+        v-show="userData.role == 'department'"
+        @click="$router.push('/?q=date')"
+      >
+        Data
+      </button>
+      <button
+        class="heading"
+        v-show="userData.role == 'admin'"
+        @click="$router.push('/?q=departments')"
+      >
         Departments
       </button>
     </div>
@@ -153,7 +163,7 @@
         @click="$router.push('/event-list')"
         class="btn"
       >
-      Întâlnirile
+        Întâlnirile
       </q-btn>
     </div>
   </div>

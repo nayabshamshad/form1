@@ -1,26 +1,31 @@
 <template>
   <q-card class="my-card">
-      <q-card-section>
-  <div class="container">
-    <form class="form" autocomplete="off">
-      <h4>Resetare parola</h4>
-      <div class="cate-list">
-        <label for="pwd" ><b>E-mail</b></label>
-        <q-input type="password" name="pwd" v-model="newPass"   placeholder="Adresa de E-mail" />
+    <q-card-section>
+      <div class="container">
+        <form class="form" autocomplete="off">
+          <h4>Resetare parola</h4>
+          <div class="cate-list">
+            <label for="pwd">E-mail</label>
+            <q-input
+              type="password"
+              name="pwd"
+              v-model="newPass"
+              placeholder="Adresa de E-mail"
+            />
+          </div>
+          <div class="btn1">
+            <q-btn
+              @click="resetPassword"
+              :loading="isSubmitting"
+              type="button"
+              rounded
+              >Trimite</q-btn
+            >
+          </div>
+        </form>
       </div>
-      <div class="btn1">
-        <q-btn
-          @click="resetPassword"
-          :loading="isSubmitting"
-          type="button"
-          rounded
-          >Trimite</q-btn
-        >
-      </div>
-    </form>
-  </div>
-</q-card-section>
-    </q-card>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>

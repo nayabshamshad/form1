@@ -47,11 +47,11 @@
         </div>
         <form class="form category-form home-only">
           <div v-if="selectedUser.name != ''" class="cate-list-home">
-            <label for="club"><b>Nume/Prenume:</b></label>
+            <label for="club">Nume/Prenume:</label>
             <span>{{ selectedUser.name }}</span>
           </div>
           <div v-if="selectedUser.email !== ''" class="cate-list-home">
-            <label for="email"><b>E-mail:</b></label>
+            <label for="email">E-mail:</label>
             <span
               style="padding-left: 0; word-wrap: break-word"
               class="text-primary cursor-pointer link-text"
@@ -61,22 +61,22 @@
           </div>
 
           <div v-if="selectedUser.phoneNumber != ''" class="cate-list-home">
-            <label for="telephone no."><b>Număr de telefon:</b></label>
+            <label for="telephone no.">Număr de telefon:</label>
             <span>{{ selectedUser.phoneNumber }}</span>
           </div>
 
           <div v-if="selectedUser.etnic != ''" class="cate-list-home">
-            <label for="Etnic"><b>Etnie:</b></label>
+            <label for="Etnic">Etnie:</label>
             <span>{{ selectedUser.etnic }}</span>
           </div>
 
           <div v-if="selectedUser.gender != ''" class="cate-list-home">
-            <label for="Gender"><b>Sex:</b></label>
+            <label for="Gender">Sex:</label>
             <span>{{ selectedUser.gender }}</span>
           </div>
 
           <div v-if="selectedUser.dateOfBirth != ''" class="cate-list-home">
-            <label for="date"><b>Data nașterii:</b></label>
+            <label for="date">Data nașterii:</label>
             <span>{{
               selectedUser?.dateOfBirth
                 ? getBirthDate(selectedUser.dateOfBirth)
@@ -85,39 +85,39 @@
           </div>
 
           <div v-if="selectedUser.size != ''" class="cate-list-home">
-            <label for="Size"><b>Mărime tricou:</b></label>
+            <label for="Size">Mărime tricou:</label>
             <span>{{ selectedUser.size }}</span>
           </div>
 
           <div v-if="selectedUser.category != ''" class="cate-list-home">
-            <label for="Category"><b>Categorie:</b></label>
+            <label for="Category">Categorie:</label>
             <span>{{ selectedUser.category }}</span>
           </div>
 
           <div v-if="selectedUser.region != ''" class="cate-list-home">
-            <label for="Region"><b>Zona:</b></label>
+            <label for="Region">Zona:</label>
             <span>{{ selectedUser.region }} </span>
           </div>
 
           <div v-if="selectedUser.state != ''" class="cate-list-home">
-            <label for="state"><b>Comunitate:</b></label>
+            <label for="state">Comunitate:</label>
             <span>{{ selectedUser.state }}</span>
           </div>
 
           <div v-if="selectedUser.clubName != ''" class="cate-list-home">
-            <label for="club"><b>Clubul:</b></label>
+            <label for="club">Clubul:</label>
             <span>{{ selectedUser.clubName }}</span>
           </div>
 
           <div v-if="selectedUser.role !== 'department'" class="cate-list-home">
-            <label for="status"><b>Status:</b></label>
+            <label for="status">Status:</label>
             <span>{{ selectedUser.status ? "Activ" : "InActiv" }}</span>
           </div>
           <div
             v-if="selectedUser.tagList.length > 0"
             class="cate-list-home chip-container"
           >
-            <label for="tags"><b>Specializări:</b></label>
+            <label for="tags">Specializări:</label>
             <div v-if="selectedUser.tagList">
               <span v-for="(item, index) in selectedUser.tagList" :key="index">
                 {{ item }}
@@ -133,10 +133,10 @@
             "
             class="cate-list-home"
           >
-            <label for="Instructor"><b>Anul investiturii ca:</b></label>
-            <span><b>Instructor:</b> {{ selectedUser.Instructor }}</span>
-            <span><b>Ghid:</b> {{ selectedUser.Ghid }}</span>
-            <span><b>Master Ghid:</b> {{ selectedUser.masterGhid }}</span>
+            <label for="Instructor">Anul investiturii ca:</label>
+            <span>Instructor: {{ selectedUser.Instructor }}</span>
+            <span>Ghid: {{ selectedUser.Ghid }}</span>
+            <span>Master Ghid: {{ selectedUser.masterGhid }}</span>
           </div>
         </form>
         <div class="table-container">
@@ -239,7 +239,7 @@
           </div>
 
           <div>
-            <label for="Gender"><b>Sex:</b></label>
+            <label for="Gender">Sex:</label>
             <div>
               <q-radio
                 v-model="dataUser.gender"
@@ -414,7 +414,7 @@
           ></div>
 
           <div>
-            <label for="status"><b>Status:</b></label>
+            <label for="status">Status:</label>
             <div>
               <q-radio
                 v-model="dataUser.status"
@@ -440,7 +440,7 @@
             ></div>
 
             <div style="flex-wrap: nowrap" class="flex justify-space-between">
-              <label for="list"><b>Lista copiilor:</b></label>
+              <label for="list">Lista copiilor:</label>
               <q-btn @click="addMember" type="button" round color="purple"
                 >+</q-btn
               >

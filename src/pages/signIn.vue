@@ -1,56 +1,65 @@
 <template>
-   <q-card class="my-card">
-      <q-card-section>
-  <div class="container">
-    <!-- <q-card class="my-card">
+  <q-card class="my-card full-height sign-in">
+    <q-card-section>
+      <div class="container">
+        <!-- <q-card class="my-card">
       <q-card-section> -->
-    <form @submit.prevent="loginUser" class="form" autocomplete="off">
-      <h4>Autentificare</h4>
-      <p>nu ai ica cont?<router-link to="/sign-up" class="link">inregistreaza-te</router-link> </p>
-      <div class="cate-list">
-        <label for="uname"><b> E-mail</b></label>
-        <q-input
-          v-model="userEmail"
-          type="text"
-          placeholder="Adresa de E-mail"
-          name="uname"
-        />
+        <form @submit.prevent="loginUser" class="form" autocomplete="off">
+          <h4>Autentificare</h4>
+          <p>
+            nu ai ica cont? <router-link to="/sign-up" class="link"
+              >inregistreaza-te</router-link
+            >
+          </p>
+          <div class="cate-list">
+            <label for="uname"> E-mail</label>
+            <q-input
+            outlined
+              v-model="userEmail"
+              type="text"
+              placeholder="Adresa de E-mail"
+              name="uname"
+            />
+          </div>
+          <div class="cate-list">
+            <label for="pwd">Parola</label>
+            <q-input
+            outlined
+              placeholder="Parola"
+              name="pwd"
+              v-model="userPass"
+              :type="isPwd ? 'password' : 'text'"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </div>
+          <div class="btn1">
+            <q-btn
+              @click="loginUser"
+              :loading="isSubmitting"
+              class="q-btn-item"
+              type="button"
+              >Conectare</q-btn
+            >
+          </div>
+          <span class="pwd">
+            <button style="font-size: 12px" type="button" class="link" @click="forgotPassword">
+              Am uitat parola
+            </button>
+          </span>
+        </form>
       </div>
-      <div class="cate-list">
-        <label for="pwd"><b>Parola</b></label>
-        <q-input
-          type="password"
-          placeholder="Parola"
-          name="pwd"
-          v-model="userPass"
- />
-      </div>
-      <div class="btn1">
-        <q-btn
-          @click="loginUser"
-          :loading="isSubmitting"
-          class="q-btn-item"
-          type="button"
-          >Conectare</q-btn
-        >
-      </div>
-      <span class="pwd"
-        >
-        <button
-          type="button"
-          class="link"
-          @click="forgotPassword"
-        >
-          Am uitat parola
-        </button>
-      </span>
-    </form>
-  </div>
-</q-card-section>
-    </q-card>
+    </q-card-section>
+  </q-card>
   <!-- Forgot Dialog -->
   <q-dialog v-model="forgotDialog">
-    <q-card style="width: 100%">
+    <q-card style="width: 100%; margin-right: auto">
       <q-card-section
         ><div
           class="flex"
@@ -91,6 +100,7 @@ export default {
       forgotEmail: "",
       sendingEmail: false,
       forgotCode: "",
+      isPwd: true,
     };
   },
   mounted() {},

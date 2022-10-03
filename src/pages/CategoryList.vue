@@ -1,32 +1,51 @@
 <template>
-  <q-card class="my-card">
+  <q-card class="my-card sign-up">
     <q-card-section>
       <div class="container">
         <form class="form">
           <h4>Completați informațiile</h4>
-
+          <input
+            ref="imgInput"
+            accept="image/*"
+            @change="handleImageUpload"
+            type="file"
+            style="display: none"
+          />
+          <div class="profile-img-holder q-my-lg">
+            <q-card-actions v-if="!previewImage" align="right" class="flex no-wrap q-mb-md">
+              <div class="add-img" @click="selectImage">
+                <q-icon class="text-grey" name="photo_camera"></q-icon>
+              </div>
+              <p>Adaugă o fotografie tip buletin cu tine</p>
+            </q-card-actions>
+            <div v-else-if="previewImage" class="flex no-wrap q-mb-md">
+              <div  class="add-img q-mx-auto">
+                <img class="add-event-img" :src="previewImage" alt="" />
+              </div>
+              <p>Adaugă o fotografie tip buletin cu tine</p>
+            </div>
+          </div>
           <div class="cate-list left">
-            <label for="uname"><b>Etnie</b></label>
+            <label for="uname">Etnie</label>
             <q-select
+              outlined
               :options="['Română', 'Maghiară']"
               v-model="userInfo.etnic"
             />
           </div>
 
           <div class="right gender">
-            <label for="Gender"><b>Sex:</b></label>
-            <div>
+            <label for="Gender">Sex:</label>
+            <div class="flex no-wrap">
               <q-radio
                 v-model="userInfo.gender"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
                 val="Male"
+                color="black"
                 label="Masculin"
               />
               <q-radio
                 v-model="userInfo.gender"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
+                color="black"
                 val="Female"
                 label="Femenin"
               />
@@ -34,17 +53,12 @@
           </div>
           <!--
           <div class="cate-list right">
-            <label for="uname"><b>Mărimea tricou</b></label>
-            <q-select v-model="userInfo.size" :options="sizeOptions" />
+            <label for="uname">Mărimea tricou</label>
+            <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list right gender margin">
-            <label for="uname"><b>Data nașterii:</b></label>
-            <q-input
-              filled
-              v-model="dateOfBirth"
-              mask="##/##/####"
-              @focus="openModal"
-            >
+          <div class="cate-list q-pl-sm right margin">
+            <label for="uname">Data nașterii:</label>
+            <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
                   @click="openModal"
@@ -75,82 +89,83 @@
               </template>
             </q-input>
           </div>
-          <div class="cate-list right gender">
-            <label for="uname"><b>Mărimea tricou</b></label>
-            <q-select v-model="userInfo.size" :options="sizeOptions" />
+          <div class="cate-list left">
+            <label for="uname">Mărimea tricou</label>
+            <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
           <!-- <div class="cate-list">
-            <label for="uname"><b>Categoria</b></label>
-            <q-select
+            <label for="uname">Categoria</label>
+            <q-select outlined
               v-model="userInfo.category"
               :options="['Licurici', 'Companioni', 'Exploratori']"
             />
           </div> -->
 
-          <div class="cate-list">
-            <label for="uname"><b>Categoria</b></label>
+          <div style="margin-bottom: 0" class="cate-list">
+            <label for="uname">Categoria</label>
             <div>
               <q-radio
                 v-model="userInfo.category"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
                 val="Male"
+                color="black"
                 label="Licurici"
               />
               <q-radio
                 v-model="userInfo.category"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
                 val="Female"
+                color="black"
                 label="Exploratori"
               />
               <q-radio
                 v-model="userInfo.category"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
                 val="trans"
+                color="black"
                 label="Companioni"
               />
             </div>
           </div>
           <div class="cate-list left">
-            <label for="uname"><b>Clubul</b></label>
+            <label for="uname">Clubul</label>
             <q-input
+              outlined
               type="text"
               v-model="userInfo.clubName"
               placeholder="Denumirea clubului"
             />
           </div>
           <div class="cate-list right">
-            <label for="uname"><b>Zona</b></label>
+            <label for="uname">Zona</label>
             <q-input
+              outlined
               type="text"
               v-model="userInfo.region"
               placeholder="Zona în care activezi"
             />
           </div>
           <div class="cate-list">
-            <label for="uname"><b>Comunitate</b></label>
+            <label for="uname">Comunitate</label>
             <q-input
+              outlined
               type="text"
               v-model="userInfo.state"
               placeholder="Comunitatea în care activezi"
             />
           </div>
           <div class="cate-list">
-            <label for="uname"><b>Specializări pe care le poți preda</b></label>
+            <label for="uname">Specializări pe care le poți preda</label>
             <q-input
+              outlined
               type="text"
               v-model="tagsInput"
               placeholder="Separați cu virgula"
               name="tags"
-
             />
           </div>
 
           <div class="cate-list left-1">
-            <label for="uname"><b>Anii investiturii:</b></label>
+            <label for="uname">Anii investiturii:</label>
             <q-input
+              outlined
               type="text"
               v-model="userInfo.Instructor"
               placeholder="Instructor"
@@ -161,67 +176,55 @@
 
           <div class="cate-list right-1">
             <q-input
+              outlined
               type="text"
               v-model="userInfo.masterGhid"
               placeholder="Master Ghid"
               mask="####"
-              />
+            />
           </div>
           <div class="cate-list between">
             <q-input
+              outlined
               type="text"
               v-model="userInfo.Ghid"
               placeholder="Ghid"
               mask="####"
             />
           </div>
-            <div class="cate-list">
-              <label for="status"><b>Status:</b></label>
-              <div>
-                <q-radio
-                  v-model="userInfo.status"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  :val="true"
-                  label="Active"
-                />
-                <q-radio
-                  v-model="userInfo.status"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  :val="false"
-                  label="InActive"
-                />
-              </div>
+          <div class="cate-list">
+            <label for="status">Status:</label>
+            <div class="flex" style="gap: 2rem">
+              <q-radio
+                v-model="userInfo.status"
+                :val="true"
+                color="black"
+                label="Activ"
+              />
+              <q-radio
+                v-model="userInfo.status"
+                :val="false"
+                color="black"
+                label="Inactiv"
+              />
             </div>
-          <!-- <input
-            ref="imgInput"
-            accept="image/*"
-            @change="handleImageUpload"
-            type="file"
-            style="display: none"
-          />
-          <div class="profile-img-holder q-my-lg">
-            <q-card-actions align="right" class="q-mb-md">
-              <q-btn rounded @click="selectImage" no-caps color="secondary"
-                >Add Profile Picture</q-btn
-              >
-            </q-card-actions>
-            <div v-if="previewImage" class="add-img q-mx-auto">
-              <q-btn @click="removeImg()" color="red" round size="sm">-</q-btn>
-              <img class="add-event-img" :src="previewImage" alt="" />
-            </div>
-          </div> -->
+          </div>
 
           <div v-if="userInfo.status" class="cate-list">
             <div style="flex-wrap: nowrap" class="flex justify-space-between">
-              <label for="list"><b>Lista copiilor:</b></label>
-              <q-btn @click="addMember" type="button" round color="green"
-                >+</q-btn
-              >
+              <label for="list">Lista copiilor:</label>
+              <q-btn
+                icon="add"
+                @click="addMember"
+                class="team-member-btn"
+                type="button"
+                round
+                color="green"
+              />
             </div>
 
             <div
+              class="member-list"
               v-for="(item, index) in userInfo.teamList"
               :key="index"
               style="
@@ -231,6 +234,7 @@
               "
             >
               <q-input
+                outlined
                 type="text"
                 v-model="item.name"
                 placeholder="Nume copil"
@@ -241,8 +245,9 @@
                 round
                 color="red"
                 style="width: 35px; height: 35px"
-                >-</q-btn
-              >
+                icon="remove"
+                class="remove-button"
+              />
             </div>
           </div>
           <div class="submit">

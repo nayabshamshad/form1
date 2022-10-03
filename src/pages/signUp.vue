@@ -1,81 +1,94 @@
 <template>
-  <q-card class="my-card">
-      <q-card-section>
-  <div class="container">
-    <form class="form" @submit.prevent="submit">
-      <h4>Înregistrare</h4>
-      <p>Ai deja cont? <router-link to="/sign-in" class="link">Autentifică-te</router-link> </p>
+  <q-card class="my-card full-height">
+    <q-card-section>
+      <div class="container">
+        <form class="form" @submit.prevent="submit">
+          <h4>Înregistrare</h4>
+          <p class="linkcolor">
+            Ai deja cont?
+            <router-link to="/sign-in" class="link">Autentifică-te</router-link>
+          </p>
 
-      <div class="cate-list left">
-        <label for="uname"><b>Nume</b></label>
-        <q-input
-          v-model="firstName"
-          type="text"
-          name="F-name"
-        placeholder="Nume"
-          label-color="black"
-        />
-      </div>
-      <div class="cate-list right">
-        <label for="uname"><b>Prenume</b></label>
-        <q-input
-          type="text"
-          placeholder="Prenume"
-          label-color="black"
-          v-model="lastName"
-          name="L-name"
-        />
-      </div>
-      <div class="cate-list">
-        <q-select
-          v-model="departmentName"
-          label-color="black"
-          :options="departmentList"
-        />
-      </div>
-      <div class="cate-list">
-        <label for="uname"><b>Număr de telefon</b></label>
-        <q-input
-          type="tel"
-          v-model="phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label-color="black"
-        />
-      </div>
+          <div class="cate-list left">
+            <label for="uname">Nume</label>
+            <q-input
+              v-model="firstName"
+              type="text"
+              name="F-name"
+              placeholder="Nume"
+              outlined
+              label-color="black"
+            />
+          </div>
+          <div class="cate-list right">
+            <label for="uname">Prenume</label>
+            <q-input
+              type="text"
+              placeholder="Prenume"
+              label-color="black"
+              v-model="lastName"
+              name="L-name"
+              outlined
+            />
+          </div>
+          <div class="cate-list">
+            <q-select
+              v-model="departmentName"
+              outlined
+              label-color="black"
+              :options="departmentList"
+            />
+          </div>
+          <div class="cate-list">
+            <label for="uname">Număr de telefon</label>
+            <q-input
+              type="tel"
+              v-model="phoneNumber"
+              placeholder="+40"
+              name="phone number"
+              mask="+40 #### #####"
+              label-color="black"
+              outlined
+            />
+          </div>
 
-      <div class="cate-list">
-        <label for="uname"><b> E-mail</b></label>
-        <q-input
-          type="text"
-          v-model="emailInput"
-          name="email"
-          placeholder="Adresa de E-mail"
-          label-color="black"
-        />
-      </div>
+          <div class="cate-list">
+            <label for="uname"> E-mail</label>
+            <q-input
+              type="text"
+              v-model="emailInput"
+              name="email"
+              placeholder="Adresa de E-mail"
+              label-color="black"
+              outlined
+            />
+          </div>
 
-      <div class="cate-list">
-        <label for="pwd"><b>Parola</b></label>
-        <q-input
-          type="password"
-          placeholder="Parola"
-          label-color="black"
-          v-model="passInput"
-          name="pwd"
-        />
-      </div>
-      <div class="btn1">
-        <q-btn
-          :loading="isSubmitting"
-          rounded
-          @click="submit"
-          type="button"
-          >Înregistrare</q-btn
-        >
-      </div>
-      <!-- <span class="pwd"
+          <div class="cate-list">
+            <label for="pwd">Parola</label>
+            <q-input
+              :type="isPwd ? 'password' : 'text'"
+              placeholder="Parola"
+              label-color="black"
+              v-model="passInput"
+              name="pwd"
+              outlined
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </div>
+          <div class="btn1">
+            <q-btn :loading="isSubmitting" rounded @click="submit" type="button"
+              >Înregistrare</q-btn
+            >
+          </div>
+          <!-- <span class="pwd"
         >Apăsând "Înregistrare", confirm că sunt de acord cu  Termenii și Condiițile impuse de LEC.
         <button
           type="button"
@@ -85,11 +98,59 @@
 
         </button>
       </span> -->
-      <p class="paragraph">Apăsând "Înregistrare", confirm că sunt de acord cu impuse de LEC.<router-link to="/sign-up" class="link">Termenii și Condiițile</router-link> </p>
-    </form>
-  </div>
-</q-card-section>
+          <p class="paragraph">
+            Apăsând "Înregistrare", confirm că sunt de acord cu impuse de LEC.
+            <span class="termsLink" @click="showTermsDialog = true">
+              Termenii și Condiițile
+            </span>
+          </p>
+        </form>
+      </div>
+    </q-card-section>
+  </q-card>
+  <q-dialog v-model="showTermsDialog">
+    <q-card class="termsAndConditions">
+      <q-card-section>
+        <h3>Termeni si conditii</h3>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
+          velit, obcaecati accusantium similique asperiores a alias dolorum
+          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
+          expedita, eum ipsum quibusdam veniam ut.
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
+          velit, obcaecati accusantium similique asperiores a alias dolorum
+          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
+          expedita, eum ipsum quibusdam veniam ut.
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
+          velit, obcaecati accusantium similique asperiores a alias dolorum
+          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
+          expedita, eum ipsum quibusdam veniam ut.
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
+          velit, obcaecati accusantium similique asperiores a alias dolorum
+          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
+          expedita, eum ipsum quibusdam veniam ut.
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
+          velit, obcaecati accusantium similique asperiores a alias dolorum
+          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
+          expedita, eum ipsum quibusdam veniam ut.
+        </p>
+
+      </q-card-section>
     </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -104,6 +165,8 @@ export default {
       phoneNumber: "+40",
       departmentName: "",
       imgUrl: "",
+      isPwd: true,
+      showTermsDialog: false,
     };
   },
   mounted() {

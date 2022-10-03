@@ -17,6 +17,8 @@
               v-if="$store.getters.userData.role == 'admin'"
               :options="departmentList"
               v-model="departmentName"
+              outlined
+              class="bg-white"
             ></q-select>
           </div>
           <q-btn
