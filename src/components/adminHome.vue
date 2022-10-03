@@ -459,9 +459,9 @@ export default {
           {
             value: newDate,
           },
-          {
-            value: x.etnic,
-          },
+          // {
+          //   value: x.etnic,
+          // },
           { value: x.gender },
           { value: x.size },
           { value: x.region },
