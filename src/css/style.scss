@@ -195,6 +195,15 @@ body {
   &.sign-in {
     padding-top: 5%;
   }
+  // &.sign-up,
+  // &.sign-in {
+  //   position: absolute;
+  //   left: 60%;
+  //   top: 0;
+  //   bottom: 0;
+  //   min-height: 0 !important;
+
+  // }
   .member-list {
     margin-bottom: 2rem;
     .remove-button {
@@ -357,6 +366,7 @@ body {
     }
     // categorylist
     form.category-form.event-form.form {
+      background: red ;
       @media (min-width: 768px) {
         grid-template-columns: 1fr 1fr;
         display: grid;
@@ -853,4 +863,8 @@ body {
   &:hover {
     text-decoration: underline;
   }
+}
+
+form.form {
+  padding-top: 4rem !important;
 }

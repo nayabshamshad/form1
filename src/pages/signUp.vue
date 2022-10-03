@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card full-height">
+  <q-card class="my-card full-height sign-up">
     <q-card-section>
       <div class="container">
         <form class="form" @submit.prevent="submit">
@@ -32,6 +32,7 @@
             />
           </div>
           <div class="cate-list">
+            <label>Conferinta</label>
             <q-select
               v-model="departmentName"
               outlined
