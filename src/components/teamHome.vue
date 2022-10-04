@@ -29,6 +29,55 @@
             </div>
           </div>
         </div>
+        <div class="infoRow">
+          <div class="shadowed">
+            <div>
+              <h3>Etnie:</h3>
+              <span> {{ userData.etnic }}</span>
+            </div>
+            <div>
+              <h3>Sex:</h3>
+              <span> {{ userData.gender }}</span>
+            </div>
+            <div>
+              <h3>Data nasterii:</h3>
+              <span> {{ userData.dateOfBirth ? formatTheDate(userData.dateOfBirth) : '' }}</span>
+            </div>
+            <div>
+              <h3>Marime tricou:</h3>
+              <span class="text-uppercase"> {{ userData.size }}</span>
+            </div>
+          </div>
+          <div class="shadowed skills">
+            <h3>Specializari</h3>
+            <div>
+              <p v-for="item, i in userData.tagList" :key="i">{{item}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="shadowed q-mt-md">
+          <div>
+            <h3>Categorie</h3>
+            <p>{{userData.category}}</p>
+          </div>
+          <div>
+            <h3>Zona:</h3>
+            <p>a</p>
+          </div>
+          <div>
+            <h3>Comunitate:</h3>
+            <p>a</p>
+          </div>
+          <div>
+            <h3>Clubul:</h3>
+            <p>a</p>
+          </div>
+          <div>
+            <h3>Anul investiturii ca:</h3>
+            <p>a</p>
+          </div>
+
+        </div>
         <!-- <h2>Informații utilizator</h2> -->
         <!-- <div class="add-img" v-if="dataUser.imgUrl && dataUser.imgUrl !== ''">
           <img :src="dataUser.imgUrl" />
@@ -444,6 +493,9 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
+    formatTheDate(x) {
+      return x.split('/').reverse().join('.')
+    },
     openModal() {
       this.$refs.dateIcon.$el.click();
       this.$refs.dateIcon.$el.focus();

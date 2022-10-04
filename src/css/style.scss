@@ -366,7 +366,7 @@ body {
     }
     // categorylist
     form.category-form.event-form.form {
-      background: red ;
+      background: red;
       @media (min-width: 768px) {
         grid-template-columns: 1fr 1fr;
         display: grid;
@@ -867,4 +867,51 @@ body {
 
 form.form {
   padding-top: 4rem !important;
+}
+.shadowed {
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  span,
+  p {
+    color: $linkcolor;
+  }
+  h3 {
+    color: $linkcolor;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2rem;
+  }
+}
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  > div {
+    width: 68%;
+  }
+  > div:not(.skills) {
+    width: 30%;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 15px;
+    }
+  }
+  .skills {
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      p {
+        padding: 2px 15px;
+        border: 1px solid $grey;
+        border-radius: 8px;
+        box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+
 }
