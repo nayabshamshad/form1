@@ -16,10 +16,20 @@ $grey: #c4c4c4;
 
 body {
   // font-family: Arial, sans-serif;
-  background-image: url(../assets/bg-img.jpg);
+  // background-image: url(../assets/bg-img.jpg);
   background-size: cover;
 }
-
+body::after {
+  content: "";
+  background-image: url(../assets/bg-img.jpg);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-size: cover;
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -48,8 +58,8 @@ body {
   width: 70%;
 }
 .new-card {
-  max-width: 960px !important;
-  margin-right: 8rem !important;
+  max-width: 1100px !important;
+  margin-right: auto !important;
 }
 .top-bar {
   position: relative;
@@ -899,26 +909,25 @@ form.form {
   width: 100%;
   gap: 25%;
   justify-content: center;
-  .q-field{
-    margin-top: 0.5rem ;
+  .q-field {
+    margin-top: 0.5rem;
   }
 
- .q-field__control {
+  .q-field__control {
     border-radius: 4px;
- padding: 0% !important;
-
-}
-  .q-field__append{
+    padding: 0% !important;
+  }
+  .q-field__append {
     padding: 0% !important;
     height: 20px !important;
   }
-  label{
+  label {
     width: 15% !important;
   }
 }
 .shadowed {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
-  padding: .5rem;
+  padding: 0.5rem;
   span,
   p {
     color: $linkcolor;
@@ -984,5 +993,34 @@ form.form {
   margin-top: 1rem;
   > div:not(.skills) {
     width: 48%;
+  }
+}
+
+.inline-pagination {
+  position: relative;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+  .paginationSelect {
+    font-size: 10px;
+    color: $linkcolor;
+    // border: $linkcolor;
+    outline: none;
+    border: 1px solid $linkcolor;
+    background: #fff;
+    height: 20px;
+    padding-left: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .pagination-buttons {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 10px;
+    @extend .flex;
+    .q-btn {
+      background-color: $linkcolor;
+      color: #fff;
+    }
   }
 }

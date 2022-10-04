@@ -2,7 +2,7 @@
   <q-card class="my-card full-height new-card">
     <q-card-section>
       <div class="container">
-        <q-tab-panels v-model="tabs">
+        <q-tab-panels class="admin-home" v-model="tabs">
           <!-- Approved User Listing -->
           <q-tab-panel name="approved">
             <div
@@ -47,7 +47,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-row">
-                  <tr v-for="(user, i) in approvedUsers" :key="i">
+                  <tr v-for="(user, i) in approvedUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
                     <td class="hideMobile" @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
@@ -67,15 +67,42 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div style="display: inline-flex">
-                <p>Intalniri pe pagina</p>
+                <span>Intalniri pe pagina</span>
+                <select class="paginationSelect" v-model="resultsPerPage">
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="20">20</option>
+                  <option :value="50">50</option>
+                </select>
               </div>
               <div>
-                <div class="flex flex-center">
-                  <q-pagination direction-links />
+                <div class="pagination-buttons">
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
+                  {{ currentPage }}
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPage"
+                  ></q-btn>
                 </div>
               </div>
               <div>
-                <p>1-20 din 84</p>
+                <p>
+                  {{ approvedUsers.first }}-{{ approvedUsers.last }} din
+                  {{ approvedUsers.total }}
+                </p>
               </div>
             </div>
           </q-tab-panel>
@@ -126,7 +153,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-row">
-                  <tr v-for="(user, i) in pendingUsers" :key="i">
+                  <tr v-for="(user, i) in pendingUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
                     <td class="hideMobile" @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
@@ -163,15 +190,42 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div style="display: inline-flex">
-                <p>Intalniri pe pagina</p>
+                <span>Intalniri pe pagina</span>
+                <select class="paginationSelect" v-model="resultsPerPage">
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="20">20</option>
+                  <option :value="50">50</option>
+                </select>
               </div>
               <div>
-                <div class="flex flex-center">
-                  <q-pagination direction-links />
+                <div class="pagination-buttons">
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
+                  {{ currentPage }}
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPagePending"
+                  ></q-btn>
                 </div>
               </div>
               <div>
-                <p>1-20 din 84</p>
+                <p>
+                  {{ pendingUsers.first }}-{{ pendingUsers.last }} din
+                  {{ pendingUsers.total }}
+                </p>
               </div>
             </div>
           </q-tab-panel>
@@ -219,7 +273,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-row">
-                  <tr v-for="(user, i) in declinedUsers" :key="i">
+                  <tr v-for="(user, i) in declinedUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
                     <td class="hideMobile" @click="viewUser(user)">
                       {{ user.phoneNumber }}
@@ -237,17 +291,44 @@
                 </tbody>
               </table>
             </div>
-            <div class=" q-mt-md inline-pagination">
-              <div style="display:inline-flex">
-                <p>Intalniri pe pagina</p>
+            <div class="q-mt-md inline-pagination">
+              <div style="display: inline-flex">
+                <span>Intalniri pe pagina</span>
+                <select class="paginationSelect" v-model="resultsPerPage">
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="20">20</option>
+                  <option :value="50">50</option>
+                </select>
               </div>
               <div>
-                <div class="flex flex-center">
-                  <q-pagination direction-links />
+                <div class="pagination-buttons">
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
+                  {{ currentPage }}
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDeclined"
+                  ></q-btn>
                 </div>
               </div>
               <div>
-                <p>1-20 din 84</p>
+                <p>
+                  {{ declinedUsers.first }}-{{ declinedUsers.last }} din
+                  {{ declinedUsers.total }}
+                </p>
               </div>
             </div>
             <!-- <div class=" row items-center justify-between">
@@ -315,7 +396,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-row">
-                  <tr v-for="(user, i) in departmentUsers" :key="i">
+                  <tr v-for="(user, i) in departmentUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
                     <td class="hideMobile" @click="viewUser(user)">
                       {{ user.phoneNumber }}
@@ -329,6 +410,47 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <div class="q-mt-md inline-pagination">
+              <div style="display: inline-flex">
+                <span>Intalniri pe pagina</span>
+                <select class="paginationSelect" v-model="resultsPerPage">
+                  <option :value="5">5</option>
+                  <option :value="10">10</option>
+                  <option :value="20">20</option>
+                  <option :value="50">50</option>
+                </select>
+              </div>
+              <div>
+                <div class="pagination-buttons">
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
+                  {{ currentPage }}
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDepartments"
+                  ></q-btn>
+                </div>
+              </div>
+              <div>
+                <p>
+                  {{ departmentUsers.first }}-{{ departmentUsers.last }} din
+                  {{ departmentUsers.total }}
+                </p>
+              </div>
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -391,9 +513,22 @@ export default {
       dateSetting: false,
       departmentName: "All",
       showDepartmentDialog: false,
+      resultsPerPage: 10,
+      currentPage: 1,
     };
   },
   watch: {
+    departmentName: {
+      handler: function () {
+        this.currentPage = 1;
+      },
+    },
+
+    resultsPerPage: {
+      handler: function () {
+        this.currentPage = 1;
+      },
+    },
     "$route.query.q": {
       handler: function () {
         if (this.$route?.query?.q) {
@@ -420,10 +555,21 @@ export default {
     tabs: {
       handler: function () {
         this.getData();
+        this.currentPage = 1;
       },
     },
   },
   methods: {
+    increasePage() {
+      if (this.currentPage < this.maxPage) {
+        this.currentPage = this.currentPage + 1;
+      }
+    },
+    decreasePage() {
+      if (this.currentPage > 1) {
+        this.currentPage = this.currentPage - 1;
+      }
+    },
     copyLink() {
       navigator.clipboard.writeText(this.departmentLink);
       this.$q.notify({
@@ -618,11 +764,27 @@ export default {
   },
   computed: {
     departmentUsers() {
-      return this.$store.getters.userList.filter((x) => {
+      const arr =  this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arrToReturn = arr.filter((x, i) => {
+        return i >= firstItem && i < firstItem + this.resultsPerPage;
+      });
+      return {
+        arr: arrToReturn,
+        first: firstItem + 1,
+        total: arr.length,
+        last:
+          this.currentPage == this.maxPageDepartments
+            ? arr.length
+            : this.currentPage > this.maxPageDepartments
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
     },
     userList() {
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
       return this.$store.getters.userList;
     },
     approvedUsers() {
@@ -642,10 +804,24 @@ export default {
           );
         }
       });
-      return arr;
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arrToReturn = arr.filter((x, i) => {
+        return i >= firstItem && i < firstItem + this.resultsPerPage;
+      });
+      return {
+        arr: arrToReturn,
+        first: firstItem + 1,
+        total: arr.length,
+        last:
+          this.currentPage == this.maxPage
+            ? arr.length
+            : this.currentPage > this.maxPage
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
     },
     declinedUsers() {
-      return this.userList.filter((x) => {
+      const arr = this.userList.filter((x) => {
         if (this.departmentName == "All") {
           return (
             x.isAuthorized == false &&
@@ -661,9 +837,25 @@ export default {
           );
         }
       });
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arrToReturn = arr.filter((x, i) => {
+        return i >= firstItem && i < firstItem + this.resultsPerPage;
+      });
+      return {
+        arr: arrToReturn,
+        first: firstItem + 1,
+        total: arr.length,
+        last:
+          this.currentPage == this.maxPageDeclined
+            ? arr.length
+            : this.currentPage > this.maxPageDeclined
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
+
     },
     pendingUsers() {
-      return this.userList.filter((x) => {
+      const arr = this.userList.filter((x) => {
         if (this.departmentName == "All") {
           return (
             x.isAuthorized == "pending" &&
@@ -679,6 +871,21 @@ export default {
           );
         }
       });
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arrToReturn = arr.filter((x, i) => {
+        return i >= firstItem && i < firstItem + this.resultsPerPage;
+      });
+      return {
+        arr: arrToReturn,
+        first: firstItem + 1,
+        total: arr.length,
+        last:
+          this.currentPage == this.maxPagePending
+            ? arr.length
+            : this.currentPage > this.maxPagePending
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
     },
     departmentList() {
       let arr = this.$store.getters.userList
@@ -696,6 +903,69 @@ export default {
     },
     departmentLink() {
       return window.location.host + "/#/signup_department";
+    },
+    maxPage() {
+      const arr = this.userList.filter((x) => {
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == true &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == true &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
+      });
+      return Math.ceil(arr.length / this.resultsPerPage);
+    },
+    maxPagePending() {
+      const arr = this.userList.filter((x) => {
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == "pending" &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == "pending" &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
+      });
+      return Math.ceil(arr.length / this.resultsPerPage)
+    },
+    maxPageDeclined() {
+      const arr = this.userList.filter((x) => {
+        if (this.departmentName == "All") {
+          return (
+            x.isAuthorized == false &&
+            x.role != "admin" &&
+            x.role != "department"
+          );
+        } else {
+          return (
+            x.isAuthorized == false &&
+            x.role != "admin" &&
+            x.role != "department" &&
+            x.department == this.departmentName
+          );
+        }
+      });
+      return Math.ceil(arr.length / this.resultsPerPage)
+    },
+    maxPageDepartments(){
+      const arr =  this.$store.getters.userList.filter((x) => {
+        return x.role == "department";
+      });
+      return Math.ceil(arr.length / this.resultsPerPage)
     },
   },
 };

@@ -110,52 +110,14 @@
     </q-card-section>
   </q-card>
   <q-dialog v-model="showTermsDialog">
-    <q-card class="termsAndConditions">
-      <q-card-section>
-        <h3>Termeni si conditii</h3>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
-          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
-          velit, obcaecati accusantium similique asperiores a alias dolorum
-          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
-          expedita, eum ipsum quibusdam veniam ut.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
-          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
-          velit, obcaecati accusantium similique asperiores a alias dolorum
-          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
-          expedita, eum ipsum quibusdam veniam ut.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
-          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
-          velit, obcaecati accusantium similique asperiores a alias dolorum
-          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
-          expedita, eum ipsum quibusdam veniam ut.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
-          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
-          velit, obcaecati accusantium similique asperiores a alias dolorum
-          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
-          expedita, eum ipsum quibusdam veniam ut.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
-          praesentium consequatur quos vel non ipsa ullam quibusdam! Voluptates
-          velit, obcaecati accusantium similique asperiores a alias dolorum
-          placeat, blanditiis provident repudiandae ullam? Vel sed ipsa
-          expedita, eum ipsum quibusdam veniam ut.
-        </p>
-
-      </q-card-section>
-    </q-card>
+    <termsAndConditions />
   </q-dialog>
 </template>
 
 <script>
+import termsAndConditions from "../components/termsAndConditions.vue";
 export default {
+  components: { termsAndConditions },
   data() {
     return {
       firstName: "",
@@ -200,6 +162,7 @@ export default {
           message: "Please select a department",
           color: "red",
         });
+        this.isSubmitting = false;
         return;
       }
       let form = {
