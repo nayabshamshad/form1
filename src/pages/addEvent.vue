@@ -66,7 +66,7 @@
         >
           <span
             style="
-              width: 30%;
+              width: 100%;
               font-style: italic;
               text-transform: capitalize;
               display: block;

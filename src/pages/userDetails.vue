@@ -1,4 +1,6 @@
 <template>
+   <q-card class="my-card full-height sign-in">
+    <q-card-section>
   <q-tabs v-model="tabs">
     <q-tab name="user" label="Informații utilizator"></q-tab>
     <q-tab
@@ -486,11 +488,12 @@
     </q-tab-panel>
     <q-tab-panel name="events">
       <div class="container">
-        <div class="attendance-container">
+        <div class="attendance-container shadowed ">
           <div class="attendance-summary">
-            <h5 style="font-size: 18px"><span>Prezența</span></h5>
+            <h4 style="color:#233975">Prezența</h4>
             <div v-for="(student, index) in listOfAttendance" :key="index">
-              <div class="flex justify-space-around">
+              <div class="shadowed " style="border-radius: 0.3rem; margin-top: 0.5rem;">
+              <div class="flex justify-space-between">
                 <span>
                   {{ student.name }}
                 </span>
@@ -499,6 +502,7 @@
                 </span>
               </div>
             </div>
+        </div>
           </div>
         </div>
         <div class="eventlist">
@@ -587,8 +591,9 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+</q-card-section>
+  </q-card>
 </template>
-
 <script>
 import writeXlsxFile from "write-excel-file";
 

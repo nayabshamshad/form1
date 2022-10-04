@@ -41,7 +41,13 @@
             </div>
             <div>
               <h3>Data nasterii:</h3>
-              <span> {{ userData.dateOfBirth ? formatTheDate(userData.dateOfBirth) : '' }}</span>
+              <span>
+                {{
+                  userData.dateOfBirth
+                    ? formatTheDate(userData.dateOfBirth)
+                    : ""
+                }}</span
+              >
             </div>
             <div>
               <h3>Marime tricou:</h3>
@@ -51,31 +57,46 @@
           <div class="shadowed skills">
             <h3>Specializari</h3>
             <div>
-              <p v-for="item, i in userData.tagList" :key="i">{{item}}</p>
+              <p v-for="(item, i) in userData.tagList" :key="i">{{ item }}</p>
             </div>
           </div>
         </div>
-        <div class="shadowed q-mt-md">
+        <div class="shadowed q-mt-md inline">
           <div>
             <h3>Categorie</h3>
-            <p>{{userData.category}}</p>
+            <!-- <p>{{userData.category}}</p> -->
+            <p>Exploratori</p>
           </div>
           <div>
             <h3>Zona:</h3>
-            <p>a</p>
+            <p>Brasov</p>
           </div>
           <div>
             <h3>Comunitate:</h3>
-            <p>a</p>
+            <p>Betel</p>
           </div>
           <div>
             <h3>Clubul:</h3>
-            <p>a</p>
+            <p>Iosua</p>
           </div>
           <div>
             <h3>Anul investiturii ca:</h3>
-            <p>a</p>
+            <p>Instructor:</p>
           </div>
+        </div>
+        <div class="shadowed q-mt-md">
+          <h2>Lista Copiilor</h2>
+         <div class="children-list">
+         <div class=" section">Mircea Bunea</div>
+         <div class=" section">Mircea Bunea</div></div>
+
+         <div class="children-list">
+         <div class=" section">Mircea Bunea</div>
+         <div class=" section">Mircea Bunea</div></div>
+         <div class="children-list">
+         <div class=" section">Mircea Bunea</div>
+         <div class=" section">Mircea Bunea</div></div>
+
 
         </div>
         <!-- <h2>Informații utilizator</h2> -->
@@ -494,7 +515,7 @@ export default {
   components: {},
   methods: {
     formatTheDate(x) {
-      return x.split('/').reverse().join('.')
+      return x.split("/").reverse().join(".");
     },
     openModal() {
       this.$refs.dateIcon.$el.click();

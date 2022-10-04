@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card full-height sign-in new-card">
+  <q-card class="my-card full-height new-card">
     <q-card-section>
       <div class="container">
         <q-tab-panels v-model="tabs">
@@ -20,12 +20,19 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <div style="width: 30%; min-width: 150px">
+              <div
+                style="
+                  width: 40%;
+                  min-width: 150px;
+                  box-shadow: rgb(0 0 0 / 16%) 0px 0px 20px;
+                "
+              >
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
                   outlined
+                  dense
                   class="bg-white"
                 ></q-select>
               </div>
@@ -58,8 +65,22 @@
                 </tbody>
               </table>
             </div>
+            <div class="q-mt-md inline-pagination">
+              <div style="display: inline-flex">
+                <p>Intalniri pe pagina</p>
+              </div>
+              <div>
+                <div class="flex flex-center">
+                  <q-pagination direction-links />
+                </div>
+              </div>
+              <div>
+                <p>1-20 din 84</p>
+              </div>
+            </div>
           </q-tab-panel>
 
+          <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
             <div
@@ -79,7 +100,7 @@
               ></q-btn>
               <div
                 style="
-                  width: 30%;
+                  width: 40%;
                   min-width: 150px;
                   box-shadow: 0px 0px 20px #00000029;
                 "
@@ -119,7 +140,6 @@
                     <td @click="mailUser(user.email)" class="showMobile last">
                       <q-icon name="email"></q-icon>
                     </td>
-
                     <td class="icon">
                       <q-btn
                         color="green"
@@ -141,6 +161,19 @@
                 </tbody>
               </table>
             </div>
+            <div class="q-mt-md inline-pagination">
+              <div style="display: inline-flex">
+                <p>Intalniri pe pagina</p>
+              </div>
+              <div>
+                <div class="flex flex-center">
+                  <q-pagination direction-links />
+                </div>
+              </div>
+              <div>
+                <p>1-20 din 84</p>
+              </div>
+            </div>
           </q-tab-panel>
 
           <!-- Declined Users -->
@@ -160,12 +193,19 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <div style="width: 30%; min-width: 150px">
+              <div
+                style="
+                  width: 40%;
+                  min-width: 150px;
+                  box-shadow: rgb(0 0 0 / 16%) 0px 0px 20px;
+                "
+              >
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
                   outlined
+                  dense
                 ></q-select>
               </div>
             </div>
@@ -197,6 +237,29 @@
                 </tbody>
               </table>
             </div>
+            <div class=" q-mt-md inline-pagination">
+              <div style="display:inline-flex">
+                <p>Intalniri pe pagina</p>
+              </div>
+              <div>
+                <div class="flex flex-center">
+                  <q-pagination direction-links />
+                </div>
+              </div>
+              <div>
+                <p>1-20 din 84</p>
+              </div>
+            </div>
+            <!-- <div class=" row items-center justify-between">
+              <div class="q-table__control">
+                Intalniri pe pagina
+                <q-select></q-select>
+              </div>
+              <div class="q-table__separator col"></div>
+              <div class="q-table__control">
+                <span class="q-table__bottom-item">1-20 din 84</span>
+              </div>
+            </div> -->
           </q-tab-panel>
           <q-tab-panel name="date">
             <div>

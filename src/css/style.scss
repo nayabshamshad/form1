@@ -47,6 +47,10 @@ body {
   margin: auto !important;
   width: 70%;
 }
+.new-card {
+  max-width: 960px !important;
+  margin-right: 8rem !important;
+}
 .top-bar {
   position: relative;
   padding: 0rem 1rem;
@@ -639,20 +643,20 @@ body {
       background: transparent;
     }
     .attendance-container {
-      @extend .flex, .justify-center;
+      @extend .flex;
       .attendance-summary {
-        width: 30%;
-        min-width: 200px;
+        width: 100%;
+        // min-width: 200px;
         .flex {
           flex-wrap: nowrap;
         }
         span {
-          min-width: 40%;
+          // min-width: 40%;
         }
 
-        span:first-of-type {
-          padding-left: 5%;
-        }
+        // span:first-of-type {
+        //   padding: 0 5%;
+        // }
         h5 {
           span {
             background: rgba(0, 0, 0, 0.2);
@@ -661,9 +665,6 @@ body {
             padding-right: 5%;
           }
           font-style: italic;
-        }
-        div {
-          border-bottom: 1px solid rgba(120, 120, 139, 0.2);
         }
         h5,
         span:last-of-type {
@@ -892,18 +893,58 @@ body {
 form.form {
   padding-top: 4rem !important;
 }
+
+.inline-pagination {
+  display: inline-flex;
+  width: 100%;
+  gap: 25%;
+  justify-content: center;
+  .q-field{
+    margin-top: 0.5rem ;
+  }
+
+ .q-field__control {
+    border-radius: 4px;
+ padding: 0% !important;
+
+}
+  .q-field__append{
+    padding: 0% !important;
+    height: 20px !important;
+  }
+  label{
+    width: 15% !important;
+  }
+}
 .shadowed {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
+  padding: .5rem;
   span,
   p {
     color: $linkcolor;
+    font-weight: bold;
   }
   h3 {
     color: $linkcolor;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 2rem;
+  }
+  h2 {
+    color: $linkcolor;
+    text-align: center;
+    padding: 2rem;
+    font: normal normal bold 26px/18px Montserrat;
+  }
+  .section {
+    height: 42px;
+    color: $linkcolor;
+    font-weight: bold;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 20px #00000029;
+    border-radius: 8px;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
   }
 }
 .infoRow {
@@ -930,12 +971,18 @@ form.form {
       gap: 5px;
       p {
         padding: 2px 15px;
-        border: 1px solid $grey;
+        // border: 1px solid $grey;
         border-radius: 8px;
         box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
       }
     }
   }
-
-
+}
+.children-list {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  > div:not(.skills) {
+    width: 48%;
+  }
 }
