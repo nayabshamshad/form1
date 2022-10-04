@@ -1,280 +1,300 @@
 <template>
-  <div class="container">
-    <q-tab-panels v-model="tabs">
-      <!-- Approved User Listing -->
-      <q-tab-panel name="approved">
-        <div
-          class="flex"
-          style="
-            justify-content: flex-end;
-            max-width: 90%;
-            margin-bottom: 2rem;
-            gap: 5%;
-          "
-        >
-          <div style="width: 30%; min-width: 150px">
-            <q-select
-              v-if="$store.getters.userData.role == 'admin'"
-              :options="departmentList"
-              v-model="departmentName"
-              outlined
-              class="bg-white"
-            ></q-select>
-          </div>
-          <q-btn
-            round
-            @click="exportFile(approvedUsers, 'Approved')"
-            color="green"
-            icon="download"
-          ></q-btn>
-        </div>
-        <div class="table-container">
-          <table class="user-list-table">
-            <thead>
-              <tr>
-                <th>Nume/Prenume</th>
-                <th>Nr. de telefon</th>
-                <th>E-mail</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, i) in approvedUsers" :key="i">
-                <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="callUser(user.phoneNumber)">
-                  {{ user.phoneNumber }}
-                </td>
-                <td class="showMobile" @click="callUser(user.phoneNumber)">
-                  <q-icon name="phone"></q-icon>
-                </td>
-                <td @click="mailUser(user.email)" class="hideMobile last">
-                  {{ user.email }}
-                </td>
-                <td @click="mailUser(user.email)" class="showMobile last">
-                  <q-icon name="email"></q-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </q-tab-panel>
-
-      <!-- Pending User Listing -->
-      <q-tab-panel name="pending">
-        <div
-          class="flex"
-          style="
-            justify-content: flex-end;
-            max-width: 90%;
-            gap: 5%;
-            margin-bottom: 2rem;
-          "
-        >
-          <div style="width: 30%; min-width: 150px">
-            <q-select
-              v-if="$store.getters.userData.role == 'admin'"
-              :options="departmentList"
-              v-model="departmentName"
-            ></q-select>
-          </div>
-          <q-btn
-            round
-            @click="exportFile(pendingUsers, 'Pending')"
-            color="green"
-            icon="download"
-          ></q-btn>
-        </div>
-        <div class="table-container">
-          <table class="user-list-table">
-            <thead>
-              <tr>
-                <th>Nume/Prenume</th>
-                <th>Nr. de telefon</th>
-                <th>E-mail</th>
-                <th>Acțiune</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, i) in pendingUsers" :key="i">
-                <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="callUser(user.phoneNumber)">
-                  {{ user.phoneNumber }}
-                </td>
-                <td class="showMobile" @click="callUser(user.phoneNumber)">
-                  <q-icon name="phone"></q-icon>
-                </td>
-                <td @click="mailUser(user.email)" class="hideMobile last">
-                  {{ user.email }}
-                </td>
-                <td @click="mailUser(user.email)" class="showMobile last">
-                  <q-icon name="email"></q-icon>
-                </td>
-
-                <td>
-                  <q-btn
-                    color="green"
-                    icon="check"
-                    size="xs"
-                    round
-                    @click="approveUser(user.uid)"
-                  />
-                  <q-btn
-                    @click="declineUser(user.uid)"
-                    color="red"
-                    size="xs"
-                    text-color="white"
-                    round
-                    icon="close"
-                  ></q-btn>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </q-tab-panel>
-
-      <!-- Declined Users -->
-      <q-tab-panel name="declined">
-        <div
-          class="flex"
-          style="
-            justify-content: flex-end;
-            max-width: 90%;
-            gap: 5%;
-            margin-bottom: 2rem;
-          "
-        >
-          <div style="width: 30%; min-width: 150px">
-            <q-select
-              v-if="$store.getters.userData.role == 'admin'"
-              :options="departmentList"
-              v-model="departmentName"
-            ></q-select>
-          </div>
-          <q-btn
-            round
-            @click="exportFile(declinedUsers, 'Declined')"
-            color="green"
-            icon="download"
-          ></q-btn>
-        </div>
-        <div class="table-container">
-          <table class="user-list-table">
-            <thead>
-              <tr>
-                <th>Nume/Prenume</th>
-                <th>Nr. de telefon</th>
-                <th>E-mail</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, i) in declinedUsers" :key="i">
-                <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">
-                  {{ user.phoneNumber }}
-                </td>
-                <td class="showMobile" @click="callUser(user.phoneNumber)">
-                  <q-icon name="phone"></q-icon>
-                </td>
-                <td @click="mailUser(user.email)" class="hideMobile last">
-                  {{ user.email }}
-                </td>
-                <td @click="mailUser(user.email)" class="showMobile last">
-                  <q-icon name="email" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </q-tab-panel>
-      <q-tab-panel name="date">
-        <div>
-          <div class="flex justify-center">
-            <q-date v-model="dateModel" range></q-date>
-          </div>
-          <div
-            class="flex"
-            style="
-              justify-content: flex-end;
-              width: 70%;
-              margin-top: 1rem;
-              min-width: 200px;
-            "
-          >
-            <q-btn
-              round
-              icon="check"
-              color="green"
-              :loading="dateSetting"
-              @click="setDate"
-            ></q-btn>
-          </div>
-        </div>
-      </q-tab-panel>
-      <!-- Departments Listing -->
-      <q-tab-panel name="departments">
-        <div
-          class="flex"
-          style="
-            justify-content: flex-end;
-            max-width: 90%;
-            gap: 5%;
-            margin-bottom: 2rem;
-          "
-        >
-          <q-btn
-            no-caps
-            round
-            color="secondary"
-            @click="showDepartmentDialog = true"
-            icon="add"
-          />
-        </div>
-        <div class="table-container">
-          <table class="user-list-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Department</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, i) in departmentUsers" :key="i">
-                <td @click="viewUser(user)">{{ user.name }}</td>
-                <td class="hideMobile" @click="viewUser(user)">
-                  {{ user.phoneNumber }}
-                </td>
-                <td class="showMobile" @click="callUser(user.phoneNumber)">
-                  <q-icon name="phone"></q-icon>
-                </td>
-                <td @click="viewUser(user)" class="last">
-                  {{ user.departmentName }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </q-tab-panel>
-    </q-tab-panels>
-    <q-dialog v-model="showDepartmentDialog">
-      <q-card class="q-px-md q-py-lg">
-        <q-card-section class="text-center">
-          <h5 class="q-mb-lg">You can add department admins using this link</h5>
-          <p @click="copyLink" class="text-primary link-text cursor-pointer">
-            {{ departmentLink }}
-          </p>
-          <q-card-actions align="right">
-            <q-btn @click="copyLink" no-caps color="secondary" flat
-              >Copy to Clipboard</q-btn
+  <q-card class="my-card full-height sign-in new-card">
+    <q-card-section>
+      <div class="container">
+        <q-tab-panels v-model="tabs">
+          <!-- Approved User Listing -->
+          <q-tab-panel name="approved">
+            <div
+              class="flex flex-btn"
+              style="
+                justify-content: space-between;
+                max-width: 94%;
+                margin-bottom: 2rem;
+                gap: 5%;
+              "
             >
-          </q-card-actions>
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
-        </q-card-actions>
-      </q-card></q-dialog
-    >
-  </div>
+              <q-btn
+                round
+                @click="exportFile(approvedUsers, 'Approved')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <div style="width: 30%; min-width: 150px">
+                <q-select
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  outlined
+                  class="bg-white"
+                ></q-select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="user-list-table">
+                <thead>
+                  <tr>
+                    <th>Nume/Prenume</th>
+                    <th>Nr. de telefon</th>
+                    <th>E-mail</th>
+                  </tr>
+                </thead>
+                <tbody class="table-row">
+                  <tr v-for="(user, i) in approvedUsers" :key="i">
+                    <td @click="viewUser(user)">{{ user.name }}</td>
+                    <td class="hideMobile" @click="callUser(user.phoneNumber)">
+                      {{ user.phoneNumber }}
+                    </td>
+                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                      <q-icon name="phone"></q-icon>
+                    </td>
+                    <td @click="mailUser(user.email)" class="hideMobile last">
+                      {{ user.email }}
+                    </td>
+                    <td @click="mailUser(user.email)" class="showMobile last">
+                      <q-icon name="email"></q-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </q-tab-panel>
+
+          <!-- Pending User Listing -->
+          <q-tab-panel name="pending">
+            <div
+              class="flex flex-btn"
+              style="
+                justify-content: space-between;
+                max-width: 94%;
+                gap: 5%;
+                margin-bottom: 2rem;
+              "
+            >
+              <q-btn
+                round
+                @click="exportFile(pendingUsers, 'Pending')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <div
+                style="
+                  width: 30%;
+                  min-width: 150px;
+                  box-shadow: 0px 0px 20px #00000029;
+                "
+              >
+                <q-select
+                  dense
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  outlined
+                  class="bg-white"
+                ></q-select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="user-list-table">
+                <thead>
+                  <tr>
+                    <th>Nume/Prenume</th>
+                    <th>Nr. de telefon</th>
+                    <th>E-mail</th>
+                    <th>Acțiune</th>
+                  </tr>
+                </thead>
+                <tbody class="table-row">
+                  <tr v-for="(user, i) in pendingUsers" :key="i">
+                    <td @click="viewUser(user)">{{ user.name }}</td>
+                    <td class="hideMobile" @click="callUser(user.phoneNumber)">
+                      {{ user.phoneNumber }}
+                    </td>
+                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                      <q-icon name="phone"></q-icon>
+                    </td>
+                    <td @click="mailUser(user.email)" class="hideMobile last">
+                      {{ user.email }}
+                    </td>
+                    <td @click="mailUser(user.email)" class="showMobile last">
+                      <q-icon name="email"></q-icon>
+                    </td>
+
+                    <td class="icon">
+                      <q-btn
+                        color="green"
+                        icon="check"
+                        size="xs"
+                        round
+                        @click="approveUser(user.uid)"
+                      />
+                      <q-btn
+                        @click="declineUser(user.uid)"
+                        color="red"
+                        size="xs"
+                        text-color="white"
+                        round
+                        icon="close"
+                      ></q-btn>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </q-tab-panel>
+
+          <!-- Declined Users -->
+          <q-tab-panel name="declined">
+            <div
+              class="flex flex-btn"
+              style="
+                justify-content: space-between;
+                max-width: 94%;
+                gap: 5%;
+                margin-bottom: 2rem;
+              "
+            >
+              <q-btn
+                round
+                @click="exportFile(declinedUsers, 'Declined')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <div style="width: 30%; min-width: 150px">
+                <q-select
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  outlined
+                ></q-select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="user-list-table">
+                <thead>
+                  <tr>
+                    <th>Nume/Prenume</th>
+                    <th>Nr. de telefon</th>
+                    <th>E-mail</th>
+                  </tr>
+                </thead>
+                <tbody class="table-row">
+                  <tr v-for="(user, i) in declinedUsers" :key="i">
+                    <td @click="viewUser(user)">{{ user.name }}</td>
+                    <td class="hideMobile" @click="viewUser(user)">
+                      {{ user.phoneNumber }}
+                    </td>
+                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                      <q-icon name="phone"></q-icon>
+                    </td>
+                    <td @click="mailUser(user.email)" class="hideMobile last">
+                      {{ user.email }}
+                    </td>
+                    <td @click="mailUser(user.email)" class="showMobile last">
+                      <q-icon name="email" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="date">
+            <div>
+              <div class="flex justify-center">
+                <q-date v-model="dateModel" range></q-date>
+              </div>
+              <div
+                class="flex"
+                style="
+                  justify-content: flex-end;
+                  width: 70%;
+                  margin-top: 1rem;
+                  min-width: 200px;
+                "
+              >
+                <q-btn
+                  round
+                  icon="check"
+                  color="green"
+                  :loading="dateSetting"
+                  @click="setDate"
+                ></q-btn>
+              </div>
+            </div>
+          </q-tab-panel>
+          <!-- Departments Listing -->
+          <q-tab-panel name="departments">
+            <div
+              class="flex icon"
+              style="
+                justify-content: flex-end;
+                max-width: 94%;
+                gap: 5%;
+                margin-bottom: 2rem;
+              "
+            >
+              <q-btn
+                no-caps
+                round
+                color="green"
+                size="small"
+                @click="showDepartmentDialog = true"
+                icon="add"
+              />
+            </div>
+            <div class="table-container">
+              <table class="user-list-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Department</th>
+                  </tr>
+                </thead>
+                <tbody class="table-row">
+                  <tr v-for="(user, i) in departmentUsers" :key="i">
+                    <td @click="viewUser(user)">{{ user.name }}</td>
+                    <td class="hideMobile" @click="viewUser(user)">
+                      {{ user.phoneNumber }}
+                    </td>
+                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                      <q-icon name="phone"></q-icon>
+                    </td>
+                    <td @click="viewUser(user)" class="last">
+                      {{ user.departmentName }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+        <q-dialog v-model="showDepartmentDialog">
+          <q-card class="q-px-md q-py-lg">
+            <q-card-section class="text-center">
+              <h5 class="q-mb-lg">
+                You can add department admins using this link
+              </h5>
+              <p
+                @click="copyLink"
+                class="text-primary link-text cursor-pointer"
+              >
+                {{ departmentLink }}
+              </p>
+              <q-card-actions align="right">
+                <q-btn @click="copyLink" no-caps color="secondary" flat
+                  >Copy to Clipboard</q-btn
+                >
+              </q-card-actions>
+            </q-card-section>
+            <q-card-actions align="right">
+              <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
+            </q-card-actions>
+          </q-card></q-dialog
+        >
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
