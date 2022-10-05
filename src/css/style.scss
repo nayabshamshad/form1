@@ -10,6 +10,10 @@ $grey: #c4c4c4;
 .linkcolor {
   color: $linkcolor;
 }
+.bg-linkcolor {
+  background: $linkcolor;
+  color: #fff;
+}
 
 // Font Family
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -806,7 +810,7 @@ body::after {
     thead {
       tr {
         th {
-          text-align: end;
+          text-align: center;
           background-color: $btncolor;
 
           &:first-of-type {
@@ -1010,10 +1014,15 @@ form.form {
 }
 .children-list {
   display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-  > div:not(.skills) {
-    width: 48%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 1rem;
+  // margin-top: 1rem;
+  // display: grid;
+  > div {
+    width: 45%;
   }
 }
 
@@ -1043,5 +1052,21 @@ form.form {
       background-color: $linkcolor;
       color: #fff;
     }
+  }
+}
+.center-card {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.edit-details {
+  h5 {
+    line-height: 2rem;
+    white-space: nowrap;
+  }
+  .q-btn.q-btn--round.edit-toggle {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: -10px;
+    margin-right: 10px;
   }
 }

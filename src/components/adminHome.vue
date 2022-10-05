@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card full-height new-card">
+  <q-card class="my-card new-card">
     <q-card-section>
       <div class="container">
         <q-tab-panels class="admin-home" v-model="tabs">
@@ -16,7 +16,7 @@
             >
               <q-btn
                 round
-                @click="exportFile(approvedUsers, 'Approved')"
+                @click="exportFile(approvedUsers.arr, 'Approved')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -121,7 +121,7 @@
             >
               <q-btn
                 round
-                @click="exportFile(pendingUsers, 'Pending')"
+                @click="exportFile(pendingUsers.arr, 'Pending')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -243,7 +243,7 @@
             >
               <q-btn
                 round
-                @click="exportFile(declinedUsers, 'Declined')"
+                @click="exportFile(declinedUsers.arr, 'Declined')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -455,7 +455,7 @@
           </q-tab-panel>
         </q-tab-panels>
         <q-dialog v-model="showDepartmentDialog">
-          <q-card class="q-px-md q-py-lg">
+          <q-card class="q-px-md q-py-lg center-card">
             <q-card-section class="text-center">
               <h5 class="q-mb-lg">
                 You can add department admins using this link

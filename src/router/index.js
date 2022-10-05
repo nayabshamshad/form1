@@ -23,6 +23,21 @@ export default route(function ({ store }) {
         component: () => import("../layouts/MainLayout.vue"),
         children: routes,
       },
+      {
+        path: "/sign-in",
+        name: "" /* Sign In*/,
+        component: () => import("../pages/signIn.vue"),
+      },
+      {
+        path: "/sign-up",
+        name: "" /* Sign Up */,
+        component: () => import("../pages/signUp.vue"),
+      },
+      {
+        path: "/category-list",
+        name: "" /* Update Your Profile */,
+        component: () => import("../pages/CategoryList.vue"),
+      },
     ],
 
     history: createHistory(

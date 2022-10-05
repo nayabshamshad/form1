@@ -4,16 +4,7 @@ const routes = [
     name: "" /* Welcome */,
     component: () => import("../pages/HomeView.vue"),
   },
-  {
-    path: "/sign-in",
-    name: "" /* Sign In*/,
-    component: () => import("../pages/signIn.vue"),
-  },
-  {
-    path: "/sign-up",
-    name: "" /* Sign Up */,
-    component: () => import("../pages/signUp.vue"),
-  },
+
   {
     path: "/event-list",
     name: "" /* Events List */,
@@ -23,11 +14,6 @@ const routes = [
     path: "/signup_department",
     name: "Create Department",
     component: () => import("../pages/signUpDepartment.vue"),
-  },
-  {
-    path: "/category-list",
-    name: "" /* Update Your Profile */,
-    component: () => import("../pages/CategoryList.vue"),
   },
   {
     path: "/add-event",

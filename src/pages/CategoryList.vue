@@ -20,7 +20,7 @@
             </q-card-actions>
             <div v-else-if="previewImage" class="flex no-wrap q-mb-md">
               <div  class="add-img q-mx-auto">
-                <img class="add-event-img" :src="previewImage" alt="" />
+                <img class="add-event-img" @click="selectImage" :src="previewImage" alt="" />
               </div>
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
@@ -61,6 +61,7 @@
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
+                color="black"
                   @click="openModal"
                   ref="dateIcon"
                   name="event"
@@ -312,13 +313,11 @@ export default {
       tagsInput: "",
       isSubmitting: false,
       sizeOptions: [
-        "x-Small",
-        "Small",
-        "Medium",
-        "Large",
-        "X-Large",
-        "XX-Large",
-        "XXX-Large",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
       ],
       error: "Te rugăm să reverifici datele introduse.",
       errorDialog: false,

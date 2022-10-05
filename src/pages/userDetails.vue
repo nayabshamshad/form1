@@ -1,7 +1,7 @@
 <template>
-  <q-card class="my-card full-height sign-in">
+  <q-card class="my-card full-height info sign-in">
     <q-card-section>
-      <q-tabs v-model="tabs">
+      <q-tabs class="linkcolor" v-model="tabs">
         <q-tab name="user" label="Informații utilizator"></q-tab>
         <q-tab
           v-if="
@@ -18,37 +18,8 @@
       </q-tabs>
       <q-tab-panels v-model="tabs">
         <q-tab-panel name="user">
-          <div v-if="!isEdit" class="container">
-            <!-- <div class="flex" style="justify-content: flex-end; max-width: 75%">
-              <q-btn
-                round
-                @click="isEdit = !isEdit"
-                color="green"
-                v-show="selectedUser.role !== 'department'"
-                icon="edit"
-              ></q-btn>
-            </div> -->
-            <!-- <div
-              class="flex"
-              style="justify-content: flex-end; max-width: 75%"
-            ></div> -->
-            <!-- <h2>
-              {{
-                selectedUser.isAuthorized === "pending"
-                  ? "În așteptare"
-                  : selectedUser.role === "department"
-                  ? "Department Admin"
-                  : selectedUser.isAuthorized == true
-                  ? "Autorizat"
-                  : "Refuzat"
-              }}
-            </h2> -->
-            <!-- <div
-              class="add-img"
-              v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-            >
-              <img :src="selectedUser.imgUrl" />
-            </div> -->
+          <div class="container">
+
             <!-- <form class="form category-form home-only">
               <div v-if="selectedUser.name != ''" class="cate-list-home">
                 <label for="club">Nume/Prenume:</label>
@@ -183,29 +154,115 @@
                 </tbody>
               </table>
             </div>
-
-            <!-- <div
-              v-if="
-                selectedUser.status &&
-                selectedUser.teamList.length > 0 &&
-                selectedUser.role !== 'department'
-              "
-              class="home-detail"
+            <div class="container">
+        <div class="flex justify-end">
+          <q-btn
+            round
+            @click="isEdit = !isEdit"
+            icon="edit_note"
+            class="bg-linkcolor"
+          ></q-btn>
+        </div>
+        <div class="flex no-wrap">
+          <div class="userImg">
+            <img v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''" :src="selectedUser.imgUrl" alt="" />
+            <div v-else>
+              <q-icon class="text-grey" name="photo_camera"></q-icon>
+            </div>
+          </div>
+          <div class="userInfoText">
+            <h4>{{ selectedUser.name }}</h4>
+            <p :style="selectedUser.status ? 'color: green' : 'color: red'">
+              {{ selectedUser.status ? "Activ" : "Inactiv" }}
+            </p>
+            <div>
+              <p>{{ selectedUser.phoneNumber }}</p>
+              <p>{{ selectedUser.email }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="infoRow">
+          <div class="shadowed">
+            <div>
+              <h3>Etnie:</h3>
+              <span> {{ selectedUser.etnic }}</span>
+            </div>
+            <div>
+              <h3>Sex:</h3>
+              <span> {{ selectedUser.gender }}</span>
+            </div>
+            <div>
+              <h3>Data nasterii:</h3>
+              <span>
+                {{
+                  selectedUser.dateOfBirth
+                    ? formatTheDate(selectedUser.dateOfBirth)
+                    : ""
+                }}</span
+              >
+            </div>
+            <div>
+              <h3>Marime tricou:</h3>
+              <span class="text-uppercase"> {{ selectedUser.size }}</span>
+            </div>
+          </div>
+          <div class="shadowed skills">
+            <h3>Specializari</h3>
+            <div>
+              <p v-for="(item, i) in selectedUser.tagList" :key="i">{{ item }}</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="shadowed q-mt-md"
+          style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
+        >
+          <div>
+            <h3>Categorie</h3>
+            <!-- <p>{{selectedUser.category}}</p> -->
+            <p>Exploratori</p>
+          </div>
+          <div>
+            <h3>Zona:</h3>
+            <p>Brasov</p>
+          </div>
+          <div>
+            <h3>Comunitate:</h3>
+            <p>Betel</p>
+          </div>
+          <div>
+            <h3>Clubul:</h3>
+            <p>Iosua</p>
+          </div>
+          <div>
+            <h3>Anul investiturii ca:</h3>
+            <div>
+              <span>Instructor:</span> <span>{{ selectedUser.Instructor }}</span>
+            </div>
+            <div>
+              <span>Ghid:</span> <span>{{ selectedUser.Ghid }}</span>
+            </div>
+            <div>
+              <span>Master Ghid:</span> <span>{{ selectedUser.masterGhid }}</span>
+            </div>
+          </div>
+        </div>
+        <div v-show="selectedUser.status" class="shadowed q-mt-md">
+          <h2>Lista Copiilor</h2>
+          <div class="children-list">
+            <div
+              v-for="(member, i) in selectedUser.teamList"
+              :key="i"
+              class="section"
             >
-              <h2>Lista copiilor</h2>
-              <div class="grid">
-                <div
-                  class="grid-cell"
-                  v-for="(item, index) in selectedUser.teamList"
-                  :key="index"
-                >
-                  {{ item.name }}
-                </div>
-              </div>
-            </div> -->
+              {{ member.name }}
+            </div>
+          </div>
+        </div>
+      </div>
           </div>
 
-          <div v-else class="container">
+          <div class="container">
             <div class="flex" style="justify-content: flex-end; max-width: 75%">
               <q-btn
                 round
@@ -540,58 +597,63 @@
                     <thead>
                       <tr>
                         <th>Tema intalnirii</th>
-                        <th>Data Intalnirii</th>
+                        <th style="text-align: end">Data Intalnirii</th>
                       </tr>
                     </thead>
                     <tbody class="table-row">
-                      <tr class="shadowed tr" v-for="(item, i) in selectedUser.eventList" :key="i" >
-                        <td>{{item.name}}</td>
-                        <td>{{ getBirthDate(item.date)}}</td>
+                      <tr
+                        class="shadowed tr"
+                        v-for="(item, i) in eventList.arr"
+                        :key="i"
+                        @click="showEventDetails(item)"
+                      >
+                        <td>{{ item.name }}</td>
+                        <td>{{ getBirthDate(item.date) }}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="q-mt-md inline-pagination">
-              <div style="display: inline-flex">
-                <span>Intalniri pe pagina</span>
-                <select class="paginationSelect" v-model="resultsPerPage">
-                  <option :value="5">5</option>
-                  <option :value="10">10</option>
-                  <option :value="20">20</option>
-                  <option :value="50">50</option>
-                </select>
-              </div>
-              <div>
-                <div class="pagination-buttons">
-                  <q-btn
-                    size="sm"
-                    round
-                    text-color="white"
-                    icon="chevron_left"
-                    no-caps
-                    @click="decreasePage"
-                    :disabled="currentPage === 1"
-                  ></q-btn>
-                  {{ currentPage }}
-                  <q-btn
-                    size="sm"
-                    round
-                    text-color="white"
-                    @click="increasePage"
-                    no-caps
-                    icon="chevron_right"
-                    :disabled="currentPage >= maxPage"
-                  ></q-btn>
+                  <div style="display: inline-flex">
+                    <span>Intalniri pe pagina</span>
+                    <select class="paginationSelect" v-model="resultsPerPage">
+                      <option :value="5">5</option>
+                      <option :value="10">10</option>
+                      <option :value="20">20</option>
+                      <option :value="50">50</option>
+                    </select>
+                  </div>
+                  <div>
+                    <div class="pagination-buttons">
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        icon="chevron_left"
+                        no-caps
+                        @click="decreasePage"
+                        :disabled="currentPage === 1"
+                      ></q-btn>
+                      {{ currentPage }}
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        @click="increasePage"
+                        no-caps
+                        icon="chevron_right"
+                        :disabled="currentPage >= maxPage"
+                      ></q-btn>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <p>1-1 din 1</p> -->
+                    <p>
+                  {{ eventList.first }}-{{ eventList.last }} din
+                  {{ eventList.total }}
+                </p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p>1-1 din 1</p>
-                <!-- <p>
-                  {{ approvedUsers.first }}-{{ approvedUsers.last }} din
-                  {{ approvedUsers.total }}
-                </p> -->
-              </div>
-            </div>
               </div>
             </div>
 
@@ -690,15 +752,8 @@ export default {
       error: "Te rugăm să reverifici datele introduse.",
       tagsInput: "",
       teamList: "",
-      sizeOptions: [
-        "x-Small",
-        "Small",
-        "Medium",
-        "Large",
-        "X-Large",
-        "XX-Large",
-        "XXX-Large",
-      ],   resultsPerPage: 10,
+      sizeOptions: ["S", "M", "L", "XL", "XXL"],
+      resultsPerPage: 10,
       currentPage: 1,
     };
   },
@@ -722,10 +777,15 @@ export default {
     }
     await this.$store.dispatch("updatedUserDetails", this.selectedUser.uid);
     if (this.selectedUser.date) {
-    this.dateModel.to = this.selectedUser.date.to;
-    this.dateModel.from = this.selectedUser.date.from;}
+      this.dateModel.to = this.selectedUser.date.to;
+      this.dateModel.from = this.selectedUser.date.from;
+    }
   },
-  methods: {  increasePage() {
+  methods: {
+    formatTheDate(x) {
+      return x.split("/").reverse().join(".");
+    },
+    increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
       }
@@ -945,12 +1005,32 @@ export default {
         this.error = "Trebuie să completezi lista cu copii.";
       }
     },
-    showEventDetails(e, i, d) {
-      this.$store.dispatch("selectEvent", i);
+    showEventDetails(x) {
+      this.$store.dispatch("selectEvent", x);
     },
   },
-  computed: { maxPage() {
-      const arr = this.selectedUser.eventList
+  computed: {
+    eventList() {
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage
+      const arr = this.selectedUser.eventList.filter((x, i) => {
+        return i >= firstItem && i < firstItem + this.resultsPerPage
+      });
+      return {
+        arr: arr,
+        first: firstItem + 1,
+        total: this.selectedUser.eventList.length,
+        last:
+           this.currentPage == this.maxPage
+            ? this.selectedUser.eventList.length
+            : this.currentPage > this.maxPage
+            ? 1
+            : firstItem + this.resultsPerPage,
+
+
+      };
+    },
+    maxPage() {
+      const arr = this.selectedUser.eventList;
       return Math.ceil(arr.length / this.resultsPerPage);
     },
     departmentUserList() {
@@ -993,7 +1073,8 @@ export default {
           this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
         }
       },
-    },  resultsPerPage: {
+    },
+    resultsPerPage: {
       handler: function () {
         this.currentPage = 1;
       },
