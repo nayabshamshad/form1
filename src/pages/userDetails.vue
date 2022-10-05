@@ -795,7 +795,7 @@ export default {
         profile.region == "" ||
         profile.state == "" ||
         profile.gender == "" ||
-        profile.etnic == "" ||
+        // profile.etnic == "" ||
         profile.clubName == "" ||
         profile.category == "" ||
         profile.size == ""
