@@ -282,7 +282,7 @@ body::after {
       }
     }
     p {
-      margin: 0.5rem 0;
+      // margin: 0.5rem 0;
       text-align: center;
       span {
         color: $linkcolor;
@@ -582,12 +582,23 @@ body::after {
       @extend .flex, .justify-center;
       > span {
         display: flex;
-        width: 80%;
-        justify-content: flex-end;
+        width: 84%;
+        justify-content: flex-start;
         padding-right: 5px;
+        margin-bottom: 1rem;
+        .q-btn {
+          color: $input !important;
+        }
       }
       .btn {
         margin-left: 2rem;
+      }
+    }
+    .shadowed {
+      span {
+        .q-icon {
+          color: $input;
+        }
       }
     }
     // media quiry
@@ -776,10 +787,16 @@ body::after {
     margin-left: 2rem;
   }
 }
+
 .table-container {
   display: flex;
   justify-content: center;
   color: $linkcolor;
+  .lista {
+    width: 100%;
+    border-spacing: 0;
+    box-shadow: none;
+  }
   table {
     // min-width: 80%;
     width: 90%;
@@ -789,7 +806,7 @@ body::after {
     thead {
       tr {
         th {
-          text-align: center;
+          text-align: end;
           background-color: $btncolor;
 
           &:first-of-type {
@@ -805,6 +822,9 @@ body::after {
       }
     }
     tbody {
+      .tr {
+        background-color: white !important;
+      }
       tr {
         cursor: pointer;
 
@@ -852,9 +872,9 @@ body::after {
     td {
       &:last-of-type {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+        justify-content: right;
+        padding-right: 1.4rem;
+        gap: 10%;
       }
     }
     th,
@@ -925,13 +945,13 @@ form.form {
     width: 15% !important;
   }
 }
+
 .shadowed {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
   padding: 0.5rem;
   span,
   p {
     color: $linkcolor;
-    font-weight: bold;
   }
   h3 {
     color: $linkcolor;
@@ -970,7 +990,7 @@ form.form {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 15px;
+      gap: 7px;
     }
   }
   .skills {

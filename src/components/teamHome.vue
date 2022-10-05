@@ -28,6 +28,14 @@
               <p>{{ userData.email }}</p>
             </div>
           </div>
+          <div style="padding-left: 18rem; margin-bottom: 5rem">
+            <q-btn
+              style="background-color: #2c4893; color: #fff"
+              round
+              @click="isEdit = !isEdit"
+              icon="edit"
+            ></q-btn>
+          </div>
         </div>
         <div class="infoRow">
           <div class="shadowed">
@@ -61,7 +69,10 @@
             </div>
           </div>
         </div>
-        <div class="shadowed q-mt-md inline">
+        <div
+          class="shadowed q-mt-md"
+          style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
+        >
           <div>
             <h3>Categorie</h3>
             <!-- <p>{{userData.category}}</p> -->
@@ -86,18 +97,19 @@
         </div>
         <div class="shadowed q-mt-md">
           <h2>Lista Copiilor</h2>
-         <div class="children-list">
-         <div class=" section">Mircea Bunea</div>
-         <div class=" section">Mircea Bunea</div></div>
+          <div class="children-list">
+            <div class="section">Mircea Bunea</div>
+            <div class="section">Mircea Bunea</div>
+          </div>
 
-         <div class="children-list">
-         <div class=" section">Mircea Bunea</div>
-         <div class=" section">Mircea Bunea</div></div>
-         <div class="children-list">
-         <div class=" section">Mircea Bunea</div>
-         <div class=" section">Mircea Bunea</div></div>
-
-
+          <div class="children-list">
+            <div class="section">Mircea Bunea</div>
+            <div class="section">Mircea Bunea</div>
+          </div>
+          <div class="children-list">
+            <div class="section">Mircea Bunea</div>
+            <div class="section">Mircea Bunea</div>
+          </div>
         </div>
         <!-- <h2>Informații utilizator</h2> -->
         <!-- <div class="add-img" v-if="dataUser.imgUrl && dataUser.imgUrl !== ''">
