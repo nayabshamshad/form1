@@ -117,7 +117,7 @@
                 style="padding-left: 5rem; padding-right: 5rem"
               >
                 <div class="flex items-center justify-around">
-                  <q-btn class="edit-toggle" round icon="chevron_left"></q-btn>
+                  <q-btn class="edit-toggle" round v-close-popup icon="chevron_left"></q-btn>
                   <h4>Completați informațiile</h4>
                 </div>
                 <input
@@ -229,14 +229,6 @@
                     :options="sizeOptions"
                   />
                 </div>
-                <!-- <div class="cate-list">
-            <label for="uname">Categoria</label>
-            <q-select outlined
-              v-model="dataUser.category"
-              :options="['Licurici', 'Companioni', 'Exploratori']"
-            />
-          </div> -->
-
                 <div style="margin-bottom: 0" class="cate-list">
                   <label for="uname">Categoria</label>
                   <div>

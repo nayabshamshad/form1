@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card">
+  <q-card class="my-card center-card" style="height: 100vh">
     <q-card-section>
       <div class="container">
         <form class="form" autocomplete="off">
@@ -31,11 +31,11 @@
 <script>
 export default {
   async mounted() {
-    if (this.$route?.query?.oobCode) {
-      this.$store.dispatch("verifyReset", this.$route.query.oobCode);
-    } else {
-      this.$router.push("/");
-    }
+    // if (this.$route?.query?.oobCode) {
+    //   this.$store.dispatch("verifyReset", this.$route.query.oobCode);
+    // } else {
+    //   this.$router.push("/");
+    // }
   },
   data() {
     return {

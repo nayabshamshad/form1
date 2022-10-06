@@ -57,36 +57,7 @@
       </div>
     </q-card-section>
   </q-card>
-  <!-- Forgot Dialog -->
-  <q-dialog v-model="forgotDialog">
-    <q-card style="width: 100%; margin-right: auto">
-      <q-card-section
-        ><div
-          class="flex"
-          style="justify-content: flex-end; padding: 0 30%"
-        ></div>
-        <div class="text-h6">Resetare parolă</div>
-      </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        <p>Introduce adresa de E-mail</p>
-        <q-input v-model="forgotEmail" type="email"></q-input>
-        <div class="flex justify-center">
-          <q-btn
-            @click="sendResetEmail"
-            rounder
-            style="margin-top: 1rem"
-            :loading="sendingEmail"
-            >Resetare</q-btn
-          >
-        </div>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="Ieșire" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -108,33 +79,11 @@ export default {
     async confirmReset() {
       const reset = await this.$store.dispatch("confirmReset", this.forgotCode);
     },
-    async sendResetEmail() {
-      if (this.sendingEmail) {
-        return;
-      }
-      this.sendingEmail = true;
-      const reset = await this.$store.dispatch(
-        "sendResetEmail",
-        this.forgotEmail
-      );
-      if (reset.err) {
-        this.sendingEmail = false;
-        return;
-      } else {
-        this.$q.notify({
-          message:
-            "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
-          color: "green",
-        });
-        setTimeout(() => {
-          this.forgotDialog = false;
-        }, 1000);
-      }
-      this.sendingEmail = false;
-    },
-    async forgotPassword() {
-      this.forgotEmail = this.userEmail;
-      this.forgotDialog = true;
+
+
+    forgotPassword() {
+      this.$router.push('/send-reset-link')
+
     },
     async loginUser() {
       this.forgotDialog = false;

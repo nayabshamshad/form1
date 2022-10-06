@@ -1,6 +1,86 @@
 <template>
-  <div class="container">
-    <form class="form category-form event-form">
+  <q-card class="center-card q-px-lg ">
+    <div class="container q-py-lg p-px-lg q-mx-lg ">
+      <div class="flex q-mb-lg q-pb-lg items-center">
+        <div style="width: 15%">
+          <q-btn
+            @click="$router.go(-1)"
+            round
+            icon="chevron_left"
+            class="bg-linkcolor"
+          ></q-btn>
+        </div>
+        <div style="width: 70%" class="text-center">
+          <h5 class="linkcolor text-weight-bold">Specializari</h5>
+        </div>
+        <div style="width: 15%">
+          <h6 class="linkcolor text-weight-bold">{{ currentEvent.date }}</h6>
+        </div>
+      </div>
+      <div class="shadowed" style="min-height: 220px; padding-top: 1rem">
+        <h5 class="text-weight-bold linkcolor text-left q-px-md">
+          Scurta descriere:
+        </h5>
+        <p
+          style="text-align: left"
+          class="text-left q-px-md text-weight-normal linkcolor"
+        >
+          {{ currentEvent.desc }}
+        </p>
+      </div>
+      <div class="shadowed q-mt-lg q-pb-md">
+        <h5 class="linkcolor text-weight-bold text-center q-py-md">Prezenta</h5>
+        <div class="q-pb-lg q-pt-md">
+          <div
+            v-for="(student, i) in memberList"
+            :key="i"
+            class="shadowed flex items-center justify-between q-my-sm"
+            style="padding-left: 1rem; padding-right: 1rem"
+          >
+            <p class="q-mb-none text-capitalize">{{ student }}</p>
+            <q-icon
+              :name="
+                currentEvent.attendanceList.includes(student)
+                  ? 'check'
+                  : 'close'
+              "
+              :style="
+                currentEvent.attendanceList.includes(student)
+                  ? 'color: green;'
+                  : 'color: red;'
+              "
+              size="md"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="shadowed"
+        style="min-height: 220px; padding-top: 1rem; margin-top: 2rem"
+      >
+        <h5 class="text-weight-bold linkcolor text-left q-px-md">
+          Fotografii:
+        </h5>
+        <div
+          class="flex justify-center items-center"
+          style="min-height: 150px; max-height: 250px; gap: 2%"
+        >
+          <div
+            v-for="(src, i) in currentEvent.imageList"
+            :key="i"
+            style="width: 30%"
+            class="flex justify-center align-center"
+          >
+            <img
+              :src="src"
+              alt=""
+              style="min-height: 100px"
+              @click="showImg(src)"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- <form class="form category-form event-form">
       <div class="cate-list-home">
         <label for="name">Tema întâlnirii:</label>
         <span>{{ currentEvent.name }}</span>
@@ -51,8 +131,9 @@
           <img :src="src" alt="" @click="showImg(src)" />
         </div>
       </div>
-    </form>
-  </div>
+    </form> -->
+    </div>
+  </q-card>
 
   <!-- IMG view dialog -->
   <q-dialog v-model="dialogBox">

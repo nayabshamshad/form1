@@ -332,7 +332,7 @@ export default store(function () {
             isUpdated: true,
             uid: auth.currentUser.uid,
             email: payload.email,
-            departmentName: payload.name,
+            departmentName: payload.departmentName,
             date: { from: "03/03/2022", to: "04/04/2022" },
           })
           .catch((err) => {
@@ -373,6 +373,8 @@ export default store(function () {
       async updateUserProfileAdmin({ commit, dispatch }, payload) {
         await firestore.doc(payload.uid).update(payload);
         await dispatch("getUserData");
+        await dispatch("getUserList");
+        commit('setSelectedUser', payload)
       },
       async signInUser({ state, commit }, payload) {
         var error = false;

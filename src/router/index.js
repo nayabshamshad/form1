@@ -38,6 +38,11 @@ export default route(function ({ store }) {
         name: "" /* Update Your Profile */,
         component: () => import("../pages/CategoryList.vue"),
       },
+      {
+        path: "/send-reset-link",
+        name: "Send reset link",
+        component: () => import("../pages/askForReset.vue"),
+      },
     ],
 
     history: createHistory(
@@ -50,7 +55,7 @@ export default route(function ({ store }) {
         to.path != "/sign-in" &&
         to.path != "/sign-up" &&
         to.path != "/reset_password" &&
-        to.name != "Create Department"
+        to.name != "Create Department" && to.path != '/send-reset-link'
       ) {
         next("/sign-in");
       } else {
@@ -61,6 +66,7 @@ export default route(function ({ store }) {
         to.path == "/sign-in" ||
         to.path == "/sign-up" ||
         to.name == "Create Department"
+        
       ) {
         if (
           store.getters.userData?.isUpdated &&

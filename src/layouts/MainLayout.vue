@@ -7,6 +7,8 @@
       userData?.role != 'department'
     "
   >
+  <h1 class="lec-logo text-weight-bold">LEC</h1>
+
     <div class="top-center">
       <q-btn
         no-caps
@@ -58,6 +60,7 @@
       (userData?.role == 'admin' || userData?.role == 'department')
     "
   >
+  <h1 class="lec-logo text-weight-bold">LEC</h1>
     <div class="flex admin-nav top-center">
       <q-btn
         no-caps
@@ -66,10 +69,13 @@
         flat
         @click="$router.push('/?q=approved')"
         class="btn"
-        :class="$route.fullPath === '/' || $route.fullPath === '/?q=approved' ? 'add-border' : ''"
+        :class="
+          $route.fullPath === '/' || $route.fullPath === '/?q=approved'
+            ? 'add-border'
+            : ''
+        "
       >
         Aprobat
-
       </q-btn>
       <q-btn
         no-caps
@@ -79,7 +85,8 @@
         @click="$router.push('/?q=pending')"
         class="btn"
         :class="$route.fullPath === '/?q=pending' ? 'add-border' : ''"
-      > În așteptare
+      >
+        În așteptare
       </q-btn>
       <q-btn
         no-caps
@@ -89,7 +96,8 @@
         @click="$router.push('/?q=declined')"
         class="btn"
         :class="$route.fullPath === '/?q=declined' ? 'add-border' : ''"
-      > Refuzat
+      >
+        Refuzat
       </q-btn>
       <q-btn
         no-caps
@@ -100,7 +108,8 @@
         class="btn"
         v-show="userData.role === 'department'"
         :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
-      > Data
+      >
+        Data
       </q-btn>
       <q-btn
         no-caps
@@ -111,9 +120,9 @@
         class="btn"
         v-show="userData.role === 'admin'"
         :class="$route.fullPath === '/?q=departments' ? 'add-border' : ''"
-
-      > Conferinte
-      </q-btn>>
+      >
+        Conferinte
+      </q-btn>
     </div>
     <div class="q-ml-auto">
       <q-btn
@@ -151,18 +160,36 @@
     </div>
   </div>
   <router-view />
+  <div
+    class="flex align-center bottom-bar justify-between"
+    v-if="
+      isAuthenticated &&
+      userData?.role != 'admin' &&
+      userData?.role != 'department'
+    "
+  >
+    <div @click="showTerms = true">Termeni si conditii</div>
+    <div>{{ new Date().getFullYear() }}</div>
+    <div>&#x24B8; LEC</div>
+  </div>
+  <q-dialog v-model="showTerms">
+  <showTerms />
+  </q-dialog>
 </template>
 <script>
 import { defineComponent } from "vue";
-
+import showTerms from '../components/termsAndConditions.vue'
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
+  components: {showTerms},
   data() {
-    return {};
+    return {
+      showTerms: false,
+    };
   },
   methods: {
+
     logOut() {
       this.$store.dispatch("signOutUser");
     },

@@ -1,6 +1,132 @@
 <template>
-  <div class="container">
-    <form class="form">
+  <q-card class="center-card q-px-lg q-pt-lg add-event-card">
+    <div class="container q-py-lg p-px-lg q-mx-lg">
+      <div class="flex q-mb-lg q-pb-lg items-center">
+        <div style="width: 15%">
+          <q-btn
+            @click="$router.go(-1)"
+            round
+            icon="chevron_left"
+            class="bg-linkcolor"
+          ></q-btn>
+        </div>
+        <div style="width: 70%" class="text-center">
+          <h5 class="linkcolor text-weight-bold">Adaugare Intalnire</h5>
+        </div>
+        <div style="width: 15%">
+          <q-btn
+            no-caps
+            class="q-px-lg text-weight-bold"
+            @click="addEvent"
+            color="secondary"
+            >Salvare</q-btn
+          >
+        </div>
+      </div>
+      <div class="row justify-between align-center">
+        <div class="shadowed flex justify-between no-wrap" style="width: 63%">
+          <h6 style="width: 40%" class="linkcolor text-weight-bold">
+            Adaugare Intalnire
+          </h6>
+          <div style="width: 55%">
+            <q-input
+              borderless
+              v-model="eventName"
+              type="text"
+              color="blue"
+              input-class="linkcolor"
+            />
+          </div>
+        </div>
+        <div
+          class="shadowed flex no-wrap items-center justify-around"
+          style="width: 35%"
+        >
+          <h6 class="q-my-none linkcolor text-weight-bold">
+            {{ eventDateView }}
+          </h6>
+          <q-icon
+            ref="dateIcon"
+            name="event"
+            class="cursor-pointer linkcolor"
+            size="md"
+          >
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date
+                v-model="eventDate"
+                @update:model-value="handleDateChange"
+              >
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+          <!-- </template> -->
+          <!-- </q-input> -->
+        </div>
+      </div>
+      <div class="shadowed q-mt-lg add-event-textarea">
+        <h5 class="text-weight-bold linkcolor">Scurta descriere:</h5>
+        <q-input
+          v-model="eventDesc"
+          label="Adaugati text..."
+          type="text"
+          autogrow
+          input-class="linkcolor"
+          :rules="[
+            (val) =>
+              val.length <= 50 ||
+              'Descrierea nu poate fi mai lungă de 50 de caractere.',
+          ]"
+          input-style="min-height: 8rem;"
+          borderless
+        />
+      </div>
+      <div class="shadowed q-mt-lg">
+        <h5 class="linkcolor text-center text-weight-bold q-pt-lg q-pb-md">
+          Prezenta
+        </h5>
+        <div class="q-mb-lg add-event-checkboxes">
+          <div
+            class="shadowed q-my-sm flex justify-between"
+            v-for="(user, i) in userData.teamList"
+            :key="i"
+          >
+            <p class="linkcolor text-weight-semibold q-mb-none text-capitalize">
+              {{ user.name }}
+            </p>
+            <q-checkbox :val="user.name" v-model="attendanceList" />
+          </div>
+        </div>
+      </div>
+      <div class="shadowed q-mt-lg linkcolor">
+        <h5 class="text-weight-bold q-pt-lg">Fotografii:</h5>
+        <h6 class="text-weight-light q-mb-md">Adaugati Max. 3 fotografii</h6>
+        <div class="flex justify-between no-wrap" style="gap: 3px">
+          <div v-for="img, i in previewImages" :key="i" class="img-card">
+            <img :src="img" alt="">
+          </div>
+          <div class="img-card select-img" v-for="i in 3-previewImages.length" :key="i" @click="openInput">
+            <q-icon name="add_a_photo" size="xl"></q-icon>
+          </div>
+
+
+        </div>
+      </div>
+      <input
+            @change="handleImageUpload"
+            type="file"
+            ref="imgInput"
+            style="display: none"
+            name="img"
+            accept="image/*"
+          />
+      <!-- <form class="form">
       <h2>Adaugare întâlnire</h2>
       <div class="cate-list">
         <q-input
@@ -12,7 +138,6 @@
       </div>
       <div class="cate-list">
         <label style="font-size: 16px">Data întâlnirii:</label>
-        <!-- <q-input v-model="eventDate" mask="date" type="date"> </q-input> -->
         <q-input
           filled
           v-model="eventDateView"
@@ -128,8 +253,10 @@
           >Trimite</q-btn
         >
       </div>
-    </form>
-  </div>
+    </form> -->
+    </div>
+  </q-card>
+
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
@@ -167,11 +294,15 @@ export default {
       eventDateView: "02/08/2022",
     };
   },
+  mounted() {
+    if (
+      this.$store?.getters?.userData?.role == "admin" ||
+      this.$store?.getters?.userData?.role == "admin"
+    ) {
+      this.$router.push("/");
+    }
+  },
   methods: {
-    openModal() {
-      this.$refs.dateIcon.$el.click();
-      this.$refs.dateIcon.$el.focus();
-    },
     handleDateChange(e, d, c) {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
       let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
@@ -278,11 +409,9 @@ export default {
       }
     },
     removeImg(e) {
-      const index = this.previewImages.findIndex((x) => {
-        return x === e;
-      });
-      this.previewImages.splice(index, 1);
-      this.localImageList.splice(index, 1);
+
+      this.previewImages.splice(e, 1);
+      this.localImageList.splice(e, 1);
     },
     addUser(e) {
       if (this.attendanceList.includes(e.target.value) && !e.target.checked) {
