@@ -970,7 +970,6 @@ export default {
         const arr = this.$store.getters.userList.filter((x) => {
           return x.department === this.selectedUser.departmentName;
         });
-        console.log(arr);
         return arr;
       } else {
         return [];
