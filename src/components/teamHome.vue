@@ -280,7 +280,7 @@
           type="text"
           v-model="dataUser.Instructor"
           label-color="black"
-          label="Anul investiturii ca Instructor:"
+          label="Anul investiturii ca instructor:"
           placeholder="YYYY"
           name="Instructor"
           mask="####"
@@ -291,7 +291,7 @@
           type="text"
           v-model="dataUser.Ghid"
           placeholder="YYYY"
-          label="Anul investiturii ca Ghid:"
+          label="Anul investiturii ca ghid:"
           label-color="black"
           mask="####"
         />
@@ -303,7 +303,7 @@
           placeholder="YYYY"
           mask="####"
           label-color="black"
-          label="Anul investiturii ca Master Ghid:"
+          label="Anul investiturii ca Master ghid:"
         />
       </div>
       <div
