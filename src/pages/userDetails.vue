@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="my-card full-height info sign-in"
+    class="my-card info sign-in"
     style="padding-top: 0; padding-left: 0; padding-right: 0"
   >
     <q-card-section class="q-px-none q-pt-none">
@@ -239,13 +239,17 @@
                     <input
                       ref="imgInput"
                       accept="image/*"
-                      @change="handleImageUpload"
+                      @input="handleImageUpload"
                       type="file"
                       style="display: none"
                     />
                     <div class="profile-img-holder q-my-lg">
-                      <q-card-actions
-                        v-if="!dataUser.imgUrl || dataUser.imgUrl == ''"
+                      <div
+                        @click="showImgInput"
+                        v-if="
+                          (!dataUser.imgUrl || dataUser.imgUrl == '') &&
+                          previewImage == ''
+                        "
                         align="right"
                         class="flex no-wrap q-mb-md"
                       >
@@ -256,15 +260,38 @@
                           ></q-icon>
                         </div>
                         <p>Adaugă o fotografie tip buletin cu tine</p>
-                      </q-card-actions>
+                      </div>
                       <div
-                        v-else-if="dataUser.imgUrl != ''"
+                        @click="showImgInput"
+                        v-else-if="dataUser.imgUrl != '' && previewImage == ''"
                         class="flex no-wrap q-mb-md"
                       >
                         <div class="add-img q-mx-auto">
                           <img
                             class="add-event-img"
                             :src="dataUser.imgUrl"
+                            alt=""
+                          />
+                        </div>
+                        <p>Adaugă o fotografie tip buletin cu tine</p>
+                      </div>
+                      <div
+                        v-else-if="previewImage != ''"
+                        class="flex no-wrap q-mb-md"
+                      >
+                        <div class="add-img q-mx-auto relative-position">
+                          <q-icon
+                            size="sm"
+                            name="cancel"
+                            color="red"
+                            class="absolute"
+                            style="top: 3px; right: 5px; z-index: 1"
+                            @click="removeImg"
+                          />
+                          <img
+                            @click="showImgInput"
+                            class="add-event-img"
+                            :src="previewImage"
                             alt=""
                           />
                         </div>
@@ -541,18 +568,23 @@
               <div class="attendance-summary">
                 <h4 style="color: #233975">Lista Intalnirilor</h4>
                 <div class="eventlist">
-                  <span>
+                  <div class="q-mb-md q-mt-sm flex justify-between" style="width: 80%">
                     <q-btn
-                      size="sm"
+                      size="md"
                       color="green"
                       icon="download"
                       @click="exportFile('events')"
                       round
                     ></q-btn
-                  ></span>
+                  >
+                
+                </div>
                 </div>
                 <div class="table-container">
-                  <table class="user-list-table lista">
+                  <table
+                    v-if="selectedUser.eventList.length > 0"
+                    class="user-list-table lista"
+                  >
                     <thead>
                       <tr>
                         <th>Tema intalnirii</th>
@@ -571,6 +603,18 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div
+                    v-else
+                    class="shadowed q-mx-auto"
+                    style="border-radius: 8px; width: 90%"
+                  >
+                    <h4
+                      class="text-weight-bold linkcolor text-left"
+                      style="opacity: 0.5"
+                    >
+                      Nu exista intalniri inca
+                    </h4>
+                  </div>
                 </div>
                 <div class="q-mt-md inline-pagination">
                   <div style="display: inline-flex">
@@ -664,6 +708,7 @@
 </template>
 <script>
 import writeXlsxFile from "write-excel-file";
+import { storage, deleter } from "../store/firebase.js";
 
 export default {
   data() {
@@ -682,12 +727,25 @@ export default {
       sizeOptions: ["S", "M", "L", "XL", "XXL"],
       resultsPerPage: 10,
       currentPage: 1,
+      previewImage: "",
+      file: null,
     };
   },
   async mounted() {
     await this.pageSetup();
   },
   methods: {
+    removeImg() {
+      this.previewImage = "";
+    },
+    async handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    showImgInput() {
+      this.$refs.imgInput.click();
+    },
     async pageSetup() {
       if (this.selectedUser) {
         this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
@@ -706,7 +764,6 @@ export default {
         let dateArr = this.dataUser.dateOfBirth.split("/");
         this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
       }
-      await this.$store.dispatch("updatedUserDetails", this.selectedUser.uid);
       if (this.selectedUser.date) {
         this.dateModel.to = this.selectedUser.date.to;
         this.dateModel.from = this.selectedUser.date.from;
@@ -829,7 +886,30 @@ export default {
 
       this.isSubmitting = true;
       let profile;
+      if (this.previewImage != "") {
+        if (this.dataUser.imgUrl && this.dataUser.imgUrl != "") {
+          await deleter
+            .refFromURL(this.dataUser.imgUrl)
+            .delete()
+            .then()
+            .catch((errImg) => {
+              console.log(errImg);
+            });
+        }
 
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.dataUser.imgUrl = url;
+          });
+      }
       profile = { ...this.dataUser };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
@@ -924,6 +1004,7 @@ export default {
       }
       await this.$store.dispatch("updateUserProfileAdmin", profile);
       await this.pageSetup();
+      this.previewImage = "";
       this.isSubmitting = false;
       this.isEdit = false;
     },

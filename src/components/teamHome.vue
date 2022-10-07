@@ -4,6 +4,7 @@
       <div class="container">
         <div class="flex justify-end">
           <q-btn
+          v-show="dateContained"
             round
             @click="isEdit = !isEdit"
             icon="edit_note"
@@ -117,19 +118,28 @@
                 style="padding-left: 5rem; padding-right: 5rem"
               >
                 <div class="flex items-center justify-around">
-                  <q-btn class="edit-toggle" round v-close-popup icon="chevron_left"></q-btn>
+                  <q-btn
+                    class="edit-toggle"
+                    round
+                    v-close-popup
+                    icon="chevron_left"
+                  ></q-btn>
                   <h4>Completați informațiile</h4>
                 </div>
                 <input
                   ref="imgInput"
                   accept="image/*"
-                  @change="handleImageUpload"
+                  @input="handleImageUpload"
                   type="file"
                   style="display: none"
                 />
                 <div class="profile-img-holder q-my-lg">
-                  <q-card-actions
-                    v-if="dataUser.imgUrl == ''"
+                  <div
+                    @click="showImgInput"
+                    v-if="
+                      (!dataUser.imgUrl || dataUser.imgUrl == '') &&
+                      previewImage == ''
+                    "
                     align="right"
                     class="flex no-wrap q-mb-md"
                   >
@@ -137,15 +147,38 @@
                       <q-icon class="text-grey" name="photo_camera"></q-icon>
                     </div>
                     <p>Adaugă o fotografie tip buletin cu tine</p>
-                  </q-card-actions>
+                  </div>
                   <div
-                    v-else-if="dataUser.imgUrl != ''"
+                    @click="showImgInput"
+                    v-else-if="dataUser.imgUrl != '' && previewImage == ''"
                     class="flex no-wrap q-mb-md"
                   >
                     <div class="add-img q-mx-auto">
                       <img
                         class="add-event-img"
                         :src="dataUser.imgUrl"
+                        alt=""
+                      />
+                    </div>
+                    <p>Adaugă o fotografie tip buletin cu tine</p>
+                  </div>
+                  <div
+                    v-else-if="previewImage != ''"
+                    class="flex no-wrap q-mb-md"
+                  >
+                    <div class="add-img q-mx-auto relative-position">
+                      <q-icon
+                        size="sm"
+                        name="cancel"
+                        color="red"
+                        class="absolute"
+                        style="top: 3px; right: 5px; z-index: 1"
+                        @click="removeImg"
+                      />
+                      <img
+                        @click="showImgInput"
+                        class="add-event-img"
+                        :src="previewImage"
                         alt=""
                       />
                     </div>
@@ -418,11 +451,22 @@
 </template>
 
 <script>
-import { auth } from "../store/firebase";
+import { auth, storage, deleter } from "../store/firebase";
 export default {
   name: "HomeView",
   components: {},
   methods: {
+    removeImg() {
+      this.previewImage = "";
+    },
+    async handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    showImgInput() {
+      this.$refs.imgInput.click();
+    },
     formatTheDate(x) {
       return x.split("/").reverse().join(".");
     },
@@ -471,6 +515,30 @@ export default {
     async submit() {
       if (this.isSubmitting) {
         return;
+      }
+      if (this.previewImage != "") {
+        if (this.dataUser.imgUrl && this.dataUser.imgUrl != "") {
+          await deleter
+            .refFromURL(this.dataUser.imgUrl)
+            .delete()
+            .then()
+            .catch((errImg) => {
+              console.log(errImg);
+            });
+        }
+
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.dataUser.imgUrl = url;
+          });
       }
       this.isSubmitting = true;
       let profile;
@@ -572,7 +640,7 @@ export default {
         return;
       }
       await this.$store.dispatch("updateUserProfile", profile);
-      this.$store.dispatch("getUserData");
+      // this.$store.dispatch("getUserData");
       this.isEdit = false;
       this.isSubmitting = false;
     },
@@ -593,6 +661,8 @@ export default {
       tagsInput: "",
       sizeOptions: ["S", "M", "L", "XL", "XXL"],
       teamList: [{ name: "" }],
+      previewImage: "",
+      file: null,
     };
   },
   mounted() {

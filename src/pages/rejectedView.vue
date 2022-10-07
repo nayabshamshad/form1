@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <q-card class="q-py-lg q-px-lg">
+    <q-card style="height: 100vh;" class="q-py-lg q-px-lg">
       <q-card-section class="q-py-lg q-my-lg q-px-lg">
         <div class="q-my-lg"><q-icon @click="logOut" class="cursor-pointer linkcolor" name="west" size="xl"></q-icon></div>
         <h3 class="text-weight-bold text-center q-py-lg q-mt-lg">

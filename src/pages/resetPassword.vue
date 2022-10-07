@@ -67,6 +67,7 @@ export default {
         this.$q.notify({
           message: "Parola a fost resetata, te rugăm să te autentifici.",
           color: "green",
+          icon: 'report_gmailerrorred'
         });
         this.$router.push("/");
       }

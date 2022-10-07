@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card new-card">
+  <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
         <q-tab-panels class="admin-home" v-model="tabs">
@@ -497,7 +497,7 @@ export default {
         this.tabs = this.$route?.query?.q;
       }
     }
-    this.getData();
+    // this.getData();
     if (this.dateList) {
       this.dateModel = this.dateList;
     }
@@ -554,7 +554,7 @@ export default {
     },
     tabs: {
       handler: function () {
-        this.getData();
+        // this.getData();
         this.currentPage = 1;
       },
     },

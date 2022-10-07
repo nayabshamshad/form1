@@ -43,6 +43,21 @@ export default route(function ({ store }) {
         name: "Send reset link",
         component: () => import("../pages/askForReset.vue"),
       },
+      {
+        path: "/rejected",
+        component: () => import("../pages/rejectedView"),
+        name: "" /* Rejected */,
+      },
+      {
+        path: "/pending",
+        component: () => import("../pages/waitingView.vue"),
+        name: "" /* Waiting Page */,
+      },
+      {
+        path: "/reset_password",
+        component: () => import("../pages/resetPassword"),
+        name: "" /* Reset Password */,
+      },
     ],
 
     history: createHistory(
@@ -66,7 +81,7 @@ export default route(function ({ store }) {
         to.path == "/sign-in" ||
         to.path == "/sign-up" ||
         to.name == "Create Department"
-        
+
       ) {
         if (
           store.getters.userData?.isUpdated &&

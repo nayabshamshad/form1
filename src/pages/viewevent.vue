@@ -1,6 +1,6 @@
 <template>
-  <q-card class="center-card q-px-lg ">
-    <div class="container q-py-lg p-px-lg q-mx-lg ">
+  <q-card class="center-card q-px-lg info">
+    <div class="container q-py-lg p-px-lg q-mx-lg">
       <div class="flex q-mb-lg q-pb-lg items-center">
         <div style="width: 15%">
           <q-btn
@@ -74,7 +74,7 @@
             <img
               :src="src"
               alt=""
-              style="min-height: 100px"
+              style="max-height: 150px; border-radius: 8px; width: 100%;"
               @click="showImg(src)"
             />
           </div>

@@ -23,30 +23,16 @@ const routes = [
   {
     path: "/view-event",
     name: "" /* Event Details */,
-    component: () => import("../pages/viewevent.vue"),
-  },
-  {
-    path: "/pending",
-    component: () => import("../pages/waitingView.vue"),
-    name: "" /* Waiting Page */,
+  component: () => import("../pages/viewevent.vue"),
   },
   {
     path: "/user-details",
     component: () => import("../pages/userDetails"),
     name: "" /* User Details */,
   },
-  {
-    path: "/rejected",
-    component: () => import("../pages/rejectedView"),
-    name: "" /* Rejected */,
-  },
+
   // Always leave this as last one,
   // but you can also remove it
-  {
-    path: "/reset_password",
-    component: () => import("../pages/resetPassword"),
-    name: "" /* Reset Password */,
-  },
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),

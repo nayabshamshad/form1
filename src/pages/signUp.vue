@@ -132,6 +132,8 @@ export default {
       showTermsDialog: false,
     };
   },
+
+
   mounted() {
     this.getData();
   },

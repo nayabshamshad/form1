@@ -7,7 +7,7 @@
       userData?.role != 'department'
     "
   >
-  <h1 class="lec-logo text-weight-bold">LEC</h1>
+    <h1 class="lec-logo text-weight-bold">LEC</h1>
 
     <div class="top-center">
       <q-btn
@@ -60,7 +60,7 @@
       (userData?.role == 'admin' || userData?.role == 'department')
     "
   >
-  <h1 class="lec-logo text-weight-bold">LEC</h1>
+    <h1 class="lec-logo text-weight-bold">LEC</h1>
     <div class="flex admin-nav top-center">
       <q-btn
         no-caps
@@ -162,34 +162,29 @@
   <router-view />
   <div
     class="flex align-center bottom-bar justify-between"
-    v-if="
-      isAuthenticated &&
-      userData?.role != 'admin' &&
-      userData?.role != 'department'
-    "
+    v-if="isAuthenticated"
   >
     <div @click="showTerms = true">Termeni si conditii</div>
     <div>{{ new Date().getFullYear() }}</div>
     <div>&#x24B8; LEC</div>
   </div>
   <q-dialog v-model="showTerms">
-  <showTerms />
+    <showTerms />
   </q-dialog>
 </template>
 <script>
 import { defineComponent } from "vue";
-import showTerms from '../components/termsAndConditions.vue'
+import showTerms from "../components/termsAndConditions.vue";
 export default defineComponent({
   name: "MainLayout",
 
-  components: {showTerms},
+  components: { showTerms },
   data() {
     return {
       showTerms: false,
     };
   },
   methods: {
-
     logOut() {
       this.$store.dispatch("signOutUser");
     },

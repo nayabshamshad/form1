@@ -1,5 +1,5 @@
 <template>
-  <q-card class="center-card q-px-lg q-pt-lg add-event-card">
+  <q-card class="center-card info q-px-lg q-pt-lg add-event-card">
     <div class="container q-py-lg p-px-lg q-mx-lg">
       <div class="flex q-mb-lg q-pb-lg items-center">
         <div style="width: 15%">
@@ -19,6 +19,7 @@
             class="q-px-lg text-weight-bold"
             @click="addEvent"
             color="secondary"
+            :loading="isFetching"
             >Salvare</q-btn
           >
         </div>
@@ -109,7 +110,7 @@
         <h6 class="text-weight-light q-mb-md">Adaugati Max. 3 fotografii</h6>
         <div class="flex justify-between no-wrap" style="gap: 3px">
           <div v-for="img, i in previewImages" :key="i" class="img-card">
-            <img :src="img" alt="">
+            <img :src="img" class="cursor-pointer" @click="removeImg(i)" alt="">
           </div>
           <div class="img-card select-img" v-for="i in 3-previewImages.length" :key="i" @click="openInput">
             <q-icon name="add_a_photo" size="xl"></q-icon>

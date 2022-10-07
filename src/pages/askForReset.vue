@@ -1,8 +1,15 @@
 <template>
-  <q-card class="center-card" style="height: 100vh; padding-top: 10rem">
-<q-card-section>
-  <div><q-icon name="west" size="xl" class="linkcolor cursor-pointer" @click="$router.go(-1)" ></q-icon></div>
-</q-card-section>
+  <q-card class="" style="height: 100vh; padding-top: 10rem">
+    <q-card-section>
+      <div>
+        <q-icon
+          name="west"
+          size="xl"
+          class="linkcolor cursor-pointer"
+          @click="$router.go(-1)"
+        ></q-icon>
+      </div>
+    </q-card-section>
 
     <q-card-section
       ><div
@@ -56,10 +63,11 @@ export default {
           message:
             "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
           color: "green",
+          icon: "report_gmailerrorred",
         });
         setTimeout(() => {
-          this.forgotDialog = false;
-        }, 1000);
+          this.$router.push("/sign-in");
+        }, 5000);
       }
       this.sendingEmail = false;
     },

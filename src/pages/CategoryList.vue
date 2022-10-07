@@ -352,7 +352,12 @@ export default {
       }
       this.isSubmitting = true;
       let profile;
-      if (this.previewImage !== "") {
+      if(this.previewImage == '') {
+        this.$q.notify({
+          message: 'Please select a profile image',
+          color: 'red',
+        })
+      }
         const img_name = new Date() + "-" + this.file.name;
         await storage
           .child(img_name)
@@ -365,7 +370,6 @@ export default {
           .then((url) => {
             this.userInfo.imgUrl = url;
           });
-      }
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
