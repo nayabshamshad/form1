@@ -402,15 +402,15 @@ export default {
           fontWeight: "bold",
         },
         {
-          value: "Instructor - anul investiturii:",
+          value: "Instructor - anul Investiturii:",
           fontWeight: "bold",
         },
         {
-          value: "Ghid - anul investiturii:",
+          value: "Ghid - anul Investiturii:",
           fontWeight: "bold",
         },
         {
-          value: "Master Ghid - anul investiturii:",
+          value: "Master Ghid - anul Investiturii:",
           fontWeight: "bold",
         },
         {
