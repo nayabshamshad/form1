@@ -60,8 +60,10 @@
       (userData?.role == 'admin' || userData?.role == 'department')
     "
   >
+  <!-- Mobile Nav -->
+  <mobile-nav v-show="showMenu" />
     <h1 class="lec-logo text-weight-bold">LEC</h1>
-    <div class="flex admin-nav top-center">
+    <div class="flex hideMobile admin-nav top-center">
       <q-btn
         no-caps
         type="button"
@@ -124,6 +126,9 @@
         Conferinte
       </q-btn>
     </div>
+    <div class="showMobile">
+<q-btn color="black" flat icon="menu" @click="showMenu = !showMenu"></q-btn>
+    </div>
     <div class="q-ml-auto">
       <q-btn
         no-caps
@@ -175,13 +180,14 @@
 <script>
 import { defineComponent } from "vue";
 import showTerms from "../components/termsAndConditions.vue";
+import MobileNav from '../components/MobileNav.vue'
 export default defineComponent({
   name: "MainLayout",
-
-  components: { showTerms },
+  components: { showTerms, MobileNav },
   data() {
     return {
       showTerms: false,
+      showMenu: false,
     };
   },
   methods: {

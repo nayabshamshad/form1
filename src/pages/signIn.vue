@@ -2,9 +2,9 @@
   <q-card class="my-card full-height sign-in">
     <q-card-section>
       <div class="container">
-        <!-- <q-card class="my-card">
-      <q-card-section> -->
+
         <form @submit.prevent="loginUser" class="form" autocomplete="off">
+          <h2 class="text-center showMobile text-bold q-mb-lg q-pb-lg">LEC</h2>
           <h4>Autentificare</h4>
           <p>
             nu ai ica cont? <router-link to="/sign-up" class="link"
