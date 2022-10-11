@@ -2,6 +2,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+  + .user-details {
+    display: inline-flex;
+    width: 100%;
+    padding: 1.5rem;
+    padding-right: 1.75rem;
+    justify-content: space-between;
+  }
   > div {
     width: 68%;
   }

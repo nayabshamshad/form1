@@ -107,13 +107,8 @@
                 </div>
               </div>
               <div
-                class="shadowed q-mt-md"
-                style="
-                  display: inline-flex;
-                  width: 100%;
-                  gap: 10%;
-                  padding: 1.5rem;
-                "
+                class="shadowed user-details q-mt-md"
+             
               >
                 <div>
                   <h3>Categorie</h3>
@@ -577,7 +572,7 @@
                       round
                     ></q-btn
                   >
-                
+
                 </div>
                 </div>
                 <div class="table-container">

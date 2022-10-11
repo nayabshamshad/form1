@@ -34,7 +34,7 @@
   margin-right: auto !important;
 }
 .showMobile {
-  display: none;
+  display: none !important;
 }
 @media (max-width: 768px) {
   .hideMobile {

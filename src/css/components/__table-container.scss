@@ -141,15 +141,13 @@
     margin-left: 5px;
     cursor: pointer;
   }
-  div:has(.pagination-buttons) {
-    position: relative;
-  }
+
   .pagination-buttons {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
     gap: 10px;
-    top: 50%;
+    top: 70%;
     @extend .flex;
     .q-btn {
       background-color: $linkcolor;
