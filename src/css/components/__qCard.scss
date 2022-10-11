@@ -1,6 +1,20 @@
 .q-card {
   margin-left: auto;
   margin-right: 15rem;
+  &.info:has(.table-container) {
+    @media(max-width: 950px) {
+      padding: 2rem ;
+    }
+    @media(max-width: 870px) {
+      padding: 2rem 0.5rem;
+
+    }
+    @media(max-width:850px) {
+      .q-card__section:not(:has(.attendance-container)) {
+        padding: 1rem 0;
+      }
+    }
+  }
   @media (max-width: 1250px) {
     margin-right: 5rem;
   }
@@ -44,6 +58,9 @@
       div {
         width: 150px;
         border-radius: 8px;
+        @media(max-width: 370px) {
+          width: 120px;
+        }
       }
       img {
         max-height: 150px;
@@ -60,6 +77,12 @@
     }
     .userInfoText {
       padding-left: 2rem;
+      @media(max-width: 500px) {
+        padding-left: 1rem;
+      }
+      @media(max-width: 400px) {
+        padding-left: 0.5rem;
+      }
       * {
         text-align: start !important;
       }
@@ -68,6 +91,12 @@
         color: $linkcolor;
         text-transform: capitalize;
         margin-bottom: 0;
+        @media(max-width: 600px) {
+          font-size: 1rem;
+          + p {
+            font-size: 1rem;
+          }
+        }
       }
       > p {
         font-size: 18px;
@@ -82,6 +111,9 @@
           margin-bottom: 0;
           color: $linkcolor;
           font-size: 17px;
+          @media(max-width: 600px) {
+            font-size: 12px;
+          }
         }
       }
     }
@@ -211,6 +243,9 @@
     }
     // lists
     .icon {
+      @media(max-width: 500px) {
+        padding-right: 10px;
+      }
       .q-icon {
         font-size: 2.715em;
         font-weight: bold;
@@ -245,50 +280,7 @@
         }
       }
     }
-    .table-row {
-      color: $linkcolor;
-      font-weight: bold;
-      outline: none;
-      @media (min-width: 768px) {
-        tr:nth-child(even) {
-          background: #ffffff 0% 0% no-repeat padding-box;
-        }
-        tr:nth-child(odd) {
-          background-color: $input;
-        }
-      }
-      @media (max-width: 768px) {
-        display: block;
-        tr {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          height: 2.5rem;
-          margin-bottom: 8px;
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-          border-radius: 8px;
-          padding-left: 5px;
 
-          > td:first-of-type {
-            max-width: 85%;
-            min-width: 80%;
-          }
-          > td.showMobile {
-            min-width: 15%;
-            text-align: right;
-            padding-right: 15px;
-            padding-left: 8px;
-            font-size: 17px;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-          }
-          .hide-this{
-            display: none !important;
-          }
-
-        }
-      }
-    }
     .left-1 {
       width: 33%;
       float: left;

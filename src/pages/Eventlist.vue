@@ -1,5 +1,8 @@
 <template>
-  <q-card class="center-card q-px-lg info" style="padding-top: 3rem">
+  <q-card
+    class="center-card q-px-lg info client-event-list"
+    style="padding-top: 3rem"
+  >
     <div class="container">
       <div class="attendance-container shadowed">
         <div class="attendance-summary">
@@ -26,23 +29,37 @@
         <div class="attendance-summary">
           <h4 style="color: #233975">Lista Intalnirilor</h4>
           <div class="eventlist">
-            <div class="q-mt-sm q-mb-md flex justify-between q-mx-auto" style="width: 80%">
+            <div
+              class="q-mt-sm q-mb-md flex justify-between q-mx-auto"
+              style="width: 80%"
+            >
               <q-btn
                 size="md"
                 color="green"
                 icon="download"
                 @click="exportFile('events')"
                 round
-              ></q-btn
-            >
-            <div>
-                  <span style="font-size: 12px" class="linkcolor q-pr-sm font-weight-light subtitle1 text-left">Adauga intalnire</span>
-                  <q-btn class="bg-linkcolor" icon="add" round @click="$router.push('/add-event')" />
-                </div>
-          </div>
+              ></q-btn>
+              <div>
+                <span
+                  style="font-size: 12px"
+                  class="linkcolor q-pr-sm font-weight-light subtitle1 text-left"
+                  >Adauga intalnire</span
+                >
+                <q-btn
+                  class="bg-linkcolor"
+                  icon="add"
+                  round
+                  @click="$router.push('/add-event')"
+                />
+              </div>
+            </div>
           </div>
           <div class="table-container">
-            <table v-if="eventList.arr.length > 0" class="user-list-table lista">
+            <table
+              v-if="eventList.arr.length > 0"
+              class="user-list-table lista"
+            >
               <thead>
                 <tr>
                   <th>Tema intalnirii</th>
@@ -57,13 +74,22 @@
                   @click="showEventDetails(item)"
                 >
                   <td>{{ item.name }}</td>
-                  <td>{{ formatDate(item.date) }}</td>
+                  <td class="event-date-td">{{ formatDate(item.date) }}</td>
                 </tr>
               </tbody>
             </table>
-              <div v-else class="shadowed q-mx-auto" style="border-radius: 8px; width: 90%;">
-                <h4 class="text-weight-bold linkcolor text-left" style="opacity: 0.5">Nu exista intalniri inca</h4>
-              </div>
+            <div
+              v-else
+              class="shadowed q-mx-auto"
+              style="border-radius: 8px; width: 90%"
+            >
+              <h4
+                class="text-weight-bold linkcolor text-left"
+                style="opacity: 0.5"
+              >
+                Nu exista intalniri inca
+              </h4>
+            </div>
           </div>
           <div class="q-mt-md inline-pagination">
             <div style="display: inline-flex">
@@ -86,7 +112,7 @@
                   :disabled="currentPage === 1"
                   @click="decreasePage"
                 ></q-btn>
-                {{ currentPage }}
+                <span> {{ currentPage }} </span>
                 <q-btn
                   size="sm"
                   round
@@ -101,7 +127,7 @@
             <div>
               <p>
                 {{ eventList.first }}-{{ eventList.last }} din
-                      {{ eventList.total }}
+                {{ eventList.total }}
               </p>
             </div>
           </div>
@@ -118,7 +144,7 @@ export default {
   components: {},
   data() {
     return {
-      resultsPerPage: 10,
+      resultsPerPage: 20,
       currentPage: 1,
     };
   },
@@ -205,7 +231,6 @@ export default {
         this.currentPage = this.currentPage - 1;
       }
     },
-
   },
   computed: {
     eventList() {

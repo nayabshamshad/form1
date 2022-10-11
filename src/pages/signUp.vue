@@ -38,8 +38,9 @@
             <q-select
               v-model="departmentName"
               outlined
-              label-color="black"
               :options="departmentList"
+              label="Conferinta Name"
+              label-color="grey"
             />
           </div>
           <div class="cate-list">

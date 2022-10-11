@@ -1,5 +1,5 @@
 <template>
-  <q-card class="center-card q-px-lg info">
+  <q-card class="center-card q-px-lg info view-event">
     <div class="container q-py-lg p-px-lg q-mx-lg">
       <div class="flex q-mb-lg q-pb-lg items-center">
         <div style="width: 15%">
@@ -11,10 +11,10 @@
           ></q-btn>
         </div>
         <div style="width: 70%" class="text-center">
-          <h5 class="linkcolor text-weight-bold">Specializari</h5>
+          <h5 class="linkcolor text-weight-bold">{{currentEvent.name}}</h5>
         </div>
         <div style="width: 15%">
-          <h6 class="linkcolor text-weight-bold">{{ currentEvent.date }}</h6>
+          <h6 class="linkcolor text-weight-bold text-no-wrap">{{ formatDate(currentEvent.date) }}</h6>
         </div>
       </div>
       <div class="shadowed" style="min-height: 220px; padding-top: 1rem">
@@ -162,6 +162,32 @@ export default {
     };
   },
   methods: {
+    formatDate(e) {
+      if (e && new Date(e)) {
+        let date = new Date(e);
+        let newDate;
+        const monthList = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        const month = monthList[date.getMonth()];
+
+        newDate = date.getDate() + " " + month + ", " + date.getFullYear();
+        return newDate;
+      } else {
+        return "";
+      }
+    },
     showImg(src) {
       this.dialogBox = true;
       this.imgSrc = src;

@@ -1,15 +1,25 @@
 <template>
   <div
-    class="top-bar"
+    class="top-bar user-top"
     v-if="
       isAuthenticated &&
       userData?.role != 'admin' &&
       userData?.role != 'department'
     "
   >
-    <h1 class="lec-logo text-weight-bold">LEC</h1>
+  <div class="flex menu-container justify-between ">
 
-    <div class="top-center">
+    <h1 class="lec-logo text-weight-bold">LEC</h1>
+    <div class="showMobile">
+        <q-btn
+        color="black"
+        flat
+        icon="menu"
+        @click="showMenuUser = !showMenuUser"
+        ></q-btn>
+        </div>
+        <mobile-nav @close="showMenuUser = !showMenuUser" v-show="showMenuUser" />
+    <div class="top-center admin-nav hideMobile" >
       <q-btn
         no-caps
         color="black"
@@ -51,6 +61,7 @@
         ></q-icon
       ></q-btn>
     </div>
+  </div>
   </div>
 
   <div
@@ -203,6 +214,7 @@ export default defineComponent({
     return {
       showTerms: false,
       showMenu: false,
+      showMenuUser: false,
     };
   },
   methods: {

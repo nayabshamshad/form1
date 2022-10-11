@@ -1,13 +1,52 @@
+.q-tab-panels:has(.infoRow) {
+  @media (max-width: 585px) {
+    padding: 0 2rem !important;
+  }
+  @media (max-width: 500px) {
+    padding: 0 1rem !important;
+  }
+  @media (max-width: 400px) {
+    padding: 0 !important;
+  }
+}
 .infoRow {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+    > div.shadowed,
+    div.shadowed:not(.skills) {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
   + .user-details {
-    display: inline-flex;
+    display: flex;
     width: 100%;
     padding: 1.5rem;
     padding-right: 1.75rem;
     justify-content: space-between;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      > div {
+        &:not(:last-of-type) {
+          display: flex;
+          gap: 10px;
+        }
+        &:last-of-type {
+          > div {
+            padding-left: 0.6rem;
+          }
+        }
+        h3 {
+          line-height: 20px;
+        }
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
   > div {
     width: 68%;
@@ -46,6 +85,11 @@
   > div {
     width: 45%;
   }
+  @media (max-width: 768px) {
+    > div {
+      width: 90%;
+    }
+  }
 }
 
 .edit-details {
@@ -58,5 +102,66 @@
     margin-bottom: 0 !important;
     margin-left: -10px;
     margin-right: 10px;
+  }
+}
+.q-card.user-details {
+  .q-tab {
+    @media (max-width: 500px) {
+      padding: 0 4px;
+    }
+  }
+
+  td:first-of-type:has(~ .event-date-td) {
+    @media (max-width: 768px) {
+      width: 60%;
+      min-width: 60%;
+    }
+  }
+  td.event-date-td {
+    @media (max-width: 768px) {
+      width: 40%;
+      white-space: nowrap;
+    }
+  }
+  @media (max-width: 768px) {
+    .attendance-summary:has(> h4) {
+      position: relative;
+    }
+    h4:has(+ .eventlist) {
+      font-size: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      + .eventlist {
+        top: 0;
+        position: absolute;
+      }
+    }
+  }
+  h4:has(+ .eventlist) {
+    + .eventlist {
+      > div {
+        @media (max-width: 768px) {
+          .q-btn {
+            margin-left: 1rem;
+          }
+        }
+        @media (min-width: 769px) {
+          width: 90% !important;
+          .q-btn {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+  .inline-pagination {
+    @media (min-width: 769px) {
+      margin-top: 1rem;
+    }
+    .pagination-buttons {
+      .q-btn {
+        margin-left: 0;
+      }
+    }
   }
 }

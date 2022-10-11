@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="my-card info sign-in"
+    class="my-card info sign-in user-details"
     style="padding-top: 0; padding-left: 0; padding-right: 0"
   >
     <q-card-section class="q-px-none q-pt-none">
@@ -106,10 +106,7 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="shadowed user-details q-mt-md"
-             
-              >
+              <div class="shadowed user-details q-mt-md">
                 <div>
                   <h3>Categorie</h3>
                   <!-- <p>{{selectedUser.category}}</p> -->
@@ -536,7 +533,7 @@
             </q-card>
           </q-dialog>
         </q-tab-panel>
-        <q-tab-panel name="events">
+        <q-tab-panel class="user-event-container" name="events">
           <div class="container">
             <div class="attendance-container shadowed">
               <div class="attendance-summary">
@@ -563,17 +560,18 @@
               <div class="attendance-summary">
                 <h4 style="color: #233975">Lista Intalnirilor</h4>
                 <div class="eventlist">
-                  <div class="q-mb-md q-mt-sm flex justify-between" style="width: 80%">
+                  <div
+                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
+                    style="width: 80%"
+                  >
                     <q-btn
                       size="md"
                       color="green"
                       icon="download"
                       @click="exportFile('events')"
                       round
-                    ></q-btn
-                  >
-
-                </div>
+                    ></q-btn>
+                  </div>
                 </div>
                 <div class="table-container">
                   <table
@@ -594,7 +592,9 @@
                         @click="showEventDetails(item)"
                       >
                         <td>{{ item.name }}</td>
-                        <td>{{ getBirthDate(item.date) }}</td>
+                        <td class="event-date-td">
+                          {{ getBirthDate(item.date) }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -632,7 +632,7 @@
                         @click="decreasePage"
                         :disabled="currentPage === 1"
                       ></q-btn>
-                      {{ currentPage }}
+                      <span> {{ currentPage }} </span>
                       <q-btn
                         size="sm"
                         round
@@ -720,7 +720,7 @@ export default {
       tagsInput: "",
       teamList: "",
       sizeOptions: ["S", "M", "L", "XL", "XXL"],
-      resultsPerPage: 10,
+      resultsPerPage: 20,
       currentPage: 1,
       previewImage: "",
       file: null,

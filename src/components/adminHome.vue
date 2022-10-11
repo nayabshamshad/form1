@@ -5,15 +5,7 @@
         <q-tab-panels class="admin-home" v-model="tabs">
           <!-- Approved User Listing -->
           <q-tab-panel name="approved">
-            <div
-              class="flex flex-btn"
-              style="
-                justify-content: space-between;
-                max-width: 94%;
-                margin-bottom: 2rem;
-                gap: 5%;
-              "
-            >
+            <div class="flex flex-btn">
               <q-btn
                 round
                 @click="exportFile(approvedUsers.arr, 'Approved')"
@@ -50,10 +42,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                   </tr>
@@ -81,7 +79,7 @@
                     @click="decreasePage"
                     :disabled="currentPage === 1"
                   ></q-btn>
-                  {{ currentPage }}
+                  <span> {{ currentPage }} </span>
                   <q-btn
                     size="sm"
                     round
@@ -105,15 +103,7 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
-            <div
-              class="flex flex-btn"
-              style="
-                justify-content: space-between;
-                max-width: 94%;
-                gap: 5%;
-                margin-bottom: 2rem;
-              "
-            >
+            <div class="flex flex-btn">
               <q-btn
                 round
                 @click="exportFile(pendingUsers.arr, 'Pending')"
@@ -145,16 +135,25 @@
                 <tbody class="table-row">
                   <tr v-for="(user, i) in pendingUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
-                    <td class="hideMobile " @click="callUser(user.phoneNumber)">
+                    <td class="hideMobile" @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile hide-this" @click="callUser(user.phoneNumber)">
+                    <td
+                      class="showMobile hide-this"
+                      @click="callUser(user.phoneNumber)"
+                    >
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                     <td class="icon">
@@ -199,7 +198,7 @@
                     @click="decreasePage"
                     :disabled="currentPage === 1"
                   ></q-btn>
-                  {{ currentPage }}
+                  <span> {{ currentPage }} </span>
                   <q-btn
                     size="sm"
                     round
@@ -222,22 +221,14 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
-            <div
-              class="flex flex-btn"
-              style="
-                justify-content: space-between;
-                max-width: 94%;
-                gap: 5%;
-                margin-bottom: 2rem;
-              "
-            >
+            <div class="flex flex-btn">
               <q-btn
                 round
                 @click="exportFile(declinedUsers.arr, 'Declined')"
                 color="green"
                 icon="download"
               ></q-btn>
-              <h5>Refuzat</h5>
+              <h5 class="showMobile">Refuzat</h5>
               <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
@@ -266,10 +257,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email" />
                     </td>
                   </tr>
@@ -297,7 +294,7 @@
                     @click="decreasePage"
                     :disabled="currentPage === 1"
                   ></q-btn>
-                  {{ currentPage }}
+                  <span> {{ currentPage }} </span>
                   <q-btn
                     size="sm"
                     round
@@ -354,7 +351,7 @@
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
             <div
-              class="flex icon "
+              class="flex icon"
               style="
                 justify-content: flex-end;
                 max-width: 94%;
@@ -362,7 +359,7 @@
                 margin-bottom: 2rem;
               "
             >
-            <h5>Conferinte</h5>
+              <h5>Conferinte</h5>
               <q-btn
                 no-caps
                 round
@@ -387,7 +384,7 @@
                     <td class="hideMobile" @click="viewUser(user)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile " @click="callUser(user.phoneNumber)">
+                    <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
                     <td @click="viewUser(user)" class="last hide-this">
@@ -419,7 +416,7 @@
                     @click="decreasePage"
                     :disabled="currentPage === 1"
                   ></q-btn>
-                  {{ currentPage }}
+                  <span> {{ currentPage }} </span>
                   <q-btn
                     size="sm"
                     round
@@ -499,7 +496,7 @@ export default {
       dateSetting: false,
       departmentName: "All",
       showDepartmentDialog: false,
-      resultsPerPage: 10,
+      resultsPerPage: 20,
       currentPage: 1,
     };
   },

@@ -62,7 +62,7 @@
           </div>
         </div>
         <div
-          class="shadowed q-mt-md"
+          class="shadowed q-mt-md user-details"
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
           <div>
