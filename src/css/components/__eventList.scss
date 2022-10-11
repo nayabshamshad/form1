@@ -2,6 +2,9 @@
   position: relative;
   justify-content: space-evenly;
   padding-top: 1rem;
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+  }
   .paginationSelect {
     font-size: 10px;
     color: $linkcolor;
