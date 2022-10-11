@@ -1,3 +1,31 @@
+.inline-pagination {
+  position: relative;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+  }
+  .paginationSelect {
+    font-size: 10px;
+    color: $linkcolor;
+    outline: none;
+    border: 1px solid $linkcolor;
+    background: #fff;
+    height: 20px;
+    padding-left: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  div:has(.pagination-buttons) {
+    position: relative;
+  }
+  .add-event-checkboxes {
+    .q-checkbox__inner {
+      color: $linkcolor;
+    }
+  }
+}
+
 .add-event-card {
   min-width: 1100px !important;
   .shadowed {
@@ -7,11 +35,6 @@
   .add-event-textarea {
     min-height: 14rem;
     .q-field__label {
-      color: $linkcolor;
-    }
-  }
-  .add-event-checkboxes {
-    .q-checkbox__inner {
       color: $linkcolor;
     }
   }

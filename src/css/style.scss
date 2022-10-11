@@ -29,7 +29,7 @@ $grey: #c4c4c4;
 
 body::after {
   content: "";
-  @media (min-width: 850px) {
+  @media (min-width: 769px) {
     background-image: url(../assets/bg-img.jpg);
   }
   position: fixed;

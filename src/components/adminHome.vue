@@ -20,13 +20,8 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <div
-                style="
-                  width: 40%;
-                  min-width: 150px;
-                  box-shadow: rgb(0 0 0 / 16%) 0px 0px 20px;
-                "
-              >
+              <h5>Aprobat</h5>
+              <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
@@ -55,10 +50,10 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last">
+                    <td @click="mailUser(user.email)" class="hideMobile hide-this">
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last">
+                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
                       <q-icon name="email"></q-icon>
                     </td>
                   </tr>
@@ -66,7 +61,7 @@
               </table>
             </div>
             <div class="q-mt-md inline-pagination">
-              <div style="display: inline-flex">
+              <div class="hide-pagination" style="display: inline-flex">
                 <span>Intalniri pe pagina</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
@@ -125,13 +120,8 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <div
-                style="
-                  width: 40%;
-                  min-width: 150px;
-                  box-shadow: 0px 0px 20px #00000029;
-                "
-              >
+              <h5>In Asteptare</h5>
+              <div class="media-select">
                 <q-select
                   dense
                   v-if="$store.getters.userData.role == 'admin'"
@@ -155,16 +145,16 @@
                 <tbody class="table-row">
                   <tr v-for="(user, i) in pendingUsers.arr" :key="i">
                     <td @click="viewUser(user)">{{ user.name }}</td>
-                    <td class="hideMobile" @click="callUser(user.phoneNumber)">
+                    <td class="hideMobile " @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                    <td class="showMobile hide-this" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last">
+                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last">
+                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
                       <q-icon name="email"></q-icon>
                     </td>
                     <td class="icon">
@@ -189,7 +179,7 @@
               </table>
             </div>
             <div class="q-mt-md inline-pagination">
-              <div style="display: inline-flex">
+              <div class="hide-pagination" style="display: inline-flex">
                 <span>Intalniri pe pagina</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
@@ -247,13 +237,8 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <div
-                style="
-                  width: 40%;
-                  min-width: 150px;
-                  box-shadow: rgb(0 0 0 / 16%) 0px 0px 20px;
-                "
-              >
+              <h5>Refuzat</h5>
+              <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
@@ -281,10 +266,10 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last">
+                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last">
+                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
                       <q-icon name="email" />
                     </td>
                   </tr>
@@ -292,7 +277,7 @@
               </table>
             </div>
             <div class="q-mt-md inline-pagination">
-              <div style="display: inline-flex">
+              <div class="hide-pagination" style="display: inline-flex">
                 <span>Intalniri pe pagina</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
@@ -369,7 +354,7 @@
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
             <div
-              class="flex icon"
+              class="flex icon "
               style="
                 justify-content: flex-end;
                 max-width: 94%;
@@ -377,6 +362,7 @@
                 margin-bottom: 2rem;
               "
             >
+            <h5>Conferinte</h5>
               <q-btn
                 no-caps
                 round
@@ -401,10 +387,10 @@
                     <td class="hideMobile" @click="viewUser(user)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                    <td class="showMobile " @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="viewUser(user)" class="last">
+                    <td @click="viewUser(user)" class="last hide-this">
                       {{ user.departmentName }}
                     </td>
                   </tr>
@@ -764,7 +750,7 @@ export default {
   },
   computed: {
     departmentUsers() {
-      const arr =  this.$store.getters.userList.filter((x) => {
+      const arr = this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -852,7 +838,6 @@ export default {
             ? 1
             : firstItem + this.resultsPerPage,
       };
-
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
@@ -940,7 +925,7 @@ export default {
           );
         }
       });
-      return Math.ceil(arr.length / this.resultsPerPage)
+      return Math.ceil(arr.length / this.resultsPerPage);
     },
     maxPageDeclined() {
       const arr = this.userList.filter((x) => {
@@ -959,13 +944,13 @@ export default {
           );
         }
       });
-      return Math.ceil(arr.length / this.resultsPerPage)
+      return Math.ceil(arr.length / this.resultsPerPage);
     },
-    maxPageDepartments(){
-      const arr =  this.$store.getters.userList.filter((x) => {
+    maxPageDepartments() {
+      const arr = this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
-      return Math.ceil(arr.length / this.resultsPerPage)
+      return Math.ceil(arr.length / this.resultsPerPage);
     },
   },
 };
