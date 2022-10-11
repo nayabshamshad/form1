@@ -23,6 +23,7 @@ $grey: #c4c4c4;
 @import "./components/__qCard";
 @import "./components/__table-container";
 @import "./components/__termsAndConditions";
+@import "./components/__home";
 @import "./components/__eventList";
 @import './components/__bottomBar';
 
@@ -45,6 +46,9 @@ body::after {
   margin: 0;
   font-family: "Montserrat";
 }
+ul {
+  list-style-type: none;
+}
 
 .q-tab-panels {
   background-color: transparent;
@@ -66,24 +70,7 @@ form.form {
   }
 }
 
-.add-event-card {
-  min-width: 1100px !important;
-  .shadowed {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  .add-event-textarea {
-    min-height: 14rem;
-    .q-field__label {
-      color: $linkcolor;
-    }
-  }
-  .add-event-checkboxes {
-    .q-checkbox__inner {
-      color: $linkcolor;
-    }
-  }
-}
+
 .img-card {
   margin-bottom: 2rem;
   width: 30%;

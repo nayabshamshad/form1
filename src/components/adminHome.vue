@@ -354,7 +354,7 @@
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
             <div
-              class="flex icon"
+              class="flex icon "
               style="
                 justify-content: flex-end;
                 max-width: 94%;
@@ -362,6 +362,7 @@
                 margin-bottom: 2rem;
               "
             >
+            <h5>Conferinte</h5>
               <q-btn
                 no-caps
                 round
@@ -386,10 +387,10 @@
                     <td class="hideMobile" @click="viewUser(user)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile" @click="callUser(user.phoneNumber)">
+                    <td class="showMobile " @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="viewUser(user)" class="last">
+                    <td @click="viewUser(user)" class="last hide-this">
                       {{ user.departmentName }}
                     </td>
                   </tr>

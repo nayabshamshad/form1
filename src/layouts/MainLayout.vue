@@ -33,7 +33,7 @@
         Întâlniri
       </q-btn>
     </div>
-    <div class="q-ml-auto">
+    <div class="">
       <q-btn
         no-caps
         color="black"
@@ -129,7 +129,7 @@
     <div class="showMobile">
 <q-btn color="black" flat icon="menu" @click="showMenu = !showMenu"></q-btn>
     </div>
-    <div class="q-ml-auto">
+    <div class="">
       <q-btn
         no-caps
         color="black"

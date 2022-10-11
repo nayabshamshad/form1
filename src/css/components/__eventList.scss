@@ -19,16 +19,23 @@
   div:has(.pagination-buttons) {
     position: relative;
   }
-  .pagination-buttons {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    gap: 10px;
-    top: 50%;
-    @extend .flex;
-    .q-btn {
-      background-color: $linkcolor;
-      color: #fff;
+  .add-event-checkboxes {
+    .q-checkbox__inner {
+      color: $linkcolor;
+    }
+  }
+}
+
+.add-event-card {
+  min-width: 1100px !important;
+  .shadowed {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .add-event-textarea {
+    min-height: 14rem;
+    .q-field__label {
+      color: $linkcolor;
     }
   }
 }
