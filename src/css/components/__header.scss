@@ -1,0 +1,108 @@
+.top-bar {
+  position: relative;
+  padding: 0rem 1rem;
+  height: 4rem;
+  background-color: #fff;
+  border: $grey 2px solid;
+  color: $input;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  .top-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    height: 100%;
+    .q-btn {
+      height: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  // @media (max-width: 850px) {
+  //   margin-bottom: 3rem;
+  // }
+  > .q-ml-auto {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+  .admin-nav {
+    flex-wrap: nowrap;
+    button {
+      border: none;
+      outline: none;
+      background: none;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 250ms;
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      @media (max-width: 600px) {
+        padding: 5px;
+      }
+      @media (max-width: 500px) {
+        font-size: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      @media (max-width: 370px) {
+        padding: 2px;
+      }
+    }
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .btn {
+    // float: right;
+    padding: 0.5rem 0.5rem;
+    margin: 0 0.5rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+    display: inline;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    @media (max-width: 550px) {
+      display: none;
+    }
+  }
+}
+.lec-logo {
+  color: black;
+  font-size: 5rem;
+  margin-left: 15%;
+  @media (max-width: 1120px) {
+    margin-left: 3rem;
+  }
+  @media (max-width: 860px) {
+    font-size: 3rem;
+    margin-left: 2rem;
+  }
+}
+.mobileNav {
+  position: absolute;
+  color: black;
+  z-index: 200;
+  font-size: 3rem;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid black;
+  border-bottom-color: #ccc;
+}

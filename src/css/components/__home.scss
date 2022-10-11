@@ -1,0 +1,55 @@
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  > div {
+    width: 68%;
+  }
+  > div:not(.skills) {
+    width: 30%;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+    }
+  }
+  .skills {
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 1rem;
+      p {
+        padding: 2px 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+.children-list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 1rem;
+  > div {
+    width: 45%;
+  }
+}
+
+.edit-details {
+  h5 {
+    line-height: 2rem;
+    white-space: nowrap;
+  }
+  .q-btn.q-btn--round.edit-toggle {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: -10px;
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,31 @@
+.inline-pagination {
+  position: relative;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+  .paginationSelect {
+    font-size: 10px;
+    color: $linkcolor;
+    outline: none;
+    border: 1px solid $linkcolor;
+    background: #fff;
+    height: 20px;
+    padding-left: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  div:has(.pagination-buttons) {
+    position: relative;
+  }
+  .pagination-buttons {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 10px;
+    top: 50%;
+    @extend .flex;
+    .q-btn {
+      background-color: $linkcolor;
+      color: #fff;
+    }
+  }
+}
