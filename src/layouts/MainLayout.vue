@@ -33,7 +33,7 @@
         Întâlniri
       </q-btn>
     </div>
-    <div class="">
+    <div class="hideMobile">
       <q-btn
         no-caps
         color="black"
@@ -60,8 +60,10 @@
       (userData?.role == 'admin' || userData?.role == 'department')
     "
   >
-  <!-- Mobile Nav -->
-  <mobile-nav v-show="showMenu" />
+    <!-- Mobile Nav -->
+    <mobile-nav @close="showMenu = false" v-show="showMenu" />
+    <div class="hideMobile menu-container flex justify-between">
+
     <h1 class="lec-logo text-weight-bold">LEC</h1>
     <div class="flex hideMobile admin-nav top-center">
       <q-btn
@@ -126,10 +128,7 @@
         Conferinte
       </q-btn>
     </div>
-    <div class="showMobile">
-<q-btn color="black" flat icon="menu" @click="showMenu = !showMenu"></q-btn>
-    </div>
-    <div class="">
+    <div class="hideMobile">
       <q-btn
         no-caps
         color="black"
@@ -164,14 +163,30 @@
       </q-btn>
     </div>
   </div>
+
+    <div class="showMobile flex justify-between">
+      <div><h1 class="lec-logo text-weight-bold ">LEC</h1></div>
+      <div>
+        <q-btn
+        color="black"
+        flat
+        icon="menu"
+        @click="showMenu = !showMenu"
+        ></q-btn>
+      </div>
+    </div>
+
+  </div>
   <router-view />
   <div
-    class="flex align-center bottom-bar justify-between"
+    class="flex align-center bottom-bar justify-center"
     v-if="isAuthenticated"
   >
+  <div class="flex justify-between">
     <div @click="showTerms = true">Termeni si conditii</div>
     <div>{{ new Date().getFullYear() }}</div>
     <div>&#x24B8; LEC</div>
+  </div>
   </div>
   <q-dialog v-model="showTerms">
     <showTerms />
@@ -180,7 +195,7 @@
 <script>
 import { defineComponent } from "vue";
 import showTerms from "../components/termsAndConditions.vue";
-import MobileNav from '../components/MobileNav.vue'
+import MobileNav from "../components/MobileNav.vue";
 export default defineComponent({
   name: "MainLayout",
   components: { showTerms, MobileNav },

@@ -4,12 +4,13 @@
   border: 1px solid #ccc;
   margin-bottom: 0;
   text-align: center;
+
   > div {
+    width: 70%;
     cursor: default;
-    &:first-of-type {
+    > div:first-of-type {
       cursor: pointer;
     }
-    width: 30%;
     color: #333;
     font-size: 12px;
   }
