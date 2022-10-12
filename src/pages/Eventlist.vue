@@ -43,7 +43,7 @@
         v-if="userInfo.eventList?.length > 0"
         style="width: 80%"
         title="Lista întâlnirilor"
-        :rows="userInfo.eventList"
+        :rows="sortedEvents"
         :columns="[
           {
             name: 'name',
@@ -150,6 +150,25 @@ export default {
     },
   },
   computed: {
+    sortedEvents() {
+      let arr = [];
+      let eventList = [];
+      if (this.userInfo.eventList.length > 0) {
+        this.userInfo.eventList.forEach((x) => {
+          eventList.push(x);
+        });
+        arr = eventList.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return arr;
+    },
     userInfo() {
       return this.$store.getters.userData;
     },
@@ -169,7 +188,15 @@ export default {
           arr[index].attendance = arr[index].attendance + 1;
         });
       });
-      return arr;
+      return arr.sort((a, b) => {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        }
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        }
+        return 0;
+      });         
     },
   },
 };

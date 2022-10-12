@@ -186,7 +186,7 @@
           <div class="grid">
             <div
               class="grid-cell"
-              v-for="(item, index) in selectedUser.teamList"
+              v-for="(item, index) in sortedTeamList"
               :key="index"
             >
               {{ item.name }}
@@ -517,7 +517,7 @@
             v-if="selectedUser.eventList?.length > 0"
             style="width: 80%"
             title="Lista întâlnirilor"
-            :rows="selectedUser.eventList"
+            :rows="sortedEvents"
             :columns="[
               {
                 name: 'name',
@@ -620,7 +620,6 @@ export default {
   async mounted() {
     if (this.selectedUser) {
       this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
-      console.log(this.selectedUser);
       if (this.selectedUser.date) {
         this.dateModel.to = this.selectedUser.date.to;
         this.dateModel.from = this.selectedUser.date.from;
@@ -856,6 +855,45 @@ export default {
     },
   },
   computed: {
+    sortedEvents() {
+      let arr = [];
+      let eventList = [];
+      if (this.selectedUser.eventList.length > 0) {
+        this.selectedUser.eventList.forEach((x) => {
+          eventList.push(x);
+        });
+        arr = eventList.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return arr;
+    },
+
+    sortedTeamList() {
+      let arr = [];
+      let teamList = [];
+      if (this.selectedUser.teamList.length > 0) {
+        this.selectedUser.teamList.forEach((x) => {
+          teamList.push(x);
+        });
+        arr = teamList.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return arr;
+    },
     departmentUserList() {
       if (this.selectedUser.role === "department") {
         return this.$store.getters.userList.filter((x) => {
@@ -884,7 +922,15 @@ export default {
           arr[index].attendance = arr[index].attendance + 1;
         });
       });
-      return arr;
+      return arr.sort((a, b) => {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        }
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        }
+        return 0;
+      });
     },
   },
   watch: {

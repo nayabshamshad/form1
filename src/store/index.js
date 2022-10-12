@@ -493,7 +493,17 @@ export default store(function () {
           res.forEach((x) => {
             userList.push(x.data());
           });
-          commit("setUserList", userList);
+          let sortedArr = userList.sort((a, b) => {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            if (a.name.toLowerCase() < b.name.toLowerCase()) {
+              return -1;
+            }
+            return 0;
+          });
+
+          commit("setUserList", sortedArr);
         });
       },
 

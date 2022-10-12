@@ -97,7 +97,7 @@
       <div class="grid">
         <div
           class="grid-cell"
-          v-for="(item, index) in dataUser.teamList"
+          v-for="(item, index) in sortedTeamList"
           :key="index"
         >
           {{ item.name }}
@@ -644,6 +644,44 @@ export default {
     },
   },
   computed: {
+    sortedEvents(){
+      let arr = [];
+      let eventList = []
+      if (this.userData.eventList.length > 0) {
+        this.userData.eventList.forEach(x => {
+          eventList.push(x)
+        })
+        arr = eventList.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return arr;
+    },
+    sortedTeamList() {
+      let arr = [];
+      let teamList = []
+      if (this.dataUser.teamList.length > 0) {
+        this.dataUser.teamList.forEach(x => {
+          teamList.push(x)
+        })
+        arr = teamList.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return arr;
+    },
     userData() {
       if (this.$store.getters.userData) {
         return this.$store.getters.userData;
