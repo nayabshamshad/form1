@@ -2,14 +2,13 @@
   margin-left: auto;
   margin-right: 15rem;
   &.info:has(.table-container) {
-    @media(max-width: 950px) {
-      padding: 2rem ;
+    @media (max-width: 950px) {
+      padding: 2rem;
     }
-    @media(max-width: 870px) {
+    @media (max-width: 870px) {
       padding: 2rem 0.5rem;
-
     }
-    @media(max-width:850px) {
+    @media (max-width: 850px) {
       .q-card__section:not(:has(.attendance-container)) {
         padding: 1rem 0;
       }
@@ -54,33 +53,30 @@
       padding: 2rem 0;
     }
     .userImg {
-      > img,
-      div {
-        width: 150px;
-        border-radius: 8px;
-        @media(max-width: 370px) {
-          width: 120px;
-        }
+      height: 150px;
+      width: 150px;
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      @media(max-width: 370px) {
+        height: 120px;
+        width: 120px;
       }
-      img {
-        max-height: 150px;
-      }
-
-      div {
-        height: 150px;
-        border: 1px $grey solid;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 40px;
+      > img {
+        position: absolute;
+        height: 100%;
+        width: auto;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
     .userInfoText {
       padding-left: 2rem;
-      @media(max-width: 500px) {
+      @media (max-width: 500px) {
         padding-left: 1rem;
       }
-      @media(max-width: 400px) {
+      @media (max-width: 400px) {
         padding-left: 0.5rem;
       }
       * {
@@ -91,7 +87,7 @@
         color: $linkcolor;
         text-transform: capitalize;
         margin-bottom: 0;
-        @media(max-width: 600px) {
+        @media (max-width: 600px) {
           font-size: 1rem;
           + p {
             font-size: 1rem;
@@ -111,7 +107,7 @@
           margin-bottom: 0;
           color: $linkcolor;
           font-size: 17px;
-          @media(max-width: 600px) {
+          @media (max-width: 600px) {
             font-size: 12px;
           }
         }
@@ -124,7 +120,6 @@
       font-weight: 500;
     }
     h4 {
-
       @media (max-width: 768px) {
         margin-top: 2rem;
       }
@@ -188,7 +183,7 @@
       .q-field--outlined .q-field__control {
         border-radius: 8px;
       }
-      .cate-margin{
+      .cate-margin {
         margin-bottom: 0px !important;
       }
       .cate-list {
@@ -243,7 +238,7 @@
     }
     // lists
     .icon {
-      @media(max-width: 500px) {
+      @media (max-width: 500px) {
         padding-right: 10px;
       }
       .q-icon {
