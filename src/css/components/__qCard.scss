@@ -151,7 +151,8 @@
     }
     h4 {
       @media (max-width: 768px) {
-        margin: 5rem 0;
+        font-size: 1rem !important;
+        font-weight: bold;
       }
     }
   }
@@ -376,7 +377,7 @@
       }
     }
     .margin {
-      margin-top: 3rem !important;
+      margin-top: 2rem !important;
     }
     .gender {
       margin-top: 2rem;
@@ -638,8 +639,8 @@
         max-width: 150px;
         max-height: 150px;
         @media (max-width: 425px) {
-          min-width: 127px;
-          min-height: 128px;
+          min-width: 100px;
+          min-height: 102px;
         }
         margin: auto;
         margin-left: -0.5rem;
@@ -666,6 +667,9 @@
         font-size: 13px;
         @media (max-width: 425px) {
           font-size: 10px;
+        }
+        @media (max-width: 320px) {
+          font-size: 8px;
         }
         font-weight: 400;
       }

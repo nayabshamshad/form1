@@ -4,7 +4,7 @@
       <div class="container">
         <h1 class="lec-logo text-weight-bold display">LEC</h1>
         <form class="form">
-          <h4>Completați informațiile</h4>
+          <h4 class="q-mt-lg">Completați informațiile</h4>
           <input
             ref="imgInput"
             accept="image/*"
@@ -35,19 +35,20 @@
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
           </div>
-          <div class="cate-flex" >
-          <label for="uname">Etnie</label>
-          <label class="cate-left" for="Gender">Sex:</label>
-        </div>
-          <div class="cate-list cate-list-signup cate-flex">
-            <q-select
-              outlined
-              :options="['Română', 'Maghiară']"
-              v-model="userInfo.etnic"
-            />
-          <!-- </div> -->
-          <div style="padding-left:5px;margin-top: 7px;">
-            <div class="flex no-wrap btn-radio">
+          <div class="row">
+            <div class="flex cate-list col-md-6">
+              <label for="uname">Etnie</label>
+              <q-select
+                outlined
+                :options="['Română', 'Maghiară']"
+                v-model="userInfo.etnic"
+              />
+            </div>
+            <!-- </div> -->
+            <!-- <div style="padding-left: 5px; margin-top: 7px"> -->
+
+            <div class="flex cate-list col-md-6" style=" margin-top: 1.5rem;">
+              <label for="Gender">Sex:</label>
               <q-radio
                 v-model="userInfo.gender"
                 val="Male"
@@ -62,13 +63,13 @@
               />
             </div>
           </div>
-          </div>
+
           <!--
           <div class="cate-list right">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list cate-list-signup  q-pl-sm right margin">
+          <div class="cate-list cate-list-signup q-pl-sm right margin">
             <label for="uname">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
@@ -155,7 +156,7 @@
               placeholder="Zona în care activezi"
             />
           </div>
-          <div class="cate-list cate-list-signup" >
+          <div class="cate-list cate-list-signup">
             <label for="uname">Comunitate</label>
             <q-input
               outlined
@@ -175,9 +176,7 @@
             />
           </div>
           <label for="uname">Anii investiturii:</label>
-          <div
-            class="cate-list cate-list-signup cate-flex"
-          >
+          <div class="cate-list cate-list-signup cate-flex">
             <q-input
               style="margin-right: 1rem"
               outlined
@@ -243,9 +242,7 @@
               class="member-list cate-flex"
               v-for="(item, index) in userInfo.teamList"
               :key="index"
-              style="
-                align-items: center;
-              "
+              style="align-items: center"
             >
               <q-input
                 outlined
