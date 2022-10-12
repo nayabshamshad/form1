@@ -10,7 +10,7 @@
           <div v-for="(student, index) in listOfAttendance" :key="index">
             <div
               class="shadowed"
-              style="border-radius: 0.3rem; margin-top: 0.5rem"
+              style="border-radius: 0.3rem; margin-top: 1rem"
             >
               <div class="flex justify-space-between">
                 <span>

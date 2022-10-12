@@ -13,9 +13,9 @@
   gap: 10px;
   &.user-top {
     .menu-container {
-@media(max-width: 650px) {
-  width: 100%;
-}
+      @media (max-width: 650px) {
+        width: 100%;
+      }
     }
   }
   @media (max-width: 1024px) {
@@ -41,7 +41,7 @@
   .menu-container {
     width: 72%;
     .showMobile {
-      @media(max-width: 1024px) {
+      @media (max-width: 1024px) {
         display: block !important;
       }
     }

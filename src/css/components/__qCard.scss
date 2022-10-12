@@ -1,3 +1,24 @@
+.cate-flex {
+  justify-content: space-between;
+  display: flex;
+}
+
+.display {
+  text-align: center;
+  font-size: 5rem;
+  margin-top: 3rem;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
+.btn-radio {
+  .q-radio__inner {
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+}
 .q-card {
   margin-left: auto;
   margin-right: 15rem;
@@ -58,7 +79,7 @@
       overflow: hidden;
       border-radius: 8px;
       position: relative;
-      @media(max-width: 370px) {
+      @media (max-width: 370px) {
         height: 120px;
         width: 120px;
       }
@@ -69,6 +90,23 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
+      }
+      > div:has(i) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+        width: 150px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+
+        @media (max-width: 370px) {
+          height: 120px;
+          width: 120px;
+        }
+        i {
+          font-size: 3rem;
+        }
       }
     }
     .userInfoText {
@@ -121,7 +159,7 @@
     }
     h4 {
       @media (max-width: 768px) {
-        margin-top: 2rem;
+        margin: 5rem 0;
       }
     }
   }
@@ -186,9 +224,9 @@
       .cate-margin {
         margin-bottom: 0px !important;
       }
-      .cate-list {
-        margin-bottom: 3rem;
-      }
+      // .cate-list {
+      //   margin-bottom: 3rem;
+      // }
       .q-btn:not(.back-button) {
         margin-bottom: 2rem;
       }
@@ -363,6 +401,11 @@
       width: 49.5%;
       .inline {
         float: left;
+      }
+    }
+    .cate-list-signup {
+      @media (max-width: 769px) {
+        margin: 1.5rem 0 !important;
       }
     }
     .cate-list {
@@ -557,9 +600,25 @@
       background: transparent;
     }
     .attendance-container {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 2rem;
+      padding-top: 1rem;
+      &:first-of-type {
+        margin-top: 0.5rem;
+      }
       @extend .flex;
       .attendance-summary {
         width: 100%;
+        .table-container {
+          table {
+            width: 100%;
+          }
+        }
         .flex {
           flex-wrap: nowrap;
         }
@@ -601,6 +660,10 @@
         min-height: 150px;
         max-width: 150px;
         max-height: 150px;
+        @media (max-width: 425px) {
+          min-width: 127px;
+          min-height: 128px;
+        }
         margin: auto;
         margin-left: -0.5rem;
         margin-right: 1rem;
@@ -624,6 +687,9 @@
       p {
         white-space: nowrap;
         font-size: 13px;
+        @media (max-width: 425px) {
+          font-size: 10px;
+        }
         font-weight: 400;
       }
     }

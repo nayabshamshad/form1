@@ -11,11 +11,11 @@
             type="file"
             style="display: none"
           />
-          <div class="profile-img-holder q-my-lg">
+          <div class="profile-img-holder q-mt-lg">
             <q-card-actions
               v-if="!previewImage"
               align="right"
-              class="flex no-wrap q-mb-md"
+              class="flex no-wrap q-mb-none"
             >
               <div class="add-img" @click="selectImage">
                 <q-icon class="text-grey" name="photo_camera"></q-icon>

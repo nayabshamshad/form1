@@ -32,7 +32,7 @@
         <q-tab-panel name="user">
           <div class="container">
             <div class="container">
-              <div class="flex justify-end">
+              <div class="flex justify-end q-pr-sm">
                 <q-btn
                   round
                   @click="isEdit = !isEdit"
@@ -235,7 +235,7 @@
                       type="file"
                       style="display: none"
                     />
-                    <div class="profile-img-holder q-my-lg">
+                    <div class="profile-img-holder q-mt-lg">
                       <div
                         @click="showImgInput"
                         v-if="
@@ -243,7 +243,7 @@
                           previewImage == ''
                         "
                         align="right"
-                        class="flex no-wrap q-mb-md"
+                        class="flex no-wrap q-mb-none"
                       >
                         <div class="add-img">
                           <q-icon
@@ -541,7 +541,7 @@
                 <div v-for="(student, index) in listOfAttendance" :key="index">
                   <div
                     class="shadowed"
-                    style="border-radius: 0.3rem; margin-top: 0.5rem"
+                    style="border-radius: 0.3rem; margin-top: 1rem"
                   >
                     <div class="flex justify-space-between">
                       <span>
