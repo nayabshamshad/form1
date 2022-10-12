@@ -1,15 +1,41 @@
+
+  .cate-flex{
+    justify-content: space-between;
+    display: flex
+  }
+  .btn{
+    @media (max-width: 425px){
+      width: 100% !important;
+    }
+}
+  .display {
+    text-align: center;
+    font-size: 5rem;
+    margin-top: 3rem;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
+  }
+  .btn-radio{
+    .q-radio__inner {
+      @media (max-width: 768px) {
+        font-size: 24px;
+      }
+
+  }
+  }
 .q-card {
   margin-left: auto;
   margin-right: 15rem;
   &.info:has(.table-container) {
-    @media(max-width: 950px) {
-      padding: 2rem ;
+    @media (max-width: 950px) {
+      padding: 2rem;
     }
-    @media(max-width: 870px) {
+    @media (max-width: 870px) {
       padding: 2rem 0.5rem;
-
     }
-    @media(max-width:850px) {
+    @media (max-width: 850px) {
       .q-card__section:not(:has(.attendance-container)) {
         padding: 1rem 0;
       }
@@ -58,7 +84,7 @@
       div {
         width: 150px;
         border-radius: 8px;
-        @media(max-width: 370px) {
+        @media (max-width: 370px) {
           width: 120px;
         }
       }
@@ -77,10 +103,10 @@
     }
     .userInfoText {
       padding-left: 2rem;
-      @media(max-width: 500px) {
+      @media (max-width: 500px) {
         padding-left: 1rem;
       }
-      @media(max-width: 400px) {
+      @media (max-width: 400px) {
         padding-left: 0.5rem;
       }
       * {
@@ -91,7 +117,7 @@
         color: $linkcolor;
         text-transform: capitalize;
         margin-bottom: 0;
-        @media(max-width: 600px) {
+        @media (max-width: 600px) {
           font-size: 1rem;
           + p {
             font-size: 1rem;
@@ -111,7 +137,7 @@
           margin-bottom: 0;
           color: $linkcolor;
           font-size: 17px;
-          @media(max-width: 600px) {
+          @media (max-width: 600px) {
             font-size: 12px;
           }
         }
@@ -124,9 +150,8 @@
       font-weight: 500;
     }
     h4 {
-
       @media (max-width: 768px) {
-        margin-top: 2rem;
+        margin: 5rem 0;
       }
     }
   }
@@ -188,12 +213,12 @@
       .q-field--outlined .q-field__control {
         border-radius: 8px;
       }
-      .cate-margin{
+      .cate-margin {
         margin-bottom: 0px !important;
       }
-      .cate-list {
-        margin-bottom: 3rem;
-      }
+      // .cate-list {
+      //   margin-bottom: 3rem;
+      // }
       .q-btn:not(.back-button) {
         margin-bottom: 2rem;
       }
@@ -243,7 +268,7 @@
     }
     // lists
     .icon {
-      @media(max-width: 500px) {
+      @media (max-width: 500px) {
         padding-right: 10px;
       }
       .q-icon {
@@ -369,6 +394,12 @@
       .inline {
         float: left;
       }
+    }
+    .cate-list-signup{
+      @media (max-width:769px) {
+        margin: 1.5rem 0 !important;
+      }
+
     }
     .cate-list {
       margin: 2rem 0;
@@ -606,6 +637,10 @@
         min-height: 150px;
         max-width: 150px;
         max-height: 150px;
+        @media (max-width: 425px) {
+          min-width: 127px;
+          min-height: 128px;
+        }
         margin: auto;
         margin-left: -0.5rem;
         margin-right: 1rem;
@@ -629,6 +664,9 @@
       p {
         white-space: nowrap;
         font-size: 13px;
+        @media (max-width: 425px) {
+          font-size: 10px;
+        }
         font-weight: 400;
       }
     }

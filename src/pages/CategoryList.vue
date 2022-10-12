@@ -2,6 +2,7 @@
   <q-card class="my-card sign-up">
     <q-card-section>
       <div class="container">
+        <h1 class="lec-logo text-weight-bold display">LEC</h1>
         <form class="form">
           <h4>Completați informațiile</h4>
           <input
@@ -34,18 +35,19 @@
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
           </div>
-          <div class="cate-list left">
-            <label for="uname">Etnie</label>
+          <div class="cate-flex" >
+          <label for="uname">Etnie</label>
+          <label class="cate-left" for="Gender">Sex:</label>
+        </div>
+          <div class="cate-list cate-list-signup cate-flex">
             <q-select
               outlined
               :options="['Română', 'Maghiară']"
               v-model="userInfo.etnic"
             />
-          </div>
-
-          <div class="right gender">
-            <label for="Gender">Sex:</label>
-            <div class="flex no-wrap">
+          <!-- </div> -->
+          <div style="padding-left:5px;margin-top: 7px;">
+            <div class="flex no-wrap btn-radio">
               <q-radio
                 v-model="userInfo.gender"
                 val="Male"
@@ -60,12 +62,13 @@
               />
             </div>
           </div>
+          </div>
           <!--
           <div class="cate-list right">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list q-pl-sm right margin">
+          <div class="cate-list cate-list-signup  q-pl-sm right margin">
             <label for="uname">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
@@ -99,7 +102,7 @@
               </template>
             </q-input>
           </div>
-          <div class="cate-list left">
+          <div class="cate-list cate-list-signup left">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
@@ -111,9 +114,9 @@
             />
           </div> -->
 
-          <div class="cate-list">
+          <div class="cate-list cate-list-signup">
             <label for="uname">Categoria</label>
-            <div style="justify-content: space-between; display: flex">
+            <div class="cate-flex">
               <q-radio
                 v-model="userInfo.category"
                 val="Male"
@@ -134,7 +137,7 @@
               />
             </div>
           </div>
-          <div class="cate-list left">
+          <div class="cate-list cate-list-signup left">
             <label for="uname">Clubul</label>
             <q-input
               outlined
@@ -143,7 +146,7 @@
               placeholder="Denumirea clubului"
             />
           </div>
-          <div class="cate-list right">
+          <div class="cate-list cate-list-signup right">
             <label for="uname">Zona</label>
             <q-input
               outlined
@@ -152,7 +155,7 @@
               placeholder="Zona în care activezi"
             />
           </div>
-          <div class="cate-list">
+          <div class="cate-list cate-list-signup" >
             <label for="uname">Comunitate</label>
             <q-input
               outlined
@@ -161,7 +164,7 @@
               placeholder="Comunitatea în care activezi"
             />
           </div>
-          <div class="cate-list">
+          <div class="cate-list cate-list-signup">
             <label for="uname">Specializări pe care le poți preda</label>
             <q-input
               outlined
@@ -173,12 +176,7 @@
           </div>
           <label for="uname">Anii investiturii:</label>
           <div
-            class="cate-list"
-            style="
-              display: flex;
-              justify-content: space-between;
-              margin-top: 0px;
-            "
+            class="cate-list cate-list-signup cate-flex"
           >
             <q-input
               style="margin-right: 1rem"
@@ -210,7 +208,7 @@
               mask="####"
             />
           </div>
-          <div class="cate-list cate-margin">
+          <div class="cate-list cate-list-signup cate-margin">
             <label for="status">Status:</label>
             <div class="flex" style="gap: 2rem">
               <q-radio
@@ -228,8 +226,8 @@
             </div>
           </div>
 
-          <div v-if="userInfo.status" class="cate-list">
-            <div style="flex-wrap: nowrap" class="flex justify-space-between">
+          <div v-if="userInfo.status" class="cate-list cate-list-signup">
+            <div class="cate-flex">
               <label for="list">Lista copiilor:</label>
               <q-btn
                 icon="add"
@@ -242,13 +240,11 @@
             </div>
 
             <div
-              class="member-list"
+              class="member-list cate-flex"
               v-for="(item, index) in userInfo.teamList"
               :key="index"
               style="
-                display: flex;
                 align-items: center;
-                justify-content: space-between;
               "
             >
               <q-input
@@ -273,7 +269,7 @@
               type="button"
               :loading="isSubmitting"
               @click="submit"
-              class="signupbtn"
+              class="signupbtn btn"
               >Trimite</q-btn
             >
           </div>
