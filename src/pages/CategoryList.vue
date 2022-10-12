@@ -12,15 +12,24 @@
             style="display: none"
           />
           <div class="profile-img-holder q-my-lg">
-            <q-card-actions v-if="!previewImage" align="right" class="flex no-wrap q-mb-md">
+            <q-card-actions
+              v-if="!previewImage"
+              align="right"
+              class="flex no-wrap q-mb-md"
+            >
               <div class="add-img" @click="selectImage">
                 <q-icon class="text-grey" name="photo_camera"></q-icon>
               </div>
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </q-card-actions>
             <div v-else-if="previewImage" class="flex no-wrap q-mb-md">
-              <div  class="add-img q-mx-auto">
-                <img class="add-event-img" @click="selectImage" :src="previewImage" alt="" />
+              <div class="add-img q-mx-auto">
+                <img
+                  class="add-event-img"
+                  @click="selectImage"
+                  :src="previewImage"
+                  alt=""
+                />
               </div>
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
@@ -61,7 +70,7 @@
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
-                color="black"
+                  color="black"
                   @click="openModal"
                   ref="dateIcon"
                   name="event"
@@ -102,9 +111,9 @@
             />
           </div> -->
 
-          <div style="margin-bottom: 0" class="cate-list">
+          <div class="cate-list">
             <label for="uname">Categoria</label>
-            <div>
+            <div style="justify-content: space-between; display: flex">
               <q-radio
                 v-model="userInfo.category"
                 val="Male"
@@ -162,10 +171,17 @@
               name="tags"
             />
           </div>
-
-          <div class="cate-list left-1">
-            <label for="uname">Anii investiturii:</label>
+          <label for="uname">Anii investiturii:</label>
+          <div
+            class="cate-list"
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-top: 0px;
+            "
+          >
             <q-input
+              style="margin-right: 1rem"
               outlined
               type="text"
               v-model="userInfo.Instructor"
@@ -173,18 +189,19 @@
               name="Instructor"
               mask="####"
             />
-          </div>
+            <!-- </div> -->
 
-          <div class="cate-list right-1">
+            <!-- <div class="cate-list right-1 cate-margin"> -->
             <q-input
+              style="margin-right: 1rem"
               outlined
               type="text"
               v-model="userInfo.masterGhid"
               placeholder="Master Ghid"
               mask="####"
             />
-          </div>
-          <div class="cate-list between">
+            <!-- </div> -->
+            <!-- <div class="cate-list between cate-margin"> -->
             <q-input
               outlined
               type="text"
@@ -193,7 +210,7 @@
               mask="####"
             />
           </div>
-          <div class="cate-list">
+          <div class="cate-list cate-margin">
             <label for="status">Status:</label>
             <div class="flex" style="gap: 2rem">
               <q-radio
@@ -312,13 +329,7 @@ export default {
       dateOfBirth: "21/03/2022",
       tagsInput: "",
       isSubmitting: false,
-      sizeOptions: [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL",
-      ],
+      sizeOptions: ["S", "M", "L", "XL", "XXL"],
       error: "Te rugăm să reverifici datele introduse.",
       errorDialog: false,
     };
@@ -352,24 +363,24 @@ export default {
       }
       this.isSubmitting = true;
       let profile;
-      if(this.previewImage == '') {
+      if (this.previewImage == "") {
         this.$q.notify({
-          message: 'Please select a profile image',
-          color: 'red',
-        })
+          message: "Please select a profile image",
+          color: "red",
+        });
       }
-        const img_name = new Date() + "-" + this.file.name;
-        await storage
-          .child(img_name)
-          .put(this.file, {
-            contentType: this.file.type,
-          })
-          .then((snapshot) => {
-            return snapshot.ref.getDownloadURL();
-          })
-          .then((url) => {
-            this.userInfo.imgUrl = url;
-          });
+      const img_name = new Date() + "-" + this.file.name;
+      await storage
+        .child(img_name)
+        .put(this.file, {
+          contentType: this.file.type,
+        })
+        .then((snapshot) => {
+          return snapshot.ref.getDownloadURL();
+        })
+        .then((url) => {
+          this.userInfo.imgUrl = url;
+        });
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {

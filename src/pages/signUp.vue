@@ -5,7 +5,7 @@
         <form class="form" @submit.prevent="submit">
           <div class="showMobile flex "><q-btn @click="$router.go(-1)" flat class="linkcolor back-button" icon="west" rounded></q-btn></div>
           <h2 class="text-center showMobile text-bold q-mb-lg">LEC</h2>
-          <h4 class="mobile-center">Înregistrare</h4>
+          <h4 class="text-center">Înregistrare</h4>
           <p class="linkcolor">
             Ai deja cont?
             <router-link to="/sign-in" class="link">Autentifică-te</router-link>

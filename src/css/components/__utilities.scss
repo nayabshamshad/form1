@@ -65,7 +65,7 @@
       margin-right: 15%;
     }
   }
-  .non-selectable {
+  .non-selectable:not(.q-radio__bg)    {
     margin-left: 2rem;
     @media (max-width: 425px) {
       margin-left: 1rem;
