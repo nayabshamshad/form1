@@ -242,6 +242,13 @@
     gap: 5%;
     margin-bottom: 2rem;
     // height: 4rem;
+    .q-btn {
+      margin-left: 2rem;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+      }
+    }
 
     @media (max-width: 768px) {
       justify-content: center;
@@ -266,7 +273,7 @@
       @media (max-width: 768px) {
         position: absolute;
         left: 0px;
-        margin-left: 15px;
+        // margin-left: 15px;
         top: 0;
       }
       @media (max-width: 500px) {
