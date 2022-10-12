@@ -124,11 +124,8 @@
       font-weight: 500;
     }
     h4 {
-      @media (min-width: 769px) {
-        text-align: start !important;
-      }
+
       @media (max-width: 768px) {
-        text-align: center !important;
         margin-top: 2rem;
       }
     }
@@ -187,9 +184,12 @@
       }
     }
     .form {
-      padding: 7rem 23% 0;
+      padding: 7rem 15% 0;
       .q-field--outlined .q-field__control {
         border-radius: 8px;
+      }
+      .cate-margin{
+        margin-bottom: 0px !important;
       }
       .cate-list {
         margin-bottom: 3rem;
@@ -607,7 +607,7 @@
         max-width: 150px;
         max-height: 150px;
         margin: auto;
-        margin-left: -2rem;
+        margin-left: -0.5rem;
         margin-right: 1rem;
         border-radius: 8px;
         border: 1px solid $grey;
