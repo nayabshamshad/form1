@@ -1,16 +1,26 @@
 <template>
   <q-card class="my-card center-card" style="height: 100vh">
     <q-card-section>
+      <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
+      <div class="reset-icon">
+        <q-icon
+          name="west"
+          size="xl"
+          class="linkcolor cursor-pointer"
+          @click="$router.go(-1)"
+        ></q-icon>
+      </div>
       <div class="container">
         <form class="form" autocomplete="off">
-          <h4>Resetare parola</h4>
+          <h4 class="reset-pwd-h4">Resetare parola</h4>
           <div class="cate-list">
-            <label for="pwd">E-mail</label>
+            <label for="pwd">Parola nouă</label>
             <q-input
+            outlined
               type="password"
               name="pwd"
               v-model="newPass"
-              placeholder="Adresa de E-mail"
+              placeholder="Introduce o parolă nouă"
             />
           </div>
           <div class="btn1">
@@ -19,7 +29,7 @@
               :loading="isSubmitting"
               type="button"
               rounded
-              >Trimite</q-btn
+              >RESETARE PAROLĂ</q-btn
             >
           </div>
         </form>

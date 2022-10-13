@@ -77,11 +77,17 @@
     border: 1px solid;
     width: 6rem;
 }
+.reset-pwd-h4{
+  @media (max-width: 768px){
+    margin-top: 3rem;
+  }
+}
 .reject-icon {
   margin-left: 6rem;
   @media (max-width: 320px) {
     margin-left: 0rem;
   }
+
   // @media (min-width: 425px) {
   //   margin-left: 2.5rem;
   // }
