@@ -487,6 +487,7 @@ export default {
     if (this.$store.getters.userData?.role == "department") {
       this.departmentName = this.$store.getters.userData?.departmentName;
     }
+    this.$store.dispatch('getUserList')
   },
   data() {
     return {

@@ -82,7 +82,7 @@ form.form {
   align-items: center;
   position: relative;
   overflow: hidden;
-  >.q-btn {
+  > .q-btn {
     position: absolute;
     top: 0;
     right: 0;
@@ -127,8 +127,28 @@ form.form {
   left: 0;
 }
 
-//Add event page save button mobile
-// separate heading bring it lower - mobile
-// scroll issue
-// pending page
-// check user home
+.my-card.sign-up.category-list {
+  .cate-list.q-pl-sm.right.margin {
+    margin-top: calc(4rem - 5px) !important;
+    @media (min-width: 471px) {
+      margin-top: 3rem !important;
+    }
+  }
+  .right.gender {
+    @media (max-width: 470px) {
+      > div {
+        padding-top: 5px;
+      }
+    }
+  }
+  .cate-list.q-mb-none {
+    margin-bottom: 0;
+  }
+  .cate-list:has(.member-list) {
+    .q-btn.q-btn--round {
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -165,6 +165,7 @@ export default store(function () {
           desc: "",
           attendanceList: [],
         });
+        commit('setUserList', [])
         this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {
