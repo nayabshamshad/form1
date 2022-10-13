@@ -13,6 +13,8 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+  > div {
+  }
   @media (max-width: 1024px) {
     flex-wrap: wrap;
     > div.shadowed,
@@ -49,7 +51,7 @@
     }
   }
   > div {
-    width: 68%;
+    width: 69%;
   }
   > div:not(.skills) {
     width: 30%;
@@ -82,8 +84,13 @@
   flex-direction: row;
   gap: 10px;
   margin-bottom: 1rem;
+  padding-bottom: 1rem;
   > div {
-    width: 45%;
+    width: 47%;
+    margin-bottom: 0.2rem;
+    @media (min-width: 769px) {
+      margin-bottom: 0.75rem;
+    }
   }
   @media (max-width: 768px) {
     > div {
@@ -121,6 +128,8 @@
     @media (max-width: 768px) {
       width: 40%;
       white-space: nowrap;
+      font-weight: 500;
+      font-size: 12px;
     }
   }
   @media (max-width: 768px) {
@@ -157,6 +166,7 @@
   .inline-pagination {
     @media (min-width: 769px) {
       margin-top: 1rem;
+      width: 100%;
     }
     .pagination-buttons {
       .q-btn {

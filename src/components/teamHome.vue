@@ -133,7 +133,7 @@
                   type="file"
                   style="display: none"
                 />
-                <div class="profile-img-holder q-my-lg">
+                <div class="profile-img-holder q-mt-lg">
                   <div
                     @click="showImgInput"
                     v-if="
@@ -141,7 +141,7 @@
                       previewImage == ''
                     "
                     align="right"
-                    class="flex no-wrap q-mb-md"
+                    class="flex no-wrap q-mb-none"
                   >
                     <div class="add-img">
                       <q-icon class="text-grey" name="photo_camera"></q-icon>

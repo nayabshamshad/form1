@@ -107,6 +107,7 @@
     }
     h6 {
       font-size: 12px;
+      text-align: right;
     }
   }
   .shadowed:last-of-type:has(img) {
@@ -135,6 +136,17 @@
     td.event-date-td {
       width: 35%;
       white-space: nowrap;
+    }
+  }
+}
+.event-img-container {
+  min-height: 150px;
+  gap: 2%;
+  > div {
+    width: 30%;
+    overflow: hidden;
+    > img {
+      height: 150px;
     }
   }
 }

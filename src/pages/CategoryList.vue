@@ -2,7 +2,6 @@
   <q-card class="my-card sign-up">
     <q-card-section>
       <div class="container">
-        <h1 class="lec-logo text-weight-bold display">LEC</h1>
         <form class="form">
           <h4 class="q-mt-lg">Completați informațiile</h4>
           <input
@@ -12,11 +11,11 @@
             type="file"
             style="display: none"
           />
-          <div class="profile-img-holder q-my-lg">
+          <div class="profile-img-holder q-mt-lg">
             <q-card-actions
               v-if="!previewImage"
               align="right"
-              class="flex no-wrap q-mb-md"
+              class="flex no-wrap q-mb-none"
             >
               <div class="add-img" @click="selectImage">
                 <q-icon class="text-grey" name="photo_camera"></q-icon>
@@ -35,20 +34,19 @@
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
           </div>
-          <div class="row">
-            <div class="flex cate-list col-md-6">
-              <label for="uname">Etnie</label>
-              <q-select
-                outlined
-                :options="['Română', 'Maghiară']"
-                v-model="userInfo.etnic"
-              />
-            </div>
-            <!-- </div> -->
-            <!-- <div style="padding-left: 5px; margin-top: 7px"> -->
-
-            <div class="flex cate-list col-md-6" style=" margin-top: 1.5rem;">
-              <label for="Gender">Sex:</label>
+          <div class="cate-flex" >
+          <label for="uname">Etnie</label>
+          <label class="cate-left" for="Gender">Sex:</label>
+        </div>
+          <div class="cate-list cate-list-signup cate-flex">
+            <q-select
+              outlined
+              :options="['Română', 'Maghiară']"
+              v-model="userInfo.etnic"
+            />
+          <!-- </div> -->
+          <div style="padding-left:5px;margin-top: 7px;">
+            <div class="flex no-wrap btn-radio">
               <q-radio
                 v-model="userInfo.gender"
                 val="Male"
@@ -63,13 +61,13 @@
               />
             </div>
           </div>
-
+          </div>
           <!--
           <div class="cate-list right">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list cate-list-signup q-pl-sm right margin">
+          <div class="cate-list cate-list-signup  q-pl-sm right margin">
             <label for="uname">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
@@ -103,7 +101,7 @@
               </template>
             </q-input>
           </div>
-          <div class="cate-list cate-list-signup left">
+          <div class="cate-list left">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
@@ -115,9 +113,9 @@
             />
           </div> -->
 
-          <div class="cate-list cate-list-signup">
+          <div class="cate-list">
             <label for="uname">Categoria</label>
-            <div class="cate-flex">
+            <div style="justify-content: space-between; display: flex">
               <q-radio
                 v-model="userInfo.category"
                 val="Male"
@@ -138,7 +136,7 @@
               />
             </div>
           </div>
-          <div class="cate-list cate-list-signup left">
+          <div class="cate-list left">
             <label for="uname">Clubul</label>
             <q-input
               outlined
@@ -147,7 +145,7 @@
               placeholder="Denumirea clubului"
             />
           </div>
-          <div class="cate-list cate-list-signup right">
+          <div class="cate-list right">
             <label for="uname">Zona</label>
             <q-input
               outlined
@@ -156,7 +154,7 @@
               placeholder="Zona în care activezi"
             />
           </div>
-          <div class="cate-list cate-list-signup">
+          <div class="cate-list cate-list-signup" >
             <label for="uname">Comunitate</label>
             <q-input
               outlined
@@ -165,7 +163,7 @@
               placeholder="Comunitatea în care activezi"
             />
           </div>
-          <div class="cate-list cate-list-signup">
+          <div class="cate-list">
             <label for="uname">Specializări pe care le poți preda</label>
             <q-input
               outlined
@@ -176,7 +174,9 @@
             />
           </div>
           <label for="uname">Anii investiturii:</label>
-          <div class="cate-list cate-list-signup cate-flex">
+          <div
+            class="cate-list cate-list-signup cate-flex"
+          >
             <q-input
               style="margin-right: 1rem"
               outlined
@@ -207,7 +207,7 @@
               mask="####"
             />
           </div>
-          <div class="cate-list cate-list-signup cate-margin">
+          <div class="cate-list cate-margin">
             <label for="status">Status:</label>
             <div class="flex" style="gap: 2rem">
               <q-radio
@@ -225,8 +225,8 @@
             </div>
           </div>
 
-          <div v-if="userInfo.status" class="cate-list cate-list-signup">
-            <div class="cate-flex">
+          <div v-if="userInfo.status" class="cate-list">
+            <div style="flex-wrap: nowrap" class="flex justify-space-between">
               <label for="list">Lista copiilor:</label>
               <q-btn
                 icon="add"
@@ -239,10 +239,12 @@
             </div>
 
             <div
-              class="member-list cate-flex"
+              class="member-list"
               v-for="(item, index) in userInfo.teamList"
               :key="index"
-              style="align-items: center"
+              style="
+                align-items: center;
+              "
             >
               <q-input
                 outlined
@@ -266,7 +268,7 @@
               type="button"
               :loading="isSubmitting"
               @click="submit"
-              class="signupbtn btn"
+              class="signupbtn"
               >Trimite</q-btn
             >
           </div>

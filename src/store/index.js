@@ -15,6 +15,7 @@ export default store(function () {
         desc: "",
         attendanceList: [],
       },
+      signedUp: false,
       dateList: {},
       userList: [],
       selectedUser: [],
@@ -47,6 +48,9 @@ export default store(function () {
       },
     },
     mutations: {
+      setSignedUp(state, payload) {
+        state.signedUp = payload;
+      },
       setEvents(state, payload) {
         state.userData.eventList = payload;
       },
@@ -157,6 +161,9 @@ export default store(function () {
         this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {
+        if (state.signedUp) {
+          return;
+        }
         if (state.userData != null) {
           return;
         }
@@ -200,8 +207,9 @@ export default store(function () {
           this.$router.push("/");
         }
       },
-      async signUp({ commit }, payload) {
+      async signUp({ dispatch, commit }, payload) {
         var error = false;
+        commit("setSignedUp", true);
         await auth
           .createUserWithEmailAndPassword(payload.email, payload.password)
           .then(() => {})
@@ -230,6 +238,8 @@ export default store(function () {
             }
           });
         if (error) {
+          commit("setSignedUp", false);
+
           return;
         }
         await auth.currentUser
@@ -244,6 +254,8 @@ export default store(function () {
             });
           });
         if (error) {
+          commit("setSignedUp", false);
+
           return;
         }
         await firestore
@@ -276,6 +288,8 @@ export default store(function () {
           })
           .catch((err) => {
             error = true;
+            commit("setSignedUp", false);
+
             Notify.create({
               message: err.message,
               color: "red",
@@ -287,6 +301,7 @@ export default store(function () {
         }
         commit("setCurrentUser", auth.currentUser);
         if (error) {
+          commit("setSignedUp", false);
           return;
         }
         commit("setUserData", {
@@ -321,9 +336,9 @@ export default store(function () {
           color: "green",
           icon: "report_gmailerrorred",
         });
-        setTimeout(() => {
-          dispatch("signOutUser");
-        }, 50000);
+        dispatch("signOutUser");
+        commit("setSignedUp", false);
+
         // this.$router.push("/pending");
       },
       async signUpDepartment({ commit }, payload) {

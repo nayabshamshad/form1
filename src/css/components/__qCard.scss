@@ -1,30 +1,24 @@
-
-  .cate-flex{
-    justify-content: space-between;
-    display: flex
-  }
-  .btn{
-    @media (max-width: 425px){
-      width: 100% !important;
-    }
+.cate-flex {
+  justify-content: space-between;
+  display: flex;
 }
-  .display {
-    text-align: center;
-    font-size: 5rem;
-    margin-top: 3rem;
 
-    @media (min-width: 769px) {
-      display: none;
+.display {
+  text-align: center;
+  font-size: 5rem;
+  margin-top: 3rem;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
+.btn-radio {
+  .q-radio__inner {
+    @media (max-width: 768px) {
+      font-size: 24px;
     }
   }
-  .btn-radio{
-    .q-radio__inner {
-      @media (max-width: 768px) {
-        font-size: 24px;
-      }
-
-  }
-  }
+}
 .q-card {
   margin-left: auto;
   margin-right: 15rem;
@@ -80,25 +74,39 @@
       padding: 2rem 0;
     }
     .userImg {
-      > img,
-      div {
-        width: 150px;
-        border-radius: 8px;
-        @media (max-width: 370px) {
-          width: 120px;
-        }
+      height: 150px;
+      width: 150px;
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      @media (max-width: 370px) {
+        height: 120px;
+        width: 120px;
       }
-      img {
-        max-height: 150px;
+      > img {
+        position: absolute;
+        height: 100%;
+        width: auto;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
-
-      div {
-        height: 150px;
-        border: 1px $grey solid;
+      > div:has(i) {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 40px;
+        height: 150px;
+        width: 150px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+
+        @media (max-width: 370px) {
+          height: 120px;
+          width: 120px;
+        }
+        i {
+          font-size: 3rem;
+        }
       }
     }
     .userInfoText {
@@ -396,11 +404,10 @@
         float: left;
       }
     }
-    .cate-list-signup{
-      @media (max-width:769px) {
+    .cate-list-signup {
+      @media (max-width: 769px) {
         margin: 1.5rem 0 !important;
       }
-
     }
     .cate-list {
       margin: 2rem 0;
@@ -594,9 +601,25 @@
       background: transparent;
     }
     .attendance-container {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 2rem;
+      padding-top: 1rem;
+      &:first-of-type {
+        margin-top: 0.5rem;
+      }
       @extend .flex;
       .attendance-summary {
         width: 100%;
+        .table-container {
+          table {
+            width: 100%;
+          }
+        }
         .flex {
           flex-wrap: nowrap;
         }

@@ -2,7 +2,7 @@
   <q-card class="center-card q-px-lg info view-event">
     <div class="container q-py-lg p-px-lg q-mx-lg">
       <div class="flex q-mb-lg q-pb-lg items-center">
-        <div style="width: 15%">
+        <div style="width: 30%">
           <q-btn
             @click="$router.go(-1)"
             round
@@ -10,11 +10,11 @@
             class="bg-linkcolor"
           ></q-btn>
         </div>
-        <div style="width: 70%" class="text-center">
+        <div style="width: 40%" class="text-center">
           <h5 class="linkcolor text-weight-bold">{{currentEvent.name}}</h5>
         </div>
-        <div style="width: 15%">
-          <h6 class="linkcolor text-weight-bold text-no-wrap">{{ formatDate(currentEvent.date) }}</h6>
+        <div style="width: 30%">
+          <h6 class="linkcolor text-right text-weight-bold text-no-wrap">{{ formatDate(currentEvent.date) }}</h6>
         </div>
       </div>
       <div class="shadowed" style="min-height: 220px; padding-top: 1rem">
@@ -29,12 +29,12 @@
         </p>
       </div>
       <div class="shadowed q-mt-lg q-pb-md">
-        <h5 class="linkcolor text-weight-bold text-center q-py-md">Prezenta</h5>
+        <h5 class="linkcolor text-weight-bold text-center q-pt-md">Prezenta</h5>
         <div class="q-pb-lg q-pt-md">
           <div
             v-for="(student, i) in memberList"
             :key="i"
-            class="shadowed flex items-center justify-between q-my-sm"
+            class="shadowed flex items-center justify-between q-mt-sm q-mb-md"
             style="padding-left: 1rem; padding-right: 1rem"
           >
             <p class="q-mb-none text-capitalize">{{ student }}</p>
@@ -62,19 +62,16 @@
           Fotografii:
         </h5>
         <div
-          class="flex justify-center items-center"
-          style="min-height: 150px; max-height: 250px; gap: 2%"
+          class="flex justify-center items-center event-img-container"
         >
           <div
             v-for="(src, i) in currentEvent.imageList"
             :key="i"
-            style="width: 30%"
             class="flex justify-center align-center"
           >
             <img
               :src="src"
               alt=""
-              style="max-height: 150px; border-radius: 8px; width: 100%;"
               @click="showImg(src)"
             />
           </div>
