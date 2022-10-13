@@ -1,8 +1,25 @@
 <template>
-  <q-card class="my-card sign-up">
+  <q-card class="my-card sign-up category-list">
     <q-card-section>
       <div class="container">
-        <form class="form">
+        <form class="form" style="padding-top: 0 !important;">
+          <div class="flex justify-end">
+            <q-btn
+              no-caps
+              color="black"
+              flat
+              type="button"
+              @click="$store.dispatch('signOutUser')"
+              class="btn log-out"
+              style="font-size: 12px; font-weight: 300; width: auto;background-color: transparent;"
+              >Deconectare
+              <q-icon
+                class=""
+                style="font-size: 30px; color: rgba(150, 150, 150, 1)"
+                name="exit_to_app"
+              ></q-icon
+            ></q-btn>
+          </div>
           <h4>Completați informațiile</h4>
           <input
             ref="imgInput"

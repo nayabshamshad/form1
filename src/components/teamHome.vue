@@ -67,20 +67,25 @@
         >
           <div>
             <h3>Categorie</h3>
-            <!-- <p>{{userData.category}}</p> -->
-            <p>Exploratori</p>
+            <!-- <p>Exploratori</p> -->
+            <p>{{userData.category}}</p>
           </div>
           <div>
             <h3>Zona:</h3>
-            <p>Brasov</p>
+            <!-- <p>Brasov</p> -->
+            <p>{{userData.region}}</p>
           </div>
           <div>
             <h3>Comunitate:</h3>
-            <p>Betel</p>
+            <!-- <p>Betel</p> -->
+            <p>{{userData.state}}</p>
+
           </div>
           <div>
             <h3>Clubul:</h3>
-            <p>Iosua</p>
+            <!-- <p>Iosua</p> -->
+            <p>{{userData.clubName}}</p>
+
           </div>
           <div>
             <h3>Anul investiturii ca:</h3>

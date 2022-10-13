@@ -109,20 +109,24 @@
               <div class="shadowed user-details q-mt-md">
                 <div>
                   <h3>Categorie</h3>
-                  <!-- <p>{{selectedUser.category}}</p> -->
-                  <p>Exploratori</p>
+                  <p>{{ selectedUser.category }}</p>
+                  <!-- <p>Exploratori</p> -->
                 </div>
                 <div>
                   <h3>Zona:</h3>
-                  <p>Brasov</p>
+
+                  <!-- <p>Brasov</p> -->
+                  <p>{{ selectedUser.region }}</p>
                 </div>
                 <div>
                   <h3>Comunitate:</h3>
-                  <p>Betel</p>
+                  <!-- <p>Betel</p> -->
+                  <p>{{ selectedUser.state }}</p>
                 </div>
                 <div>
                   <h3>Clubul:</h3>
-                  <p>Iosua</p>
+                  <!-- <p>Iosua</p> -->
+                  <p>{{ selectedUser.clubName }}</p>
                 </div>
                 <div>
                   <h3>Anul investiturii ca:</h3>
