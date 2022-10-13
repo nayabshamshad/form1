@@ -25,12 +25,12 @@
               </div>
             </div>
             <div class="table-container">
-              <table class="user-list-table">
+              <table class="user-list-table approved">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
+                    <th >Nume/Prenume</th>
+                    <th >Nr. de telefon</th>
+                    <th >E-mail</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -123,7 +123,7 @@
               </div>
             </div>
             <div class="table-container">
-              <table class="user-list-table">
+              <table class="user-list-table pending">
                 <thead>
                   <tr>
                     <th>Nume/Prenume</th>
@@ -240,7 +240,7 @@
               </div>
             </div>
             <div class="table-container">
-              <table class="user-list-table">
+              <table class="user-list-table declined">
                 <thead>
                   <tr>
                     <th>Nume/Prenume</th>
@@ -370,7 +370,7 @@
               />
             </div>
             <div class="table-container">
-              <table class="user-list-table">
+              <table class="user-list-table department">
                 <thead>
                   <tr>
                     <th>Name</th>

@@ -1,21 +1,28 @@
 <template>
-  <div class="flex justify-center waiting-container">
-    <q-card
-      style="width: 100%; height: 100vh; position: relative"
-      class="flex justify-center"
-    >
-      <div>
-        <q-icon
-          style="position: absolute; top: 10%; left: 5%"
-          name="west"
-          size="lg"
-          @click="logOut"
-          class="linkcolor cursor-pointer"
-        ></q-icon>
-      </div>
-      <q-card-section>
-        <h2>Înregistrare reușită</h2>
-        <p>Te rugăm să aștepți aprobarea unui administrator</p>
+  <div class="">
+    <q-card style="height: 100vh;" class="q-py-lg q-px-lg">
+      <q-card-section class="q-py-lg q-my-lg q-px-lg">
+        <div class="q-my-lg"><q-icon @click="logOut" class="cursor-pointer linkcolor" name="west" size="xl"></q-icon></div>
+        <h3 class="text-weight-bold text-center q-py-lg q-mt-lg">
+          Înregistrare reușită
+        </h3>
+        <h6
+          class="q-mx-auto text-weight-light text-center"
+          style="max-width: 70%"
+        >
+        Te rugăm să aștepți aprobarea unui administrator
+        </h6>
+        <div class="q-pt-lg q-mt-lg flex items-center justify-center" style="gap: 1rem;">
+          <q-btn
+          outline
+            class="linkcolor"
+
+            :loading="isFetching"
+            @click="logOut"
+          >
+            Retrimite
+          </q-btn>
+        </div>
       </q-card-section>
     </q-card>
   </div>

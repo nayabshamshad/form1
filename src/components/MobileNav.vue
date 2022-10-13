@@ -45,7 +45,7 @@
           >Panou de bord</q-btn
         >
       </li>
-      <li v-if="$store.getters.userData.status == true > 0">
+      <li v-if="$store.getters.userData.status == true">
         <q-btn flat color="black" @click="pushRoute('events')">Intalniri</q-btn>
       </li>
       <li>

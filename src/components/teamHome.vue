@@ -6,7 +6,7 @@
           <q-btn
           v-show="dateContained"
             round
-            @click="isEdit = !isEdit"
+            @click="$router.push('/edit-profile')"
             icon="edit_note"
             class="bg-linkcolor"
           ></q-btn>
@@ -114,7 +114,7 @@
         </div>
       </div>
       <!-- edit Info dialog -->
-      <q-dialog v-model="isEdit" no-esc-dismiss no-backdrop-dismiss>
+      <!-- <q-dialog v-model="isEdit" no-esc-dismiss no-backdrop-dismiss>
         <q-card class="my-card edit-details sign-up center-card">
           <q-card-section>
             <div class="container">
@@ -216,11 +216,6 @@
                     />
                   </div>
                 </div>
-                <!--
-          <div class="cate-list right">
-            <label for="uname">Mărimea tricou</label>
-            <q-select outlined v-model="dataUser.size" :options="sizeOptions" />
-          </div> -->
                 <div class="cate-list q-pl-sm right margin">
                   <label for="uname">Data nașterii:</label>
                   <q-input
@@ -429,7 +424,7 @@
             </div>
           </q-card-section>
         </q-card>
-      </q-dialog>
+      </q-dialog> -->
 
       <!--  Error Dialog  -->
       <q-dialog v-model="errorDialog">

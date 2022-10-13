@@ -158,6 +158,13 @@ export default store(function () {
         await auth.signOut();
         commit("setUserData", null);
         commit("setCurrentUser", null);
+        commit("setSelectedUser", []);
+        commit("selectEvent", {
+          name: "",
+          date: "",
+          desc: "",
+          attendanceList: [],
+        });
         this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {

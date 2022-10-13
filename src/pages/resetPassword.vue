@@ -7,11 +7,19 @@
           <div class="cate-list">
             <label for="pwd">E-mail</label>
             <q-input
-              type="password"
               name="pwd"
+              :type="isPwd ? 'password' : 'text'"
               v-model="newPass"
               placeholder="Adresa de E-mail"
-            />
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
           </div>
           <div class="btn1">
             <q-btn
@@ -41,6 +49,7 @@ export default {
     return {
       newPass: "",
       isSubmitting: false,
+      isPwd: true,
     };
   },
   methods: {
@@ -67,12 +76,13 @@ export default {
         this.$q.notify({
           message: "Parola a fost resetata, te rugăm să te autentifici.",
           color: "green",
-          icon: 'report_gmailerrorred'
+          icon: "report_gmailerrorred",
         });
         this.$router.push("/");
       }
     },
   },
+
 };
 </script>
 <style></style>

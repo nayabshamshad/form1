@@ -1,9 +1,15 @@
 <template>
-  <q-card class="my-card sign-up category-list">
+  <q-card
+    class="my-card sign-up category-list"
+    :class="$route.path == '/edit-profile' ? 'info' : ''"
+  >
     <q-card-section>
       <div class="container">
-        <form class="form" style="padding-top: 0 !important;">
-          <div class="flex justify-end">
+        <form class="form">
+          <div
+            v-if="this.$route.path == '/category-list'"
+            class="flex justify-end"
+          >
             <q-btn
               no-caps
               color="black"
@@ -11,7 +17,12 @@
               type="button"
               @click="$store.dispatch('signOutUser')"
               class="btn log-out"
-              style="font-size: 12px; font-weight: 300; width: auto;background-color: transparent;"
+              style="
+                font-size: 12px;
+                font-weight: 300;
+                width: auto;
+                background-color: transparent;
+              "
               >Deconectare
               <q-icon
                 class=""
@@ -29,8 +40,10 @@
             style="display: none"
           />
           <div class="profile-img-holder q-mt-lg">
-            <q-card-actions
-              v-if="!previewImage"
+            <div
+              v-if="
+                !previewImage && (!userInfo.imgUrl || userInfo.imgUrl == '')
+              "
               align="right"
               class="flex no-wrap q-mb-none"
             >
@@ -38,13 +51,26 @@
                 <q-icon class="text-grey" name="photo_camera"></q-icon>
               </div>
               <p>Adaugă o fotografie tip buletin cu tine</p>
-            </q-card-actions>
-            <div v-else-if="previewImage" class="flex no-wrap q-mb-md">
+            </div>
+            <div
+              v-else-if="previewImage || userInfo?.imgUrl != ''"
+              class="flex no-wrap q-mb-none"
+            >
               <div class="add-img q-mx-auto">
+                <q-btn
+                  @click="
+                    userInfo.imgUrl = '';
+                    previewImage = '';
+                  "
+                  round
+                  color="green"
+                  size="xs"
+                  icon="remove"
+                ></q-btn>
                 <img
                   class="add-event-img"
                   @click="selectImage"
-                  :src="previewImage"
+                  :src="previewImage ? previewImage : userInfo.imgUrl"
                   alt=""
                 />
               </div>
@@ -82,7 +108,7 @@
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list q-pl-sm right margin">
+          <div class="cate-list q-pl-sm right margin date-div">
             <label for="uname">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
@@ -133,19 +159,19 @@
             <div style="justify-content: space-between; display: flex">
               <q-radio
                 v-model="userInfo.category"
-                val="Male"
+                val="Licurici"
                 color="black"
                 label="Licurici"
               />
               <q-radio
                 v-model="userInfo.category"
-                val="Female"
+                val="Exploratori"
                 color="black"
                 label="Exploratori"
               />
               <q-radio
                 v-model="userInfo.category"
-                val="trans"
+                val="Companioni"
                 color="black"
                 label="Companioni"
               />
@@ -209,14 +235,7 @@
             <!-- </div> -->
 
             <!-- <div class="cate-list right-1 cate-margin"> -->
-            <q-input
-              style="margin-right: 1rem"
-              outlined
-              type="text"
-              v-model="userInfo.masterGhid"
-              placeholder="Master Ghid"
-              mask="####"
-            />
+
             <!-- </div> -->
             <!-- <div class="cate-list between cate-margin"> -->
             <q-input
@@ -224,6 +243,14 @@
               type="text"
               v-model="userInfo.Ghid"
               placeholder="Ghid"
+              mask="####"
+            />
+            <q-input
+              style="margin-right: 1rem"
+              outlined
+              type="text"
+              v-model="userInfo.masterGhid"
+              placeholder="Master Ghid"
               mask="####"
             />
           </div>
@@ -316,7 +343,7 @@
   </q-dialog>
 </template>
 <script>
-import { storage } from "../store/firebase.js";
+import { storage, deleter } from "../store/firebase.js";
 export default {
   name: "CategoryListView",
   components: {},
@@ -380,24 +407,42 @@ export default {
       }
       this.isSubmitting = true;
       let profile;
-      if (this.previewImage == "") {
+      if (
+        this.previewImage == "" &&
+        (!this.userInfo.imgUrl || this.userInfo.imgUrl == "")
+      ) {
         this.$q.notify({
-          message: "Please select a profile image",
           color: "red",
+          message: "Please select a valid image",
         });
+        this.isSubmitting = false;
+        return;
       }
-      const img_name = new Date() + "-" + this.file.name;
-      await storage
-        .child(img_name)
-        .put(this.file, {
-          contentType: this.file.type,
-        })
-        .then((snapshot) => {
-          return snapshot.ref.getDownloadURL();
-        })
-        .then((url) => {
-          this.userInfo.imgUrl = url;
-        });
+      if (this.previewImage != "") {
+        if (this.userInfo.imgUrl && this.userInfo.imgUrl != "") {
+          await deleter
+            .refFromURL(this.userInfo.imgUrl)
+            .delete()
+            .then()
+            .catch((errImg) => {
+              console.log(errImg);
+            });
+        }
+
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.userInfo.imgUrl = url;
+          });
+      }
+
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
@@ -480,10 +525,27 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      await this.$store.dispatch("updateUserProfile", profile);
+      if (
+        this.storeUserInfo.role != "department" &&
+        this.storeUserInfo.role != "admin"
+      ) {
+        for (const key in this.storeUserInfo) {
+          if (profile[key] == undefined || profile[key] == null) {
+            profile[key] = this.storeUserInfo[key];
+          }
+        }
+      }
+      if (
+        this.storeUserInfo.role != "department" &&
+        this.storeUserInfo.role != "admin"
+      ) {
+        await this.$store.dispatch("updateUserProfile", profile);
+        this.$router.push("/");
+      } else if (this.storeUserInfo.role == "admin") {
+        await this.$store.dispatch("updateUserProfileAdmin", profile);
+        this.$router.push("/user-details");
+      }
       this.isSubmitting = false;
-
-      this.$router.push("/");
     },
     addMember() {
       this.userInfo.teamList.push({ name: "" });
@@ -498,13 +560,40 @@ export default {
     },
   },
   mounted() {
-    if (this.storeUserInfo?.isUpdated) {
+    if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
+    } else if (this.$route.path == "/edit-profile") {
+      if (
+        this.storeUserInfo.role != "department" &&
+        this.storeUserInfo.role != "admin"
+      ) {
+        this.userInfo = JSON.parse(
+          JSON.stringify(this.$store.getters.userData)
+        );
+        this.tagsInput = this.userInfo.tagList.join(", ");
+      } else {
+        this.userInfo = JSON.parse(
+          JSON.stringify(this.$store.getters.selectedUser)
+        );
+        this.tagsInput = this.userInfo.tagList.join(", ");
+      }
     }
   },
   computed: {
     storeUserInfo() {
       return this.$store.getters.userData;
+    },
+  },
+  watch: {
+    "userInfo.status": {
+      handler: function () {
+        if (
+          this.userInfo.status == true &&
+          this.userInfo.teamList.length == 0
+        ) {
+          this.addMember();
+        }
+      },
     },
   },
 };

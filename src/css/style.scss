@@ -25,7 +25,7 @@ $grey: #c4c4c4;
 @import "./components/__termsAndConditions";
 @import "./components/__home";
 @import "./components/__eventList";
-@import './components/__bottomBar';
+@import "./components/__bottomBar";
 
 body::after {
   content: "";
@@ -70,7 +70,6 @@ form.form {
   }
 }
 
-
 .img-card {
   margin-bottom: 2rem;
   width: 30%;
@@ -81,6 +80,14 @@ form.form {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+  >.q-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
   &.select-img {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
@@ -90,8 +97,11 @@ form.form {
     }
   }
   > img {
-    max-height: 150px;
-    max-width: 100%;
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    top: 0;
   }
 }
 .q-dialog {
@@ -102,8 +112,20 @@ form.form {
     min-height: 0 !important;
   }
 }
+.iconed-img {
+  position: relative;
+}
 
-
+.iconed-img::after {
+  content: "-";
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  left: 0;
+}
 
 //Add event page save button mobile
 // separate heading bring it lower - mobile

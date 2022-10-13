@@ -73,7 +73,7 @@
           flex-direction: column;
           .img-card {
             margin-bottom: 0.25rem;
-            width: 100%;
+            width: 60%;
           }
         }
       }
@@ -147,6 +147,35 @@
     overflow: hidden;
     > img {
       height: 150px;
+    }
+  }
+}
+.add-event-card {
+  &.q-card.center-card.info.q-px-lg.q-pt-lg.add-event-card {
+    @media (max-width: 1000px) {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+    .container > .flex.q-mb-lg.q-pb-lg.items-center {
+      position: relative;
+      justify-content: space-between;
+      > .text-center {
+        h5 {
+          @media (max-width: 768px) {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -2.5rem;
+          }
+        }
+      }
+      > div:last-of-type {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .q-btn {
+        }
+      }
     }
   }
 }

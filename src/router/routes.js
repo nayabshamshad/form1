@@ -4,7 +4,11 @@ const routes = [
     name: "" /* Welcome */,
     component: () => import("../pages/HomeView.vue"),
   },
-
+  {
+    path: "/edit-profile",
+    name: "Edit Profile",
+    component: () => import("../pages/CategoryList.vue"),
+  },
   {
     path: "/event-list",
     name: "" /* Events List */,
@@ -23,7 +27,7 @@ const routes = [
   {
     path: "/view-event",
     name: "" /* Event Details */,
-  component: () => import("../pages/viewevent.vue"),
+    component: () => import("../pages/viewevent.vue"),
   },
   {
     path: "/user-details",
