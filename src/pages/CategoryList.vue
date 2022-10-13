@@ -77,18 +77,19 @@
               <p>Adaugă o fotografie tip buletin cu tine</p>
             </div>
           </div>
-          <div class="cate-list left">
-            <label for="uname">Etnie</label>
+          <div class="cate-flex" >
+          <label for="uname">Etnie</label>
+          <label class="cate-left" for="Gender">Sex:</label>
+        </div>
+          <div class="cate-list cate-list-signup cate-flex">
             <q-select
               outlined
               :options="['Română', 'Maghiară']"
               v-model="userInfo.etnic"
             />
-          </div>
-
-          <div class="right gender">
-            <label for="Gender">Sex:</label>
-            <div class="flex no-wrap">
+          <!-- </div> -->
+          <div style="padding-left:5px;margin-top: 7px;">
+            <div class="flex no-wrap btn-radio">
               <q-radio
                 v-model="userInfo.gender"
                 val="Male"
@@ -103,12 +104,13 @@
               />
             </div>
           </div>
+          </div>
           <!--
           <div class="cate-list right">
             <label for="uname">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div> -->
-          <div class="cate-list q-pl-sm right margin date-div">
+          <div class="cate-list cate-list-signup  q-pl-sm right margin">
             <label for="uname">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
@@ -195,7 +197,7 @@
               placeholder="Zona în care activezi"
             />
           </div>
-          <div class="cate-list">
+          <div class="cate-list cate-list-signup" >
             <label for="uname">Comunitate</label>
             <q-input
               outlined
@@ -216,12 +218,7 @@
           </div>
           <label for="uname">Anii investiturii:</label>
           <div
-            class="cate-list"
-            style="
-              display: flex;
-              justify-content: space-between;
-              margin-top: 0px;
-            "
+            class="cate-list cate-list-signup cate-flex"
           >
             <q-input
               style="margin-right: 1rem"
@@ -290,9 +287,7 @@
               v-for="(item, index) in userInfo.teamList"
               :key="index"
               style="
-                display: flex;
                 align-items: center;
-                justify-content: space-between;
               "
             >
               <q-input

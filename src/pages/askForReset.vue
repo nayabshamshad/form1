@@ -1,7 +1,8 @@
 <template>
-  <q-card class="" style="height: 100vh; padding-top: 10rem">
+  <q-card class="reset-card">
     <q-card-section>
-      <div>
+      <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
+      <div class="reset-icon">
         <q-icon
           name="west"
           size="xl"
@@ -14,21 +15,20 @@
     <q-card-section
       ><div
         class="flex"
-        style="justify-content: flex-end; padding: 0 30%"
+        style="justify-content: flex-end; padding: 0 30%;"
       ></div>
-      <h5 class="text-center text-weight-bold">Resetare parolă</h5>
+      <h5 class="text-center text-weight-bold reset-h5">Resetare parolă</h5>
     </q-card-section>
 
     <q-card-section class="q-pt-none q-px-lg q-mx-lg">
-      <p class="q-mx-auto text-center">Introduce adresa de E-mail</p>
-      <p class="q-mb-lg text-weight-bold">E-mail</p>
-      <q-input outlined v-model="forgotEmail" type="email"></q-input>
+      <p class="q-mx-auto text-center hide">Introduce adresa de E-mail</p>
+      <p class="q-mb-lg text-weight-bold reset-label">E-mail</p>
+      <q-input outlined v-model="forgotEmail" type="email" class="reset-input"></q-input>
       <div class="flex justify-center">
         <q-btn
-          class="bg-linkcolor"
+          class="bg-linkcolor reset-btn"
           @click="sendResetEmail"
           rounder
-          style="margin-top: 1rem"
           :loading="sendingEmail"
           >Resetare</q-btn
         >

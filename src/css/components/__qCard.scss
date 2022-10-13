@@ -2,7 +2,56 @@
   justify-content: space-between;
   display: flex;
 }
-
+.reset-card {
+  height: 100vh;
+  padding-top: 10rem;
+  @media (max-width: 768px) {
+    padding-top: 2rem;
+  }
+}
+.hide {
+  @media (max-width: 425px) {
+    display: none;
+  }
+}
+.reset-icon {
+  margin-left: 5rem;
+  @media (max-width: 768px) {
+    margin-left: 1.5rem;
+  }
+}
+.reset-btn {
+  margin-top: 2rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0px;
+  }
+}
+.reset-h5 {
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+.reset-label {
+  margin-left: 3rem;
+  @media (max-width: 768px) {
+    margin-left: 0px;
+  }
+}
+.reset-input {
+  margin: 0 3rem 0 3rem;
+  @media (max-width: 768px) {
+    margin: 0 0 2rem 0;
+  }
+}
+.reset-lec {
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
 .display {
   text-align: center;
   font-size: 5rem;
@@ -11,6 +60,37 @@
   @media (min-width: 769px) {
     display: none;
   }
+}
+.reject-h3 {
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+}
+.reject-h6 {
+  max-width: 70%;
+  @media (max-width: 768px) {
+    font-size: 8px;
+    line-height: 1rem;
+  }
+}
+.reject-btn {
+    border: 1px solid;
+    width: 6rem;
+}
+.reset-pwd-h4{
+  @media (max-width: 768px){
+    margin-top: 3rem;
+  }
+}
+.reject-icon {
+  margin-left: 6rem;
+  @media (max-width: 320px) {
+    margin-left: 0rem;
+  }
+
+  // @media (min-width: 425px) {
+  //   margin-left: 2.5rem;
+  // }
 }
 .btn-radio {
   .q-radio__inner {
@@ -392,7 +472,7 @@
       }
     }
     .margin {
-      margin-top: 3rem !important;
+      margin-top: 2rem !important;
     }
     .gender {
       margin-top: 1rem; //2
@@ -442,12 +522,12 @@
       flex-direction: column;
       padding: 1rem;
       text-align: start;
-      > div {
-      }
-      @media (min-width: 768px) {
-        &.chip-container {
-        }
-      }
+      // > div {
+      // }
+      // @media (min-width: 768px) {
+      //   &.chip-container {
+      //   }
+      // }
       &.chip-container {
         > div {
           display: flex;
@@ -724,6 +804,9 @@
         font-size: 13px;
         @media (max-width: 425px) {
           font-size: 10px;
+        }
+        @media (max-width: 320px) {
+          font-size: 8px;
         }
         font-weight: 400;
       }
