@@ -2,19 +2,19 @@
   <q-card class="my-card full-height sign-in">
     <q-card-section>
       <div class="container">
-
         <form @submit.prevent="loginUser" class="form" autocomplete="off">
           <h2 class="text-center showMobile text-bold q-mb-lg q-pb-lg">LEC</h2>
           <h4>Autentificare</h4>
           <p>
-            nu ai ica cont? <router-link to="/sign-up" class="link"
-              >inregistreaza-te</router-link
+            Nu ai încă cont?
+            <router-link to="/sign-up" class="link"
+              >Înregistrează-te</router-link
             >
           </p>
           <div class="cate-list">
             <label for="uname"> E-mail</label>
             <q-input
-            outlined
+              outlined
               v-model="userEmail"
               type="text"
               placeholder="Adresa de E-mail"
@@ -24,7 +24,7 @@
           <div class="cate-list">
             <label for="pwd">Parola</label>
             <q-input
-            outlined
+              outlined
               placeholder="Parola"
               name="pwd"
               v-model="userPass"
@@ -49,7 +49,12 @@
             >
           </div>
           <span class="pwd">
-            <button style="font-size: 12px" type="button" class="link" @click="forgotPassword">
+            <button
+              style="font-size: 12px"
+              type="button"
+              class="link"
+              @click="forgotPassword"
+            >
               Am uitat parola
             </button>
           </span>
@@ -57,7 +62,6 @@
       </div>
     </q-card-section>
   </q-card>
-
 </template>
 
 <script>
@@ -80,10 +84,8 @@ export default {
       const reset = await this.$store.dispatch("confirmReset", this.forgotCode);
     },
 
-
     forgotPassword() {
-      this.$router.push('/send-reset-link')
-
+      this.$router.push("/send-reset-link");
     },
     async loginUser() {
       this.forgotDialog = false;

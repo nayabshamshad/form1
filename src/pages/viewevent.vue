@@ -11,15 +11,17 @@
           ></q-btn>
         </div>
         <div style="width: 40%" class="text-center">
-          <h5 class="linkcolor text-weight-bold">{{currentEvent.name}}</h5>
+          <h5 class="linkcolor text-weight-bold">{{ currentEvent.name }}</h5>
         </div>
         <div style="width: 30%">
-          <h6 class="linkcolor text-right text-weight-bold text-no-wrap">{{ formatDate(currentEvent.date) }}</h6>
+          <h6 class="linkcolor text-right text-weight-bold text-no-wrap">
+            {{ formatDate(currentEvent.date) }}
+          </h6>
         </div>
       </div>
       <div class="shadowed" style="min-height: 220px; padding-top: 1rem">
         <h5 class="text-weight-bold linkcolor text-left q-px-md">
-          Scurta descriere:
+          Scurtă descriere:
         </h5>
         <p
           style="text-align: left"
@@ -29,7 +31,7 @@
         </p>
       </div>
       <div class="shadowed q-mt-lg q-pb-md">
-        <h5 class="linkcolor text-weight-bold text-center q-pt-md">Prezenta</h5>
+        <h5 class="linkcolor text-weight-bold text-center q-pt-md">Prezența</h5>
         <div class="q-pb-lg q-pt-md">
           <div
             v-for="(student, i) in memberList"
@@ -61,19 +63,13 @@
         <h5 class="text-weight-bold linkcolor text-left q-px-md">
           Fotografii:
         </h5>
-        <div
-          class="flex justify-center items-center event-img-container"
-        >
+        <div class="flex justify-center items-center event-img-container">
           <div
             v-for="(src, i) in currentEvent.imageList"
             :key="i"
             class="flex justify-center align-center"
           >
-            <img
-              :src="src"
-              alt=""
-              @click="showImg(src)"
-            />
+            <img :src="src" alt="" @click="showImg(src)" />
           </div>
         </div>
       </div>

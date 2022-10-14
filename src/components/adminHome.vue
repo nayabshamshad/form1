@@ -28,9 +28,9 @@
               <table class="user-list-table approved">
                 <thead>
                   <tr>
-                    <th >Nume/Prenume</th>
-                    <th >Nr. de telefon</th>
-                    <th >E-mail</th>
+                    <th>Nume/Prenume</th>
+                    <th>Nr. de telefon</th>
+                    <th>E-mail</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -60,7 +60,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Intalniri pe pagina</span>
+                <span>Întâlniri pe pagină</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -110,7 +110,7 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <h5>In Asteptare</h5>
+              <h5 class="showMobile">În așteptare</h5>
               <div class="media-select">
                 <q-select
                   dense
@@ -179,7 +179,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Intalniri pe pagina</span>
+                <span>Întâlniri pe pagină</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -275,7 +275,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Intalniri pe pagina</span>
+                <span>Întâlniri pe pagină</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -315,7 +315,7 @@
             </div>
             <!-- <div class=" row items-center justify-between">
               <div class="q-table__control">
-                Intalniri pe pagina
+                Întâlniri pe pagină
                 <q-select></q-select>
               </div>
               <div class="q-table__separator col"></div>
@@ -359,7 +359,7 @@
                 margin-bottom: 2rem;
               "
             >
-              <h5>Conferinte</h5>
+              <h5 class="showMobile">Conferințe</h5>
               <q-btn
                 no-caps
                 round
@@ -397,7 +397,7 @@
 
             <div class="q-mt-md inline-pagination">
               <div style="display: inline-flex">
-                <span>Intalniri pe pagina</span>
+                <span>Întâlniri pe pagină</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -487,7 +487,7 @@ export default {
     if (this.$store.getters.userData?.role == "department") {
       this.departmentName = this.$store.getters.userData?.departmentName;
     }
-    this.$store.dispatch('getUserList')
+    this.$store.dispatch("getUserList");
   },
   data() {
     return {
@@ -588,20 +588,20 @@ export default {
           value: "Data nașterii",
           fontWeight: "bold",
         },
+        // {
+        //   value: "Etnie",
+        //   fontWeight: "bold",
+        // },
         {
-          value: "Etnie",
+          value: "Gen",
           fontWeight: "bold",
         },
         {
-          value: "Sex",
+          value: "Mărime tricou",
           fontWeight: "bold",
         },
         {
-          value: "Marime tricou",
-          fontWeight: "bold",
-        },
-        {
-          value: "Zona",
+          value: "Zonă",
           fontWeight: "bold",
         },
         {

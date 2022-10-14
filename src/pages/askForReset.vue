@@ -15,15 +15,20 @@
     <q-card-section
       ><div
         class="flex"
-        style="justify-content: flex-end; padding: 0 30%;"
+        style="justify-content: flex-end; padding: 0 30%"
       ></div>
       <h5 class="text-center text-weight-bold reset-h5">Resetare parolă</h5>
     </q-card-section>
 
     <q-card-section class="q-pt-none q-px-lg q-mx-lg">
-      <p class="q-mx-auto text-center hide">Introduce adresa de E-mail</p>
+      <p class="q-mx-auto text-center hide">Introdu adresa de E-mail</p>
       <p class="q-mb-lg text-weight-bold reset-label">E-mail</p>
-      <q-input outlined v-model="forgotEmail" type="email" class="reset-input"></q-input>
+      <q-input
+        outlined
+        v-model="forgotEmail"
+        type="email"
+        class="reset-input"
+      ></q-input>
       <div class="flex justify-center">
         <q-btn
           class="bg-linkcolor reset-btn"

@@ -164,6 +164,7 @@
           min-width: 80%;
         }
 
+        // phone icon
         > td.showMobile {
           width: 15%;
           text-align: center;
@@ -174,7 +175,6 @@
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
           max-width: 50px;
           min-width: 40px;
-          margin-right: 2px;
           height: 100%;
           position: absolute;
           right: 0;
@@ -344,9 +344,9 @@ div:has(> .media-select) {
 }
 .user-list-table {
   @media (min-width: 769px) {
-  &.approved,
-  &.declined,
-  &.department {
+    &.approved,
+    &.declined,
+    &.department {
       th {
         &:not(:last-of-type) {
           width: 30%;

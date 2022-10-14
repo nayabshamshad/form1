@@ -11,7 +11,7 @@
           ></q-btn>
         </div>
         <div style="width: 70%" class="text-center">
-          <h5 class="linkcolor text-weight-bold">Adaugare Intalnire</h5>
+          <h5 class="linkcolor text-weight-bold">Adăugare întâlnire</h5>
         </div>
         <div style="width: 15%">
           <q-btn
@@ -26,15 +26,14 @@
       </div>
       <div class="row justify-between align-center">
         <div class="shadowed flex justify-between no-wrap" style="width: 63%">
-          <h6 style="width: 40%" class="linkcolor text-weight-bold">
-            Adaugare Intalnire
-          </h6>
+          <h6 style="width: 40%" class="linkcolor text-weight-bold">Titlul</h6>
           <div style="width: 55%">
             <q-input
               borderless
               v-model="eventName"
               type="text"
               color="blue"
+              placeholder="Titlul întâlnirii"
               input-class="linkcolor"
             />
           </div>
@@ -72,10 +71,10 @@
         </div>
       </div>
       <div class="shadowed q-mt-lg add-event-textarea">
-        <h5 class="text-weight-bold linkcolor">Scurta descriere:</h5>
+        <h5 class="text-weight-bold linkcolor">Scurtă descriere:</h5>
         <q-input
           v-model="eventDesc"
-          label="Adaugati text..."
+          label="Adăugați text..."
           type="text"
           autogrow
           input-class="linkcolor"
@@ -90,7 +89,7 @@
       </div>
       <div class="shadowed q-mt-lg">
         <h5 class="linkcolor text-center text-weight-bold q-pt-lg q-pb-md">
-          Prezenta
+          Prezența
         </h5>
         <div class="q-mb-lg add-event-checkboxes">
           <div
@@ -107,27 +106,36 @@
       </div>
       <div class="shadowed q-mt-lg linkcolor">
         <h5 class="text-weight-bold q-pt-lg">Fotografii:</h5>
-        <h6 class="text-weight-light q-mb-md">Adaugati Max. 3 fotografii</h6>
+        <h6 class="text-weight-light q-mb-md">Adaugați max. 3 fotografii</h6>
         <div class="flex justify-between no-wrap" style="gap: 3px">
-          <div v-for="img, i in previewImages" :key="i" class="img-card">
-            <q-btn color="red" size="xs" icon="remove" @click="removeImg(i)" round></q-btn>
-             <img :src="img" class="cursor-pointer iconed-img"  alt="">
+          <div v-for="(img, i) in previewImages" :key="i" class="img-card">
+            <q-btn
+              color="red"
+              size="xs"
+              icon="remove"
+              @click="removeImg(i)"
+              round
+            ></q-btn>
+            <img :src="img" class="cursor-pointer iconed-img" alt="" />
           </div>
-          <div class="img-card select-img" v-for="i in 3-previewImages.length" :key="i" @click="openInput">
+          <div
+            class="img-card select-img"
+            v-for="i in 3 - previewImages.length"
+            :key="i"
+            @click="openInput"
+          >
             <q-icon name="add_a_photo" size="xl"></q-icon>
           </div>
-
-
         </div>
       </div>
       <input
-            @change="handleImageUpload"
-            type="file"
-            ref="imgInput"
-            style="display: none"
-            name="img"
-            accept="image/*"
-          />
+        @change="handleImageUpload"
+        type="file"
+        ref="imgInput"
+        style="display: none"
+        name="img"
+        accept="image/*"
+      />
       <!-- <form class="form">
       <h2>Adaugare întâlnire</h2>
       <div class="cate-list">
@@ -384,6 +392,12 @@ export default {
         this.isFetching = false;
         return;
       }
+      if (this.eventName == "") {
+        this.error = "Te rugăm sa adaugi titlul întâlnirii";
+        this.errorDialog = true;
+        this.isFetching = false;
+        return;
+      }
       if (this.eventDesc == "") {
         this.error = "Te rugăm sa adaugi descrierea întâlnirii.";
         this.errorDialog = true;
@@ -413,7 +427,6 @@ export default {
       }
     },
     removeImg(e) {
-
       this.previewImages.splice(e, 1);
       this.localImageList.splice(e, 1);
     },

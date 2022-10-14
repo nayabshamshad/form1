@@ -27,7 +27,7 @@
       </div>
       <div class="attendance-container shadowed" style="margin-top: 1rem">
         <div class="attendance-summary">
-          <h4 style="color: #233975">Lista Intalnirilor</h4>
+          <h4 style="color: #233975">Lista întâlnirilor</h4>
           <div class="eventlist">
             <div
               class="q-mt-sm q-mb-md flex justify-between q-mx-auto"
@@ -44,7 +44,7 @@
                 <span
                   style="font-size: 12px"
                   class="linkcolor q-pr-sm font-weight-light subtitle1 text-left"
-                  >Adauga intalnire</span
+                  >Adaugă întâlnire</span
                 >
                 <q-btn
                   class="bg-linkcolor"
@@ -62,7 +62,7 @@
             >
               <thead>
                 <tr>
-                  <th>Tema intalnirii</th>
+                  <th>Titlul îtâlnirii</th>
                   <th style="text-align: end">Data Intalnirii</th>
                 </tr>
               </thead>
@@ -87,13 +87,13 @@
                 class="text-weight-bold linkcolor text-left"
                 style="opacity: 0.5"
               >
-                Nu exista intalniri inca
+                Nu există întâlniri încă
               </h4>
             </div>
           </div>
           <div class="q-mt-md inline-pagination">
             <div style="display: inline-flex">
-              <span>Intalniri pe pagina</span>
+              <span>Întâlniri pe pagină</span>
               <select class="paginationSelect" v-model="resultsPerPage">
                 <option :value="5">5</option>
                 <option :value="10">10</option>

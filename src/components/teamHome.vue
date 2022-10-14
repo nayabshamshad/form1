@@ -4,7 +4,7 @@
       <div class="container">
         <div class="flex justify-end">
           <q-btn
-          v-show="dateContained"
+            v-show="dateContained"
             round
             @click="$router.push('/edit-profile')"
             icon="edit_note"
@@ -31,16 +31,16 @@
         </div>
         <div class="infoRow">
           <div class="shadowed">
-            <div>
+            <!-- <div>
               <h3>Etnie:</h3>
               <span> {{ userData.etnic }}</span>
-            </div>
+            </div> -->
             <div>
-              <h3>Sex:</h3>
+              <h3>Gen:</h3>
               <span> {{ userData.gender }}</span>
             </div>
             <div>
-              <h3>Data nasterii:</h3>
+              <h3>Data nașterii:</h3>
               <span>
                 {{
                   userData.dateOfBirth
@@ -50,12 +50,12 @@
               >
             </div>
             <div>
-              <h3>Marime tricou:</h3>
+              <h3>Mărime tricou:</h3>
               <span class="text-uppercase"> {{ userData.size }}</span>
             </div>
           </div>
           <div class="shadowed skills">
-            <h3>Specializari</h3>
+            <h3>Specializări</h3>
             <div>
               <p v-for="(item, i) in userData.tagList" :key="i">{{ item }}</p>
             </div>
@@ -66,26 +66,24 @@
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
           <div>
-            <h3>Categorie</h3>
+            <h3>Categorie:</h3>
             <!-- <p>Exploratori</p> -->
-            <p>{{userData.category}}</p>
+            <p>{{ userData.category }}</p>
           </div>
           <div>
-            <h3>Zona:</h3>
+            <h3>Zonă:</h3>
             <!-- <p>Brasov</p> -->
-            <p>{{userData.region}}</p>
+            <p>{{ userData.region }}</p>
           </div>
           <div>
             <h3>Comunitate:</h3>
             <!-- <p>Betel</p> -->
-            <p>{{userData.state}}</p>
-
+            <p>{{ userData.state }}</p>
           </div>
           <div>
             <h3>Clubul:</h3>
             <!-- <p>Iosua</p> -->
-            <p>{{userData.clubName}}</p>
-
+            <p>{{ userData.clubName }}</p>
           </div>
           <div>
             <h3>Anul investiturii ca:</h3>
@@ -196,7 +194,7 @@
                 </div>
 
                 <div class="right gender">
-                  <label for="Gender">Sex:</label>
+                  <label for="Gender">Gen:</label>
                   <div class="flex no-wrap">
                     <q-radio
                       v-model="dataUser.gender"
@@ -208,7 +206,7 @@
                       v-model="dataUser.gender"
                       color="black"
                       val="Female"
-                      label="Femenin"
+                      label="Feminin"
                     />
                   </div>
                 </div>
@@ -721,7 +719,11 @@ export default {
     teamListSorted() {
       let arr = [];
       let teamList = [];
-      if (this.userData && this.userData.teamList && this.userData.teamList.length > 0) {
+      if (
+        this.userData &&
+        this.userData.teamList &&
+        this.userData.teamList.length > 0
+      ) {
         this.userData.teamList.forEach((x) => {
           teamList.push(x);
         });

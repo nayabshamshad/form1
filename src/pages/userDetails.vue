@@ -74,16 +74,16 @@
               </div>
               <div class="infoRow">
                 <div class="shadowed">
-                  <div>
+                  <!-- <div>
                     <h3>Etnie:</h3>
                     <span> {{ selectedUser.etnic }}</span>
-                  </div>
+                  </div> -->
                   <div>
-                    <h3>Sex:</h3>
+                    <h3>Gen:</h3>
                     <span> {{ selectedUser.gender }}</span>
                   </div>
                   <div>
-                    <h3>Data nasterii:</h3>
+                    <h3>Data nașterii:</h3>
                     <span>
                       {{
                         selectedUser.dateOfBirth
@@ -93,12 +93,12 @@
                     >
                   </div>
                   <div>
-                    <h3>Marime tricou:</h3>
+                    <h3>Mărime tricou:</h3>
                     <span class="text-uppercase"> {{ selectedUser.size }}</span>
                   </div>
                 </div>
                 <div class="shadowed skills">
-                  <h3>Specializari</h3>
+                  <h3>Specializări</h3>
                   <div>
                     <p v-for="(item, i) in selectedUser.tagList" :key="i">
                       {{ item }}
@@ -108,12 +108,12 @@
               </div>
               <div class="shadowed user-details q-mt-md">
                 <div>
-                  <h3>Categorie</h3>
+                  <h3>Categorie:</h3>
                   <p>{{ selectedUser.category }}</p>
                   <!-- <p>Exploratori</p> -->
                 </div>
                 <div>
-                  <h3>Zona:</h3>
+                  <h3>Zonă:</h3>
 
                   <!-- <p>Brasov</p> -->
                   <p>{{ selectedUser.region }}</p>
@@ -215,15 +215,6 @@
             </div>
           </div>
 
-
-
-
-
-
-
-
-
-
           <!--
           <q-dialog v-model="isEdit" no-esc-dismiss no-backdrop-dismiss>
             <q-card class="my-card edit-details sign-up center-card">
@@ -314,7 +305,7 @@
                     </div>
 
                     <div class="right gender">
-                      <label for="Gender">Sex:</label>
+                      <label for="Gender">Gen:</label>
                       <div class="flex no-wrap">
                         <q-radio
                           v-model="dataUser.gender"
@@ -326,7 +317,7 @@
                           v-model="dataUser.gender"
                           color="black"
                           val="Female"
-                          label="Femenin"
+                          label="Feminin"
                         />
                       </div>
                     </div>
@@ -542,27 +533,6 @@
               </q-card-section>
             </q-card>
           </q-dialog> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </q-tab-panel>
         <q-tab-panel class="user-event-container" name="events">
           <div class="container">
@@ -589,7 +559,7 @@
             </div>
             <div class="attendance-container shadowed" style="margin-top: 1rem">
               <div class="attendance-summary">
-                <h4 style="color: #233975">Lista Intalnirilor</h4>
+                <h4 style="color: #233975">Lista întâlnirilor</h4>
                 <div class="eventlist">
                   <div
                     class="q-mb-md download-button-event q-mt-sm flex justify-between"
@@ -611,7 +581,7 @@
                   >
                     <thead>
                       <tr>
-                        <th>Tema intalnirii</th>
+                        <th>Titlul întâlnirii</th>
                         <th style="text-align: end">Data Intalnirii</th>
                       </tr>
                     </thead>
@@ -638,13 +608,13 @@
                       class="text-weight-bold linkcolor text-left"
                       style="opacity: 0.5"
                     >
-                      Nu exista intalniri inca
+                      Nu există întâlniri încă
                     </h4>
                   </div>
                 </div>
                 <div class="q-mt-md inline-pagination">
                   <div style="display: inline-flex">
-                    <span>Intalniri pe pagina</span>
+                    <span>Întâlniri pe pagină</span>
                     <select class="paginationSelect" v-model="resultsPerPage">
                       <option :value="5">5</option>
                       <option :value="10">10</option>
@@ -1084,7 +1054,7 @@ export default {
             return -1;
           }
           return 0;
-      });
+        });
       return {
         arr: arr,
         first: firstItem + 1,
@@ -1124,10 +1094,10 @@ export default {
       });
       this.selectedUser.eventList.forEach((x) => {
         x.attendanceList.forEach((y) => {
-          const index = arr.findIndex((st) => {            
+          const index = arr.findIndex((st) => {
             return st.name == y;
           });
-          if(index > -1) {
+          if (index > -1) {
             arr[index].attendance = arr[index].attendance + 1;
           }
         });

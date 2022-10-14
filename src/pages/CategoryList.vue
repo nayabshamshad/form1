@@ -87,22 +87,22 @@
           </div> -->
 
           <div class="cate-list cate-margin gender">
-            <label for="Gender">Sex:</label>
+            <label for="Gender">Gen:</label>
             <div class="flex no-wrap">
-                <q-radio
-                  v-model="userInfo.gender"
-                  val="Male"
-                  color="black"
-                  label="Masculin"
-                />
-                <q-radio
-                  v-model="userInfo.gender"
-                  color="black"
-                  val="Female"
-                  label="Femenin"
-                />
-              </div>
+              <q-radio
+                v-model="userInfo.gender"
+                val="Masculin"
+                color="black"
+                label="Masculin"
+              />
+              <q-radio
+                v-model="userInfo.gender"
+                color="black"
+                val="Feminin"
+                label="Feminin"
+              />
             </div>
+          </div>
 
           <div class="cate-list q-pl-sm right margin">
             <label for="uname">Data nașterii:</label>
@@ -151,7 +151,11 @@
           </div> -->
 
           <div class="cate-list q-mb-none">
-            <label for="uname" style="display: block; width: 20px; padding-left: 4px;">Categoria</label>
+            <label
+              for="uname"
+              style="display: block; width: 20px; padding-left: 4px"
+              >Categoria</label
+            >
             <div style="justify-content: space-between; display: flex">
               <q-radio
                 v-model="userInfo.category"
@@ -183,7 +187,7 @@
             />
           </div>
           <div class="cate-list right">
-            <label for="uname">Zona</label>
+            <label for="uname">Zonă</label>
             <q-input
               outlined
               type="text"
@@ -353,7 +357,7 @@ export default {
         masterGhid: "",
         region: "",
         state: "",
-        gender: "Male",
+        gender: "Masculin",
         etnic: "",
         tagList: [],
         clubName: "",
@@ -409,7 +413,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Please select a valid image",
+          message: "Te rog selectează o imagine potrivită",
         });
         this.isSubmitting = false;
         return;
