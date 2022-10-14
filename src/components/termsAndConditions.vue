@@ -38,20 +38,6 @@
         numărul de telefon, adresa de e-mail.
       </p>
       <li>
-        Numele, prenumele, data nașterii, naționalitate, adresa de
-        domiciliu/reședință, biserica de proveniență și semnătura sunt date cu
-        caracter personal pe care le colectăm în vederea înregistrării
-        participării dvs. la Congres [GDPR, Art. 6, al. (1), lit. a)]. Aceste
-        date sunt colectate, prelucrate și stocate pe perioada derulării
-        evenimentului, precum și ulterior încetării acestuia pentru statistici.
-        Titularii datelor nu pot solicita ștergerea acestor date, ci doar
-        rectificarea și restricționarea lor. La aceste date au acces salariații
-        noștri autorizați, furnizori externi de servicii de administrare a
-        Bisericii, de servicii juridice, de servicii financiare, de servicii de
-        corespondență și de servicii IT și arhivare. Aceste date pot fi stocate
-        în format criptat într-un alt stat membru.
-      </li>
-      <li>
         Numărul de telefon, adresa de e-mail sunt date cu caracter personal pe
         care le colectăm, cu consimțământul dumneavoastră, în scopul
         transmiterii unor informații [GDPR, Art. 6, al. (1), lit. a)]. Atâta

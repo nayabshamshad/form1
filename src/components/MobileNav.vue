@@ -11,7 +11,7 @@
       </li>
       <li>
         <q-btn flat color="black" @click="viewUsers('pending')"
-          >In Asteptare</q-btn
+          >În așteptare</q-btn
         >
       </li>
       <li>
