@@ -15,6 +15,7 @@ export default store(function () {
         desc: "",
         attendanceList: [],
       },
+      signedUp: false,
       dateList: {},
       userList: [],
       selectedUser: [],
@@ -24,7 +25,12 @@ export default store(function () {
         return state.selectedUser;
       },
       userData(state) {
-        return state.userData;
+        if (state.userData) {
+          debugger
+          return state.userData;
+        } else {
+          return null;
+        }
       },
       currentUser(state) {
         return state.currentUser;
@@ -47,6 +53,12 @@ export default store(function () {
       },
     },
     mutations: {
+      setSignedUp(state, payload) {
+        state.signedUp = payload;
+      },
+      setEvents(state, payload) {
+        state.userData.eventList = payload;
+      },
       setCurrentUser(state, payload) {
         state.currentUser = payload;
       },
@@ -75,7 +87,16 @@ export default store(function () {
         state.selectedUser = user;
       },
       setDateList(state, payload) {
-        state.dateList = payload;
+        const date = state.userData.role == "admin" ? payload.date : payload;
+        if (state.userData.role == "admin") {
+          let index = state.userList.findIndex((x) => {
+            return x.uid == payload.uid;
+          });
+          state.userList[index].date = date;
+        } else {
+          state.userData.date = date;
+        }
+        state.dateList = date;
       },
     },
     actions: {
@@ -139,12 +160,29 @@ export default store(function () {
         return error;
       },
       async signOutUser({ commit }) {
+        debugger;
         await auth.signOut();
-        commit("setUserData", null);
-        commit("setCurrentUser", null);
+        debugger;
         this.$router.push("/sign-in");
+
+        commit("setCurrentUser", null);
+        commit("setSelectedUser", []);
+        commit("selectEvent", {
+          name: "",
+          date: "",
+          desc: "",
+          attendanceList: [],
+        });
+        commit("setUserList", []);
+        commit("setUserData", null);
       },
-      async getUserData({ state, commit }) {
+      async getUserData({ state, commit, dispatch }) {
+        if (state.signedUp) {
+          return;
+        }
+        if (state.userData != null) {
+          return;
+        }
         await firestore
           .doc(auth.currentUser.uid)
           .get()
@@ -152,12 +190,42 @@ export default store(function () {
             commit("setCurrentUser", auth.currentUser);
             commit("setUserData", res.data());
           });
-        if (state.userData.date) {
+        if (
+          state.userData.role != "department" &&
+          state.userData.role != "admin"
+        ) {
+          await firestore.get().then((res) => {
+            let arr = [];
+            res.forEach((x) => {
+              arr.push(x.data());
+            });
+            const filtered = arr.filter((x) => {
+              return x?.departmentName == state.userData.department;
+            });
+            commit("setDateList", filtered[0].date);
+          });
+        } else if (state.userData.date) {
           commit("setDateList", state.userData.date);
         }
+        if (
+          state.userData.role == "admin" ||
+          state.userData.role == "department"
+        ) {
+          this.dispatch("getUserList");
+        }
+        if (
+          this.$router.currentRoute.value.path == "/sign-in" ||
+          this.$router.currentRoute.value.path == "/sign-up" ||
+          this.$router.currentRoute.value.path == "/signup_department" ||
+          this.$router.currentRoute.value.path == "/send-reset-link" ||
+          this.$router.currentRoute.value.path == "/reset_password"
+        ) {
+          this.$router.push("/");
+        }
       },
-      async signUp({ commit }, payload) {
+      async signUp({ dispatch, commit }, payload) {
         var error = false;
+        commit("setSignedUp", true);
         await auth
           .createUserWithEmailAndPassword(payload.email, payload.password)
           .then(() => {})
@@ -186,6 +254,8 @@ export default store(function () {
             }
           });
         if (error) {
+          commit("setSignedUp", false);
+
           return;
         }
         await auth.currentUser
@@ -200,6 +270,8 @@ export default store(function () {
             });
           });
         if (error) {
+          commit("setSignedUp", false);
+
           return;
         }
         await firestore
@@ -217,7 +289,7 @@ export default store(function () {
             region: "",
             state: "",
             gender: "",
-            // etnic: "",
+            etnic: "",
             phoneNumber: payload.phoneNumber,
             tagList: [],
             clubName: "",
@@ -232,6 +304,8 @@ export default store(function () {
           })
           .catch((err) => {
             error = true;
+            commit("setSignedUp", false);
+
             Notify.create({
               message: err.message,
               color: "red",
@@ -242,24 +316,46 @@ export default store(function () {
           return;
         }
         commit("setCurrentUser", auth.currentUser);
-
-        await firestore
-          .doc(auth.currentUser.uid)
-          .get()
-          .then((response) => {
-            commit("setUserData", response.data());
-          })
-          .catch((err) => {
-            error = true;
-            Notify.create({
-              message: err.message,
-              color: "red",
-            });
-          });
         if (error) {
+          commit("setSignedUp", false);
           return;
         }
-        this.$router.push("/category-list");
+        commit("setUserData", {
+          name: payload.name,
+          isAuthorized: "pending",
+          eventList: [],
+          teamList: [],
+          role: "teamLead",
+          dateOfBirth: "",
+          Instructor: "",
+          Ghid: "",
+          masterGhid: "",
+          region: "",
+          state: "",
+          gender: "",
+          etnic: "",
+          phoneNumber: payload.phoneNumber,
+          tagList: [],
+          clubName: "",
+          status: "",
+          category: "",
+          size: "",
+          isUpdated: false,
+          uid: auth.currentUser.uid,
+          email: payload.email,
+          department: payload.department,
+          imgUrl: payload.imgUrl,
+        });
+        Notify.create({
+          message:
+            "Înregistrare reușită! Te rugăm să aștepți aprobarea unui administrator",
+          color: "green",
+          icon: "report_gmailerrorred",
+        });
+        dispatch("signOutUser");
+        commit("setSignedUp", false);
+
+        // this.$router.push("/pending");
       },
       async signUpDepartment({ commit }, payload) {
         var error = false;
@@ -322,7 +418,7 @@ export default store(function () {
             region: "",
             state: "",
             gender: "",
-            // etnic: "",
+            etnic: "",
             phoneNumber: payload.phoneNumber,
             tagList: [],
             clubName: "",
@@ -332,7 +428,8 @@ export default store(function () {
             isUpdated: true,
             uid: auth.currentUser.uid,
             email: payload.email,
-            departmentName: payload.department,
+            departmentName: payload.departmentName,
+            date: { from: "03/03/2022", to: "04/04/2022" },
           })
           .catch((err) => {
             error = true;
@@ -347,31 +444,41 @@ export default store(function () {
         }
         commit("setCurrentUser", auth.currentUser);
 
-        await firestore
-          .doc(auth.currentUser.uid)
-          .get()
-          .then((response) => {
-            commit("setUserData", response.data());
-          })
-          .catch((err) => {
-            error = true;
-            Notify.create({
-              message: err.message,
-              color: "red",
-            });
-          });
-        if (error) {
-          return;
-        }
+        commit("setUserData", {
+          name: payload.name,
+          isAuthorized: true,
+          eventList: [],
+          teamList: [],
+          role: "department",
+          dateOfBirth: "",
+          Instructor: "",
+          Ghid: "",
+          masterGhid: "",
+          region: "",
+          state: "",
+          gender: "",
+          etnic: "",
+          phoneNumber: payload.phoneNumber,
+          tagList: [],
+          clubName: "",
+          status: "",
+          category: "",
+          size: "",
+          isUpdated: true,
+          uid: auth.currentUser.uid,
+          email: payload.email,
+          departmentName: payload.departmentName,
+          date: { from: "03/03/2022", to: "04/04/2022" },
+        });
         this.$router.push("/category-list");
       },
-      async updateUserProfile({ state, commit, dispatch }, payload) {
+      async updateUserProfile({ state, commit }, payload) {
         await firestore.doc(state.currentUser.uid).update(payload);
-        await dispatch("getUserData");
+        commit("setUserData", payload);
       },
-      async updateUserProfileAdmin({ commit, dispatch }, payload) {
+      async updateUserProfileAdmin({ commit }, payload) {
         await firestore.doc(payload.uid).update(payload);
-        await dispatch("getUserData");
+        commit("setSelectedUser", payload);
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
@@ -414,50 +521,8 @@ export default store(function () {
         if (error) {
           return;
         }
-        await firestore
-          .doc(auth.currentUser.uid)
-          .get()
-          .then((response) => {
-            commit("setUserData", response.data());
-            if (response.data()?.isUpdated == false) {
-              this.$router.push("/category-list");
-            } else {
-              this.$router.push("/");
-            }
-          })
-          .catch((err) => {
-            error = true;
-            Notify.create({
-              message: err.message,
-              color: "red",
-            });
-            return err.message;
-          });
-        if (
-          state.userData.role != "department" &&
-          state.userData.role != "admin"
-        ) {
-          await firestore
-            .get()
-            .then((res) => {
-              let arr = [];
-              res.forEach((x) => {
-                arr.push(x.data());
-              });
-              const b = arr.filter((x) => {
-                return state.userData.department == x.departmentName;
-              });
-              commit("setDateList", b[0].date);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          if (error) {
-            return;
-          }
-        }
       },
-      async addEvent({ dispatch, state }, payload) {
+      async addEvent({ commit, state }, payload) {
         let eventList = [];
         state.userData.eventList.forEach((x) => {
           eventList.push(x);
@@ -466,14 +531,14 @@ export default store(function () {
         firestore.doc(auth.currentUser.uid).update({
           eventList: eventList,
         });
-        await dispatch("getUserData");
+        commit("setEvents", eventList);
         this.$router.push("/event-list");
       },
       selectEvent({ commit }, payload) {
         commit("selectEvent", payload);
         this.$router.push("/view-event");
       },
-      async updateEvent({ dispatch, state }, payload) {
+      async updateEvent({ commit, state }, payload) {
         let index = state.userData.eventList.findIndex((x) => {
           return x.name == payload.name;
         });
@@ -484,7 +549,7 @@ export default store(function () {
         await firestore.doc(auth.currentUser.uid).update({
           eventList: eventList,
         });
-        await dispatch("getUserData");
+        commit("setEvents", eventList);
         this.$router.push("/event-list");
       },
       async getUserList({ commit }) {
@@ -493,16 +558,22 @@ export default store(function () {
           res.forEach((x) => {
             userList.push(x.data());
           });
-          let sortedArr = userList.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) {
-              return 1;
-            }
-            if (a.name.toLowerCase() < b.name.toLowerCase()) {
-              return -1;
+          const sortedArr = userList.sort((a, b) => {
+            if (
+              a.name &&
+              a.name.toLowerCase() &&
+              b.name &&
+              b.name.toLowerCase()
+            ) {
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return 1;
+              }
+              if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                return -1;
+              }
             }
             return 0;
           });
-
           commit("setUserList", sortedArr);
         });
       },
@@ -549,11 +620,12 @@ export default store(function () {
             commit("setSelectedUser", res.data());
           });
       },
-      async setDateRange({ state, commit, dispatch }, payload) {
+      async setDateRange({ state, commit }, payload) {
         await firestore.doc(payload.uid).update({ date: payload.date });
-        commit("setDateList", payload.date);
-        if (this.state.userData.role == "admin") {
-          dispatch("getUserList");
+        if (state.userData.role != "admin") {
+          commit("setDateList", payload.date);
+        } else if (state.userData.role == "admin") {
+          commit("setDateList", payload);
         }
       },
     },

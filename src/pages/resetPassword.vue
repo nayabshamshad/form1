@@ -1,38 +1,66 @@
 <template>
-  <div class="container">
-    <form class="form" autocomplete="off">
-      <h2>Resetarea parolei</h2>
-      <div class="cate-list">
-        <label for="pwd"><b>Parola</b></label>
-        <q-input type="password" name="pwd" v-model="newPass" />
+  <q-card class="my-card center-card" style="height: 100vh">
+    <q-card-section>
+      <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
+      <div class="reset-icon">
+        <q-icon
+          name="west"
+          size="xl"
+          class="linkcolor cursor-pointer"
+          @click="$router.go(-1)"
+        ></q-icon>
       </div>
-      <div class="btn1">
-        <q-btn
-          @click="resetPassword"
-          :loading="isSubmitting"
-          type="button"
-          color="purple"
-          rounded
-          >Resetare parolă</q-btn
-        >
+      <div class="container">
+        <form class="form" autocomplete="off">
+          <h4 class="reset-pwd-h4">Resetare parola</h4>
+          <div class="cate-list">
+            <label for="pwd">Parola nouă</label>
+            <q-input
+            outlined
+            
+              name="pwd"
+              :type="isPwd ? 'password' : 'text'"
+              v-model="newPass"
+              placeholder="Introduce o parolă nouă"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </div>
+          <div class="btn1">
+            <q-btn
+              @click="resetPassword"
+              :loading="isSubmitting"
+              type="button"
+              rounded
+              >RESETARE PAROLĂ</q-btn
+            >
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
 export default {
   async mounted() {
-    if (this.$route?.query?.oobCode) {
-      this.$store.dispatch("verifyReset", this.$route.query.oobCode);
-    } else {
-      this.$router.push("/");
-    }
+    // if (this.$route?.query?.oobCode) {
+    //   this.$store.dispatch("verifyReset", this.$route.query.oobCode);
+    // } else {
+    //   this.$router.push("/");
+    // }
   },
   data() {
     return {
       newPass: "",
       isSubmitting: false,
+      isPwd: true,
     };
   },
   methods: {
@@ -59,12 +87,13 @@ export default {
         this.$q.notify({
           message: "Parola a fost resetata, te rugăm să te autentifici.",
           color: "green",
+          icon: "report_gmailerrorred",
         });
         this.$router.push("/");
       }
     },
   },
+
 };
 </script>
-
 <style></style>

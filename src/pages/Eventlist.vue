@@ -1,73 +1,140 @@
 <template>
-  <div class="container">
-    <div class="attendance-container">
-      <div class="attendance-summary">
-        <h5 style="font-size: 18px"><span>Prezența</span></h5>
-        <div v-for="(student, index) in listOfAttendance" :key="index">
-          <div class="flex justify-space-around">
-            <span>
-              {{ student.name }}
-            </span>
-            <span>
-              {{ student.attendance }} / {{ userInfo.eventList.length }}
-            </span>
+  <q-card
+    class="center-card q-px-lg info client-event-list"
+    style="padding-top: 3rem"
+  >
+    <div class="container">
+      <div class="attendance-container shadowed">
+        <div class="attendance-summary">
+          <h4 style="color: #233975">Prezența</h4>
+          <div v-for="(student, index) in listOfAttendance" :key="index">
+            <div
+              class="shadowed"
+              style="border-radius: 0.3rem; margin-top: 1rem"
+            >
+              <div class="flex justify-space-between">
+                <span>
+                  {{ student.name }}
+                </span>
+                <span>
+                  {{ student.attendance }} /
+                  {{ userInfo.eventList.length }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="attendance-container shadowed" style="margin-top: 1rem">
+        <div class="attendance-summary">
+          <h4 style="color: #233975">Lista Intalnirilor</h4>
+          <div class="eventlist">
+            <div
+              class="q-mt-sm q-mb-md flex justify-between q-mx-auto"
+              style="width: 100%"
+            >
+              <q-btn
+                size="md"
+                color="green"
+                icon="download"
+                @click="exportFile('events')"
+                round
+              ></q-btn>
+              <div>
+                <span
+                  style="font-size: 12px"
+                  class="linkcolor q-pr-sm font-weight-light subtitle1 text-left"
+                  >Adauga intalnire</span
+                >
+                <q-btn
+                  class="bg-linkcolor"
+                  icon="add"
+                  round
+                  @click="$router.push('/add-event')"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="table-container">
+            <table
+              v-if="eventList.arr.length > 0"
+              class="user-list-table lista"
+            >
+              <thead>
+                <tr>
+                  <th>Tema intalnirii</th>
+                  <th style="text-align: end">Data Intalnirii</th>
+                </tr>
+              </thead>
+              <tbody class="table-row">
+                <tr
+                  class="shadowed tr"
+                  v-for="(item, i) in eventList.arr"
+                  :key="i"
+                  @click="showEventDetails(item)"
+                >
+                  <td>{{ item.name }}</td>
+                  <td class="event-date-td">{{ formatDate(item.date) }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              v-else
+              class="shadowed q-mx-auto"
+              style="border-radius: 8px; width: 90%"
+            >
+              <h4
+                class="text-weight-bold linkcolor text-left"
+                style="opacity: 0.5"
+              >
+                Nu exista intalniri inca
+              </h4>
+            </div>
+          </div>
+          <div class="q-mt-md inline-pagination">
+            <div style="display: inline-flex">
+              <span>Intalniri pe pagina</span>
+              <select class="paginationSelect" v-model="resultsPerPage">
+                <option :value="5">5</option>
+                <option :value="10">10</option>
+                <option :value="20">20</option>
+                <option :value="50">50</option>
+              </select>
+            </div>
+            <div>
+              <div class="pagination-buttons">
+                <q-btn
+                  size="sm"
+                  round
+                  text-color="white"
+                  icon="chevron_left"
+                  no-caps
+                  :disabled="currentPage === 1"
+                  @click="decreasePage"
+                ></q-btn>
+                <span> {{ currentPage }} </span>
+                <q-btn
+                  size="sm"
+                  round
+                  text-color="white"
+                  no-caps
+                  icon="chevron_right"
+                  @click="increasePage"
+                  :disabled="currentPage >= maxPage"
+                ></q-btn>
+              </div>
+            </div>
+            <div>
+              <p>
+                {{ eventList.first }}-{{ eventList.last }} din
+                {{ eventList.total }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="eventlist">
-      <span>
-        <q-btn
-          round
-          color="green"
-          size="sm"
-          icon="download"
-          v-if="userInfo?.eventList?.length > 0"
-          @click="exportFile('events')"
-        ></q-btn>
-        <q-btn
-          color="purple"
-          rounded
-          type="button"
-          class="btn"
-          size="sm"
-          @click="$router.push('/add-event')"
-        >
-          Adaugă întâlnire
-        </q-btn></span
-      >
-    </div>
-    <div style="margin-top: 1rem" class="flex justify-center">
-      <q-table
-        v-if="userInfo.eventList?.length > 0"
-        style="width: 80%"
-        title="Lista întâlnirilor"
-        :rows="sortedEvents"
-        :columns="[
-          {
-            name: 'name',
-            label: 'Tema întâlnirii',
-            required: true,
-            align: 'center',
-            field: (item) => item.name,
-          },
-          {
-            name: 'date',
-            label: 'Data întâlnirii',
-            required: true,
-            align: 'center',
-            field: (item) => formatDate(item.date),
-          },
-        ]"
-        flat
-        dark
-        bordered
-        @row-click="showEventDetails"
-      />
-      <div v-else style="width: 60%">Toate întâlnirile vor aparea aici</div>
-    </div>
-  </div>
+  </q-card>
 </template>
 <script>
 import writeXlsxFile from "write-excel-file";
@@ -75,6 +142,12 @@ import writeXlsxFile from "write-excel-file";
 export default {
   name: "EventlistView",
   components: {},
+  data() {
+    return {
+      resultsPerPage: 20,
+      currentPage: 1,
+    };
+  },
   beforeMount() {
     if (this.userInfo.role == "admin") {
       this.$router.push("/");
@@ -145,19 +218,28 @@ export default {
         return "";
       }
     },
-    showEventDetails(e, i, d) {
+    showEventDetails(i) {
       this.$store.dispatch("selectEvent", i);
+    },
+    increasePage() {
+      if (this.currentPage < this.maxPage) {
+        this.currentPage = this.currentPage + 1;
+      }
+    },
+    decreasePage() {
+      if (this.currentPage > 1) {
+        this.currentPage = this.currentPage - 1;
+      }
     },
   },
   computed: {
-    sortedEvents() {
-      let arr = [];
-      let eventList = [];
-      if (this.userInfo.eventList.length > 0) {
-        this.userInfo.eventList.forEach((x) => {
-          eventList.push(x);
-        });
-        arr = eventList.sort((a, b) => {
+    eventList() {
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arr = this.userInfo.eventList
+        .filter((x, i) => {
+          return i >= firstItem && i < firstItem + this.resultsPerPage;
+        })
+        .sort((a, b) => {
           if (a.name.toLowerCase() > b.name.toLowerCase()) {
             return 1;
           }
@@ -166,8 +248,17 @@ export default {
           }
           return 0;
         });
-      }
-      return arr;
+      return {
+        arr: arr,
+        first: firstItem + 1,
+        total: this.userInfo.eventList.length,
+        last:
+          this.currentPage == this.maxPage
+            ? this.userInfo.eventList.length
+            : this.currentPage > this.maxPage
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
     },
     userInfo() {
       return this.$store.getters.userData;
@@ -180,15 +271,7 @@ export default {
           attendance: 0,
         });
       });
-      this.userInfo.eventList.forEach((x) => {
-        x.attendanceList.forEach((y) => {
-          const index = arr.findIndex((st) => {
-            return st.name == y;
-          });
-          arr[index].attendance = arr[index].attendance + 1;
-        });
-      });
-      return arr.sort((a, b) => {
+      arr = arr.sort((a, b) => {
         if (a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
         }
@@ -196,7 +279,22 @@ export default {
           return -1;
         }
         return 0;
-      });         
+      });
+      this.userInfo.eventList.forEach((x) => {
+        x.attendanceList.forEach((y) => {
+          const index = arr.findIndex((st) => {
+            return st.name == y;
+          });
+          if(index > -1) {
+            arr[index].attendance = arr[index].attendance + 1;
+          }
+        });
+      });
+      return arr;
+    },
+    maxPage() {
+      const arr = this.userInfo.eventList;
+      return Math.ceil(arr.length / this.resultsPerPage);
     },
   },
 };

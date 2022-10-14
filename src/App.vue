@@ -24,7 +24,7 @@ export default defineComponent({
   watch: {
     isAuth: {
       handler: async function () {
-        if(this.isAuth) {
+        if (this.isAuth && this.$store.getters.userData == null) {
           await this.$store.dispatch("getUserData");
         }
         // if (this.isAuth) {

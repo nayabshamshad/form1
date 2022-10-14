@@ -1,102 +1,69 @@
 <template>
   <div
-    class="top-bar"
+    class="top-bar user-top"
     v-if="
       isAuthenticated &&
       userData?.role != 'admin' &&
       userData?.role != 'department'
     "
   >
-    <q-btn
-      no-caps
-      @click="$router.go(-1)"
-      round
-      style="transform: rotate(-90deg)"
-      icon="navigation"
-      v-if="$route.path != '/sign-in'"
-    />
-    <div v-else></div>
-    <h3 class="heading" style="">{{ $route.name }}</h3>
-    <div>
+  <div class="flex menu-container justify-between ">
+
+    <h1 class="lec-logo text-weight-bold">LEC</h1>
+    <div class="showMobile">
+        <q-btn
+        color="black"
+        flat
+        icon="menu"
+        @click="showMenuUser = !showMenuUser"
+        ></q-btn>
+        </div>
+        <mobile-nav @close="showMenuUser = !showMenuUser" v-show="showMenuUser" />
+    <div class="top-center admin-nav hideMobile" >
       <q-btn
         no-caps
-        color="grey"
-        text-color="black"
-        to="/"
+        color="black"
+        flat
         type="button"
-        @click="logOut"
-        class="btn"
-        >Deconectare</q-btn
-      >
-      <q-btn
-        no-caps
-        color="grey"
-        text-color="black"
-        type="button"
-        v-if="
-          $route.path != '/' &&
-          userData?.isAuthorized == true &&
-          userData?.isUpdated == true
-        "
         @click="$router.push('/')"
         class="btn"
+        :class="$route.path === '/' ? 'add-border' : ''"
       >
         Panou de bord
       </q-btn>
       <q-btn
         no-caps
-        color="grey"
-        text-color="black"
         type="button"
-        v-if="
-          $route.path != '/event-list' &&
-          userData?.status &&
-          userData?.role != 'admin' &&
-          userData?.isAuthorized == true
-        "
+        color="black"
+        flat
         @click="$router.push('/event-list')"
         class="btn"
+        :class="$route.path === '/event-list' ? 'add-border' : ''"
       >
         Întâlniri
       </q-btn>
     </div>
-  </div>
-  <div class="top-bar" v-else-if="!isAuthenticated">
-    <q-btn
-      no-caps
-      @click="$router.go(-1)"
-      round
-      style="transform: rotate(-90deg)"
-      icon="navigation"
-      v-if="$route.path != '/sign-in'"
-    />
-    <div v-else></div>
-    <h3>{{ $route.name }}</h3>
-    <div>
+    <div class="hideMobile">
       <q-btn
-        v-if="$route.path != '/sign-in'"
         no-caps
-        color="grey"
-        text-color="black"
-        @click="$router.push('/sign-in')"
+        color="black"
+        flat
+        to="/"
         type="button"
-        class="btn"
-      >
-        Conectare
-      </q-btn>
-      <q-btn
-        v-if="$route.path != '/sign-up'"
-        no-caps
-        color="grey"
-        text-color="black"
-        type="button"
-        @click="$router.push('/sign-up')"
-        class="btn"
-      >
-        Înregistrare
-      </q-btn>
+        @click="logOut"
+        class="btn log-out"
+        style="font-size: 12px; font-weight: 300"
+        >Deconectare
+        <q-icon
+          class="q-pl-md"
+          style="font-size: 30px; color: rgba(150, 150, 150, 1)"
+          name="exit_to_app"
+        ></q-icon
+      ></q-btn>
     </div>
   </div>
+  </div>
+
   <div
     class="top-bar"
     v-else-if="
@@ -104,51 +71,91 @@
       (userData?.role == 'admin' || userData?.role == 'department')
     "
   >
-    <q-btn
-      no-caps
-      @click="$router.go(-1)"
-      round
-      style="transform: rotate(-90deg)"
-      icon="navigation"
-      v-if="$route.path != '/sign-in'"
-    />
-    <div v-else></div>
-    <div class="flex admin-nav">
-      <button class="heading" @click="$router.push('/?q=approved')">
-        Aprobat
-      </button>
-      <button class="heading" @click="$router.push('/?q=pending')">
-        În așteptare
-      </button>
-      <button class="heading" @click="$router.push('/?q=declined')">
-        Refuzat
-      </button>
-      <button
-        class="heading"
-        v-show="userData.role == 'department'"
-        @click="$router.push('/?q=date')"
-      >
-        Data
-      </button>
-      <button
-        class="heading"
-        v-show="userData.role == 'admin'"
-        @click="$router.push('/?q=departments')"
-      >
-        Conferințe
-      </button>
-    </div>
-    <div>
+    <!-- Mobile Nav -->
+    <mobile-nav @close="showMenu = false" v-show="showMenu" />
+    <div class="hideMobile menu-container flex justify-between">
+
+    <h1 class="lec-logo text-weight-bold">LEC</h1>
+    <div class="flex hideMobile admin-nav top-center">
       <q-btn
         no-caps
-        color="grey"
-        text-color="black"
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/?q=approved')"
+        class="btn"
+        :class="
+          $route.fullPath === '/' || $route.fullPath === '/?q=approved'
+            ? 'add-border'
+            : ''
+        "
+      >
+        Aprobat
+      </q-btn>
+      <q-btn
+        no-caps
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/?q=pending')"
+        class="btn"
+        :class="$route.fullPath === '/?q=pending' ? 'add-border' : ''"
+      >
+        În așteptare
+      </q-btn>
+      <q-btn
+        no-caps
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/?q=declined')"
+        class="btn"
+        :class="$route.fullPath === '/?q=declined' ? 'add-border' : ''"
+      >
+        Refuzat
+      </q-btn>
+      <q-btn
+        no-caps
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/?q=date')"
+        class="btn"
+        v-show="userData.role === 'department'"
+        :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
+      >
+        Data
+      </q-btn>
+      <q-btn
+        no-caps
+        type="button"
+        color="black"
+        flat
+        @click="$router.push('/?q=departments')"
+        class="btn"
+        v-show="userData.role === 'admin'"
+        :class="$route.fullPath === '/?q=departments' ? 'add-border' : ''"
+      >
+        Conferinte
+      </q-btn>
+    </div>
+    <div class="hideMobile">
+      <q-btn
+        no-caps
+        color="black"
+        flat
         to="/"
         type="button"
         @click="logOut"
-        class="btn"
-        >Deconectare</q-btn
-      >
+        class="btn log-out"
+        style="font-size: 12px; font-weight: 300"
+        >Deconectare
+        <q-icon
+          class="q-pl-md"
+          style="font-size: 30px; color: rgba(150, 150, 150, 1)"
+          name="exit_to_app"
+        ></q-icon
+      ></q-btn>
       <q-btn
         no-caps
         color="grey"
@@ -167,17 +174,48 @@
       </q-btn>
     </div>
   </div>
+
+    <div class="showMobile flex justify-between">
+      <div><h1 class="lec-logo text-weight-bold ">LEC</h1></div>
+      <div>
+        <q-btn
+        color="black"
+        flat
+        icon="menu"
+        @click="showMenu = !showMenu"
+        ></q-btn>
+      </div>
+    </div>
+
+  </div>
   <router-view />
+  <div
+    class="flex align-center bottom-bar justify-center"
+    v-if="isAuthenticated"
+  >
+  <div class="flex justify-between">
+    <div @click="showTerms = true">Termeni si conditii</div>
+    <div>{{ new Date().getFullYear() }}</div>
+    <div>&#x24B8; LEC</div>
+  </div>
+  </div>
+  <q-dialog v-model="showTerms">
+    <showTerms />
+  </q-dialog>
 </template>
 <script>
 import { defineComponent } from "vue";
-
+import showTerms from "../components/termsAndConditions.vue";
+import MobileNav from "../components/MobileNav.vue";
 export default defineComponent({
   name: "MainLayout",
-
-  components: {},
+  components: { showTerms, MobileNav },
   data() {
-    return {};
+    return {
+      showTerms: false,
+      showMenu: false,
+      showMenuUser: false,
+    };
   },
   methods: {
     logOut() {

@@ -35,9 +35,9 @@
       </div>
       <div class="cate-list">
         <q-input
-        type="text"
+          type="text"
           label="Department-Name"
-          label-color="black" 
+          label-color="black"
           placeholder="Enter Department-Name"
           name="Department-Name"
           v-model="departmentName"
@@ -108,6 +108,14 @@ export default {
         this.$q.notify({
           message: "Phone Number must be formatted correctly",
           color: "red",
+        });
+        this.isSubmitting = false;
+        return;
+      }
+      if (this.departmentName === "") {
+        this.$q.notify({
+          color: "red",
+          message: "Please select a valid department",
         });
         this.isSubmitting = false;
         return;

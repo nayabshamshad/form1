@@ -1,0 +1,177 @@
+.q-tab-panels:has(.infoRow) {
+  @media (max-width: 585px) {
+    padding: 0 2rem !important;
+  }
+  @media (max-width: 500px) {
+    padding: 0 1rem !important;
+  }
+  @media (max-width: 400px) {
+    padding: 0 !important;
+  }
+}
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  > div {
+  }
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+    > div.shadowed,
+    div.shadowed:not(.skills) {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
+  + .user-details {
+    display: flex;
+    width: 100%;
+    padding: 1.5rem;
+    padding-right: 1.75rem;
+    justify-content: space-between;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      > div {
+        &:not(:last-of-type) {
+          display: flex;
+          gap: 10px;
+        }
+        &:last-of-type {
+          > div {
+            padding-left: 0.6rem;
+          }
+        }
+        h3 {
+          line-height: 20px;
+        }
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  > div {
+    width: 69%;
+  }
+  > div:not(.skills) {
+    width: 30%;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+    }
+  }
+  .skills {
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 1rem;
+      p {
+        padding: 2px 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+.children-list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  > div {
+    width: 47%;
+    margin-bottom: 0.2rem;
+    @media (min-width: 769px) {
+      margin-bottom: 0.75rem;
+    }
+  }
+  @media (max-width: 768px) {
+    > div {
+      width: 90%;
+    }
+  }
+}
+
+.edit-details {
+  h5 {
+    line-height: 2rem;
+    white-space: nowrap;
+  }
+  .q-btn.q-btn--round.edit-toggle {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: -10px;
+    margin-right: 10px;
+  }
+}
+.q-card.user-details {
+  .q-tab {
+    @media (max-width: 500px) {
+      padding: 0 4px;
+    }
+  }
+
+  td:first-of-type:has(~ .event-date-td) {
+    @media (max-width: 768px) {
+      width: 60%;
+      min-width: 60%;
+    }
+  }
+  td.event-date-td {
+    @media (max-width: 768px) {
+      width: 40%;
+      white-space: nowrap;
+      font-weight: 500;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 768px) {
+    .attendance-summary:has(> h4) {
+      position: relative;
+    }
+    h4:has(+ .eventlist) {
+      font-size: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      + .eventlist {
+        top: 0;
+        position: absolute;
+      }
+    }
+  }
+  h4:has(+ .eventlist) {
+    + .eventlist {
+      > div {
+        @media (max-width: 768px) {
+          .q-btn {
+            margin-left: 1rem;
+          }
+        }
+        @media (min-width: 769px) {
+          width: 90% !important;
+          .q-btn {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+  .inline-pagination {
+    @media (min-width: 769px) {
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .pagination-buttons {
+      .q-btn {
+        margin-left: 0;
+      }
+    }
+  }
+}

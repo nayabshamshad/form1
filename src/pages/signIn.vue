@@ -1,87 +1,63 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="loginUser" class="form" autocomplete="off">
-      <h2>Autentificare</h2>
-      <div class="cate-list">
-        <label for="uname"><b>Adresa ta de E-mail</b></label>
-        <q-input
-          v-model="userEmail"
-          type="text"
-          placeholder="Adresa de E-mail"
-          name="uname"
-        />
-      </div>
-      <div class="cate-list">
-        <label for="pwd"><b>Parola</b></label>
-        <q-input
-          type="password"
-          placeholder="Parola"
-          name="pwd"
-          v-model="userPass"
-        />
-      </div>
-      <div class="btn1">
-        <q-btn
-          @click="loginUser"
-          :loading="isSubmitting"
-          type="button"
-          color="purple"
-          rounded
-          >Conectare</q-btn
-        >
-      </div>
-      <span class="pwd"
-        >Utilizator nou?
-        <router-link to="/sign-up">Înregistrare</router-link>
-        <button
-          type="button"
-          style="
-            background: none;
-            outline: none;
-            border: none;
-            display: block;
-            color: blue;
-            cursor: pointer;
-          "
-          @click="forgotPassword"
-        >
-          Am uitat parola
-        </button>
-      </span>
-    </form>
-  </div>
+  <q-card class="my-card full-height sign-in">
+    <q-card-section>
+      <div class="container">
 
-  <!-- Forgot Dialog -->
-  <q-dialog v-model="forgotDialog">
-    <q-card style="width: 100%">
-      <q-card-section
-        ><div
-          class="flex"
-          style="justify-content: flex-end; padding: 0 30%"
-        ></div>
-        <div class="text-h6">Resetare parolă</div>
-      </q-card-section>
+        <form @submit.prevent="loginUser" class="form" autocomplete="off">
+          <h2 class="text-center showMobile text-bold q-mb-lg q-pb-lg">LEC</h2>
+          <h4>Autentificare</h4>
+          <p>
+            nu ai ica cont? <router-link to="/sign-up" class="link"
+              >inregistreaza-te</router-link
+            >
+          </p>
+          <div class="cate-list">
+            <label for="uname"> E-mail</label>
+            <q-input
+            outlined
+              v-model="userEmail"
+              type="text"
+              placeholder="Adresa de E-mail"
+              name="uname"
+            />
+          </div>
+          <div class="cate-list">
+            <label for="pwd">Parola</label>
+            <q-input
+            outlined
+              placeholder="Parola"
+              name="pwd"
+              v-model="userPass"
+              :type="isPwd ? 'password' : 'text'"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </div>
+          <div class="btn1">
+            <q-btn
+              @click="loginUser"
+              :loading="isSubmitting"
+              class="q-btn-item"
+              type="button"
+              >Conectare</q-btn
+            >
+          </div>
+          <span class="pwd">
+            <button style="font-size: 12px" type="button" class="link" @click="forgotPassword">
+              Am uitat parola
+            </button>
+          </span>
+        </form>
+      </div>
+    </q-card-section>
+  </q-card>
 
-      <q-card-section class="q-pt-none">
-        <p>Introduce adresa de E-mail</p>
-        <q-input v-model="forgotEmail" type="email"></q-input>
-        <div class="flex justify-center">
-          <q-btn
-            @click="sendResetEmail"
-            rounder
-            style="margin-top: 1rem"
-            :loading="sendingEmail"
-            color="purple"
-            >Resetare</q-btn
-          >
-        </div>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="Ieșire" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -95,6 +71,7 @@ export default {
       forgotEmail: "",
       sendingEmail: false,
       forgotCode: "",
+      isPwd: true,
     };
   },
   mounted() {},
@@ -102,33 +79,11 @@ export default {
     async confirmReset() {
       const reset = await this.$store.dispatch("confirmReset", this.forgotCode);
     },
-    async sendResetEmail() {
-      if (this.sendingEmail) {
-        return;
-      }
-      this.sendingEmail = true;
-      const reset = await this.$store.dispatch(
-        "sendResetEmail",
-        this.forgotEmail
-      );
-      if (reset.err) {
-        this.sendingEmail = false;
-        return;
-      } else {
-        this.$q.notify({
-          message:
-            "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
-          color: "green",
-        });
-        setTimeout(() => {
-          this.forgotDialog = false;
-        }, 1000);
-      }
-      this.sendingEmail = false;
-    },
-    async forgotPassword() {
-      this.forgotEmail = this.userEmail;
-      this.forgotDialog = true;
+
+
+    forgotPassword() {
+      this.$router.push('/send-reset-link')
+
     },
     async loginUser() {
       this.forgotDialog = false;

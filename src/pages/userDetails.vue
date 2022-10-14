@@ -1,596 +1,740 @@
 <template>
-  <q-tabs v-model="tabs">
-    <q-tab name="user" label="Informații utilizator"></q-tab>
-    <q-tab
-      v-if="
-        selectedUser.status &&
-        selectedUser?.isUpdated &&
-        selectedUser.isAuthorized == true
-      "
-      name="events"
-      label="Întâlnirile"
-    ></q-tab>
-    <q-tab name="date" v-if="selectedUser.role === 'department'"> Data</q-tab>
-  </q-tabs>
-  <q-tab-panels v-model="tabs">
-    <q-tab-panel name="user">
-      <div v-if="!isEdit" class="container">
-        <div class="flex" style="justify-content: flex-end; max-width: 75%">
-          <q-btn
-            round
-            @click="isEdit = !isEdit"
-            color="green"
-            v-show="selectedUser.role !== 'department'"
-            icon="edit"
-          ></q-btn>
-        </div>
-        <div
-          class="flex"
-          style="justify-content: flex-end; max-width: 75%"
-        ></div>
-        <h2>
-          {{
-            selectedUser.isAuthorized === "pending"
-              ? "În așteptare"
-              : selectedUser.role === "department"
-              ? "Lider de Conferința"
-              : selectedUser.isAuthorized == true
-              ? "Autorizat"
-              : "Refuzat"
-          }}
-        </h2>
-        <div
-          class="add-img"
-          v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-        >
-          <img :src="selectedUser.imgUrl" />
-        </div>
-        <form class="form category-form home-only">
-          <div v-if="selectedUser.name != ''" class="cate-list-home">
-            <label for="club"><b>Nume/Prenume:</b></label>
-            <span>{{ selectedUser.name }}</span>
-          </div>
-          <div v-if="selectedUser.email !== ''" class="cate-list-home">
-            <label for="email"><b>E-mail:</b></label>
-            <span
-              style="padding-left: 0; word-wrap: break-word"
-              class="text-primary cursor-pointer link-text"
-              @click="mailUser(selectedUser.email)"
-              >{{ selectedUser.email }}</span
-            >
-          </div>
-
-          <div v-if="selectedUser.phoneNumber != ''" class="cate-list-home">
-            <label for="telephone no."><b>Număr de telefon:</b></label>
-            <span>{{ selectedUser.phoneNumber }}</span>
-          </div>
-
-          <!-- <div v-if="selectedUser.etnic != ''" class="cate-list-home">
-            <label for="Etnic"><b>Etnie:</b></label>
-            <span>{{ selectedUser.etnic }}</span>
-          </div> -->
-
-          <div v-if="selectedUser.gender != ''" class="cate-list-home">
-            <label for="Gender"><b>Gen:</b></label>
-            <span>{{ selectedUser.gender }}</span>
-          </div>
-
-          <div v-if="selectedUser.dateOfBirth != ''" class="cate-list-home">
-            <label for="date"><b>Data nașterii:</b></label>
-            <span>{{
-              selectedUser?.dateOfBirth
-                ? getBirthDate(selectedUser.dateOfBirth)
-                : ""
-            }}</span>
-          </div>
-
-          <div v-if="selectedUser.size != ''" class="cate-list-home">
-            <label for="Size"><b>Mărime tricou:</b></label>
-            <span>{{ selectedUser.size }}</span>
-          </div>
-
-          <div v-if="selectedUser.category != ''" class="cate-list-home">
-            <label for="Category"><b>Categorie:</b></label>
-            <span>{{ selectedUser.category }}</span>
-          </div>
-
-          <div v-if="selectedUser.region != ''" class="cate-list-home">
-            <label for="Region"><b>Zona:</b></label>
-            <span>{{ selectedUser.region }} </span>
-          </div>
-
-          <div v-if="selectedUser.state != ''" class="cate-list-home">
-            <label for="state"><b>Comunitate:</b></label>
-            <span>{{ selectedUser.state }}</span>
-          </div>
-
-          <div v-if="selectedUser.clubName != ''" class="cate-list-home">
-            <label for="club"><b>Clubul:</b></label>
-            <span>{{ selectedUser.clubName }}</span>
-          </div>
-
-          <div v-if="selectedUser.role !== 'department'" class="cate-list-home">
-            <label for="status"><b>Status:</b></label>
-            <span>{{ selectedUser.status ? "Activ" : "InActiv" }}</span>
-          </div>
-          <div
-            v-if="selectedUser.tagList.length > 0"
-            class="cate-list-home chip-container"
-          >
-            <label for="tags"><b>Specializări:</b></label>
-            <div v-if="selectedUser.tagList">
-              <span v-for="(item, index) in selectedUser.tagList" :key="index">
-                {{ item }}
-              </span>
-            </div>
-          </div>
-
-          <div
-            v-if="
-              selectedUser.Instructor !== '' ||
-              selectedUser.Ghid !== '' ||
-              selectedUser.masterGhid !== ''
-            "
-            class="cate-list-home"
-          >
-            <label for="Instructor"><b>Anul investiturii ca:</b></label>
-            <span><b>Instructor:</b> {{ selectedUser.Instructor }}</span>
-            <span><b>Ghid:</b> {{ selectedUser.Ghid }}</span>
-            <span><b>Master Ghid:</b> {{ selectedUser.masterGhid }}</span>
-          </div>
-        </form>
-        <div class="table-container">
-          <table
-            v-if="
-              selectedUser.role === 'department' &&
-              departmentUserList.length > 0
-            "
-            class="user-list-table"
-          >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, i) in departmentUserList" :key="i">
-                <td>{{ user.name }}</td>
-                <td class="hideMobile" @click="callUser(user.phoneNumber)">
-                  {{ user.phoneNumber }}
-                </td>
-                <td class="showMobile" @click="callUser(user.phoneNumber)">
-                  <q-icon name="phone"></q-icon>
-                </td>
-                <td @click="mailUser(user.email)" class="hideMobile last">
-                  {{ user.email }}
-                </td>
-                <td @click="mailUser(user.email)" class="showMobile last">
-                  <q-icon name="email"></q-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div
+  <q-card
+    class="my-card info sign-in user-details"
+    style="padding-top: 0; padding-left: 0; padding-right: 0"
+  >
+    <q-card-section class="q-px-none q-pt-none">
+      <q-tabs
+        indicator-color="transparent"
+        active-class="remove-border"
+        align="justify"
+        class="linkcolor q-mb-md admin-tabs user-detail-tab"
+        v-model="tabs"
+      >
+        <q-tab name="user" label="Informații utilizator"></q-tab>
+        <q-tab
           v-if="
             selectedUser.status &&
-            selectedUser.teamList.length > 0 &&
-            selectedUser.role !== 'department'
+            selectedUser?.isUpdated &&
+            selectedUser.isAuthorized == true
           "
-          class="home-detail"
+          name="events"
+          label="Întâlnirile"
+        ></q-tab>
+        <q-tab name="date" v-if="selectedUser.role === 'department'">
+          Data</q-tab
         >
-          <h2>Lista copiilor</h2>
-          <div class="grid">
-            <div
-              class="grid-cell"
-              v-for="(item, index) in sortedTeamList"
-              :key="index"
-            >
-              {{ item.name }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-else class="container">
-        <div class="flex" style="justify-content: flex-end; max-width: 75%">
-          <q-btn
-            round
-            @click="isEdit = !isEdit"
-            color="green"
-            icon="edit"
-          ></q-btn>
-        </div>
-        <form class="form">
-          <h2>Editare informații</h2>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.name"
-              placeholder="Nume/Prenume"
-              name="name"
-              label="Nume/Prenume:"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="tel"
-              v-model="dataUser.phoneNumber"
-              placeholder="+40......."
-              name="phone number"
-              mask="+40 #### #####"
-              label="Număr de telefon:"
-              label-color="black"
-            />
-          </div>
-
-          <!-- <div class="cate-list">
-            <q-select
-              :options="['Română', 'Maghiară']"
-              label="Etnie:"
-              label-color="black"
-              v-model="dataUser.etnic"
-            />
-          </div> -->
-
-          <div>
-            <label for="Gender"><b>Gen:</b></label>
-            <div>
-              <q-radio
-                v-model="dataUser.gender"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
-                val="Male"
-                label="Masculin"
-              />
-              <q-radio
-                v-model="dataUser.gender"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
-                val="Female"
-                label="Feminin"
-              />
-            </div>
-          </div>
-
-          <div class="cate-list">
-            <label
-              style="
-                margin-bottom: 0;
-                margin-top: 1rem;
-                display: block;
-                font-size: 16px;
-                font-weight: 500;
-              "
-              >Data nașterii:</label
-            >
-            <!-- <q-input
-
-              label-color="black"
-              v-model="dataUser.dateOfBirth"
-              type="date"
-            ></q-input> -->
-
-            <q-input
-              filled
-              v-model="dateOfBirth"
-              mask="##/##/####"
-              @focus="openModal"
-            >
-              <template v-slot:append>
-                <q-icon
-                  @click="openModal"
-                  ref="dateIcon"
-                  name="event"
-                  class="cursor-pointer"
-                >
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
+      </q-tabs>
+      <q-tab-panels
+        style="padding-left: 3rem; padding-right: 3rem"
+        v-model="tabs"
+      >
+        <q-tab-panel name="user">
+          <div class="container">
+            <div class="container">
+              <div class="flex justify-end q-pr-sm">
+                <q-btn
+                  round
+                  @click="$router.push('/edit-profile')"
+                  icon="edit_note"
+                  class="bg-linkcolor"
+                ></q-btn>
+              </div>
+              <div class="flex no-wrap">
+                <div class="userImg">
+                  <img
+                    v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
+                    :src="selectedUser.imgUrl"
+                    alt=""
+                  />
+                  <div v-else>
+                    <q-icon class="text-grey" name="photo_camera"></q-icon>
+                  </div>
+                </div>
+                <div class="userInfoText">
+                  <h4>{{ selectedUser.name }}</h4>
+                  <p
+                    :style="
+                      selectedUser.status || selectedUser.role == 'department'
+                        ? 'color: green'
+                        : 'color: red'
+                    "
                   >
-                    <q-date
-                      v-model="dataUser.dateOfBirth"
-                      @update:model-value="handleDateChange"
+                    {{
+                      selectedUser.status || selectedUser.role == "department"
+                        ? "Activ"
+                        : "Inactiv"
+                    }}
+                  </p>
+                  <div>
+                    <p>{{ selectedUser.phoneNumber }}</p>
+                    <p>{{ selectedUser.email }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="infoRow">
+                <div class="shadowed">
+                  <div>
+                    <h3>Etnie:</h3>
+                    <span> {{ selectedUser.etnic }}</span>
+                  </div>
+                  <div>
+                    <h3>Sex:</h3>
+                    <span> {{ selectedUser.gender }}</span>
+                  </div>
+                  <div>
+                    <h3>Data nasterii:</h3>
+                    <span>
+                      {{
+                        selectedUser.dateOfBirth
+                          ? formatTheDate(selectedUser.dateOfBirth)
+                          : ""
+                      }}</span
                     >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </div>
+                  </div>
+                  <div>
+                    <h3>Marime tricou:</h3>
+                    <span class="text-uppercase"> {{ selectedUser.size }}</span>
+                  </div>
+                </div>
+                <div class="shadowed skills">
+                  <h3>Specializari</h3>
+                  <div>
+                    <p v-for="(item, i) in selectedUser.tagList" :key="i">
+                      {{ item }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="shadowed user-details q-mt-md">
+                <div>
+                  <h3>Categorie</h3>
+                  <p>{{ selectedUser.category }}</p>
+                  <!-- <p>Exploratori</p> -->
+                </div>
+                <div>
+                  <h3>Zona:</h3>
 
-          <div class="cate-list">
-            <q-select
-              v-model="dataUser.size"
-              :options="sizeOptions"
-              label-color="black"
-              label="Mărime tricou:"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-select
-              v-model="dataUser.category"
-              label="Categorie:"
-              label-color="black"
-              :options="['Licurici', 'Companioni', 'Exploratori']"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.region"
-              placeholder="ex. Târgu Mureș"
-              label="Zona:"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.state"
-              placeholder="Comunitate"
-              label="Comunitate:"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.clubName"
-              placeholder="Clubul"
-              name="Club"
-              label="Clubul:"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="tagsInput"
-              placeholder="Comma seperated"
-              name="tags"
-              label="Specializări (max 5):"
-              label-color="black"
-            />
-          </div>
-
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.Instructor"
-              label-color="black"
-              label="Anul investiturii ca instructor:"
-              placeholder="YYYY"
-              name="Instructor"
-              mask="####"
-            />
-          </div>
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.Ghid"
-              placeholder="YYYY"
-              label="Anul investiturii ca ghid:"
-              label-color="black"
-              mask="####"
-            />
-          </div>
-          <div class="cate-list">
-            <q-input
-              type="text"
-              v-model="dataUser.masterGhid"
-              placeholder="YYYY"
-              mask="####"
-              label-color="black"
-              label="Anul investiturii ca Master ghid:"
-            />
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              padding-right: 2rem;
-              margin: 1rem 0;
-            "
-          ></div>
-
-          <div>
-            <label for="status"><b>Status:</b></label>
-            <div>
-              <q-radio
-                v-model="dataUser.status"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
-                :val="true"
-                label="Activ"
-              />
-              <q-radio
-                v-model="dataUser.status"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
-                :val="false"
-                label="InActiv"
-              />
-            </div>
-          </div>
-
-          <div v-if="dataUser.status" class="cate-list">
-            <div
-              class="flex"
-              style="justify-content: flex-end; padding: 0 30%"
-            ></div>
-
-            <div style="flex-wrap: nowrap" class="flex justify-space-between">
-              <label for="list"><b>Lista copiilor:</b></label>
-              <q-btn @click="addMember" type="button" round color="purple"
-                >+</q-btn
+                  <!-- <p>Brasov</p> -->
+                  <p>{{ selectedUser.region }}</p>
+                </div>
+                <div>
+                  <h3>Comunitate:</h3>
+                  <!-- <p>Betel</p> -->
+                  <p>{{ selectedUser.state }}</p>
+                </div>
+                <div>
+                  <h3>Clubul:</h3>
+                  <!-- <p>Iosua</p> -->
+                  <p>{{ selectedUser.clubName }}</p>
+                </div>
+                <div>
+                  <h3>Anul investiturii ca:</h3>
+                  <div>
+                    <span>Instructor: </span>
+                    <span>
+                      {{
+                        selectedUser.Instructor !== ""
+                          ? selectedUser.Instructor
+                          : "-"
+                      }}</span
+                    >
+                  </div>
+                  <div>
+                    <span>Ghid: </span>
+                    <span>
+                      {{
+                        selectedUser.Ghid !== "" ? selectedUser.Ghid : "-"
+                      }}</span
+                    >
+                  </div>
+                  <div>
+                    <span>Master Ghid:</span>
+                    <span>
+                      {{
+                        selectedUser.masterGhid !== ""
+                          ? selectedUser.masterGhid
+                          : "-"
+                      }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div v-show="selectedUser.status" class="shadowed q-mt-md">
+                <h2>Lista Copiilor</h2>
+                <div class="children-list">
+                  <div
+                    v-for="(member, i) in sortedTeam"
+                    :key="i"
+                    class="section"
+                  >
+                    {{ member.name }}
+                  </div>
+                </div>
+              </div>
+              <div
+                v-if="
+                  selectedUser.role === 'department' &&
+                  departmentUserList.length > 0
+                "
+                class="table-container q-mt-lg"
               >
-            </div>
-
-            <div
-              v-for="(item, index) in teamList"
-              :key="index"
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              "
-            >
-              <q-input
-                type="text"
-                v-model="item.name"
-                placeholder="Member Name"
-                style="width: 70%"
-              />
-              <q-btn
-                @click="removeMember(index)"
-                type="button"
-                round
-                color="red"
-                style="width: 35px; height: 35px"
-                >-</q-btn
-              >
-            </div>
-          </div>
-          <div class="submit">
-            <q-btn
-              type="button"
-              :loading="isSubmitting"
-              @click="submit"
-              color="purple"
-              class="signupbtn"
-              >Trimite</q-btn
-            >
-          </div>
-        </form>
-      </div>
-    </q-tab-panel>
-    <q-tab-panel name="events">
-      <div class="container">
-        <div class="attendance-container">
-          <div class="attendance-summary">
-            <h5 style="font-size: 18px"><span>Prezența</span></h5>
-            <div v-for="(student, index) in listOfAttendance" :key="index">
-              <div class="flex justify-space-around">
-                <span>
-                  {{ student.name }}
-                </span>
-                <span>
-                  {{ student.attendance }} / {{ selectedUser.eventList.length }}
-                </span>
+                <table style="width: 100%" class="user-list-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-row">
+                    <tr v-for="(user, i) in departmentUserList" :key="i">
+                      <td>{{ user.name }}</td>
+                      <td
+                        class="hideMobile"
+                        @click="callUser(user.phoneNumber)"
+                      >
+                        {{ user.phoneNumber }}
+                      </td>
+                      <td
+                        class="showMobile"
+                        @click="callUser(user.phoneNumber)"
+                      >
+                        <q-icon name="phone"></q-icon>
+                      </td>
+                      <td @click="mailUser(user.email)" class="hideMobile last">
+                        {{ user.email }}
+                      </td>
+                      <td @click="mailUser(user.email)" class="showMobile last">
+                        <q-icon name="email"></q-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-        </div>
-        <div class="eventlist">
-          <span>
-            <q-btn
-              size="sm"
-              color="green"
-              icon="download"
-              @click="exportFile('events')"
-              round
-            ></q-btn
-          ></span>
-        </div>
-        <div style="margin-top: 1rem" class="flex justify-center">
-          <q-table
-            v-if="selectedUser.eventList?.length > 0"
-            style="width: 80%"
-            title="Lista întâlnirilor"
-            :rows="sortedEvents"
-            :columns="[
-              {
-                name: 'name',
-                label: 'Tema întâlnirii',
-                required: true,
-                align: 'center',
-                field: (item) => item.name,
-              },
-              {
-                name: 'date',
-                label: 'Data întâlnirii',
-                required: true,
-                align: 'center',
-                field: (item) => getBirthDate(item.date),
-              },
-            ]"
-            flat
-            dark
-            bordered
-            @row-click="showEventDetails"
-          />
-          <div v-else style="width: 60%" class="flex justify-center">
-            Acest utilizator nu are nicio întâlnirea inregistrată
+
+
+
+
+
+
+
+
+
+
+          <!--
+          <q-dialog v-model="isEdit" no-esc-dismiss no-backdrop-dismiss>
+            <q-card class="my-card edit-details sign-up center-card">
+              <q-card-section>
+                <div class="container">
+                  <form
+                    class="form"
+                    style="padding-left: 5rem; padding-right: 5rem"
+                  >
+                    <div class="flex items-center justify-around">
+                      <q-btn
+                        class="edit-toggle"
+                        v-close-popup
+                        round
+                        icon="chevron_left"
+                      ></q-btn>
+                      <h4>Completați informațiile</h4>
+                    </div>
+                    <input
+                      ref="imgInput"
+                      accept="image/*"
+                      @input="handleImageUpload"
+                      type="file"
+                      style="display: none"
+                    />
+                    <div class="profile-img-holder q-mt-lg">
+                      <div
+                        @click="showImgInput"
+                        v-if="
+                          (!dataUser.imgUrl || dataUser.imgUrl == '') &&
+                          previewImage == ''
+                        "
+                        align="right"
+                        class="flex no-wrap q-mb-none"
+                      >
+                        <div class="add-img">
+                          <q-icon
+                            class="text-grey"
+                            name="photo_camera"
+                          ></q-icon>
+                        </div>
+                        <p>Adaugă o fotografie tip buletin cu tine</p>
+                      </div>
+                      <div
+                        @click="showImgInput"
+                        v-else-if="dataUser.imgUrl != '' && previewImage == ''"
+                        class="flex no-wrap q-mb-md"
+                      >
+                        <div class="add-img q-mx-auto">
+                          <img
+                            class="add-event-img"
+                            :src="dataUser.imgUrl"
+                            alt=""
+                          />
+                        </div>
+                        <p>Adaugă o fotografie tip buletin cu tine</p>
+                      </div>
+                      <div
+                        v-else-if="previewImage != ''"
+                        class="flex no-wrap q-mb-md"
+                      >
+                        <div class="add-img q-mx-auto relative-position">
+                          <q-icon
+                            size="sm"
+                            name="cancel"
+                            color="red"
+                            class="absolute"
+                            style="top: 3px; right: 5px; z-index: 1"
+                            @click="removeImg"
+                          />
+                          <img
+                            @click="showImgInput"
+                            class="add-event-img"
+                            :src="previewImage"
+                            alt=""
+                          />
+                        </div>
+                        <p>Adaugă o fotografie tip buletin cu tine</p>
+                      </div>
+                    </div>
+                    <div class="cate-list left">
+                      <label for="uname">Etnie</label>
+                      <q-select
+                        outlined
+                        :options="['Română', 'Maghiară']"
+                        v-model="dataUser.etnic"
+                      />
+                    </div>
+
+                    <div class="right gender">
+                      <label for="Gender">Sex:</label>
+                      <div class="flex no-wrap">
+                        <q-radio
+                          v-model="dataUser.gender"
+                          val="Male"
+                          color="black"
+                          label="Masculin"
+                        />
+                        <q-radio
+                          v-model="dataUser.gender"
+                          color="black"
+                          val="Female"
+                          label="Femenin"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="cate-list q-pl-sm right margin">
+                      <label for="uname">Data nașterii:</label>
+                      <q-input
+                        v-model="dateOfBirth"
+                        mask="##/##/####"
+                        @focus="openModal"
+                      >
+                        <template v-slot:append>
+                          <q-icon
+                            @click="openModal"
+                            ref="dateIcon"
+                            name="event"
+                            class="cursor-pointer"
+                            color="black"
+                          >
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-date
+                                v-model="dataUser.dateOfBirth"
+                                @update:model-value="handleDateChange"
+                              >
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-date>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="cate-list left">
+                      <label for="uname">Mărimea tricou</label>
+                      <q-select
+                        outlined
+                        v-model="dataUser.size"
+                        :options="sizeOptions"
+                      />
+                    </div>
+                    <div style="margin-bottom: 0" class="cate-list">
+                      <label for="uname">Categoria</label>
+                      <div>
+                        <q-radio
+                          v-model="dataUser.category"
+                          val="Male"
+                          color="black"
+                          label="Licurici"
+                        />
+                        <q-radio
+                          v-model="dataUser.category"
+                          val="Female"
+                          color="black"
+                          label="Exploratori"
+                        />
+                        <q-radio
+                          v-model="dataUser.category"
+                          val="trans"
+                          color="black"
+                          label="Companioni"
+                        />
+                      </div>
+                    </div>
+                    <div class="cate-list left">
+                      <label for="uname">Clubul</label>
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.clubName"
+                        placeholder="Denumirea clubului"
+                      />
+                    </div>
+                    <div class="cate-list right">
+                      <label for="uname">Zona</label>
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.region"
+                        placeholder="Zona în care activezi"
+                      />
+                    </div>
+                    <div class="cate-list">
+                      <label for="uname">Comunitate</label>
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.state"
+                        placeholder="Comunitatea în care activezi"
+                      />
+                    </div>
+                    <div class="cate-list">
+                      <label for="uname"
+                        >Specializări pe care le poți preda</label
+                      >
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="tagsInput"
+                        placeholder="Separați cu virgula"
+                        name="tags"
+                      />
+                    </div>
+
+                    <div class="cate-list left-1">
+                      <label for="uname">Anii investiturii:</label>
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.Instructor"
+                        placeholder="Instructor"
+                        name="Instructor"
+                        mask="####"
+                      />
+                    </div>
+
+                    <div class="cate-list right-1">
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.masterGhid"
+                        placeholder="Master Ghid"
+                        mask="####"
+                      />
+                    </div>
+                    <div class="cate-list between">
+                      <q-input
+                        outlined
+                        type="text"
+                        v-model="dataUser.Ghid"
+                        placeholder="Ghid"
+                        mask="####"
+                      />
+                    </div>
+                    <div class="cate-list">
+                      <label for="status">Status:</label>
+                      <div class="flex" style="gap: 2rem">
+                        <q-radio
+                          v-model="dataUser.status"
+                          :val="true"
+                          color="black"
+                          label="Activ"
+                        />
+                        <q-radio
+                          v-model="dataUser.status"
+                          :val="false"
+                          color="black"
+                          label="Inactiv"
+                        />
+                      </div>
+                    </div>
+
+                    <div v-if="dataUser.status" class="cate-list">
+                      <div
+                        style="flex-wrap: nowrap"
+                        class="flex justify-space-between"
+                      >
+                        <label for="list">Lista copiilor:</label>
+                        <q-btn
+                          icon="add"
+                          @click="addMember"
+                          class="team-member-btn"
+                          type="button"
+                          round
+                          color="green"
+                        />
+                      </div>
+
+                      <div
+                        class="member-list flex items-center justify-between"
+                        v-for="(item, index) in teamList"
+                        :key="index"
+                      >
+                        <div style="width: 85%">
+                          <q-input
+                            outlined
+                            type="text"
+                            v-model="item.name"
+                            placeholder="Nume copil"
+                          />
+                        </div>
+                        <q-btn
+                          @click="removeMember(index)"
+                          type="button"
+                          round
+                          color="red"
+                          style="width: 35px; height: 35px"
+                          icon="remove"
+                          class="remove-button"
+                        />
+                      </div>
+                    </div>
+                    <div class="submit">
+                      <q-btn
+                        type="button"
+                        :loading="isSubmitting"
+                        @click="submit"
+                        class="signupbtn"
+                        >Trimite</q-btn
+                      >
+                    </div>
+                  </form>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-dialog> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </q-tab-panel>
+        <q-tab-panel class="user-event-container" name="events">
+          <div class="container">
+            <div class="attendance-container shadowed">
+              <div class="attendance-summary">
+                <h4 style="color: #233975">Prezența</h4>
+                <div v-for="(student, index) in listOfAttendance" :key="index">
+                  <div
+                    class="shadowed"
+                    style="border-radius: 0.3rem; margin-top: 1rem"
+                  >
+                    <div class="flex justify-space-between">
+                      <span>
+                        {{ student.name }}
+                      </span>
+                      <span>
+                        {{ student.attendance }} /
+                        {{ selectedUser.eventList.length }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="attendance-container shadowed" style="margin-top: 1rem">
+              <div class="attendance-summary">
+                <h4 style="color: #233975">Lista Intalnirilor</h4>
+                <div class="eventlist">
+                  <div
+                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
+                    style="width: 80%"
+                  >
+                    <q-btn
+                      size="md"
+                      color="green"
+                      icon="download"
+                      @click="exportFile('events')"
+                      round
+                    ></q-btn>
+                  </div>
+                </div>
+                <div class="table-container">
+                  <table
+                    v-if="selectedUser.eventList.length > 0"
+                    class="user-list-table lista"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Tema intalnirii</th>
+                        <th style="text-align: end">Data Intalnirii</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-row">
+                      <tr
+                        class="shadowed tr"
+                        v-for="(item, i) in eventList.arr"
+                        :key="i"
+                        @click="showEventDetails(item)"
+                      >
+                        <td>{{ item.name }}</td>
+                        <td class="event-date-td">
+                          {{ getBirthDate(item.date) }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div
+                    v-else
+                    class="shadowed q-mx-auto"
+                    style="border-radius: 8px; width: 90%"
+                  >
+                    <h4
+                      class="text-weight-bold linkcolor text-left"
+                      style="opacity: 0.5"
+                    >
+                      Nu exista intalniri inca
+                    </h4>
+                  </div>
+                </div>
+                <div class="q-mt-md inline-pagination">
+                  <div style="display: inline-flex">
+                    <span>Intalniri pe pagina</span>
+                    <select class="paginationSelect" v-model="resultsPerPage">
+                      <option :value="5">5</option>
+                      <option :value="10">10</option>
+                      <option :value="20">20</option>
+                      <option :value="50">50</option>
+                    </select>
+                  </div>
+                  <div>
+                    <div class="pagination-buttons">
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        icon="chevron_left"
+                        no-caps
+                        @click="decreasePage"
+                        :disabled="currentPage === 1"
+                      ></q-btn>
+                      <span> {{ currentPage }} </span>
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        @click="increasePage"
+                        no-caps
+                        icon="chevron_right"
+                        :disabled="currentPage >= maxPage"
+                      ></q-btn>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <p>1-1 din 1</p> -->
+                    <p>
+                      {{ eventList.first }}-{{ eventList.last }} din
+                      {{ eventList.total }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </q-tab-panel>
-    <q-tab-panel name="date">
-      <div>
-        <div class="flex justify-center">
-          <q-date v-model="dateModel" range></q-date>
-        </div>
-        <div
-          class="flex"
-          style="
-            justify-content: flex-end;
-            width: 70%;
-            margin-top: 1rem;
-            min-width: 200px;
-          "
-        >
-          <q-btn
-            round
-            icon="check"
-            color="green"
-            :loading="dateSetting"
-            @click="setDate"
-          ></q-btn>
-        </div>
-      </div>
-    </q-tab-panel>
-  </q-tab-panels>
+        </q-tab-panel>
+        <q-tab-panel name="date">
+          <div>
+            <div class="flex justify-center">
+              <q-date v-model="dateModel" range></q-date>
+            </div>
+            <div
+              class="flex"
+              style="
+                justify-content: flex-end;
+                width: 70%;
+                margin-top: 1rem;
+                min-width: 200px;
+              "
+            >
+              <q-btn
+                round
+                icon="check"
+                color="green"
+                :loading="dateSetting"
+                @click="setDate"
+              ></q-btn>
+            </div>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
 
-  <!-- Error Dialog -->
-  <q-dialog v-model="errorDialog">
-    <q-card>
-      <q-card-section>
-        <div class="text-h6">Alertă</div>
-      </q-card-section>
+      <!-- Error Dialog -->
+      <q-dialog v-model="errorDialog">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Alertă</div>
+          </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        {{ error }}
-      </q-card-section>
+          <q-card-section class="q-pt-none">
+            {{ error }}
+          </q-card-section>
 
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+          <q-card-actions align="right">
+            <q-btn flat label="OK" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </q-card-section>
+  </q-card>
 </template>
-
 <script>
 import writeXlsxFile from "write-excel-file";
+import { storage, deleter } from "../store/firebase.js";
 
 export default {
   data() {
@@ -606,40 +750,64 @@ export default {
       error: "Te rugăm să reverifici datele introduse.",
       tagsInput: "",
       teamList: "",
-      sizeOptions: [
-        "x-Small",
-        "Small",
-        "Medium",
-        "Large",
-        "X-Large",
-        "XX-Large",
-        "XXX-Large",
-      ],
+      sizeOptions: ["S", "M", "L", "XL", "XXL"],
+      resultsPerPage: 20,
+      currentPage: 1,
+      previewImage: "",
+      file: null,
     };
   },
   async mounted() {
-    if (this.selectedUser) {
-      this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
+    await this.pageSetup();
+  },
+  methods: {
+    removeImg() {
+      this.previewImage = "";
+    },
+    async handleImageUpload(e) {
+      const file = e.target.files[0];
+      this.previewImage = URL.createObjectURL(file);
+      this.file = file;
+    },
+    showImgInput() {
+      this.$refs.imgInput.click();
+    },
+    async pageSetup() {
+      if (this.selectedUser) {
+        this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
+        if (this.selectedUser.date) {
+          this.dateModel.to = this.selectedUser.date.to;
+          this.dateModel.from = this.selectedUser.date.from;
+        }
+      }
+      this.tagsInput = this.dataUser?.tagList?.join(",");
+      let teamList = [];
+      this.dataUser?.teamList?.forEach((x) => {
+        teamList.push(x);
+      });
+      this.teamList = teamList;
+      if (this.dataUser?.dateOfBirth) {
+        let dateArr = this.dataUser.dateOfBirth.split("/");
+        this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+      }
       if (this.selectedUser.date) {
         this.dateModel.to = this.selectedUser.date.to;
         this.dateModel.from = this.selectedUser.date.from;
       }
-    }
-    this.tagsInput = this.dataUser?.tagList?.join(",");
-    let teamList = [];
-    this.dataUser?.teamList?.forEach((x) => {
-      teamList.push(x);
-    });
-    this.teamList = teamList;
-    if (this.dataUser?.dateOfBirth) {
-      let dateArr = this.dataUser.dateOfBirth.split("/");
-      this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
-    }
-    await this.$store.dispatch("updatedUserDetails", this.selectedUser.uid);
-    this.dateModel.to = this.selectedUser.date.to;
-    this.dateModel.from = this.selectedUser.date.from;
-  },
-  methods: {
+    },
+    formatTheDate(x) {
+      return x.split("/").reverse().join(".");
+    },
+    increasePage() {
+      if (this.currentPage < this.maxPage) {
+        this.currentPage = this.currentPage + 1;
+      }
+    },
+    decreasePage() {
+      if (this.currentPage > 1) {
+        this.currentPage = this.currentPage - 1;
+      }
+    },
     async setDate() {
       if (this.dateSetting) {
         return;
@@ -744,7 +912,30 @@ export default {
 
       this.isSubmitting = true;
       let profile;
+      if (this.previewImage != "") {
+        if (this.dataUser.imgUrl && this.dataUser.imgUrl != "") {
+          await deleter
+            .refFromURL(this.dataUser.imgUrl)
+            .delete()
+            .then()
+            .catch((errImg) => {
+              console.log(errImg);
+            });
+        }
 
+        const img_name = new Date() + "-" + this.file.name;
+        await storage
+          .child(img_name)
+          .put(this.file, {
+            contentType: this.file.type,
+          })
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((url) => {
+            this.dataUser.imgUrl = url;
+          });
+      }
       profile = { ...this.dataUser };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
@@ -770,7 +961,9 @@ export default {
       }
       // Checks before forwarding the request
       var err = false;
+
       if (profile.status) {
+        profile.teamList = this.teamList;
         profile.teamList.forEach((x) => {
           if (x.name == "") {
             err = true;
@@ -794,7 +987,7 @@ export default {
         profile.region == "" ||
         profile.state == "" ||
         profile.gender == "" ||
-        // profile.etnic == "" ||
+        profile.etnic == "" ||
         profile.clubName == "" ||
         profile.category == "" ||
         profile.size == ""
@@ -836,9 +1029,12 @@ export default {
         return;
       }
       await this.$store.dispatch("updateUserProfileAdmin", profile);
+      await this.pageSetup();
+      this.previewImage = "";
       this.isSubmitting = false;
-      this.$router.push("/");
+      this.isEdit = false;
     },
+
     addMember() {
       this.teamList.push({ name: "" });
     },
@@ -850,32 +1046,12 @@ export default {
         this.error = "Trebuie să completezi lista cu copii.";
       }
     },
-    showEventDetails(e, i, d) {
-      this.$store.dispatch("selectEvent", i);
+    showEventDetails(x) {
+      this.$store.dispatch("selectEvent", x);
     },
   },
   computed: {
-    sortedEvents() {
-      let arr = [];
-      let eventList = [];
-      if (this.selectedUser.eventList.length > 0) {
-        this.selectedUser.eventList.forEach((x) => {
-          eventList.push(x);
-        });
-        arr = eventList.sort((a, b) => {
-          if (a.name.toLowerCase() > b.name.toLowerCase()) {
-            return 1;
-          }
-          if (a.name.toLowerCase() < b.name.toLowerCase()) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-      return arr;
-    },
-
-    sortedTeamList() {
+    sortedTeam() {
       let arr = [];
       let teamList = [];
       if (this.selectedUser.teamList.length > 0) {
@@ -894,11 +1070,43 @@ export default {
       }
       return arr;
     },
+    eventList() {
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      const arr = this.selectedUser.eventList
+        .filter((x, i) => {
+          return i >= firstItem && i < firstItem + this.resultsPerPage;
+        })
+        .sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+          }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+          }
+          return 0;
+      });
+      return {
+        arr: arr,
+        first: firstItem + 1,
+        total: this.selectedUser.eventList.length,
+        last:
+          this.currentPage == this.maxPage
+            ? this.selectedUser.eventList.length
+            : this.currentPage > this.maxPage
+            ? 1
+            : firstItem + this.resultsPerPage,
+      };
+    },
+    maxPage() {
+      const arr = this.selectedUser.eventList;
+      return Math.ceil(arr.length / this.resultsPerPage);
+    },
     departmentUserList() {
       if (this.selectedUser.role === "department") {
-        return this.$store.getters.userList.filter((x) => {
+        const arr = this.$store.getters.userList.filter((x) => {
           return x.department === this.selectedUser.departmentName;
         });
+        return arr;
       } else {
         return [];
       }
@@ -916,13 +1124,16 @@ export default {
       });
       this.selectedUser.eventList.forEach((x) => {
         x.attendanceList.forEach((y) => {
-          const index = arr.findIndex((st) => {
+          const index = arr.findIndex((st) => {            
             return st.name == y;
           });
-          arr[index].attendance = arr[index].attendance + 1;
+          if(index > -1) {
+            arr[index].attendance = arr[index].attendance + 1;
+          }
         });
       });
-      return arr.sort((a, b) => {
+
+      const sorted = arr.sort((a, b) => {
         if (a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
         }
@@ -931,6 +1142,8 @@ export default {
         }
         return 0;
       });
+      return sorted;
+      // return arr;
     },
   },
   watch: {
@@ -941,6 +1154,11 @@ export default {
           let dateArr = this.dataUser.dateOfBirth.split("/");
           this.dateOfBirth = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
         }
+      },
+    },
+    resultsPerPage: {
+      handler: function () {
+        this.currentPage = 1;
       },
     },
   },

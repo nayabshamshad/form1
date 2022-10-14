@@ -5,14 +5,9 @@ const routes = [
     component: () => import("../pages/HomeView.vue"),
   },
   {
-    path: "/sign-in",
-    name: "" /* Sign In*/,
-    component: () => import("../pages/signIn.vue"),
-  },
-  {
-    path: "/sign-up",
-    name: "" /* Sign Up */,
-    component: () => import("../pages/signUp.vue"),
+    path: "/edit-profile",
+    name: "Edit Profile",
+    component: () => import("../pages/CategoryList.vue"),
   },
   {
     path: "/event-list",
@@ -25,11 +20,6 @@ const routes = [
     component: () => import("../pages/signUpDepartment.vue"),
   },
   {
-    path: "/category-list",
-    name: "" /* Update Your Profile */,
-    component: () => import("../pages/CategoryList.vue"),
-  },
-  {
     path: "/add-event",
     name: "" /* Add Event */,
     component: () => import("../pages/addEvent.vue"),
@@ -40,27 +30,13 @@ const routes = [
     component: () => import("../pages/viewevent.vue"),
   },
   {
-    path: "/pending",
-    component: () => import("../pages/waitingView.vue"),
-    name: "" /* Waiting Page */,
-  },
-  {
     path: "/user-details",
     component: () => import("../pages/userDetails"),
     name: "" /* User Details */,
   },
-  {
-    path: "/rejected",
-    component: () => import("../pages/rejectedView"),
-    name: "" /* Rejected */,
-  },
+
   // Always leave this as last one,
   // but you can also remove it
-  {
-    path: "/reset_password",
-    component: () => import("../pages/resetPassword"),
-    name: "" /* Reset Password */,
-  },
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),

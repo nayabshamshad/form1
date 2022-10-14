@@ -1,0 +1,17 @@
+.bottom-bar {
+  height: 4rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 0;
+  text-align: center;
+
+  > div {
+    width: 70%;
+    cursor: default;
+    > div:first-of-type {
+      cursor: pointer;
+    }
+    color: #333;
+    font-size: 12px;
+  }
+}

@@ -1,82 +1,126 @@
 <template>
-  <div class="container">
-    <h2>Înregistrare</h2>
-    <form class="form" @submit.prevent="submit">
-      <div class="cate-list">
-        <q-input
-          v-model="firstName"
-          type="text"
-          name="F-name"
-          label="Nume"
-          label-color="black"
-        />
-      </div>
+  <q-card class="my-card full-height sign-up">
+    <q-card-section>
+      <div class="container">
+        <form class="form" @submit.prevent="submit">
+          <div class="showMobile flex "><q-btn @click="$router.go(-1)" flat class="linkcolor back-button" icon="west" rounded></q-btn></div>
+          <h2 class="text-center showMobile text-bold q-mb-lg">LEC</h2>
+          <h4 class="text-center">Înregistrare</h4>
+          <p class="linkcolor">
+            Ai deja cont?
+            <router-link to="/sign-in" class="link">Autentifică-te</router-link>
+          </p>
 
-      <div class="cate-list">
-        <q-input
-          type="text"
-          label="Prenume"
-          label-color="black"
-          v-model="lastName"
-          name="L-name"
-        />
-      </div>
+          <div class="cate-list left">
+            <label for="uname">Nume</label>
+            <q-input
+              v-model="firstName"
+              type="text"
+              name="F-name"
+              placeholder="Nume"
+              outlined
+              label-color="black"
+            />
+          </div>
+          <div class="cate-list right">
+            <label for="uname">Prenume</label>
+            <q-input
+              type="text"
+              placeholder="Prenume"
+              label-color="black"
+              v-model="lastName"
+              name="L-name"
+              outlined
+            />
+          </div>
+          <div class="cate-list">
+            <label>Conferintă</label>
+            <q-select
+              v-model="departmentName"
+              outlined
+              :options="departmentList"
+              label="Conferință"
+              label-color="grey"
+            />
+          </div>
+          <div class="cate-list">
+            <label for="uname">Număr de telefon</label>
+            <q-input
+              type="tel"
+              v-model="phoneNumber"
+              placeholder="+40"
+              name="phone number"
+              mask="+40 #### #####"
+              label-color="black"
+              outlined
+            />
+          </div>
 
-      <div class="cate-list">
-        <q-select
-          v-model="departmentName"
-          label="Conferința"
-          label-color="black"
-          :options="departmentList"
-        />
-      </div>
-      <div class="cate-list">
-        <q-input
-          type="tel"
-          v-model="phoneNumber"
-          placeholder="+40"
-          name="phone number"
-          mask="+40 #### #####"
-          label="Număr de telefon"
-          label-color="black"
-        />
-      </div>
+          <div class="cate-list">
+            <label for="uname"> E-mail</label>
+            <q-input
+              type="text"
+              v-model="emailInput"
+              name="email"
+              placeholder="Adresa de E-mail"
+              label-color="black"
+              outlined
+            />
+          </div>
 
-      <div class="cate-list">
-        <q-input
-          type="text"
-          v-model="emailInput"
-          name="email"
-          label="Adresă de E-mail"
-          label-color="black"
-        />
-      </div>
-
-      <div class="cate-list">
-        <q-input
-          type="password"
-          label="Parolă"
-          label-color="black"
-          v-model="passInput"
-          name="pwd"
-        />
-      </div>
-      <div class="btn1">
-        <q-btn
-          :loading="isSubmitting"
-          rounded
-          color="purple"
-          @click="submit"
+          <div class="cate-list">
+            <label for="pwd">Parola</label>
+            <q-input
+              :type="isPwd ? 'password' : 'text'"
+              placeholder="Parola"
+              label-color="black"
+              v-model="passInput"
+              name="pwd"
+              outlined
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </div>
+          <div class="btn1">
+            <q-btn :loading="isSubmitting" rounded @click="submit" type="button"
+              >Înregistrare</q-btn
+            >
+          </div>
+          <!-- <span class="pwd"
+        >Apăsând "Înregistrare", confirm că sunt de acord cu  Termenii și Condiițile impuse de LEC.
+        <button
           type="button"
-          >Trimite</q-btn
+          class="link"
+          @click="forgotPassword"
         >
+
+        </button>
+      </span> -->
+          <p class="paragraph">
+            Apăsând "Înregistrare", confirm că sunt de acord cu impuse de LEC.
+            <span class="termsLink" @click="showTermsDialog = true">
+              Termenii și Condiițile
+            </span>
+          </p>
+        </form>
       </div>
-    </form>
-  </div>
+    </q-card-section>
+  </q-card>
+  <q-dialog v-model="showTermsDialog">
+    <termsAndConditions />
+  </q-dialog>
 </template>
 
 <script>
+import termsAndConditions from "../components/termsAndConditions.vue";
 export default {
+  components: { termsAndConditions },
   data() {
     return {
       firstName: "",
@@ -87,8 +131,12 @@ export default {
       phoneNumber: "+40",
       departmentName: "",
       imgUrl: "",
+      isPwd: true,
+      showTermsDialog: false,
     };
   },
+
+
   mounted() {
     this.getData();
   },
@@ -119,6 +167,7 @@ export default {
           message: "Please select a department",
           color: "red",
         });
+        this.isSubmitting = false;
         return;
       }
       let form = {
