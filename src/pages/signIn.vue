@@ -94,7 +94,7 @@ export default {
       }
       this.isSubmitting = true;
       await this.$store.dispatch("signInUser", {
-        email: this.userEmail,
+        email: this.userEmail.trim(),
         password: this.userPass,
       });
       this.isSubmitting = false;
