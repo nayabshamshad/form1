@@ -80,8 +80,8 @@
           input-class="linkcolor"
           :rules="[
             (val) =>
-              val.length <= 50 ||
-              'Descrierea nu poate fi mai lungă de 50 de caractere.',
+              val.length <= 150 ||
+              'Descrierea nu poate fi mai lungă de 150 de caractere.',
           ]"
           input-style="min-height: 8rem;"
           borderless
@@ -187,8 +187,8 @@
           label-color="black"
           :rules="[
             (val) =>
-              val.length <= 50 ||
-              'Descrierea nu poate fi mai lungă de 50 de caractere.',
+              val.length <= 150 ||
+              'Descrierea nu poate fi mai lungă de 150 de caractere.',
           ]"
         />
       </div>
