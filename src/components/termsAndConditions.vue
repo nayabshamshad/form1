@@ -1,5 +1,5 @@
 <template>
-   <q-card class="termsAndConditions">
+   <q-card class="termsAndConditions" style="max-height:80vh !important">
       <q-card-section>
         <h3>Termeni si conditii</h3>
         <p>

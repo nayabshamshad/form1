@@ -153,6 +153,10 @@ export default {
       this.$router.push("/");
     }
   },
+  async mounted() {
+    console.log('asdad')
+    await this.$store.dispatch("getUserData");
+  },
   methods: {
     exportFile(fileName) {
       let arr = [
@@ -285,7 +289,7 @@ export default {
           const index = arr.findIndex((st) => {
             return st.name == y;
           });
-          if(index > -1) {
+          if (index > -1) {
             arr[index].attendance = arr[index].attendance + 1;
           }
         });

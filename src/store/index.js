@@ -177,12 +177,12 @@ export default store(function () {
         commit("setUserData", null);
       },
       async getUserData({ state, commit, dispatch }) {
-        if (state.signedUp) {
-          return;
-        }
-        if (state.userData != null) {
-          return;
-        }
+        // if (state.signedUp) {
+        //   return;
+        // }
+        // if (state.userData != null) {
+        //   return;
+        // }  
         await firestore
           .doc(auth.currentUser.uid)
           .get()
