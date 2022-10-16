@@ -181,7 +181,7 @@
       </div>
       <div class="cate-list">
         <q-input
-          label="Descriere (max. 50 de caractere)"
+          label="Descriere (max. 150 de caractere)"
           v-model="eventDesc"
           type="text"
           label-color="black"
@@ -334,7 +334,7 @@ export default {
       }
       this.isFetching = true;
       let urlList = [];
-      if (this.eventDesc.length > 50) {
+      if (this.eventDesc.length > 150) {
         this.isFetching = false;
         return;
       }
