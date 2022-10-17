@@ -31,6 +31,7 @@
           Panou de bord
         </q-btn>
         <q-btn
+        v-if="this.userData.status == true"
           no-caps
           type="button"
           color="black"
