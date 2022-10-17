@@ -26,7 +26,6 @@ export default store(function () {
       },
       userData(state) {
         if (state.userData) {
-          debugger
           return state.userData;
         } else {
           return null;
@@ -160,9 +159,7 @@ export default store(function () {
         return error;
       },
       async signOutUser({ commit }) {
-        debugger;
         await auth.signOut();
-        debugger;
         this.$router.push("/sign-in");
 
         commit("setCurrentUser", null);
@@ -182,7 +179,7 @@ export default store(function () {
         // }
         // if (state.userData != null) {
         //   return;
-        // }  
+        // }
         await firestore
           .doc(auth.currentUser.uid)
           .get()
