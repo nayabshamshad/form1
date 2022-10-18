@@ -26,7 +26,6 @@ export default store(function () {
       },
       userData(state) {
         if (state.userData) {
-          debugger
           return state.userData;
         } else {
           return null;
@@ -160,29 +159,14 @@ export default store(function () {
         return error;
       },
       async signOutUser({ commit }) {
-        debugger;
         await auth.signOut();
-        debugger;
-        this.$router.push("/sign-in");
 
         commit("setCurrentUser", null);
-        commit("setSelectedUser", []);
-        commit("selectEvent", {
-          name: "",
-          date: "",
-          desc: "",
-          attendanceList: [],
-        });
-        commit("setUserList", []);
         commit("setUserData", null);
+        this.$router.push('/sign-in')
       },
       async getUserData({ state, commit, dispatch }) {
-        // if (state.signedUp) {
-        //   return;
-        // }
-        // if (state.userData != null) {
-        //   return;
-        // }  
+     
         await firestore
           .doc(auth.currentUser.uid)
           .get()

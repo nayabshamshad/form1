@@ -154,7 +154,6 @@ export default {
     }
   },
   async mounted() {
-    console.log('asdad')
     await this.$store.dispatch("getUserData");
   },
   methods: {
