@@ -8,7 +8,8 @@
     "
   >
     <div class="flex menu-container justify-between">
-      <h1 class="lec-logo text-weight-bold">LEC</h1>
+      <img class="lec-logo" src="../assets/lectin-mic.png" />
+      <!-- <h1 class="lec-logo text-weight-bold">LEC</h1> -->
       <div class="showMobile">
         <q-btn
           color="black"
@@ -31,7 +32,7 @@
           Panou de bord
         </q-btn>
         <q-btn
-        v-if="this.userData.status == true"
+          v-if="this.userData.status == true"
           no-caps
           type="button"
           color="black"
@@ -74,7 +75,9 @@
     <!-- Mobile Nav -->
     <mobile-nav @close="showMenu = false" v-show="showMenu" />
     <div class="hideMobile menu-container flex justify-between">
-      <h1 class="lec-logo text-weight-bold">LEC</h1>
+      <img class="lec-logo" src="../assets/lectin-mic.png" />
+      <!-- <h1 class="lec-logo text-weight-bold">LEC</h1> -->
+
       <div class="flex hideMobile admin-nav top-center">
         <q-btn
           no-caps
@@ -175,7 +178,10 @@
     </div>
 
     <div class="showMobile flex justify-between">
-      <div><h1 class="lec-logo text-weight-bold">LEC</h1></div>
+      <div>
+        <img class="lec-logo" src="../assets/lectin-mic.png" />
+        <!-- <h1 class="lec-logo text-weight-bold">LEC</h1> -->
+      </div>
       <div>
         <q-btn
           color="black"
@@ -193,7 +199,9 @@
   >
     <div class="flex justify-between">
       <div @click="showTerms = true">Termeni și condiții</div>
-      <div>{{ new Date().getFullYear() }}</div>
+      <div style="margin-right: 65px">
+        {{ new Date().getFullYear() }}
+      </div>
       <div>&#x24B8; LEC</div>
     </div>
   </div>

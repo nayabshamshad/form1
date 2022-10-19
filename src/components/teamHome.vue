@@ -2,15 +2,7 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div class="flex justify-end">
-          <q-btn
-            v-show="dateContained"
-            round
-            @click="$router.push('/edit-profile')"
-            icon="edit_note"
-            class="bg-linkcolor"
-          ></q-btn>
-        </div>
+        <div class="flex justify-end"></div>
         <div class="flex no-wrap">
           <div class="userImg">
             <img v-if="userData.imgUrl !== ''" :src="userData.imgUrl" alt="" />
@@ -29,6 +21,12 @@
             </div>
           </div>
         </div>
+        <q-btn
+          round
+          @click="$router.push('/edit-profile')"
+          icon="edit_note"
+          class="edit-btn"
+        ></q-btn>
         <div class="infoRow">
           <div class="shadowed">
             <!-- <div>

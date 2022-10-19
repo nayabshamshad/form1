@@ -3,6 +3,8 @@
   height: 4rem;
   background-color: #fff;
   border: $grey 2px solid;
+  border-right: none;
+  border-left: none;
   color: $input;
   top: 0;
   z-index: 1;
@@ -39,7 +41,7 @@
     }
   }
   .menu-container {
-    width: 72%;
+    width: 71%;
     .showMobile {
       @media (max-width: 1024px) {
         display: block !important;
@@ -73,10 +75,10 @@
       outline: none;
       background: none;
       color: black;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 18px 18px;
+      border-radius: 0px;
       cursor: pointer;
-      transition: 250ms;
+      transition: 150ms;
       &:hover {
         background: rgba(255, 255, 255, 0.2);
       }
@@ -100,9 +102,11 @@
 
   .btn {
     // float: right;
-    padding: 0.5rem 0.5rem;
-    margin: 0 0.5rem;
+    padding: 0rem 0rem;
+    // width: min(20vw, 125px);
+    margin: 0 0.4rem;
   }
+
   h3 {
     font-size: 1.5rem;
     display: inline;
@@ -117,10 +121,11 @@
 }
 .lec-logo {
   color: black;
-  font-size: 5rem;
-  line-height: 4rem;
+  width: min(20vw, 75px);
+  margin: 0.5% 0 0 0.7%;
   @media (max-width: 1024px) {
-    font-size: 3rem;
+    width: min(20vw, 60px);
+    margin: 20% 0 0 5%;
   }
 }
 
@@ -135,6 +140,8 @@
   right: 0;
   background: #fff;
   border: 1px solid black;
+  border-right: none;
+  border-left: none;
   border-bottom: 2px #ccc solid;
   ul {
     li {

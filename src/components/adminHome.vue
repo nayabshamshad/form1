@@ -18,7 +18,6 @@
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
-                  outlined
                   dense
                   class="bg-white"
                 ></q-select>
@@ -117,7 +116,6 @@
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
-                  outlined
                   class="bg-white"
                 ></q-select>
               </div>
@@ -234,7 +232,6 @@
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
-                  outlined
                   dense
                 ></q-select>
               </div>
@@ -495,7 +492,7 @@ export default {
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
-      departmentName: "All",
+      departmentName: "Toate conferințele",
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
@@ -773,7 +770,7 @@ export default {
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -806,7 +803,7 @@ export default {
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -839,7 +836,7 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -878,7 +875,7 @@ export default {
         .map((x) => {
           return x.departmentName;
         });
-      arr.unshift("All");
+      arr.unshift("Toate conferințele");
       return arr;
     },
     dateList() {
@@ -889,7 +886,7 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -908,7 +905,7 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -927,7 +924,7 @@ export default {
     },
     maxPageDeclined() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "") {
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&

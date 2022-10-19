@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="attendance-container shadowed" style="margin-top: 1rem">
+      <div class="attendance-container shadowed">
         <div class="attendance-summary">
           <h4 style="color: #233975">Lista întâlnirilor</h4>
           <div class="eventlist">
@@ -63,7 +63,7 @@
               <thead>
                 <tr>
                   <th>Titlul îtâlnirii</th>
-                  <th style="text-align: end">Data Intalnirii</th>
+                  <th style="text-align: center">Data întâlnirii</th>
                 </tr>
               </thead>
               <tbody class="table-row">

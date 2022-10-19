@@ -11,7 +11,11 @@
         class="linkcolor q-mb-md admin-tabs user-detail-tab"
         v-model="tabs"
       >
-        <q-tab name="user" label="Informații utilizator"></q-tab>
+        <q-tab
+          name="user"
+          style="width: 6.2%; border: none; border-radius: 0 0 8px 0"
+          label="Informații utilizator"
+        ></q-tab>
         <q-tab
           v-if="
             selectedUser.status &&
@@ -20,6 +24,8 @@
           "
           name="events"
           label="Întâlnirile"
+          style="border: none; border-radius: 0 0 0 8px"
+          hover="opacity: 100"
         ></q-tab>
         <q-tab name="date" v-if="selectedUser.role === 'department'">
           Data</q-tab
@@ -32,14 +38,7 @@
         <q-tab-panel name="user">
           <div class="container">
             <div class="container">
-              <div class="flex justify-end q-pr-sm">
-                <q-btn
-                  round
-                  @click="$router.push('/edit-profile')"
-                  icon="edit_note"
-                  class="bg-linkcolor"
-                ></q-btn>
-              </div>
+              <div class="flex justify-end q-pr-sm"></div>
               <div class="flex no-wrap">
                 <div class="userImg">
                   <img
@@ -47,6 +46,7 @@
                     :src="selectedUser.imgUrl"
                     alt=""
                   />
+
                   <div v-else>
                     <q-icon class="text-grey" name="photo_camera"></q-icon>
                   </div>
@@ -72,6 +72,12 @@
                   </div>
                 </div>
               </div>
+              <q-btn
+                round
+                @click="$router.push('/edit-profile')"
+                icon="edit_note"
+                class="edit-btn"
+              ></q-btn>
               <div class="infoRow">
                 <div class="shadowed">
                   <!-- <div>
@@ -98,7 +104,7 @@
                   </div>
                 </div>
                 <div class="shadowed skills">
-                  <h3>Specializări</h3>
+                  <h3>Specializări:</h3>
                   <div>
                     <p v-for="(item, i) in selectedUser.tagList" :key="i">
                       {{ item }}
@@ -542,7 +548,7 @@
                 <div v-for="(student, index) in listOfAttendance" :key="index">
                   <div
                     class="shadowed"
-                    style="border-radius: 0.3rem; margin-top: 1rem"
+                    style="border-radius: 0.3rem; margin-top: 0.5rem"
                   >
                     <div class="flex justify-space-between">
                       <span>
@@ -557,23 +563,23 @@
                 </div>
               </div>
             </div>
-            <div class="attendance-container shadowed" style="margin-top: 1rem">
+            <div class="attendance-container shadowed">
               <div class="attendance-summary">
                 <h4 style="color: #233975">Lista întâlnirilor</h4>
                 <div class="eventlist">
                   <div
                     class="q-mb-md download-button-event q-mt-sm flex justify-between"
                     style="width: 80%"
-                  >
-                    <q-btn
-                      size="md"
-                      color="green"
-                      icon="download"
-                      @click="exportFile('events')"
-                      round
-                    ></q-btn>
-                  </div>
+                  ></div>
                 </div>
+                <q-btn
+                  size="md"
+                  color="green"
+                  icon="download"
+                  @click="exportFile('events')"
+                  round
+                  style="margin-bottom: 10px"
+                ></q-btn>
                 <div class="table-container">
                   <table
                     v-if="selectedUser.eventList.length > 0"
@@ -582,7 +588,7 @@
                     <thead>
                       <tr>
                         <th>Titlul întâlnirii</th>
-                        <th style="text-align: end">Data Intalnirii</th>
+                        <th style="text-align: center">Data întâlnirii</th>
                       </tr>
                     </thead>
                     <tbody class="table-row">
@@ -602,7 +608,7 @@
                   <div
                     v-else
                     class="shadowed q-mx-auto"
-                    style="border-radius: 8px; width: 90%"
+                    style="border-radius: 8px; width: 100%"
                   >
                     <h4
                       class="text-weight-bold linkcolor text-left"

@@ -74,18 +74,18 @@
   }
 }
 .reject-btn {
-    border: 1px solid;
-    width: 6rem;
+  border: 1px solid;
+  width: 6rem;
 }
-.reset-pwd-h4{
-  @media (max-width: 768px){
+.reset-pwd-h4 {
+  @media (max-width: 768px) {
     margin-top: 3rem;
   }
 }
 .reject-icon {
   // margin-left: 6rem;
   max-width: 80%;
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     max-width: 50%;
     min-width: 240px;
   }
@@ -99,6 +99,14 @@
   //   margin-left: 2.5rem;
   // }
 }
+
+.edit-btn {
+  background-color: #233975;
+  color: #fff;
+  float: right;
+  margin-top: -120px;
+}
+
 .btn-radio {
   .q-radio__inner {
     @media (max-width: 768px) {
@@ -161,8 +169,8 @@
       padding: 2rem 0;
     }
     .userImg {
-      min-height: 150px;
-      min-width: 150px;
+      min-height: 130px;
+      min-width: 130px;
       max-height: 150px;
       max-width: 150px;
       overflow: hidden;
@@ -173,7 +181,6 @@
         min-width: 120px;
         max-height: 120px;
         max-width: 120px;
-
       }
       > img {
         position: absolute;
@@ -202,7 +209,7 @@
       }
     }
     .userInfoText {
-      padding-left: 2rem;
+      padding-left: 1rem;
       @media (max-width: 500px) {
         padding-left: 1rem;
       }
@@ -483,7 +490,6 @@
     }
     .gender {
       &.cate-margin.cate-list {
-
         margin-top: 1rem;
       }
       width: 100%;
@@ -660,7 +666,7 @@
     }
 
     .img_holder {
-      height: 175px;
+      height: 150px;
       display: flex;
       justify-content: space-around;
       flex-direction: row;
@@ -857,5 +863,4 @@
       margin-top: 4rem !important;
     }
   }
-
 }
