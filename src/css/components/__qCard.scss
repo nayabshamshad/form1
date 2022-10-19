@@ -335,6 +335,7 @@
     }
     p {
       text-align: center;
+      margin-bottom: 0px;
       span {
         color: $linkcolor;
         font-weight: bold;
@@ -344,6 +345,9 @@
     h4 {
       text-align: center;
       font: normal normal bold 24px/36px Montserrat;
+      @media (max-width: 460px) {
+        margin-bottom: 5%;
+      }
     }
     label {
       width: 100%;

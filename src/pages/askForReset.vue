@@ -1,15 +1,20 @@
 <template>
   <q-card class="reset-card">
     <q-card-section>
-      <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
-      <div class="reset-icon">
-        <q-icon
-          name="west"
-          size="xl"
-          class="linkcolor cursor-pointer"
-          @click="$router.go(-1)"
-        ></q-icon>
-      </div>
+      <q-icon
+        name="west"
+        size="xl"
+        class="linkcolor cursor-pointer"
+        style="margin-left: 11%"
+        @click="$router.go(-1)"
+      ></q-icon>
+      <img
+        class="showMobile"
+        style="margin-left: auto; margin-right: auto; width: 25%"
+        src="../assets/lectin-mic.png"
+      />
+      <!-- <h2 class="text-center text-weight-bold reset-lec">LEC</h2> -->
+      <div class="reset-icon"></div>
     </q-card-section>
 
     <q-card-section

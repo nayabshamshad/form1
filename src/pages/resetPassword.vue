@@ -1,7 +1,12 @@
 <template>
   <q-card class="my-card center-card" style="height: 100vh">
     <q-card-section>
-      <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
+      <img
+        class="showMobile"
+        style="margin-left: auto; margin-right: auto; width: 25%"
+        src="../assets/lectin-mic.png"
+      />
+      <!-- <h2 class="text-center text-weight-bold reset-lec">LEC</h2> -->
       <div class="reset-icon">
         <q-icon
           name="west"
@@ -16,8 +21,7 @@
           <div class="cate-list">
             <label for="pwd">Parola nouă</label>
             <q-input
-            outlined
-            
+              outlined
               name="pwd"
               :type="isPwd ? 'password' : 'text'"
               v-model="newPass"
@@ -93,7 +97,6 @@ export default {
       }
     },
   },
-
 };
 </script>
 <style></style>

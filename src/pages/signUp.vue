@@ -12,7 +12,12 @@
               rounded
             ></q-btn>
           </div>
-          <h2 class="text-center showMobile text-bold q-mb-lg">LEC</h2>
+          <img
+            class="showMobile"
+            style="margin-left: auto; margin-right: auto; width: 25%"
+            src="../assets/lectin-mic.png"
+          />
+          <!-- <h2 class="text-center showMobile text-bold q-mb-lg">LEC</h2> -->
           <h4 class="text-center">Înregistrare</h4>
           <p class="linkcolor">
             Ai deja cont?

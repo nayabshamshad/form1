@@ -13,7 +13,7 @@
       >
         <q-tab
           name="user"
-          style="width: 6.2%; border: none; border-radius: 0 0 8px 0"
+          style="border: none; border-radius: 0 0 8px 0"
           label="Informații utilizator"
         ></q-tab>
         <q-tab
@@ -25,7 +25,6 @@
           name="events"
           label="Întâlnirile"
           style="border: none; border-radius: 0 0 0 8px"
-          hover="opacity: 100"
         ></q-tab>
         <q-tab name="date" v-if="selectedUser.role === 'department'">
           Data</q-tab
