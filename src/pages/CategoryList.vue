@@ -540,7 +540,7 @@ export default {
       ) {
         await this.$store.dispatch("updateUserProfile", profile);
         this.$router.push("/");
-      } else if (this.storeUserInfo.role == "admin") {
+      } else {
         await this.$store.dispatch("updateUserProfileAdmin", profile);
         this.$router.push("/user-details");
       }
@@ -576,6 +576,15 @@ export default {
         );
         this.tagsInput = this.userInfo.tagList.join(", ");
       }
+    }
+    if (this.userInfo?.dateOfBirth) {
+      this.userInfo.dateOfBirth = this.userInfo.dateOfBirth.replaceAll(
+        "-",
+        "/"
+      );
+      let dateListFinal = this.userInfo.dateOfBirth.split("/");
+      this.dateOfBirth =
+        dateListFinal[2] + "/" + dateListFinal[1] + "/" + dateListFinal[0];
     }
   },
   computed: {
