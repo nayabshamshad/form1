@@ -370,9 +370,9 @@
               <table class="user-list-table department">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Number</th>
-                    <th>Department</th>
+                    <th>Nume/Prenume</th>
+                    <th>Nr. de telefon</th>
+                    <th>Conferința</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -836,7 +836,7 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&

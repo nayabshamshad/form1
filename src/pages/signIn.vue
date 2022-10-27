@@ -2,13 +2,17 @@
   <q-card class="my-card full-height sign-in">
     <q-card-section>
       <div class="container">
-        <img
-          class="showMobile"
-          style="margin-left: auto; margin-right: auto; width: 25%"
-          src="../assets/lectin-mic.png"
-        />
         <form @submit.prevent="loginUser" class="form" autocomplete="off">
           <!-- <h2 class="text-center showMobile text-bold q-mb-lg q-pb-lg">LEC</h2> -->
+          <img
+            style="
+              margin-left: 38%;
+              margin-right: auto;
+              margin-bottom: 10%;
+              width: 25%;
+            "
+            src="../assets/lectin-mic.png"
+          />
           <h4>Autentificare</h4>
           <p>
             Nu ai încă cont?

@@ -47,13 +47,13 @@
             />
           </div>
           <div class="cate-list">
-            <label>Conferintă</label>
+            <label for="uname">Conferintă</label>
             <q-select
+              label="Conferință"
+              label-color="gray"
               v-model="departmentName"
               outlined
               :options="departmentList"
-              label="Conferință"
-              label-color="grey"
             />
           </div>
           <div class="cate-list">

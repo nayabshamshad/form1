@@ -26,6 +26,7 @@ $grey: #c4c4c4;
 @import "./components/__home";
 @import "./components/__eventList";
 @import "./components/__bottomBar";
+@import "./components/_waitingView";
 
 body::after {
   content: "";

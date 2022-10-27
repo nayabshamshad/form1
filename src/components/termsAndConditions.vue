@@ -1,6 +1,14 @@
 <template>
   <q-card class="termsAndConditions" style="max-height: 80vh !important">
     <q-card-section>
+      <q-btn
+        icon="close"
+        rounded
+        flat
+        color="#233975"
+        align-self="center"
+        v-close-popup
+      ></q-btn>
       <h3>Termeni și Condiții</h3>
       <h2>
         Notă de informare privind prelucrarea datelor cu caracter personal
