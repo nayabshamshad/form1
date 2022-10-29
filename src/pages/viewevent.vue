@@ -4,7 +4,7 @@
       <div class="flex q-mb-lg q-pb-lg items-center">
         <div style="width: 30%">
           <q-btn
-            @click="$router.push('/#/event-list')"
+            @click="$router.push('/user-details')"
             round
             icon="chevron_left"
             class="bg-linkcolor"

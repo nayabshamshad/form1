@@ -47,7 +47,7 @@
             />
           </div>
           <div class="cate-list">
-            <label for="uname">Conferintă</label>
+            <label>Conferintă</label>
             <q-select
               label="Conferință"
               label-color="gray"

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="waitingViews full-height">
+  <q-card class="waitingView full-height">
     <q-card-section>
       <div class="container">
         <img
