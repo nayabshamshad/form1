@@ -177,6 +177,12 @@
                   </div>
                 </div>
               </div>
+              <q-btn
+                @click="$router.push('/')"
+                round
+                icon="chevron_left"
+                class="back-btn"
+              ></q-btn>
               <div
                 v-if="
                   selectedUser.role === 'department' &&

@@ -7,9 +7,11 @@
       userData?.role != 'department'
     "
   >
-    <div class="flex menu-container justify-between">
-      <img class="lec-logo" src="../assets/lectin-mic.png" />
-      <!-- <h1 class="lec-logo text-weight-bold">LEC</h1> -->
+    <div class="menu-container flex justify-between">
+      <div>
+        <!-- <h1 class="lec-logo text-weight-bold">LEC</h1> -->
+        <img class="lec-logo" src="../assets/lectin-mic.png" />
+      </div>
       <div class="showMobile">
         <q-btn
           color="black"
