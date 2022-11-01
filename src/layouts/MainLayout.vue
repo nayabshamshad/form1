@@ -200,8 +200,8 @@
     v-if="isAuthenticated"
   >
     <div class="flex justify-between">
-      <div @click="showTerms = true">Termeni și condiții</div>
-      <div style="margin-right: 65px">
+      <div @click="showTerms = true">T&C</div>
+      <div>
         {{ new Date().getFullYear() }}
       </div>
       <div>&#x24B8; LEC</div>

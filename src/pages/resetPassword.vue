@@ -10,7 +10,7 @@
       <div class="reset-icon">
         <q-icon
           name="west"
-          size="xl"
+          size="md"
           class="linkcolor cursor-pointer"
           @click="$router.go(-1)"
         ></q-icon>

@@ -14,7 +14,7 @@
         Notă de informare privind prelucrarea datelor cu caracter personal
       </h2>
 
-      <p>Stimate partener, Având în vedere:</p>
+      <p>Stimate utilizator, Având în vedere:</p>
       <li>
         Regulamentul (UE) 2016/679 al Parlamentului European și al Consiliului
         din data de 27 aprilie 2016 privind protecția persoanelor fizice în ceea
