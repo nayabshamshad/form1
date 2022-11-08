@@ -5,7 +5,7 @@
         <div class="flex justify-end"></div>
         <div class="flex no-wrap">
           <div class="userImg">
-            <img v-if="userData.imgUrl !== ''" :src="userData.imgUrl" alt="" />
+            <img v-if="userData.imgUrl !== ''" :src="userData.imgUrl" alt="" @click="showProfilePicModal = true;"/>
             <div v-else>
               <q-icon class="text-grey" name="photo_camera"></q-icon>
             </div>
@@ -440,6 +440,13 @@
       </q-dialog>
     </q-card-section>
   </q-card>
+  <q-dialog v-model="showProfilePicModal">
+    <q-card>
+      <q-card-section>
+        <img style="width: 30vw" :src="dataUser.imgUrl">
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -655,6 +662,7 @@ export default {
       teamList: [{ name: "" }],
       previewImage: "",
       file: null,
+      showProfilePicModal : false,
     };
   },
   mounted() {

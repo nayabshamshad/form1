@@ -19,8 +19,15 @@ export default store(function () {
       dateList: {},
       userList: [],
       selectedUser: [],
+      tabs: "user",
     },
     getters: {
+      departmentName(state){
+        return state.departmentName
+      },
+      tabs(state){
+        return state.tabs
+      },
       selectedUser(state) {
         return state.selectedUser;
       },
@@ -52,6 +59,12 @@ export default store(function () {
       },
     },
     mutations: {
+      setDepartment(state, payload) {
+        state.departmentName = payload
+      },
+      setTabs(state, payload){
+        state.tabs = payload
+      },
       setSignedUp(state, payload) {
         state.signedUp = payload;
       },
@@ -99,6 +112,12 @@ export default store(function () {
       },
     },
     actions: {
+      setDepartment({commit}, payload){
+        commit("setDepartment", payload)
+      },
+      setTabs({commit}, payload){
+        commit("setTabs", payload)
+      },
       async finalizeReset({}, payload) {
         let error = { err: false };
         await auth
@@ -159,9 +178,8 @@ export default store(function () {
         return error;
       },
       async signOutUser({ commit }) {
-        debugger;
         await auth.signOut();
-        debugger;
+
         this.$router.push("/sign-in");
 
         commit("setCurrentUser", null);
@@ -474,6 +492,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
+        commit("setDepartment", "Toate conferințele")
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

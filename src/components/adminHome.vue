@@ -467,6 +467,12 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (
+      this.$store.getters?.departmentName &&
+      this.$store.getters.userData.role == "admin"
+    ) {
+      this.departmentName = this.$store.getters.departmentName;
+    }
     if (this.$route?.query?.q) {
       if (
         this.$route?.query?.q == "departments" &&
@@ -502,6 +508,7 @@ export default {
     departmentName: {
       handler: function () {
         this.currentPage = 1;
+        this.$store.dispatch("setDepartment", this.departmentName);
       },
     },
 
@@ -722,6 +729,7 @@ export default {
     },
     viewUser(user) {
       this.$store.dispatch("setSelectedUser", user);
+      this.$store.dispatch("setTabs", "user");
       this.$router.push("/user-details");
     },
     async setDate() {
