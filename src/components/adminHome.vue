@@ -8,7 +8,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(approvedUsers.arr, 'Approved')"
+                @click="exportFile(approvedUsers.arrTotal, 'Approved')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -105,7 +105,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(pendingUsers.arr, 'Pending')"
+                @click="exportFile(pendingUsers.arrTotal, 'Pending')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -222,7 +222,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(declinedUsers.arr, 'Declined')"
+                @click="exportFile(declinedUsers.arrTotal, 'Declined')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -763,6 +763,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPageDepartments
@@ -800,6 +801,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPage
@@ -833,6 +835,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPageDeclined
@@ -866,6 +869,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPagePending
