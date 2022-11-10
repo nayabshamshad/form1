@@ -640,6 +640,10 @@ export default {
           value: "Status",
           fontWeight: "bold",
         },
+        {
+          value: "Conferinta",
+          fontWeight: "bold",
+        },
       ];
       let arr = [header_row];
       users.forEach((x) => {
@@ -678,9 +682,9 @@ export default {
           {
             value: newDate,
           },
-          {
-            value: x.etnic,
-          },
+          // {
+          //   value: x.etnic,
+          // },
           { value: x.gender },
           { value: x.size },
           { value: x.region },
@@ -707,6 +711,9 @@ export default {
           },
           {
             value: x.status ? "Active" : "InActive",
+          },
+          {
+            value: x.department,
           }
         );
         arr.push(userArr);
