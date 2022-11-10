@@ -3,7 +3,7 @@
     class="my-card info sign-in user-details"
     style="padding-top: 0; padding-left: 0; padding-right: 0"
   >
-  <q-card-section class="q-px-none q-pt-none">
+    <q-card-section class="q-px-none q-pt-none">
       <q-tabs
         indicator-color="transparent"
         active-class="remove-border"
@@ -44,7 +44,7 @@
                     v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
                     :src="selectedUser.imgUrl"
                     alt=""
-                    style="cursor: pointer;"
+                    style="cursor: pointer"
                     @click="showProfilePicModal = true"
                   />
 
@@ -717,11 +717,11 @@
   <q-dialog v-model="showProfilePicModal">
     <q-card>
       <q-card-section>
-        <img style="width: 30vw" :src="selectedUser.imgUrl">
+        <img class="zoomImg" :src="selectedUser.imgUrl" />
       </q-card-section>
     </q-card>
   </q-dialog>
-  </template>
+</template>
 <script>
 import writeXlsxFile from "write-excel-file";
 import { storage, deleter } from "../store/firebase.js";
@@ -750,8 +750,8 @@ export default {
   },
   async mounted() {
     await this.pageSetup();
-    if(this.$store.getters?.tabs) {
-      this.tabs = this.$store.getters.tabs
+    if (this.$store.getters?.tabs) {
+      this.tabs = this.$store.getters.tabs;
     }
   },
   methods: {
@@ -1142,9 +1142,9 @@ export default {
   },
   watch: {
     tabs: {
-      handler:function(){
-        this.$store.dispatch("setTabs", this.tabs)
-      }
+      handler: function () {
+        this.$store.dispatch("setTabs", this.tabs);
+      },
     },
     selectedUser: {
       handler: function () {
