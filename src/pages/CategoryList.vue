@@ -85,7 +85,7 @@
               v-model="userInfo.etnic"
             />
           </div> -->
-          <!-- <div class="cate-list">
+          <div class="cate-list">
             <label for="uname">Nume/Prenume</label>
             <q-input
               outlined
@@ -93,7 +93,7 @@
               v-model="userInfo.name"
               placeholder="Nume/Prenume"
             />
-          </div> -->
+          </div>
           <div class="cate-list cate-margin gender">
             <label for="Gender">Gen:</label>
             <div class="flex no-wrap">
