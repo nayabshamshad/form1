@@ -56,14 +56,18 @@
                   <h4>{{ selectedUser.name }}</h4>
                   <p
                     :style="
-                      selectedUser.status || selectedUser.role == 'department'
+                      selectedUser.status == true || selectedUser.role == 'department'
                         ? 'color: green'
+                        : selectedUser.status === 'neither'
+                        ? 'color: #FFBD3C;'
                         : 'color: red'
                     "
                   >
                     {{
-                      selectedUser.status || selectedUser.role == "department"
+                      selectedUser.status === true
                         ? "Activ"
+                        : selectedUser.status === "neither"
+                        ? "Activ, fără grupă"
                         : "Inactiv"
                     }}
                   </p>
@@ -167,17 +171,32 @@
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.status" class="shadowed q-mt-md">
+              <div
+                v-show="selectedUser.status === true"
+                class="shadowed q-mt-md"
+              >
                 <h2>Lista Copiilor</h2>
                 <div class="children-list">
-                  <div
-                    v-for="(member, i) in sortedTeam"
-                    :key="i"
-                    class="section"
-                  >
-                    {{ member.name }}
+                  <div v-for="(member, i) in sortedTeam" :key="i">
+                    <div class="section" :class="member.type ? 'special' : ''">
+                      {{ member.name }}
+                    </div>
+                    <div class="flex">
+                      <div>{{ member.year }}</div>
+                      <div>{{ member.class }}</div>
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div v-show="selectedUser.status === 'neither'" class="shadowed q-my-lg" style="padding-left: 2rem; padding-right: 2rem;">
+          <h2>Detalii</h2>
+                <q-input
+                  type="textarea"
+                  input-style="resize: none;"
+                  readonly
+                  borderless
+                  v-model="selectedUser.reason"
+                ></q-input>
               </div>
               <q-btn
                 @click="$router.push('/')"

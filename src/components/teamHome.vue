@@ -17,8 +17,8 @@
           </div>
           <div class="userInfoText">
             <h4>{{ userData.name }}</h4>
-            <p :style="userData.status ? 'color: green' : 'color: red'">
-              {{ userData.status ? "Activ" : "Inactiv" }}
+            <p :style="userData.status === true ? 'color: green' : userData.status === 'neither' ? 'color: #FFBD3C;' : 'color: red'">
+              {{ userData.status === true ? "Activ" : userData.status === "neither" ? "Activ, fără grupă" : "Inactiv" }}
             </p>
             <div>
               <p>{{ userData.phoneNumber }}</p>
@@ -101,14 +101,24 @@
             </div>
           </div>
         </div>
-        <div v-show="userData.status" class="shadowed q-mt-md">
+        <div v-show="userData.status === true" class="shadowed q-mt-md">
           <h2>Lista Copiilor</h2>
           <div class="children-list">
-            <div v-for="(member, i) in teamListSorted" :key="i" class="section">
-              {{ member.name }}
-            </div>
+            <div v-for="(member, i) in teamListSorted" :key="i">
+              <div class="section" :class="member.type ? 'special' : ''">
+                {{ member.name }}
+              </div>
+              <div class="flex">
+                <div>{{member.year}}</div>
+                <div>{{member.class}}</div>
+              </div>
+              </div>
           </div>
         </div>
+        <div v-show="userData.status === 'neither'" class="shadowed q-my-lg" style="padding-left: 2rem; padding-right: 2rem;">
+          <h2>Detalii</h2>
+              <q-input type="textarea" input-style="resize: none;" readonly borderless v-model="userData.reason"></q-input>
+              </div>
       </div>
       <!-- edit Info dialog -->
       <!-- <q-dialog v-model="isEdit" no-esc-dismiss no-backdrop-dismiss>
