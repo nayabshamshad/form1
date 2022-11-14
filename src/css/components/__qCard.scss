@@ -107,6 +107,16 @@
   margin-top: 15px;
 }
 
+.zoomImg {
+  width: 30vw;
+  height: auto;
+
+  @media (max-width: 699px) {
+    width: 60vw;
+    height: auto;
+  }
+}
+
 .edit-btn {
   background-color: #233975;
   color: #fff;

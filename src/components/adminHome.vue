@@ -8,7 +8,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(approvedUsers.arr, 'Approved')"
+                @click="exportFile(approvedUsers.arrTotal, 'Approved')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -105,7 +105,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(pendingUsers.arr, 'Pending')"
+                @click="exportFile(pendingUsers.arrTotal, 'Pending')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -222,7 +222,7 @@
             <div class="flex flex-btn">
               <q-btn
                 round
-                @click="exportFile(declinedUsers.arr, 'Declined')"
+                @click="exportFile(declinedUsers.arrTotal, 'Declined')"
                 color="green"
                 icon="download"
               ></q-btn>
@@ -467,6 +467,12 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (
+      this.$store.getters?.departmentName &&
+      this.$store.getters.userData.role == "admin"
+    ) {
+      this.departmentName = this.$store.getters.departmentName;
+    }
     if (this.$route?.query?.q) {
       if (
         this.$route?.query?.q == "departments" &&
@@ -502,6 +508,7 @@ export default {
     departmentName: {
       handler: function () {
         this.currentPage = 1;
+        this.$store.dispatch("setDepartment", this.departmentName);
       },
     },
 
@@ -633,6 +640,10 @@ export default {
           value: "Status",
           fontWeight: "bold",
         },
+        {
+          value: "Conferinta",
+          fontWeight: "bold",
+        },
       ];
       let arr = [header_row];
       users.forEach((x) => {
@@ -671,9 +682,9 @@ export default {
           {
             value: newDate,
           },
-          {
-            value: x.etnic,
-          },
+          // {
+          //   value: x.etnic,
+          // },
           { value: x.gender },
           { value: x.size },
           { value: x.region },
@@ -700,6 +711,9 @@ export default {
           },
           {
             value: x.status ? "Active" : "InActive",
+          },
+          {
+            value: x.department,
           }
         );
         arr.push(userArr);
@@ -722,6 +736,7 @@ export default {
     },
     viewUser(user) {
       this.$store.dispatch("setSelectedUser", user);
+      this.$store.dispatch("setTabs", "user");
       this.$router.push("/user-details");
     },
     async setDate() {
@@ -755,6 +770,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPageDepartments
@@ -792,6 +808,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPage
@@ -825,6 +842,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPageDeclined
@@ -858,6 +876,7 @@ export default {
       return {
         arr: arrToReturn,
         first: firstItem + 1,
+        arrTotal: arr,
         total: arr.length,
         last:
           this.currentPage == this.maxPagePending

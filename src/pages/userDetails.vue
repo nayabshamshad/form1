@@ -44,6 +44,8 @@
                     v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
                     :src="selectedUser.imgUrl"
                     alt=""
+                    style="cursor: pointer"
+                    @click="showProfilePicModal = true"
                   />
 
                   <div v-else>
@@ -712,6 +714,13 @@
       </q-dialog>
     </q-card-section>
   </q-card>
+  <q-dialog v-model="showProfilePicModal">
+    <q-card>
+      <q-card-section>
+        <img class="zoomImg" :src="selectedUser.imgUrl" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 import writeXlsxFile from "write-excel-file";
@@ -736,10 +745,14 @@ export default {
       currentPage: 1,
       previewImage: "",
       file: null,
+      showProfilePicModal: false,
     };
   },
   async mounted() {
     await this.pageSetup();
+    if (this.$store.getters?.tabs) {
+      this.tabs = this.$store.getters.tabs;
+    }
   },
   methods: {
     removeImg() {
@@ -1128,6 +1141,11 @@ export default {
     },
   },
   watch: {
+    tabs: {
+      handler: function () {
+        this.$store.dispatch("setTabs", this.tabs);
+      },
+    },
     selectedUser: {
       handler: function () {
         this.dataUser = JSON.parse(JSON.stringify(this.selectedUser));
