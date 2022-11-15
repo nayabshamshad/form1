@@ -28,6 +28,7 @@
         </div>
         <q-btn
           round
+          v-show="dateContained"
           @click="$router.push('/edit-profile')"
           icon="edit_note"
           class="edit-btn"
