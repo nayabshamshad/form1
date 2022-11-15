@@ -164,25 +164,22 @@
               style="display: block; width: 20px; padding-left: 4px"
               >Categoria</label
             >
-            <div class="linear-btn-container flex" >
+            <div class="linear-btn-container flex">
               <q-btn
                 label="Licurici"
                 @click="userInfo.category = 'Licurici'"
                 :class="userInfo.category === 'Licurici' ? 'selected' : ''"
-
               />
               <q-btn
                 label="Exploratori"
                 @click="userInfo.category = 'Exploratori'"
                 :class="userInfo.category === 'Exploratori' ? 'selected' : ''"
-
               />
               <q-btn
                 v-model="userInfo.category"
                 label="Companioni"
                 @click="userInfo.category = 'Companioni'"
                 :class="userInfo.category === 'Companioni' ? 'selected' : ''"
-                
               />
             </div>
           </div>
@@ -348,7 +345,6 @@
                     />
                   </div>
                   <select
-                    :disabled="item.type"
                     style="
                       width: 50%;
                       background-color: #66666629;
@@ -359,10 +355,15 @@
                     v-model="item.class"
                   >
                     <template v-if="!item.type">
-                      <option>0-4</option>
-                      <option>5-8</option>
+                      <option v-for="(option, i) in availableOptions" :key="i">
+                        {{ option }}
+                      </option>
                     </template>
-                    <option>9-12</option>
+                    <template v-else-if="item.type">
+                      <option v-for="(option, i) in optionList[2]" :key="i">
+                        {{ option }}
+                      </option>
+                    </template>
                   </select>
                 </div>
               </div>
@@ -429,6 +430,11 @@ export default {
   components: {},
   data() {
     return {
+      optionList: [
+        [0, 1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+      ],
       userInfo: {
         teamList: [{ name: "", type: false, year: "", class: "0-4" }],
         reason: "",
@@ -706,6 +712,17 @@ export default {
     }
   },
   computed: {
+    availableOptions() {
+      let arr = [];
+      if (this.userInfo.category === "Licurici") {
+        arr = this.optionList[0];
+      } else if (this.userInfo.category === "Exploratori") {
+        arr = this.optionList[1];
+      } else if (this.userInfo.category === "Companioni") {
+        arr = this.optionList[2];
+      }
+      return arr;
+    },
     storeUserInfo() {
       return this.$store.getters.userData;
     },
