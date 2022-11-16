@@ -5,12 +5,28 @@
         <div class="flex justify-end"></div>
         <div class="flex no-wrap">
           <div class="userImg">
-            <img
-              v-if="userData.imgUrl !== ''"
-              :src="userData.imgUrl"
-              alt=""
-              @click="showProfilePicModal = true"
-            />
+            <template
+                    v-if="userData.imgUrl && userData.imgUrl !== ''"
+                  >
+                    <img
+                      :src="userData.imgUrl"
+                      alt=""
+                      style="cursor: pointer"
+                      @click="showProfilePicModal = true"
+                    />
+                    <div style="position: absolute; right: 10px;bottom: 10px; display: block;border: unset;height: 20px; width: 20px">
+                      <q-btn
+                        @click="downloadImg"
+                        round
+                        style="padding: 0.25rem; font-size: 6px;"
+
+                        size="xs"
+                        color="green"
+                      >
+                      <q-icon style="font-size : 1rem" name="download"></q-icon>
+                    </q-btn>
+                    </div>
+                  </template>
             <div v-else>
               <q-icon class="text-grey" name="photo_camera"></q-icon>
             </div>

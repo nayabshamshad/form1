@@ -3,7 +3,6 @@
     class="my-card info sign-in user-details"
     style="padding-top: 0; padding-left: 0; padding-right: 0"
   >
-  <a :href="selectedUser.imgUrl" download="asd.jpg">asdasdas</a>
     <q-card-section class="q-px-none q-pt-none">
       <q-tabs
         indicator-color="transparent"
@@ -40,14 +39,29 @@
             <div class="container">
               <div class="flex justify-end q-pr-sm"></div>
               <div class="flex no-wrap">
-                <div class="userImg">
-                  <img
+                <div class="userImg relative">
+                  <template
                     v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-                    :src="selectedUser.imgUrl"
-                    alt=""
-                    style="cursor: pointer"
-                    @click="showProfilePicModal = true"
-                  />
+                  >
+                    <img
+                      :src="selectedUser.imgUrl"
+                      alt=""
+                      style="cursor: pointer"
+                      @click="showProfilePicModal = true"
+                    />
+                    <div style="position: absolute; right: 10px;bottom: 10px; display: block;border: unset;height: 20px; width: 20px">
+                      <q-btn
+                        @click="downloadImg"
+                        round
+                        style="padding: 0.25rem; font-size: 6px;"
+
+                        size="xs"
+                        color="green"
+                      >
+                      <q-icon style="font-size : 1rem" name="download"></q-icon>
+                    </q-btn>
+                    </div>
+                  </template>
 
                   <div v-else>
                     <q-icon class="text-grey" name="photo_camera"></q-icon>
@@ -57,7 +71,8 @@
                   <h4>{{ selectedUser.name }}</h4>
                   <p
                     :style="
-                      selectedUser.status == true || selectedUser.role == 'department'
+                      selectedUser.status == true ||
+                      selectedUser.role == 'department'
                         ? 'color: green'
                         : selectedUser.status === 'neither'
                         ? 'color: #FFBD3C;'
@@ -189,8 +204,12 @@
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.status === 'neither'" class="shadowed q-my-lg" style="padding-left: 2rem; padding-right: 2rem;">
-          <h2>Detalii</h2>
+              <div
+                v-show="selectedUser.status === 'neither'"
+                class="shadowed q-my-lg"
+                style="padding-left: 2rem; padding-right: 2rem"
+              >
+                <h2>Detalii</h2>
                 <q-input
                   type="textarea"
                   input-style="resize: none;"
@@ -450,11 +469,30 @@ export default {
   },
   async mounted() {
     await this.pageSetup();
+
     if (this.$store.getters?.tabs) {
       this.tabs = this.$store.getters.tabs;
     }
   },
   methods: {
+    downloadImg() {
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = "blob";
+      xhr.onload = () => {
+        const blob = xhr.response;
+        const b = document.createElement("a");
+        console.log(xhr.response);
+        b.setAttribute(
+          "download",
+          this.selectedUser.name + blob.type.replace("image/", ".")
+        );
+        b.setAttribute("href", URL.createObjectURL(blob));
+        b.click();
+        b.remove();
+      };
+      xhr.open("GET", this.selectedUser.imgUrl);
+      xhr.send();
+    },
     removeImg() {
       this.previewImage = "";
     },
