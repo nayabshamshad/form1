@@ -131,6 +131,7 @@
                     <q-date
                       v-model="userInfo.dateOfBirth"
                       @update:model-value="handleDateChange"
+                      default-view="Years"
                     >
                       <div class="row items-center justify-end">
                         <q-btn
@@ -438,7 +439,7 @@ export default {
       userInfo: {
         teamList: [{ name: "", type: false, year: "", class: "0-4" }],
         reason: "",
-        dateOfBirth: "2022/03/21",
+        dateOfBirth: "",
         Instructor: "",
         Ghid: "",
         masterGhid: "",
@@ -457,7 +458,7 @@ export default {
       imgUrl: "",
       previewImage: "",
       file: null,
-      dateOfBirth: "21/03/2022",
+      dateOfBirth: "",
       tagsInput: "",
       isSubmitting: false,
       sizeOptions: ["S", "M", "L", "XL", "XXL"],
