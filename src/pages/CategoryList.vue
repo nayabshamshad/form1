@@ -439,7 +439,7 @@ export default {
       userInfo: {
         teamList: [{ name: "", type: false, year: "", class: "0-4" }],
         reason: "",
-        dateOfBirth: "",
+        dateOfBirth: "2022/03/21",
         Instructor: "",
         Ghid: "",
         masterGhid: "",
@@ -458,7 +458,7 @@ export default {
       imgUrl: "",
       previewImage: "",
       file: null,
-      dateOfBirth: "",
+      dateOfBirth: "21/03/2022",
       tagsInput: "",
       isSubmitting: false,
       sizeOptions: ["S", "M", "L", "XL", "XXL"],
