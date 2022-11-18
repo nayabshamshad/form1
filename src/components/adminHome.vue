@@ -2,9 +2,31 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
+        <div style="width: 85%" class="q-mx-auto">
+          <div>
+            <q-input label="Search Users" v-model="nameSearch" filled />
+          </div>
+          <div class="flex flex-btn justify-between">
+              <div style="width: 45%">
+                <q-select
+                  v-model="categoryFilter"
+                  label="Category"
+                  :options="categoryOptions"
+                />
+              </div>
+              <div style="width: 45%">
+                <q-select
+                  v-model="statusFilter"
+                  label="Status"
+                  :options="statusOptions"
+                />
+              </div>
+            </div>
+        </div>
         <q-tab-panels class="admin-home" v-model="tabs">
           <!-- Approved User Listing -->
           <q-tab-panel name="approved">
+
             <div class="flex flex-btn">
               <q-btn
                 round
@@ -495,6 +517,16 @@ export default {
   data() {
     return {
       tabs: "approved",
+      statusOptions: [
+        { label: "All", value: "All" },
+        { label: "Activ", value: true },
+        { label: "InActiv", value: false },
+        { label: "Activ, fără grupă", value: "neither" },
+      ],
+      statusFilter: {label: "All", value: "All"},
+      nameSearch: "",
+      categoryFilter: "All",
+      categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
@@ -760,7 +792,7 @@ export default {
   },
   computed: {
     departmentUsers() {
-      const arr = this.$store.getters.userList.filter((x) => {
+      const arr = this.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -781,8 +813,26 @@ export default {
       };
     },
     userList() {
-      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
-      return this.$store.getters.userList;
+      let arr = this.$store.getters.userList;
+      if (this.nameSearch !== "") {
+        arr = arr.filter((x, i) => {
+          return (
+            x.name &&
+            x.name.toLowerCase().includes(this.nameSearch.toLowerCase())
+          );
+        });
+      }
+      if (this.categoryFilter !== "All") {
+        arr = arr.filter((x) => {
+          return x.category == this.categoryFilter;
+        });
+      }
+      if(this.statusFilter.value !== "All") {
+        arr = arr.filter(x=>{
+          return x.status == this.statusFilter.value;
+        })
+      }
+      return arr;
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
