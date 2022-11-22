@@ -513,16 +513,17 @@ export default {
         this.isSubmitting = false;
         return;
       }
+      console.log(
+        profile.Instructor > profile.Ghid || profile.Ghid != "",
+        profile.Ghid > profile.masterGhid && profile.masterGhid != ""
+      );
       if (
-        (profile.Instructor > profile.Ghid &&
-          profile.Instructor != "" &&
-          profile.Ghid != "") ||
-        (profile.Ghid > profile.masterGhid &&
-          profile.Ghid != "" &&
-          profile.masterGhid != "") ||
-        (profile.Instructor > profile.masterGhid &&
-          profile.instructor != "" &&
-          profile.masterGhid != "")
+        (profile.Instructor == "" &&
+          (profile.Ghid != "" ||
+          profile.masterGhid != "")) ||
+        (profile.Ghid == "" && profile.masterGhid != "") ||
+        parseInt(profile.Instructor) > parseInt(profile.Ghid) ||
+        parseInt(profile.Ghid) > parseInt(profile.masterGhid)
       ) {
         this.$q.notify({
           color: "red",

@@ -9,6 +9,7 @@ export default store(function () {
     state: {
       currentUser: null,
       userData: null,
+      departmentName: "",
       selectedEvent: {
         name: "",
         date: "",
