@@ -6,7 +6,6 @@
           style="width: 87.5%; height: 3rem"
           class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
         >
-
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
               <q-input
@@ -19,12 +18,12 @@
           </div>
           <div
             class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
-            style="width: 75%"
+            style="width: 100%"
           >
             <div
               v-show="showFilters"
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 83%"
+              style="width: 100%"
             >
               <div class="select-label-conferintele">
                 <q-select
@@ -543,7 +542,11 @@ export default {
   data() {
     return {
       tabs: "approved",
-      gradeOptions: [{label: "Instructor", value: "Instructor"}, {label: "Ghid", value: "Ghid"}, {label: "Master Ghid", value: "masterGhid"}],
+      gradeOptions: [
+        { label: "Instructor", value: "Instructor" },
+        { label: "Ghid", value: "Ghid" },
+        { label: "Master Ghid", value: "masterGhid" },
+      ],
       showFilters: false,
       gradeFilter: [],
       statusOptions: [
@@ -828,7 +831,6 @@ export default {
     },
   },
   computed: {
-
     departmentUsers() {
       const arr = this.userList.filter((x) => {
         return x.role == "department";
@@ -861,13 +863,11 @@ export default {
         });
       }
       if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i)=>{
-
-          arr = arr.filter(item =>{
-
+        this.gradeFilter.forEach((x, i) => {
+          arr = arr.filter((item) => {
             return item[x.value] !== "";
-          })
-        })
+          });
+        });
       }
       if (this.categoryFilter !== "All") {
         arr = arr.filter((x) => {
