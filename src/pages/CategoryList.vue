@@ -275,8 +275,9 @@
                 :class="userInfo.status === false ? 'selected' : ''"
               />
               <q-btn
+                style="font-size: 85%"
                 val="neither"
-                label="Activ Fara Grupa"
+                label="Activ (Fără Grupă)"
                 @click="userInfo.status = 'neither'"
                 :class="userInfo.status === 'neither' ? 'selected' : ''"
               />
@@ -299,6 +300,7 @@
                 @click="addMemberSpecial"
                 type="button"
                 class="bg-linkcolor"
+                style="background: #8397cd"
                 label="Adauga TLT"
               />
             </div>
@@ -333,12 +335,12 @@
                       type="text"
                       v-model="item.year"
                       pattern="[0-9]{4}"
-                      placeholder="(YYYY) Year"
+                      placeholder="Anul nașterii"
                       style="
                         padding: 0.3rem 0.7rem;
                         border-bottom-left-radius: 1rem;
-                        width: 50%;
-                        border: 1px solid #808080a8;
+                        border: 1px solid #c4c4c4;
+                        border-radius: 0px 0px 0px 8px;
                         width: 100%;
                       "
                       name=""
@@ -348,8 +350,9 @@
                   <select
                     style="
                       width: 50%;
-                      background-color: #66666629;
-                      border: 1px solid #808080a8;
+                      background: rgba(196, 196, 196, 0.2);
+                      border-radius: 0px 0px 0px 0px;
+                      border: 1px solid #c4c4c4;
                     "
                     name=""
                     id=""
@@ -387,11 +390,16 @@
           </div>
           <div v-else-if="userInfo.status == 'neither'" class="q-py-md">
             <q-input
+              outlined
               v-model="userInfo.reason"
               type="textarea"
-              bordered
-              filled
               input-style="resize: none"
+              placeholder="Mentioneaza aici ce rol ai:
+              - ghid asistent;
+              - membru TLT;
+              - ajutor instructor;
+              - nu ai grupa dar poti preda specializarile;
+              - etc... "
             ></q-input>
           </div>
           <div class="submit">

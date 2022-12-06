@@ -49,17 +49,29 @@
                       style="cursor: pointer"
                       @click="showProfilePicModal = true"
                     />
-                    <div style="position: absolute; right: 10px;bottom: 10px; display: block;border: unset;height: 20px; width: 20px">
+                    <div
+                      style="
+                        position: absolute;
+                        right: 10px;
+                        bottom: 10px;
+                        display: block;
+                        border: unset;
+                        height: 20px;
+                        width: 20px;
+                      "
+                    >
                       <q-btn
                         @click="downloadImg"
                         round
-                        style="padding: 0.25rem; font-size: 6px;"
-
+                        style="padding: 0.25rem; font-size: 6px"
                         size="xs"
                         color="green"
                       >
-                      <q-icon style="font-size : 1rem" name="download"></q-icon>
-                    </q-btn>
+                        <q-icon
+                          style="font-size: 1rem"
+                          name="download"
+                        ></q-icon>
+                      </q-btn>
                     </div>
                   </template>
 
@@ -83,7 +95,7 @@
                       selectedUser.status === true
                         ? "Activ"
                         : selectedUser.status === "neither"
-                        ? "Activ, fără grupă"
+                        ? "Activ (Fără Grupă)"
                         : "Inactiv"
                     }}
                   </p>
@@ -211,10 +223,10 @@
               >
                 <h2>Detalii</h2>
                 <q-input
+                  outlined
                   type="textarea"
                   input-style="resize: none;"
                   readonly
-                  borderless
                   v-model="selectedUser.reason"
                 ></q-input>
               </div>

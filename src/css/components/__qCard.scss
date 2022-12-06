@@ -290,24 +290,27 @@
   .add-member-button-container {
     display: flex;
     opacity: 0.7;
-    >.q-btn{
+    > .q-btn {
       padding: 0;
       height: 60px !important;
     }
     > .q-btn:last-of-type {
       border-bottom-left-radius: 0 !important;
       border-top-left-radius: 0 !important;
-  }
-   > .q-btn:first-of-type{
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-   }
+    }
+    > .q-btn:first-of-type {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
   }
 
   .member-list {
     margin-bottom: 2rem;
     .member-year {
-      background-color: #66666629;
+      border: 1px solid #c4c4c4;
+      border-bottom: 0px;
+      background: rgba(196, 196, 196, 0.2);
+      border-bottom-left-radius: 8px !important;
       &:invalid {
         background-color: #832f2f29;
       }
