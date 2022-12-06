@@ -29,5 +29,5 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firestore = firebaseApp.firestore().collection("userListFinal");
 const auth = firebaseApp.auth();
 const storage = firebaseApp.storage().ref();
-const deleter = firebaseApp.storage()
+const deleter = firebaseApp.storage();
 export { auth, firestore, storage, deleter };
