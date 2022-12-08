@@ -8,11 +8,23 @@
 .justify-space-between {
   justify-content: space-between;
 }
+.justify-flex-end {
+  justify-content: flex-end;
+}
+.justify-evenly {
+  justify-content: space-evenly;
+}
 .justify-space-around {
   justify-content: space-around;
 }
 .flex-row {
   flex-direction: row;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+.mx-1 {
+  margin: 0 0.5rem;
 }
 .mobile-center {
   @media (max-width: 768px) {
