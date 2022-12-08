@@ -2,6 +2,17 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
+        <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
+          <div class="">
+            <q-btn
+            v-show="tabs !== 'departments'"
+              round
+              @click="exportFile(tabs)"
+              color="green"
+              icon="download"
+            ></q-btn>
+          </div>
+        </div>
         <div
           style="width: 87.5%; height: 3rem"
           class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
@@ -16,18 +27,43 @@
               />
             </div>
           </div>
+          <div class="q-ml-auto">
+            <q-btn
+                no-caps
+                round
+                color="green"
+                size="small"
+                @click="showDepartmentDialog = true"
+                icon="add"
+                v-show="tabs === 'departments'"
+              />
+              <q-btn
+              class="q-mx-md"
+            v-show="tabs === 'departments'"
+              round
+              @click="exportFile(tabs)"
+              color="green"
+              icon="download"
+            ></q-btn>
+          </div>
           <div
+          v-show="tabs !== 'departments'"
             class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
             style="width: 100%"
           >
             <div
-              v-show="showFilters"
+              v-show="(showFilters && tabs !== 'departments')"
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
               style="width: 100%"
             >
-              <div class="select-label-conferintele">
+              <div
+                v-if="
+                  $store.getters.userData.role == 'admin' &&
+                  tabs !== 'departments'
+                "
+                class="select-label-conferintele"
+              >
                 <q-select
-                  v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
                   label="Conferinte"
@@ -66,7 +102,6 @@
                   dense
                   v-model="gradeFilter"
                   outlined
-                  multiple
                   :options="gradeOptions"
                 />
               </div>
@@ -80,18 +115,9 @@
               class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
               style="width: 17%"
             >
-              <div class="q-mx-sm">
-                <q-btn
-                  v-show="showFilters"
-                  round
-                  @click="exportFile(tabs)"
-                  color="green"
-                  icon="download"
-                ></q-btn>
-              </div>
-
               <div class="flex flex-btn">
                 <q-btn
+                  v-show="tabs !== 'departments'"
                   style="transition: 250ms"
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
                   @click="showFilters = !showFilters"
@@ -395,7 +421,7 @@
           </q-tab-panel>
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
-            <div
+            <!-- <div
               class="flex icon"
               style="
                 justify-content: flex-end;
@@ -412,7 +438,7 @@
                 @click="showDepartmentDialog = true"
                 icon="add"
               />
-            </div>
+            </div> -->
             <div class="table-container">
               <table class="user-list-table department">
                 <thead>
@@ -543,12 +569,13 @@ export default {
     return {
       tabs: "approved",
       gradeOptions: [
+        { label: "All", value: "all" },
         { label: "Instructor", value: "Instructor" },
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
       ],
       showFilters: false,
-      gradeFilter: [],
+      gradeFilter: { label: "All", value: "all" },
       statusOptions: [
         { label: "All", value: "All" },
         { label: "Activ", value: true },
@@ -644,7 +671,7 @@ export default {
       if (usersType === "departments") {
         users = this.departmentUsers.arrTotal;
       } else {
-        users = this[usersType + "Users"];
+        users = this[usersType + "Users"].arrTotal;
       }
 
       const header_row = [
@@ -718,6 +745,8 @@ export default {
         },
       ];
       let arr = [header_row];
+      console.log(users);
+
       users.forEach((x) => {
         let newDate = "";
         if (x.dateOfBirth != "") {
@@ -862,11 +891,9 @@ export default {
           );
         });
       }
-      if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i) => {
-          arr = arr.filter((item) => {
-            return item[x.value] !== "";
-          });
+      if (this.gradeFilter.value !== "all") {
+        arr = arr.filter((item) => {
+          return item[this.gradeFilter.value] !== "";
         });
       }
       if (this.categoryFilter !== "All") {

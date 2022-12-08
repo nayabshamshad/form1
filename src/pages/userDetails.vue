@@ -222,13 +222,9 @@
                 style="padding-left: 2rem; padding-right: 2rem"
               >
                 <h2>Detalii</h2>
-                <q-input
-                  outlined
-                  type="textarea"
-                  input-style="resize: none;"
-                  readonly
-                  v-model="selectedUser.reason"
-                ></q-input>
+                <span class="block q-pb-md">
+                  {{selectedUser.reason}}
+                </span>
               </div>
               <q-btn
                 @click="$router.push('/')"
