@@ -23,8 +23,15 @@
             <div
               v-show="showFilters"
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%"
+              style="width: 100%; position: relative"
             >
+              <div class="absolute new-checkbox" style="top: -100%; right: 0">
+                <q-checkbox
+                  label="Show TLT only"
+                  v-model="tltFilter"
+                  left-label
+                />
+              </div>
               <div class="select-label-conferintele">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
@@ -542,6 +549,7 @@ export default {
   data() {
     return {
       tabs: "approved",
+      tltFilter: false,
       gradeOptions: [
         { label: "Instructor", value: "Instructor" },
         { label: "Ghid", value: "Ghid" },
@@ -862,6 +870,7 @@ export default {
           );
         });
       }
+
       if (this.gradeFilter.length > 0) {
         this.gradeFilter.forEach((x, i) => {
           arr = arr.filter((item) => {
@@ -877,6 +886,16 @@ export default {
       if (this.statusFilter.value !== "All") {
         arr = arr.filter((x) => {
           return x.status == this.statusFilter.value;
+        });
+      }
+
+      if (this.tltFilter) {
+        arr = arr.filter((item) => {
+          return (
+            item.teamList &&
+            item.teamList.length > 0 &&
+            item.teamList.filter((y) => y?.type).length > 0
+          );
         });
       }
       return arr;
@@ -1067,4 +1086,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.new-checkbox {
+  display: flex;
+  justify-content: flex-end;
+  @media (max-width: 1120px) {
+    top: -50% !important;
+  }
+}
+</style>

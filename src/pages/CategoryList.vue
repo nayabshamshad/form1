@@ -325,7 +325,7 @@
                       ? 'background-color: rgba(131, 151, 205, 0.3)'
                       : ''
                   "
-                  placeholder="Nume copil"
+                  :placeholder="item.type ? 'TLT Name' : 'Nume copil'"
                 />
 
                 <div style="display: flex">
@@ -616,8 +616,7 @@ export default {
       );
       if (
         (profile.Instructor == "" &&
-          (profile.Ghid != "" ||
-          profile.masterGhid != "")) ||
+          (profile.Ghid != "" || profile.masterGhid != "")) ||
         (profile.Ghid == "" && profile.masterGhid != "") ||
         parseInt(profile.Instructor) > parseInt(profile.Ghid) ||
         parseInt(profile.Ghid) > parseInt(profile.masterGhid)
@@ -751,3 +750,12 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+div {
+  :deep(.q-input) {
+    border-top-left-radius: 8px;
+    overflow: hidden;
+  }
+}
+</style>
