@@ -5,7 +5,7 @@
         <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
           <div class="">
             <q-btn
-            v-show="tabs !== 'departments'"
+              v-show="tabs !== 'departments'"
               round
               @click="exportFile(tabs)"
               color="green"
@@ -29,17 +29,17 @@
           </div>
           <div class="q-ml-auto">
             <q-btn
-                no-caps
-                round
-                color="green"
-                size="small"
-                @click="showDepartmentDialog = true"
-                icon="add"
-                v-show="tabs === 'departments'"
-              />
-              <q-btn
+              no-caps
+              round
+              color="green"
+              size="small"
+              @click="showDepartmentDialog = true"
+              icon="add"
+              v-show="tabs === 'departments'"
+            />
+            <q-btn
               class="q-mx-md"
-            v-show="tabs === 'departments'"
+              v-show="tabs === 'departments'"
               round
               @click="exportFile(tabs)"
               color="green"
@@ -47,12 +47,12 @@
             ></q-btn>
           </div>
           <div
-          v-show="tabs !== 'departments'"
+            v-show="tabs !== 'departments'"
             class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
             style="width: 100%"
           >
             <div
-              v-show="(showFilters && tabs !== 'departments')"
+              v-show="showFilters && tabs !== 'departments'"
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
               style="width: 100%"
             >
@@ -76,7 +76,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="categoryFilter"
+                  v-model="allFilters.categoryFilter"
                   label="Category"
                   :options="categoryOptions"
                 />
@@ -90,7 +90,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="statusFilter"
+                  v-model="allFilters.statusFilter"
                   label="Status"
                   :options="statusOptions"
                 />
@@ -100,7 +100,7 @@
                 <q-select
                   label="Grad"
                   dense
-                  v-model="gradeFilter"
+                  v-model="allFilters.gradeFilter"
                   outlined
                   :options="gradeOptions"
                 />
@@ -120,7 +120,7 @@
                   v-show="tabs !== 'departments'"
                   style="transition: 250ms"
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
-                  @click="showFilters = !showFilters"
+                  @click="setShowFilters(!showFilters)"
                   no-caps
                   >Filtre</q-btn
                 >
@@ -540,6 +540,14 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (this.allFilters?.unset) {
+      this.allFilters = {
+        categoryFilter: this.filterList.categoryFilter,
+        statusFilter: this.filterList.statusFilter,
+        gradeFilter: this.filterList.gradeFilter,
+      };
+    }
+    console.log(this.filterList);
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -574,17 +582,13 @@ export default {
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
       ],
-      showFilters: false,
-      gradeFilter: { label: "All", value: "all" },
       statusOptions: [
         { label: "All", value: "All" },
         { label: "Activ", value: true },
         { label: "InActiv", value: false },
         { label: "Activ, fără grupă", value: "neither" },
       ],
-      statusFilter: { label: "All", value: "All" },
       nameSearch: "",
-      categoryFilter: "All",
       categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
@@ -593,9 +597,22 @@ export default {
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
+      allFilters: {
+        unset: true,
+      },
     };
   },
   watch: {
+    allFilters: {
+      handler: function () {
+        this.$store.dispatch("setFilterList", {
+          categoryFilter: this.allFilters.categoryFilter,
+          statusFilter: this.allFilters.statusFilter,
+          gradeFilter: this.allFilters.gradeFilter,
+        });
+      },
+      deep: true,
+    },
     departmentName: {
       handler: function () {
         this.currentPage = 1;
@@ -639,6 +656,9 @@ export default {
     },
   },
   methods: {
+    setShowFilters(x) {
+      this.$store.dispatch("setShowFilters", x);
+    },
     increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
@@ -745,7 +765,6 @@ export default {
         },
       ];
       let arr = [header_row];
-      console.log(users);
 
       users.forEach((x) => {
         let newDate = "";
@@ -860,6 +879,12 @@ export default {
     },
   },
   computed: {
+    filterList() {
+      return this.$store.getters.filterList;
+    },
+    showFilters() {
+      return this.$store.getters.showFilters;
+    },
     departmentUsers() {
       const arr = this.userList.filter((x) => {
         return x.role == "department";
@@ -891,19 +916,19 @@ export default {
           );
         });
       }
-      if (this.gradeFilter.value !== "all") {
+      if (this.allFilters?.gradeFilter?.value !== "all") {
         arr = arr.filter((item) => {
-          return item[this.gradeFilter.value] !== "";
+          return item[this.allFilters?.gradeFilter?.value] !== "";
         });
       }
-      if (this.categoryFilter !== "All") {
+      if (this.allFilters.categoryFilter !== "All") {
         arr = arr.filter((x) => {
-          return x.category == this.categoryFilter;
+          return x.category == this.allFilters.categoryFilter;
         });
       }
-      if (this.statusFilter.value !== "All") {
+      if (this.allFilters?.statusFilter?.value !== "All") {
         arr = arr.filter((x) => {
-          return x.status == this.statusFilter.value;
+          return x.status == this.allFilters?.statusFilter?.value;
         });
       }
       return arr;
