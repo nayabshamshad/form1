@@ -214,23 +214,32 @@
 }
 
 .input-label-search {
-  width: 95%;
+  @media(min-width: 1120px) {
+
+    width: 95%;
+  }
 }
 
 .select-label-conferintele {
   width: 25%;
   max-width: 30%;
-  margin-right: 0.5rem;
+  @media (min-width: 1120px) {
+    margin-right: 0.5rem;
+  }
 }
 
 .input-label-category {
   width: 25%;
-  margin-right: 0.5rem;
+  @media (min-width: 1120px) {
+    margin-right: 0.5rem;
+  }
 }
 
 .select-label-status {
   width: 30%;
-  margin-right: 0.5rem;
+  @media (min-width: 1120px) {
+    margin-right: 0.5rem;
+  }
 }
 
 .input-label-gard {

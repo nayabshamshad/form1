@@ -598,6 +598,15 @@ export default {
         this.isSubmitting = false;
         return;
       }
+if(profile.status == 'neither' && profile.reason == ""){
+  this.$q.notify({
+          color: "red",
+          message: "Please give detail",
+        });
+        this.isSubmitting = false;
+        return;
+}
+
       if (
         (profile.Instructor.length !== 4 && profile.Instructor != "") ||
         (profile.Ghid.length !== 4 && profile.Ghid != "") ||
@@ -610,10 +619,7 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      console.log(
-        profile.Instructor > profile.Ghid || profile.Ghid != "",
-        profile.Ghid > profile.masterGhid && profile.masterGhid != ""
-      );
+       
       if (
         (profile.Instructor == "" &&
           (profile.Ghid != "" || profile.masterGhid != "")) ||
