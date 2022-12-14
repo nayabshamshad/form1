@@ -159,13 +159,9 @@
           style="padding-left: 2rem; padding-right: 2rem"
         >
           <h2>Detalii</h2>
-          <q-input
-            type="textarea"
-            input-style="resize: none;"
-            readonly
-            borderless
-            v-model="userData.reason"
-          ></q-input>
+          <span class="block q-pb-md">
+            {{userData.reason}}
+          </span>
         </div>
       </div>
 
