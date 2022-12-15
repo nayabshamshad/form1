@@ -222,9 +222,14 @@
                 style="padding-left: 2rem; padding-right: 2rem"
               >
                 <h2>Detalii</h2>
-                <span class="block q-pb-md">
-                  {{selectedUser.reason}}
-                </span>
+                <q-card
+                  class="full-width q-mb-md"
+                  style="min-height: unset; max-width: unset"
+                >
+                  <q-card-section>
+                    {{ selectedUser.reason }}
+                  </q-card-section>
+                </q-card>
               </div>
               <q-btn
                 @click="$router.push('/')"

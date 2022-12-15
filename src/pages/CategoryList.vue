@@ -86,7 +86,7 @@
             />
           </div> -->
           <div class="cate-list">
-            <label for="uname">Nume/Prenume</label>
+            <label for="uname" class="q-pb-sm block">Nume/Prenume:</label>
             <q-input
               outlined
               type="text"
@@ -98,13 +98,23 @@
             <label for="Gender">Gen:</label>
             <div class="flex no- linear-btn-container">
               <q-btn
-                style="width: 50% !important; border: 1px solid #ccc !important"
+                style="
+                  width: 50% !important;
+                  border: 1px solid #ccc !important;
+                  margin-top: 0 !important;
+                  margin-bottom: 0 !important;
+                "
                 label="Masculin"
                 :class="userInfo.gender === 'Masculin' ? 'selected' : ''"
                 @click="userInfo.gender = 'Masculin'"
               />
               <q-btn
-                style="width: 50% !important; border: 1px solid #ccc !important"
+                style="
+                  width: 50% !important;
+                  border: 1px solid #ccc !important;
+                  margin-top: 0 !important;
+                  margin-bottom: 0 !important;
+                "
                 label="Feminin"
                 @click="userInfo.gender = 'Feminin'"
                 :class="userInfo.gender === 'Feminin' ? 'selected' : ''"
@@ -113,7 +123,7 @@
           </div>
 
           <div class="cate-list q-pl-sm right margin">
-            <label for="uname">Data nașterii:</label>
+            <label for="uname" class="block q-mt-sm">Data nașterii:</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
@@ -148,7 +158,7 @@
             </q-input>
           </div>
           <div class="cate-list left">
-            <label for="uname">Mărimea tricou</label>
+            <label for="uname" class="block q-mb-sm">Mărimea tricou</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
           <!-- <div class="cate-list">
@@ -169,23 +179,29 @@
               <q-btn
                 label="Licurici"
                 @click="userInfo.category = 'Licurici'"
+                class="q-my-none"
+                style="margin-top: 5px !important; margin-bottom: 0 !important"
                 :class="userInfo.category === 'Licurici' ? 'selected' : ''"
               />
               <q-btn
                 label="Exploratori"
                 @click="userInfo.category = 'Exploratori'"
+                class="q-my-none"
+                style="margin-top: 5px !important; margin-bottom: 0 !important"
                 :class="userInfo.category === 'Exploratori' ? 'selected' : ''"
               />
               <q-btn
                 v-model="userInfo.category"
                 label="Companioni"
+                class="q-my-none"
+                style="margin-top: 5px !important; margin-bottom: 0 !important"
                 @click="userInfo.category = 'Companioni'"
                 :class="userInfo.category === 'Companioni' ? 'selected' : ''"
               />
             </div>
           </div>
           <div class="cate-list left">
-            <label for="uname">Clubul</label>
+            <label for="uname" class="block q-mb-sm">Clubul</label>
             <q-input
               outlined
               type="text"
@@ -194,7 +210,7 @@
             />
           </div>
           <div class="cate-list right">
-            <label for="uname">Zonă</label>
+            <label for="uname" class="block q-mb-sm">Zonă</label>
             <q-input
               outlined
               type="text"
@@ -203,7 +219,7 @@
             />
           </div>
           <div class="cate-list">
-            <label for="uname">Comunitate</label>
+            <label for="uname" class="block q-mb-sm">Comunitate</label>
             <q-input
               outlined
               type="text"
@@ -212,7 +228,9 @@
             />
           </div>
           <div class="cate-list">
-            <label for="uname">Specializări pe care le poți preda</label>
+            <label for="uname" class="block q-mb-sm"
+              >Specializări pe care le poți preda</label
+            >
             <q-input
               outlined
               type="text"
@@ -221,7 +239,7 @@
               name="tags"
             />
           </div>
-          <label for="uname">Anii investiturii:</label>
+          <label for="uname" class="block q-mb-sm">Anii investiturii:</label>
           <div
             class="cate-list"
             style="
@@ -262,21 +280,27 @@
             />
           </div>
           <div class="cate-list cate-margin">
-            <label for="status">Status:</label>
+            <label for="status" class="block q-mb-sm">Status:</label>
             <div class="flex linear-btn-container">
               <q-btn
                 label="Activ"
+                style="margin-top: 0 !important; margin-bottom: 0 !important"
                 @click="userInfo.status = true"
                 :class="userInfo.status === true ? 'selected' : ''"
               />
               <q-btn
                 label="Inactiv"
                 @click="userInfo.status = false"
+                style="margin-top: 0 !important; margin-bottom: 0 !important"
                 :class="userInfo.status === false ? 'selected' : ''"
               />
               <q-btn
-                style="font-size: 85%"
                 val="neither"
+                style="
+                  font-size: 85%;
+                  margin-top: 0 !important;
+                  margin-bottom: 0 !important;
+                "
                 label="Activ (Fără Grupă)"
                 @click="userInfo.status = 'neither'"
                 :class="userInfo.status === 'neither' ? 'selected' : ''"
@@ -287,7 +311,12 @@
           <div
             v-if="userInfo.status === true"
             class="cate-list"
-            style="max-width: 600px; margin-left: auto; margin-right: auto"
+            style="
+              max-width: 600px;
+              margin-left: auto;
+              margin-right: auto;
+              margin-top: 5px;
+            "
           >
             <div class="add-member-button-container">
               <q-btn
@@ -358,6 +387,9 @@
                     id=""
                     v-model="item.class"
                   >
+                    <option value="" disabled selected hidden>
+                      Please select class
+                    </option>
                     <template v-if="!item.type">
                       <option v-for="(option, i) in availableOptions" :key="i">
                         {{ option }}
@@ -598,14 +630,14 @@ export default {
         this.isSubmitting = false;
         return;
       }
-if(profile.status == 'neither' && profile.reason == ""){
-  this.$q.notify({
+      if (profile.status == "neither" && profile.reason == "") {
+        this.$q.notify({
           color: "red",
           message: "Please give detail",
         });
         this.isSubmitting = false;
         return;
-}
+      }
 
       if (
         (profile.Instructor.length !== 4 && profile.Instructor != "") ||
@@ -619,7 +651,7 @@ if(profile.status == 'neither' && profile.reason == ""){
         this.isSubmitting = false;
         return;
       }
-       
+
       if (
         (profile.Instructor == "" &&
           (profile.Ghid != "" || profile.masterGhid != "")) ||
@@ -661,7 +693,7 @@ if(profile.status == 'neither' && profile.reason == ""){
       this.userInfo.teamList.push({
         name: "",
         year: "",
-        class: "0-4",
+        class: "",
         type: false,
       });
     },
@@ -669,7 +701,7 @@ if(profile.status == 'neither' && profile.reason == ""){
       this.userInfo.teamList.push({
         name: "",
         year: "",
-        class: "9-12",
+        class: "",
         type: true,
       });
     },
