@@ -222,10 +222,10 @@
                 style="padding-left: 2rem; padding-right: 2rem"
               >
                 <h2>Detalii</h2>
-                <q-card
-                  class="full-width q-mb-md"
-                  style="min-height: unset; max-width: unset"
-                >
+              <q-card
+                class="full-width q-mb-md"
+                style="min-height: unset; max-width: unset"
+              >
                   <q-card-section>
                     {{ selectedUser.reason }}
                   </q-card-section>
