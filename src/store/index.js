@@ -9,7 +9,6 @@ export default store(function () {
     state: {
       currentUser: null,
       userData: null,
-      departmentName: "",
       selectedEvent: {
         name: "",
         date: "",
@@ -23,11 +22,11 @@ export default store(function () {
       tabs: "user",
     },
     getters: {
-      departmentName(state) {
-        return state.departmentName;
+      departmentName(state){
+        return state.departmentName
       },
-      tabs(state) {
-        return state.tabs;
+      tabs(state){
+        return state.tabs
       },
       selectedUser(state) {
         return state.selectedUser;
@@ -61,10 +60,10 @@ export default store(function () {
     },
     mutations: {
       setDepartment(state, payload) {
-        state.departmentName = payload;
+        state.departmentName = payload
       },
-      setTabs(state, payload) {
-        state.tabs = payload;
+      setTabs(state, payload){
+        state.tabs = payload
       },
       setSignedUp(state, payload) {
         state.signedUp = payload;
@@ -113,11 +112,11 @@ export default store(function () {
       },
     },
     actions: {
-      setDepartment({ commit }, payload) {
-        commit("setDepartment", payload);
+      setDepartment({commit}, payload){
+        commit("setDepartment", payload)
       },
-      setTabs({ commit }, payload) {
-        commit("setTabs", payload);
+      setTabs({commit}, payload){
+        commit("setTabs", payload)
       },
       async finalizeReset({}, payload) {
         let error = { err: false };
@@ -185,7 +184,7 @@ export default store(function () {
 
         commit("setCurrentUser", null);
         commit("setUserData", null);
-        this.$router.push("/sign-in");
+        this.$router.push('/sign-in')
       },
       async getUserData({ state, commit, dispatch }) {
         // if (state.signedUp) {
@@ -493,7 +492,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", "All");
+        commit("setDepartment", "Toate conferințele")
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

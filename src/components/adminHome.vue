@@ -2,117 +2,27 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
-        <div
-          style="width: 87.5%; height: 3rem"
-          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
-        >
-          <div class="for-media-mobile-width" style="width: 25%">
-            <div class="input-label-search">
-              <q-input
-                dense
-                label="Search Users"
-                v-model="nameSearch"
-                outlined
-              />
-            </div>
-          </div>
-          <div
-            class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
-            style="width: 100%"
-          >
-            <div
-              v-show="showFilters"
-              class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%; position: relative"
-            >
-              <div class="absolute new-checkbox" style="top: -100%; right: 0">
-                <q-checkbox
-                  label="Show TLT only"
-                  v-model="tltFilter"
-                  left-label
-                />
-              </div>
-              <div class="select-label-conferintele">
+        <q-tab-panels class="admin-home" v-model="tabs">
+          <!-- Approved User Listing -->
+          <q-tab-panel name="approved">
+            <div class="flex flex-btn">
+              <q-btn
+                round
+                @click="exportFile(approvedUsers.arrTotal, 'Approved')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <h5 class="showMobile">Aprobat</h5>
+              <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
-                  label="Conferinte"
                   dense
-                  outlined
+                  class="bg-white"
                 ></q-select>
               </div>
-
-              <div class="input-label-category">
-                <q-select
-                  dense
-                  outlined
-                  v-model="categoryFilter"
-                  label="Category"
-                  :options="categoryOptions"
-                />
-              </div>
-
-              <!-- </div> -->
-
-              <!-- <div class="flex flex-btn "> -->
-
-              <div class="select-label-status">
-                <q-select
-                  dense
-                  outlined
-                  v-model="statusFilter"
-                  label="Status"
-                  :options="statusOptions"
-                />
-              </div>
-
-              <div class="input-label-gard">
-                <q-select
-                  label="Grad"
-                  dense
-                  v-model="gradeFilter"
-                  outlined
-                  multiple
-                  :options="gradeOptions"
-                />
-              </div>
             </div>
-
-            <!-- </div> -->
-
-            <!-- last buttons  -->
-
-            <div
-              class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
-              style="width: 17%"
-            >
-              <div class="q-mx-sm">
-                <q-btn
-                  v-show="showFilters"
-                  round
-                  @click="exportFile(tabs)"
-                  color="green"
-                  icon="download"
-                ></q-btn>
-              </div>
-
-              <div class="flex flex-btn">
-                <q-btn
-                  style="transition: 250ms"
-                  :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
-                  @click="showFilters = !showFilters"
-                  no-caps
-                  >Filtre</q-btn
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <q-tab-panels class="admin-home" v-model="tabs">
-          <!-- Approved User Listing -->
-          <q-tab-panel name="approved">
             <div class="table-container">
               <table class="user-list-table approved">
                 <thead>
@@ -192,6 +102,24 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
+            <div class="flex flex-btn">
+              <q-btn
+                round
+                @click="exportFile(pendingUsers.arrTotal, 'Pending')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <h5 class="showMobile">În așteptare</h5>
+              <div class="media-select">
+                <q-select
+                  dense
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  class="bg-white"
+                ></q-select>
+              </div>
+            </div>
             <div class="table-container">
               <table class="user-list-table pending">
                 <thead>
@@ -291,6 +219,23 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
+            <div class="flex flex-btn">
+              <q-btn
+                round
+                @click="exportFile(declinedUsers.arrTotal, 'Declined')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <h5 class="showMobile">Refuzat</h5>
+              <div class="media-select">
+                <q-select
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  dense
+                ></q-select>
+              </div>
+            </div>
             <div class="table-container">
               <table class="user-list-table declined">
                 <thead>
@@ -411,6 +356,7 @@
                 margin-bottom: 2rem;
               "
             >
+              <h5 class="showMobile">Conferințe</h5>
               <q-btn
                 no-caps
                 round
@@ -549,28 +495,10 @@ export default {
   data() {
     return {
       tabs: "approved",
-      tltFilter: false,
-      gradeOptions: [
-        { label: "Instructor", value: "Instructor" },
-        { label: "Ghid", value: "Ghid" },
-        { label: "Master Ghid", value: "masterGhid" },
-      ],
-      showFilters: false,
-      gradeFilter: [],
-      statusOptions: [
-        { label: "All", value: "All" },
-        { label: "Activ", value: true },
-        { label: "InActiv", value: false },
-        { label: "Activ, fără grupă", value: "neither" },
-      ],
-      statusFilter: { label: "All", value: "All" },
-      nameSearch: "",
-      categoryFilter: "All",
-      categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
-      departmentName: "All",
+      departmentName: "Toate conferințele",
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
@@ -646,15 +574,7 @@ export default {
         window.open(`tel: ${number}`);
       }
     },
-    exportFile(usersType) {
-      let users;
-      const fileName = usersType;
-      if (usersType === "departments") {
-        users = this.departmentUsers.arrTotal;
-      } else {
-        users = this[usersType + "Users"];
-      }
-
+    exportFile(users, fileName) {
       const header_row = [
         {
           value: "Numele și prenumele",
@@ -840,7 +760,7 @@ export default {
   },
   computed: {
     departmentUsers() {
-      const arr = this.userList.filter((x) => {
+      const arr = this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -861,48 +781,12 @@ export default {
       };
     },
     userList() {
-      let arr = this.$store.getters.userList;
-      if (this.nameSearch !== "") {
-        arr = arr.filter((x, i) => {
-          return (
-            x.name &&
-            x.name.toLowerCase().includes(this.nameSearch.toLowerCase())
-          );
-        });
-      }
-
-      if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i) => {
-          arr = arr.filter((item) => {
-            return item[x.value] !== "";
-          });
-        });
-      }
-      if (this.categoryFilter !== "All") {
-        arr = arr.filter((x) => {
-          return x.category == this.categoryFilter;
-        });
-      }
-      if (this.statusFilter.value !== "All") {
-        arr = arr.filter((x) => {
-          return x.status == this.statusFilter.value;
-        });
-      }
-
-      if (this.tltFilter) {
-        arr = arr.filter((item) => {
-          return (
-            item.teamList &&
-            item.teamList.length > 0 &&
-            item.teamList.filter((y) => y?.type).length > 0
-          );
-        });
-      }
-      return arr;
+      let firstItem = (this.currentPage - 1) * this.resultsPerPage;
+      return this.$store.getters.userList;
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -936,7 +820,7 @@ export default {
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -970,7 +854,7 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1010,7 +894,7 @@ export default {
         .map((x) => {
           return x.departmentName;
         });
-      arr.unshift("All");
+      arr.unshift("Toate conferințele");
       return arr;
     },
     dateList() {
@@ -1021,7 +905,7 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -1040,7 +924,7 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1086,12 +970,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.new-checkbox {
-  display: flex;
-  justify-content: flex-end;
-  @media (max-width: 1120px) {
-    top: -50% !important;
-  }
-}
-</style>
+<style></style>
