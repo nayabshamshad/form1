@@ -159,9 +159,14 @@
           style="padding-left: 2rem; padding-right: 2rem"
         >
           <h2>Detalii</h2>
-          <span class="block q-pb-md">
-            {{userData.reason}}
-          </span>
+          <q-card
+            class="full-width q-mb-md"
+            style="min-height: unset; max-width: unset"
+          >
+            <q-card-section>
+              {{ userData.reason }}
+            </q-card-section>
+          </q-card>
         </div>
       </div>
 
