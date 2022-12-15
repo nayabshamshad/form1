@@ -96,18 +96,18 @@
           </div>
           <div class="cate-list cate-margin gender">
             <label for="Gender">Gen:</label>
-            <div class="flex no- linear-btn-container">
-              <q-btn
-                style="width: 50% !important; border: 1px solid #ccc !important"
+            <div class="flex no-wrap">
+              <q-radio
+                v-model="userInfo.gender"
+                val="Masculin"
+                color="black"
                 label="Masculin"
-                :class="userInfo.gender === 'Masculin' ? 'selected' : ''"
-                @click="userInfo.gender = 'Masculin'"
               />
-              <q-btn
-                style="width: 50% !important; border: 1px solid #ccc !important"
+              <q-radio
+                v-model="userInfo.gender"
+                color="black"
+                val="Feminin"
                 label="Feminin"
-                @click="userInfo.gender = 'Feminin'"
-                :class="userInfo.gender === 'Feminin' ? 'selected' : ''"
               />
             </div>
           </div>
@@ -131,7 +131,6 @@
                     <q-date
                       v-model="userInfo.dateOfBirth"
                       @update:model-value="handleDateChange"
-                      default-view="Years"
                     >
                       <div class="row items-center justify-end">
                         <q-btn
@@ -165,22 +164,24 @@
               style="display: block; width: 20px; padding-left: 4px"
               >Categoria</label
             >
-            <div class="linear-btn-container flex">
-              <q-btn
-                label="Licurici"
-                @click="userInfo.category = 'Licurici'"
-                :class="userInfo.category === 'Licurici' ? 'selected' : ''"
-              />
-              <q-btn
-                label="Exploratori"
-                @click="userInfo.category = 'Exploratori'"
-                :class="userInfo.category === 'Exploratori' ? 'selected' : ''"
-              />
-              <q-btn
+            <div style="justify-content: space-between; display: flex">
+              <q-radio
                 v-model="userInfo.category"
+                val="Licurici"
+                color="black"
+                label="Licurici"
+              />
+              <q-radio
+                v-model="userInfo.category"
+                val="Exploratori"
+                color="black"
+                label="Exploratori"
+              />
+              <q-radio
+                v-model="userInfo.category"
+                val="Companioni"
+                color="black"
                 label="Companioni"
-                @click="userInfo.category = 'Companioni'"
-                :class="userInfo.category === 'Companioni' ? 'selected' : ''"
               />
             </div>
           </div>
@@ -263,45 +264,32 @@
           </div>
           <div class="cate-list cate-margin">
             <label for="status">Status:</label>
-            <div class="flex linear-btn-container">
-              <q-btn
+            <div class="flex" style="gap: 2rem">
+              <q-radio
+                v-model="userInfo.status"
+                :val="true"
+                color="black"
                 label="Activ"
-                @click="userInfo.status = true"
-                :class="userInfo.status === true ? 'selected' : ''"
               />
-              <q-btn
+              <q-radio
+                v-model="userInfo.status"
+                :val="false"
+                color="black"
                 label="Inactiv"
-                @click="userInfo.status = false"
-                :class="userInfo.status === false ? 'selected' : ''"
-              />
-              <q-btn
-                style="font-size: 85%"
-                val="neither"
-                label="Activ (Fără Grupă)"
-                @click="userInfo.status = 'neither'"
-                :class="userInfo.status === 'neither' ? 'selected' : ''"
               />
             </div>
           </div>
 
-          <div
-            v-if="userInfo.status === true"
-            class="cate-list"
-            style="max-width: 600px; margin-left: auto; margin-right: auto"
-          >
-            <div class="add-member-button-container">
+          <div v-if="userInfo.status" class="cate-list">
+            <div style="flex-wrap: nowrap" class="flex justify-space-between">
+              <label for="list">Lista copiilor:</label>
               <q-btn
+                icon="add"
                 @click="addMember"
+                class="team-member-btn"
                 type="button"
+                round
                 color="green"
-                label="Adauga Copil"
-              />
-              <q-btn
-                @click="addMemberSpecial"
-                type="button"
-                class="bg-linkcolor"
-                style="background: #8397cd"
-                label="Adauga TLT"
               />
             </div>
 
@@ -312,95 +300,25 @@
               style="
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;
               "
             >
-              <div style="width: calc(100% - 60px)">
-                <q-input
-                  outlined
-                  type="text"
-                  v-model="item.name"
-                  :style="
-                    item.type
-                      ? 'background-color: rgba(131, 151, 205, 0.3)'
-                      : ''
-                  "
-                  :placeholder="item.type ? 'TLT Name' : 'Nume copil'"
-                />
-
-                <div style="display: flex">
-                  <div style="width: 50%; position: relative">
-                    <input
-                      class="member-year"
-                      type="text"
-                      v-model="item.year"
-                      pattern="[0-9]{4}"
-                      placeholder="Anul nașterii"
-                      style="
-                        padding: 0.3rem 0.7rem;
-                        border-bottom-left-radius: 1rem;
-                        border: 1px solid #c4c4c4;
-                        border-radius: 0px 0px 0px 8px;
-                        width: 100%;
-                      "
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <select
-                    style="
-                      width: 50%;
-                      background: rgba(196, 196, 196, 0.2);
-                      border-radius: 0px 0px 0px 0px;
-                      border: 1px solid #c4c4c4;
-                    "
-                    name=""
-                    id=""
-                    v-model="item.class"
-                  >
-                    <template v-if="!item.type">
-                      <option v-for="(option, i) in availableOptions" :key="i">
-                        {{ option }}
-                      </option>
-                    </template>
-                    <template v-else-if="item.type">
-                      <option v-for="(option, i) in optionList[2]" :key="i">
-                        {{ option }}
-                      </option>
-                    </template>
-                  </select>
-                </div>
-              </div>
-
+              <q-input
+                outlined
+                type="text"
+                v-model="item.name"
+                placeholder="Nume copil"
+              />
               <q-btn
                 @click="removeMember(index)"
                 type="button"
+                round
                 color="red"
-                style="
-                  width: 60px;
-                  height: 89px;
-                  border-radius: 0;
-                  border-top-right-radius: 0.7rem;
-                  border-bottom-right-radius: 0.7rem;
-                "
+                style="width: 35px; height: 35px"
                 icon="remove"
                 class="remove-button"
               />
             </div>
-          </div>
-          <div v-else-if="userInfo.status == 'neither'" class="q-py-md">
-            <q-input
-              outlined
-              v-model="userInfo.reason"
-              type="textarea"
-              input-style="resize: none"
-              placeholder="Mentioneaza aici ce rol ai:
-              - ghid asistent;
-              - membru TLT;
-              - ajutor instructor;
-              - nu ai grupa dar poti preda specializarile;
-              - etc... "
-            ></q-input>
           </div>
           <div class="submit">
             <q-btn
@@ -439,14 +357,8 @@ export default {
   components: {},
   data() {
     return {
-      optionList: [
-        [0, 1, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12],
-      ],
       userInfo: {
-        teamList: [{ name: "", type: false, year: "", class: "0-4" }],
-        reason: "",
+        teamList: [{ name: "" }],
         dateOfBirth: "2022/03/21",
         Instructor: "",
         Ghid: "",
@@ -538,6 +450,7 @@ export default {
             this.userInfo.imgUrl = url;
           });
       }
+
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
@@ -550,24 +463,14 @@ export default {
       }
 
       profile.isUpdated = true;
-      if (profile.status !== true) {
+      if (!profile.status) {
         profile.teamList = [];
-      }
-      if (profile.status !== "neither") {
-        profile.reason = "";
       }
       // Checks before forwarding the request
       var err = false;
       if (profile.status) {
         profile.teamList.forEach((x) => {
-          if (
-            x.name == "" ||
-            !x.year ||
-            x.year.length != 4 ||
-            isNaN(x.year) ||
-            !x.class ||
-            x.class == ""
-          ) {
+          if (x.name == "") {
             err = true;
           }
         });
@@ -610,16 +513,16 @@ export default {
         this.isSubmitting = false;
         return;
       }
-      console.log(
-        profile.Instructor > profile.Ghid || profile.Ghid != "",
-        profile.Ghid > profile.masterGhid && profile.masterGhid != ""
-      );
       if (
-        (profile.Instructor == "" &&
-          (profile.Ghid != "" || profile.masterGhid != "")) ||
-        (profile.Ghid == "" && profile.masterGhid != "") ||
-        parseInt(profile.Instructor) > parseInt(profile.Ghid) ||
-        parseInt(profile.Ghid) > parseInt(profile.masterGhid)
+        (profile.Instructor > profile.Ghid &&
+          profile.Instructor != "" &&
+          profile.Ghid != "") ||
+        (profile.Ghid > profile.masterGhid &&
+          profile.Ghid != "" &&
+          profile.masterGhid != "") ||
+        (profile.Instructor > profile.masterGhid &&
+          profile.instructor != "" &&
+          profile.masterGhid != "")
       ) {
         this.$q.notify({
           color: "red",
@@ -652,20 +555,7 @@ export default {
       this.isSubmitting = false;
     },
     addMember() {
-      this.userInfo.teamList.push({
-        name: "",
-        year: "",
-        class: "0-4",
-        type: false,
-      });
-    },
-    addMemberSpecial() {
-      this.userInfo.teamList.push({
-        name: "",
-        year: "",
-        class: "9-12",
-        type: true,
-      });
+      this.userInfo.teamList.push({ name: "" });
     },
     removeMember(i) {
       if (this.userInfo.teamList.length > 1) {
@@ -688,26 +578,11 @@ export default {
           JSON.stringify(this.$store.getters.userData)
         );
         this.tagsInput = this.userInfo.tagList.join(", ");
-        this.userInfo.teamList.forEach((x) => {
-          if (!x.year) {
-            x.year = "";
-            x.class = "";
-            x.type = false;
-          }
-        });
       } else {
         this.userInfo = JSON.parse(
           JSON.stringify(this.$store.getters.selectedUser)
         );
-
         this.tagsInput = this.userInfo.tagList.join(", ");
-        this.userInfo.teamList.forEach((x) => {
-          if (!x.year) {
-            x.year = "";
-            x.class = "";
-            x.type = false;
-          }
-        });
       }
     }
     if (this.userInfo?.dateOfBirth) {
@@ -721,17 +596,6 @@ export default {
     }
   },
   computed: {
-    availableOptions() {
-      let arr = [];
-      if (this.userInfo.category === "Licurici") {
-        arr = this.optionList[0];
-      } else if (this.userInfo.category === "Exploratori") {
-        arr = this.optionList[1];
-      } else if (this.userInfo.category === "Companioni") {
-        arr = this.optionList[2];
-      }
-      return arr;
-    },
     storeUserInfo() {
       return this.$store.getters.userData;
     },
@@ -750,12 +614,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-div {
-  :deep(.q-input) {
-    border-top-left-radius: 8px;
-    overflow: hidden;
-  }
-}
-</style>

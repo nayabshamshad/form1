@@ -28,7 +28,6 @@
               type="text"
               placeholder="Adresa de E-mail"
               name="uname"
-              @keypress.enter="loginUser"
             />
           </div>
           <div class="cate-list">
@@ -38,7 +37,6 @@
               placeholder="Parola"
               name="pwd"
               v-model="userPass"
-              @keypress.enter="loginUser"
               :type="isPwd ? 'password' : 'text'"
             >
               <template v-slot:append>

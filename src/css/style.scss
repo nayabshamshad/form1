@@ -147,39 +147,3 @@ form.form {
     }
   }
 }
-
-input {
-  &:focus, &:active {
-    border: none;
-    outline: none;
-  }
-
-}
-
-.linear-btn-container {
-  gap: none;
-  .q-btn {
-    width: 33% !important;
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-    border: 1px solid #ccc;
-    &::before {
-      box-shadow: none;
-    }
-    &:first-of-type {
-      border-radius: 10px 0 0 10px !important;
-      border-right: none;
-    }
-    &:last-of-type {
-      border-left: none;
-      border-radius: 0 10px 10px 0 !important;
-    }
-    &:not(.selected) {
-      background: #fff !important;
-      color: #000 !important;
-    }
-    &.selected {
-      background-color: $linkcolor;
-    }
-  }
-}
