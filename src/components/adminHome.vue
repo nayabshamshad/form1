@@ -3,9 +3,15 @@
     <q-card-section>
       <div class="container">
         <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
-          <div class="">
-            <q-btn v-show="tabs !== 'departments'" round @click="exportFile(tabs)" color="green"
-              icon="download"></q-btn>
+          <div class=""> 
+            <q-btn
+              v-show="tabs !== 'departments'"
+              round
+              @click="exportFile(tabs)"
+              color="green"
+              icon="download"
+            ></q-btn>
+ 
           </div>
         </div>
         <div style="width: 87.5%; height: 3rem"
@@ -15,16 +21,33 @@
               <q-input dense label="Search Users" v-model="nameSearch" outlined />
             </div>
           </div>
-          <div class="q-ml-auto">
-            <q-btn no-caps round color="green" size="small" @click="showDepartmentDialog = true" icon="add"
-              v-show="tabs === 'departments'" />
-            <q-btn class="q-mx-md" v-show="tabs === 'departments'" round @click="exportFile(tabs)" color="green"
-              icon="download"></q-btn>
+          <div class="q-ml-auto"> 
+            <q-btn
+              no-caps
+              round
+              color="green"
+              size="small"
+              @click="showDepartmentDialog = true"
+              icon="add"
+              v-show="tabs === 'departments'"
+            />
+            <q-btn
+              class="q-mx-md"
+              v-show="tabs === 'departments'"
+              round
+              @click="exportFile(tabs)"
+              color="green"
+              icon="download"
+            ></q-btn>
           </div>
-          <div v-show="tabs !== 'departments'"
+          <div
+            v-show="tabs !== 'departments'"
             class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
-            style="width: 100%">
-            <div v-show="(showFilters && tabs !== 'departments')"
+            style="width: 100%"
+          >
+            <div
+              v-show="showFilters && tabs !== 'departments'"
+ 
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
               style="width: 100%; position: relative">
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
@@ -35,20 +58,40 @@
                   outlined></q-select>
               </div>
 
-              <div class="input-label-category">
-                <q-select dense outlined v-model="categoryFilter" label="Category" :options="categoryOptions" />
+              <div class="input-label-category"> 
+                <q-select
+                  dense
+                  outlined
+                  v-model="allFilters.categoryFilter"
+                  label="Category"
+                  :options="categoryOptions"
+                />
+ 
               </div>
 
               <!-- </div> -->
 
               <!-- <div class="flex flex-btn "> -->
 
-              <div class="select-label-status">
-                <q-select dense outlined v-model="statusFilter" label="Status" :options="statusOptions" />
+              <div class="select-label-status"> 
+                <q-select
+                  dense
+                  outlined
+                  v-model="allFilters.statusFilter"
+                  label="Status"
+                  :options="statusOptions"
+                />
               </div>
 
               <div class="input-label-gard">
-                <q-select label="Grad" dense v-model="gradeFilter" outlined :options="gradeOptions" />
+                <q-select
+                  label="Grad"
+                  dense
+                  v-model="allFilters.gradeFilter"
+                  outlined
+                  :options="gradeOptions"
+                />
+ 
               </div>
             </div>
 
@@ -59,10 +102,16 @@
             <div
               class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
               style="width: 17%">
-              <div class="flex flex-btn">
-                <q-btn v-show="tabs !== 'departments'" style="transition: 250ms"
-                  :class="showFilters ? 'bg-linkcolor' : 'linkcolor'" @click="showFilters = !showFilters"
-                  no-caps>Filtre</q-btn>
+              <div class="flex flex-btn"> 
+                <q-btn
+                  v-show="tabs !== 'departments'"
+                  style="transition: 250ms"
+                  :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
+                  @click="setShowFilters(!showFilters)"
+                  no-caps
+                  >Filtre</q-btn
+                >
+ 
               </div>
             </div>
           </div>
@@ -375,6 +424,14 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (this.allFilters?.unset) {
+      this.allFilters = {
+        categoryFilter: this.filterList.categoryFilter,
+        statusFilter: this.filterList.statusFilter,
+        gradeFilter: this.filterList.gradeFilter,
+      };
+    }
+    console.log(this.filterList);
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -410,17 +467,13 @@ export default {
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
       ],
-      showFilters: false,
-      gradeFilter: { label: "All", value: "all" },
       statusOptions: [
         { label: "All", value: "All" },
         { label: "Activ", value: true },
         { label: "InActiv", value: false },
         { label: "Activ, fără grupă", value: "neither" },
       ],
-      statusFilter: { label: "All", value: "All" },
       nameSearch: "",
-      categoryFilter: "All",
       categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
@@ -429,9 +482,22 @@ export default {
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
+      allFilters: {
+        unset: true,
+      },
     };
   },
   watch: {
+    allFilters: {
+      handler: function () {
+        this.$store.dispatch("setFilterList", {
+          categoryFilter: this.allFilters.categoryFilter,
+          statusFilter: this.allFilters.statusFilter,
+          gradeFilter: this.allFilters.gradeFilter,
+        });
+      },
+      deep: true,
+    },
     departmentName: {
       handler: function () {
         this.currentPage = 1;
@@ -475,6 +541,9 @@ export default {
     },
   },
   methods: {
+    setShowFilters(x) {
+      this.$store.dispatch("setShowFilters", x);
+    },
     increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
@@ -581,7 +650,6 @@ export default {
         },
       ];
       let arr = [header_row];
-      console.log(users);
 
       users.forEach((x) => {
         let newDate = "";
@@ -696,6 +764,12 @@ export default {
     },
   },
   computed: {
+    filterList() {
+      return this.$store.getters.filterList;
+    },
+    showFilters() {
+      return this.$store.getters.showFilters;
+    },
     departmentUsers() {
       const arr = this.userList.filter((x) => {
         return x.role == "department";
@@ -726,28 +800,22 @@ export default {
             x.name.toLowerCase().includes(this.nameSearch.toLowerCase())
           );
         });
-      }
-
-      if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i) => {
-          arr = arr.filter((item) => {
-            return item[x.value] !== "";
-          });
-        });
-      }
-      if (this.categoryFilter !== "All") {
-        arr = arr.filter((x) => {
-          return x.category == this.categoryFilter;
-        });
-      }
-
-      if (this.tltFilter) {
+      } 
+      if (this.allFilters?.gradeFilter?.value !== "all") {
         arr = arr.filter((item) => {
-          return (
-            item.teamList &&
-            item.teamList.length > 0 &&
-            item.teamList.filter((y) => y?.type).length > 0
-          );
+          return item[this.allFilters?.gradeFilter?.value] !== "";
+ 
+        });
+      }
+      if (this.allFilters.categoryFilter !== "All") {
+        arr = arr.filter((x) => {
+          return x.category == this.allFilters.categoryFilter;
+        });
+      } 
+      if (this.allFilters?.statusFilter?.value !== "All") {
+        arr = arr.filter((x) => {
+          return x.status == this.allFilters?.statusFilter?.value;
+ 
         });
       }
       return arr;
