@@ -7,6 +7,7 @@ import { Notify } from "quasar";
 export default store(function () {
   const Store = createStore({
     state: {
+      showFilters: false,
       currentUser: null,
       userData: null,
       selectedEvent: {
@@ -20,10 +21,22 @@ export default store(function () {
       userList: [],
       selectedUser: [],
       tabs: "user",
+      filterList: {
+        categoryFilter: "All",
+        statusFilter: { label: "All", value: "All" },
+      gradeFilter: { label: "All", value: "all" },
+
+      },
     },
     getters: {
-      departmentName(state){
-        return state.departmentName
+      filterList({ filterList }) {
+        return filterList;
+      },
+      showFilters(state) {
+        return state.showFilters;
+      },
+      departmentName(state) {
+        return state.departmentName;
       },
       tabs(state){
         return state.tabs
@@ -59,6 +72,12 @@ export default store(function () {
       },
     },
     mutations: {
+      setFilterList(state, payload) {
+        state.filterList = payload;
+      },
+      setShowFilters(state, payload) {
+        state.showFilters = payload;
+      },
       setDepartment(state, payload) {
         state.departmentName = payload
       },
@@ -112,8 +131,14 @@ export default store(function () {
       },
     },
     actions: {
-      setDepartment({commit}, payload){
-        commit("setDepartment", payload)
+      setFilterList({ commit }, payload) {
+        commit("setFilterList", payload);
+      },
+      setShowFilters({ commit }, payload) {
+        commit("setShowFilters", payload);
+      },
+      setDepartment({ commit }, payload) {
+        commit("setDepartment", payload);
       },
       setTabs({commit}, payload){
         commit("setTabs", payload)

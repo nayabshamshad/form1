@@ -167,17 +167,37 @@
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.status" class="shadowed q-mt-md">
+              <div
+                v-show="selectedUser.status === true"
+                class="shadowed q-mt-md"
+              >
                 <h2>Lista Copiilor</h2>
                 <div class="children-list">
-                  <div
-                    v-for="(member, i) in sortedTeam"
-                    :key="i"
-                    class="section"
-                  >
-                    {{ member.name }}
+                  <div v-for="(member, i) in sortedTeam" :key="i">
+                    <div class="section" :class="member.type ? 'special' : ''">
+                      {{ member.name }}
+                    </div>
+                    <div class="flex">
+                      <div>{{ member.year }}</div>
+                      <div>{{ member.class }}</div>
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div
+                v-show="selectedUser.status === 'neither'"
+                class="shadowed q-my-lg"
+                style="padding-left: 2rem; padding-right: 2rem"
+              >
+                <h2>Detalii</h2>
+              <q-card
+                class="full-width q-mb-md"
+                style="min-height: unset; max-width: unset"
+              >
+                  <q-card-section>
+                    {{ selectedUser.reason }}
+                  </q-card-section>
+                </q-card>
               </div>
               <q-btn
                 @click="$router.push('/')"
@@ -899,147 +919,7 @@ export default {
       newDate = date.getDate() + " " + month + ", " + date.getFullYear();
       return newDate;
     },
-    async submit() {
-      if (this.isSubmitting) {
-        return;
-      }
 
-      this.isSubmitting = true;
-      let profile;
-      if (this.previewImage != "") {
-        if (this.dataUser.imgUrl && this.dataUser.imgUrl != "") {
-          await deleter
-            .refFromURL(this.dataUser.imgUrl)
-            .delete()
-            .then()
-            .catch((errImg) => {
-              console.log(errImg);
-            });
-        }
-
-        const img_name = new Date() + "-" + this.file.name;
-        await storage
-          .child(img_name)
-          .put(this.file, {
-            contentType: this.file.type,
-          })
-          .then((snapshot) => {
-            return snapshot.ref.getDownloadURL();
-          })
-          .then((url) => {
-            this.dataUser.imgUrl = url;
-          });
-      }
-      profile = { ...this.dataUser };
-      if (this.tagsInput != "") {
-        if (this.tagsInput.split(",").length > 5) {
-          this.error = "Nu poți să introduci mai mult de 5 specializări!";
-          this.errorDialog = true;
-          this.isSubmitting = false;
-          return;
-        }
-        profile.tagList = this.tagsInput.split(",");
-      }
-      if (profile.phoneNumber.length !== 14) {
-        this.$q.notify({
-          message: "Te rugăm să introduci un număr de telefon valid.",
-          color: "red",
-        });
-        this.isSubmitting = false;
-        return;
-      }
-
-      profile.isUpdated = true;
-      if (!profile.status) {
-        profile.teamList = [];
-      }
-      // Checks before forwarding the request
-      var err = false;
-
-      if (profile.status) {
-        profile.teamList = this.teamList;
-        profile.teamList.forEach((x) => {
-          if (x.name == "") {
-            err = true;
-          }
-        });
-      }
-      if (err) {
-        this.isSubmitting = false;
-        this.errorDialog = true;
-        this.error = "Verificați lista cu copii.";
-        return;
-      }
-      if (profile.tagList.length < 1) {
-        this.errorDialog = true;
-        this.error = "Trebuie să introduci minim o specializare";
-        this.isSubmitting = false;
-        return;
-      }
-      if (
-        profile.dateOfBirth == "" ||
-        profile.region == "" ||
-        profile.state == "" ||
-        profile.gender == "" ||
-        profile.etnic == "" ||
-        profile.clubName == "" ||
-        profile.category == "" ||
-        profile.size == ""
-      ) {
-        this.errorDialog = true;
-        this.error = "Te rugăm să reverifici datele introduse.";
-        this.isSubmitting = false;
-        return;
-      }
-      if (
-        (profile.Instructor.length !== 4 && profile.Instructor != "") ||
-        (profile.Ghid.length !== 4 && profile.Ghid != "") ||
-        (profile.masterGhid.length !== 4 && profile.masterGhid != "")
-      ) {
-        this.$q.notify({
-          color: "red",
-          message: "Formatul anului introdus este incorect.",
-        });
-        this.isSubmitting = false;
-        return;
-      }
-      if (
-        (profile.Instructor > profile.Ghid &&
-          profile.Instructor != "" &&
-          profile.Ghid != "") ||
-        (profile.Ghid > profile.masterGhid &&
-          profile.Ghid != "" &&
-          profile.masterGhid != "") ||
-        (profile.Instructor > profile.masterGhid &&
-          profile.instructor != "" &&
-          profile.masterGhid != "")
-      ) {
-        this.$q.notify({
-          color: "red",
-          message:
-            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
-        });
-        this.isSubmitting = false;
-        return;
-      }
-      await this.$store.dispatch("updateUserProfileAdmin", profile);
-      await this.pageSetup();
-      this.previewImage = "";
-      this.isSubmitting = false;
-      this.isEdit = false;
-    },
-
-    addMember() {
-      this.teamList.push({ name: "" });
-    },
-    removeMember(i) {
-      if (this.teamList.length > 1) {
-        this.teamList.splice(i, 1);
-      } else {
-        this.errorDialog = true;
-        this.error = "Trebuie să completezi lista cu copii.";
-      }
-    },
     showEventDetails(x) {
       this.$store.dispatch("selectEvent", x);
     },
