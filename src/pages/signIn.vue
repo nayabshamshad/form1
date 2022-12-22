@@ -13,7 +13,7 @@
             "
             src="../assets/lectin-mic.png"
           />
-          <h4>Autentificare</h4>
+          <h4>{{ $t('autentificare') }}</h4>
           <p>
             Nu ai încă cont?
             <router-link to="/sign-up" class="link"
@@ -21,20 +21,20 @@
             >
           </p>
           <div class="cate-list">
-            <label for="uname"> E-mail</label>
+            <label for="uname"> {{ $t('emails') }}</label>
             <q-input
               outlined
               v-model="userEmail"
               type="text"
-              placeholder="Adresa de E-mail"
+              :placeholder="$t('adresadeE-mail')"
               name="uname"
             />
           </div>
           <div class="cate-list">
-            <label for="pwd">Parola</label>
+            <label for="pwd">{{ $t('parola') }}</label>
             <q-input
               outlined
-              placeholder="Parola"
+              :placeholder="$t('parola')"
               name="pwd"
               v-model="userPass"
               :type="isPwd ? 'password' : 'text'"
@@ -54,7 +54,7 @@
               :loading="isSubmitting"
               class="q-btn-item"
               type="button"
-              >Conectare</q-btn
+              >{{ $t('conectare') }}</q-btn
             >
           </div>
           <span class="pwd">
@@ -64,7 +64,7 @@
               class="link"
               @click="forgotPassword"
             >
-              Am uitat parola
+            {{ $t('amUitatParola') }}
             </button>
           </span>
         </form>

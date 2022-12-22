@@ -14,8 +14,8 @@
         <q-tab
           name="user"
           style="border: none; border-radius: 0 0 8px 0"
-          label="Informații utilizator"
-        ></q-tab>
+          :label="$t('informatiiUtilizator')"
+          ></q-tab>
         <q-tab
           v-if="
             selectedUser.status &&
@@ -23,11 +23,11 @@
             selectedUser.isAuthorized == true
           "
           name="events"
-          label="Întâlnirile"
+          :label="$t('intâlnirile')"
           style="border: none; border-radius: 0 0 0 8px"
         ></q-tab>
         <q-tab name="date" v-if="selectedUser.role === 'department'">
-          Data</q-tab
+          {{ $t('data') }}</q-tab
         >
       </q-tabs>
       <q-tab-panels
@@ -86,11 +86,11 @@
                     <span> {{ selectedUser.etnic }}</span>
                   </div> -->
                   <div>
-                    <h3>Gen:</h3>
+                    <h3>{{ $t('gender') }}</h3>
                     <span> {{ selectedUser.gender }}</span>
                   </div>
                   <div>
-                    <h3>Data nașterii:</h3>
+                    <h3>{{ $t('dateofbirth') }}</h3>
                     <span>
                       {{
                         selectedUser.dateOfBirth
@@ -100,12 +100,12 @@
                     >
                   </div>
                   <div>
-                    <h3>Mărime tricou:</h3>
+                    <h3>{{ $t('shirtsize') }}</h3>
                     <span class="text-uppercase"> {{ selectedUser.size }}</span>
                   </div>
                 </div>
                 <div class="shadowed skills">
-                  <h3>Specializări:</h3>
+                  <h3>{{ $t('specializări') }}</h3>
                   <div>
                     <p v-for="(item, i) in selectedUser.tagList" :key="i">
                       {{ item }}
@@ -115,30 +115,30 @@
               </div>
               <div class="shadowed user-details q-mt-md">
                 <div>
-                  <h3>Categorie:</h3>
+                  <h3>{{ $t('categorie') }}</h3>
                   <p>{{ selectedUser.category }}</p>
                   <!-- <p>Exploratori</p> -->
                 </div>
                 <div>
-                  <h3>Zonă:</h3>
+                  <h3>{{ $t('zonă') }}</h3>
 
                   <!-- <p>Brasov</p> -->
                   <p>{{ selectedUser.region }}</p>
                 </div>
                 <div>
-                  <h3>Comunitate:</h3>
+                  <h3>{{ $t('comunitate') }}</h3>
                   <!-- <p>Betel</p> -->
                   <p>{{ selectedUser.state }}</p>
                 </div>
                 <div>
-                  <h3>Clubul:</h3>
+                  <h3>{{ $t('clubul') }}</h3>
                   <!-- <p>Iosua</p> -->
                   <p>{{ selectedUser.clubName }}</p>
                 </div>
                 <div>
-                  <h3>Anul investiturii ca:</h3>
+                  <h3>{{ $t('anulinvestituriica') }}</h3>
                   <div>
-                    <span>Instructor: </span>
+                    <span>{{ $t('instructor') }}</span>
                     <span>
                       {{
                         selectedUser.Instructor !== ""
@@ -148,7 +148,7 @@
                     >
                   </div>
                   <div>
-                    <span>Ghid: </span>
+                    <span>{{ $t('ghid') }}</span>
                     <span>
                       {{
                         selectedUser.Ghid !== "" ? selectedUser.Ghid : "-"
@@ -156,7 +156,7 @@
                     >
                   </div>
                   <div>
-                    <span>Master Ghid:</span>
+                    <span>{{ $t('masterghid') }}</span>
                     <span>
                       {{
                         selectedUser.masterGhid !== ""
@@ -189,7 +189,7 @@
                 class="shadowed q-my-lg"
                 style="padding-left: 2rem; padding-right: 2rem"
               >
-                <h2>Detalii</h2>
+                <h2>{{$t('Detalii')}}</h2>
               <q-card
                 class="full-width q-mb-md"
                 style="min-height: unset; max-width: unset"
@@ -215,9 +215,9 @@
                 <table style="width: 100%" class="user-list-table">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>
+                      <th>{{ $t('name') }}</th>
+                      <th>{{ $t('phone') }}</th>
+                      <th>{{ $t('email') }}</th>
                     </tr>
                   </thead>
                   <tbody class="table-row">
@@ -571,7 +571,7 @@
           <div class="container">
             <div class="attendance-container shadowed">
               <div class="attendance-summary">
-                <h4 style="color: #233975">Prezența</h4>
+                <h4 style="color: #233975">{{ $t('prezenta') }}</h4>
                 <div v-for="(student, index) in listOfAttendance" :key="index">
                   <div
                     class="shadowed"
@@ -592,7 +592,7 @@
             </div>
             <div class="attendance-container shadowed">
               <div class="attendance-summary">
-                <h4 style="color: #233975">Lista întâlnirilor</h4>
+                <h4 style="color: #233975">{{ $t('listaIntalnirilor') }}</h4>
                 <div class="eventlist">
                   <div
                     class="q-mb-md download-button-event q-mt-sm flex justify-between"
@@ -614,8 +614,8 @@
                   >
                     <thead>
                       <tr>
-                        <th>Titlul întâlnirii</th>
-                        <th style="text-align: center">Data întâlnirii</th>
+                        <th>{{ $t('titlulIntâlnirii') }}</th>
+                        <th style="text-align: center">{{ $t('dataIntalnirii') }}</th>
                       </tr>
                     </thead>
                     <tbody class="table-row">
@@ -641,13 +641,13 @@
                       class="text-weight-bold linkcolor text-left"
                       style="opacity: 0.5"
                     >
-                      Nu există întâlniri încă
+                     {{ $t('nuExistaIntalniriInca') }}
                     </h4>
                   </div>
                 </div>
                 <div class="q-mt-md inline-pagination">
                   <div style="display: inline-flex">
-                    <span>Întâlniri pe pagină</span>
+                    <span>{{ $t('intalniriPePagina') }}</span>
                     <select class="paginationSelect" v-model="resultsPerPage">
                       <option :value="5">5</option>
                       <option :value="10">10</option>
@@ -720,7 +720,7 @@
       <q-dialog v-model="errorDialog">
         <q-card>
           <q-card-section>
-            <div class="text-h6">Alertă</div>
+            <div class="text-h6">{{ $t('alertă') }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -728,7 +728,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="OK" color="primary" v-close-popup />
+            <q-btn flat :label=" $t('ok')" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
       </q-dialog>

@@ -7,18 +7,18 @@
       "
     >
       <li>
-        <q-btn flat color="black" @click="viewUsers('approved')">Aprobat</q-btn>
+        <q-btn flat color="black" @click="viewUsers('approved')">{{ $t('aprobat') }}</q-btn>
       </li>
       <li>
         <q-btn flat color="black" @click="viewUsers('pending')"
-          >În așteptare</q-btn
+          >{{ $t('Înașteptare') }}</q-btn
         >
       </li>
       <li>
-        <q-btn flat color="black" @click="viewUsers('declined')">Refuzat</q-btn>
+        <q-btn flat color="black" @click="viewUsers('declined')">{{ $t('Refuzat') }}</q-btn>
       </li>
-      <li v-show="$store.getters.userData.role == 'department'">
-        <q-btn flat color="black" @click="viewUsers('date')">Data</q-btn>
+      <li v-show="$store.getters.userData.role  == 'department'">
+        <q-btn flat color="black" @click="viewUsers('date')">{{ $t('data') }}</q-btn>
       </li>
       <li>
         <q-btn
@@ -30,7 +30,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t('Deconectare') }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -42,11 +42,11 @@
     <ul v-else>
       <li>
         <q-btn flat color="black" @click="pushRoute('user')"
-          >Panou de bord</q-btn
+          >{{ $t('panouDeBord') }}</q-btn
         >
       </li>
       <li v-if="$store.getters.userData.status == true">
-        <q-btn flat color="black" @click="pushRoute('events')">Intalniri</q-btn>
+        <q-btn flat color="black" @click="pushRoute('events')">{{ $t('intalniri') }}</q-btn>
       </li>
       <li>
         <q-btn
@@ -58,7 +58,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t('Deconectare') }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"

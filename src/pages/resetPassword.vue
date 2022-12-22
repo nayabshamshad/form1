@@ -17,15 +17,15 @@
       </div>
       <div class="container">
         <form class="form" autocomplete="off">
-          <h4 class="reset-pwd-h4">Resetare parola</h4>
+          <h4 class="reset-pwd-h4">{{ $t('resetareParola') }}</h4>
           <div class="cate-list">
-            <label for="pwd">Parola nouă</label>
+            <label for="pwd">{{ $t('parolaNoua') }}</label>
             <q-input
               outlined
               name="pwd"
               :type="isPwd ? 'password' : 'text'"
               v-model="newPass"
-              placeholder="Introduce o parolă nouă"
+              :placeholder="$t('IntroduceoParolaNoua')"
             >
               <template v-slot:append>
                 <q-icon
@@ -42,7 +42,8 @@
               :loading="isSubmitting"
               type="button"
               rounded
-              >RESETARE PAROLĂ</q-btn
+              class="text-uppercase"
+              >{{ $t('resetareParola') }}</q-btn
             >
           </div>
         </form>

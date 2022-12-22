@@ -21,7 +21,7 @@
       </div>
       <div class="shadowed" style="min-height: 220px; padding-top: 1rem">
         <h5 class="text-weight-bold linkcolor text-left q-px-md">
-          Scurtă descriere:
+          {{ $t('scurtaDescriere') }}
         </h5>
         <p
           style="text-align: left"
@@ -31,7 +31,7 @@
         </p>
       </div>
       <div class="shadowed q-mt-lg q-pb-md">
-        <h5 class="linkcolor text-weight-bold text-center q-pt-md">Prezența</h5>
+        <h5 class="linkcolor text-weight-bold text-center q-pt-md">{{ $t('prezenta') }}</h5>
         <div class="q-pb-lg q-pt-md">
           <div
             v-for="(student, i) in memberList"
@@ -61,7 +61,7 @@
         style="min-height: 220px; padding-top: 1rem; margin-top: 2rem"
       >
         <h5 class="text-weight-bold linkcolor text-left q-px-md">
-          Fotografii:
+          {{ $t('fotografii:') }}
         </h5>
         <div class="flex justify-center items-center event-img-container">
           <div

@@ -31,7 +31,7 @@
           class="btn"
           :class="$route.path === '/' ? 'add-border' : ''"
         >
-          Panou de bord
+        {{ $t('panouDeBord') }}
         </q-btn>
         <q-btn
           v-if="this.userData.status == true"
@@ -43,7 +43,7 @@
           class="btn"
           :class="$route.path === '/event-list' ? 'add-border' : ''"
         >
-          Întâlniri
+        {{ $t('Intalniri') }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -56,7 +56,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t('Deconectare') }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -94,7 +94,7 @@
               : ''
           "
         >
-          Aprobat
+        {{ $t('aprobat') }}
         </q-btn>
         <q-btn
           no-caps
@@ -105,7 +105,7 @@
           class="btn"
           :class="$route.fullPath === '/?q=pending' ? 'add-border' : ''"
         >
-          În așteptare
+       {{ $t('Înașteptare') }}
         </q-btn>
         <q-btn
           no-caps
@@ -116,7 +116,7 @@
           class="btn"
           :class="$route.fullPath === '/?q=declined' ? 'add-border' : ''"
         >
-          Refuzat
+           {{ $t('Refuzat') }}
         </q-btn>
         <q-btn
           no-caps
@@ -128,7 +128,7 @@
           v-show="userData.role === 'department'"
           :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
         >
-          Data
+        {{ $t('data') }} 
         </q-btn>
         <q-btn
           no-caps
@@ -140,7 +140,7 @@
           v-show="userData.role === 'admin'"
           :class="$route.fullPath === '/?q=departments' ? 'add-border' : ''"
         >
-          Conferințe
+        {{ $t('Conferințe') }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -153,7 +153,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t('Deconectare') }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -174,7 +174,7 @@
           @click="$router.push('/event-list')"
           class="btn"
         >
-          Întâlnirile
+        {{ $t('intâlnirile') }}
         </q-btn>
       </div>
     </div>

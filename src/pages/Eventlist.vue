@@ -6,7 +6,7 @@
     <div class="container">
       <div class="attendance-container shadowed">
         <div class="attendance-summary">
-          <h4 style="color: #233975">Prezența</h4>
+          <h4 style="color: #233975">{{ $t('prezenta') }}</h4>
           <div v-for="(student, index) in listOfAttendance" :key="index">
             <div
               class="shadowed"
@@ -27,7 +27,7 @@
       </div>
       <div class="attendance-container shadowed">
         <div class="attendance-summary">
-          <h4 style="color: #233975">Lista întâlnirilor</h4>
+          <h4 style="color: #233975">{{ $t('listaIntalnirilor') }}</h4>
           <div class="eventlist">
             <div
               class="q-mt-sm q-mb-md flex justify-between q-mx-auto"
@@ -44,7 +44,7 @@
                 <span
                   style="font-size: 12px"
                   class="linkcolor q-pr-sm font-weight-light subtitle1 text-left"
-                  >Adaugă întâlnire</span
+                  >{{ $t('adaugaIntalnire') }}</span
                 >
                 <q-btn
                   class="bg-linkcolor"
@@ -62,8 +62,8 @@
             >
               <thead>
                 <tr>
-                  <th>Titlul îtâlnirii</th>
-                  <th style="text-align: center">Data întâlnirii</th>
+                  <th>{{ $t('titlulItalnirii') }}</th>
+                  <th style="text-align: center">{{ $t('dataIntalnirii') }}</th>
                 </tr>
               </thead>
               <tbody class="table-row">
@@ -87,13 +87,13 @@
                 class="text-weight-bold linkcolor text-left"
                 style="opacity: 0.5"
               >
-                Nu există întâlniri încă
+              {{ $t('nuexistaIntalniriLnca') }}
               </h4>
             </div>
           </div>
           <div class="q-mt-md inline-pagination">
             <div style="display: inline-flex">
-              <span>Întâlniri pe pagină</span>
+              <span>{{ $t('intalniriPePagina') }}</span>
               <select class="paginationSelect" v-model="resultsPerPage">
                 <option :value="5">5</option>
                 <option :value="10">10</option>

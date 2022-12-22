@@ -10,28 +10,28 @@
             src="../assets/lectin-mic.png"
           />
           <!-- <h2 class="text-center showMobile text-bold q-mb-lg">LEC</h2> -->
-          <h4 class="text-center">Înregistrare</h4>
+          <h4 class="text-center">{{ $t('inregistrare') }}</h4>
           <p>
-            Ai deja cont?
-            <router-link to="/sign-in" class="link">Autentifică-te</router-link>
+            {{ $t('aiDejaCont') }}
+            <router-link to="/sign-in" class="link">{{ $t('autentificaTe') }}</router-link>
           </p>
 
           <div class="cate-list left">
-            <label for="uname">Nume</label>
+            <label for="uname">{{ $t('nume') }}</label>
             <q-input
               v-model="firstName"
               type="text"
               name="F-name"
-              placeholder="Nume"
+              :placeholder="$t('nume')"
               outlined
               label-color="black"
             />
           </div>
           <div class="cate-list right">
-            <label for="uname">Prenume</label>
+            <label for="uname">{{ $t('prenume') }}</label>
             <q-input
               type="text"
-              placeholder="Prenume"
+              :placeholder="$t('prenume')"
               label-color="black"
               v-model="lastName"
               name="L-name"
@@ -39,9 +39,9 @@
             />
           </div>
           <div class="cate-list">
-            <label>Conferintă</label>
+            <label>{{ $t('conferinta') }}</label>
             <q-select
-              label="Conferință"
+              :label="$t('conferinta')"
               label-color="gray"
               v-model="departmentName"
               outlined
@@ -49,7 +49,7 @@
             />
           </div>
           <div class="cate-list">
-            <label for="uname">Număr de telefon</label>
+            <label for="uname">{{ $t('numarDeTelefon') }}</label>
             <q-input
               type="tel"
               v-model="phoneNumber"
@@ -62,22 +62,22 @@
           </div>
 
           <div class="cate-list">
-            <label for="uname"> E-mail</label>
+            <label for="uname">{{ $t('emails') }}</label>
             <q-input
               type="text"
               v-model="emailInput"
               name="email"
-              placeholder="Adresa de E-mail"
+              :placeholder="$t('adresadeE-mail')"
               label-color="black"
               outlined
             />
           </div>
 
           <div class="cate-list">
-            <label for="pwd">Parola</label>
+            <label for="pwd">{{ $t('parola') }}</label>
             <q-input
               :type="isPwd ? 'password' : 'text'"
-              placeholder="Parola"
+              :placeholder="$t('parola')"
               label-color="black"
               v-model="passInput"
               name="pwd"
@@ -94,7 +94,7 @@
           </div>
           <div class="btn1">
             <q-btn :loading="isSubmitting" rounded @click="submit" type="button"
-              >Înregistrare</q-btn
+              >{{ $t('inregistrare') }}</q-btn
             >
           </div>
           <!-- <span class="pwd"

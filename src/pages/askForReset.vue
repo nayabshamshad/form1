@@ -22,12 +22,12 @@
         class="flex"
         style="justify-content: flex-end; padding: 0 30%"
       ></div>
-      <h5 class="text-center text-weight-bold reset-h5">Resetare parolă</h5>
+      <h5 class="text-center text-weight-bold reset-h5">{{ $t('resetareParola') }}</h5>
     </q-card-section>
 
     <q-card-section class="q-pt-none q-px-lg q-mx-lg">
-      <p class="q-mx-auto text-center hide">Introdu adresa de E-mail</p>
-      <p class="q-mb-lg text-weight-bold reset-label">E-mail</p>
+      <p class="q-mx-auto text-center hide">{{ $t('introdu') }}</p>
+      <p class="q-mb-lg text-weight-bold reset-label">{{ $t('emails') }}</p>
       <q-input
         outlined
         v-model="forgotEmail"
@@ -40,7 +40,7 @@
           @click="sendResetEmail"
           rounder
           :loading="sendingEmail"
-          >Resetare</q-btn
+          >{{ $t('resetare') }}</q-btn
         >
       </div>
     </q-card-section>

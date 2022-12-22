@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <h2>Pending Team Leaders</h2>
+    <h2>{{ $t('pendingTeamLeaders') }}</h2>
       <table class="table">
         <thead class="thead">
           <tr>
-            <th>Team Name</th>
-            <th>Team Leader</th>
-            <th>Status</th>
-            <th>Aprrove/decline</th>
+            <th>{{ $t('teamName') }}</th>
+            <th>{{ $t('teamLeader') }}</th>
+            <th>{{ $t('status') }}</th>
+            <th>{{ $t('aprrovedecline') }}</th>
           </tr>
         </thead>
         <tbody class="tbody">

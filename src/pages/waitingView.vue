@@ -12,11 +12,11 @@
           "
           src="../assets/lectin-mic.png"
         />
-        <h3>Înregistrare reușită</h3>
-        <h6>Te rugăm să aștepți aprobarea unui administrator</h6>
+        <h3>{{ $t('inregistraInregistrare') }}</h3>
+        <h6>{{ $t('teAdministrator') }}</h6>
         <div class="inapoi">
           <q-btn outline class="linkcolor reject-btn" @click="logOut">
-            Înapoi
+            {{ $t('inapoi') }}
           </q-btn>
         </div>
       </div>

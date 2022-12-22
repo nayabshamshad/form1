@@ -23,7 +23,7 @@
                 width: auto;
                 background-color: transparent;
               "
-              >Deconectare
+              >{{ $t("Deconectare") }}
               <q-icon
                 class=""
                 style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -31,7 +31,7 @@
               ></q-icon
             ></q-btn>
           </div>
-          <h4>Completați informațiile</h4>
+          <h4>{{ $t("completatiInformatiile") }}</h4>
           <input
             ref="imgInput"
             accept="image/*"
@@ -50,7 +50,7 @@
               <div class="add-img" @click="selectImage">
                 <q-icon class="text-grey" name="photo_camera"></q-icon>
               </div>
-              <p>Adaugă o fotografie tip buletin cu tine</p>
+              <p>{{ $t("adaugă") }}</p>
             </div>
             <div
               v-else-if="previewImage || userInfo?.imgUrl != ''"
@@ -74,7 +74,7 @@
                   alt=""
                 />
               </div>
-              <p>Adaugă o fotografie tip buletin cu tine</p>
+              <p>{{ $t("adaugă") }}</p>
             </div>
           </div>
           <!-- <div class="cate-list left">
@@ -86,16 +86,16 @@
             />
           </div> -->
           <div class="cate-list">
-            <label for="uname" class="q-pb-sm block">Nume/Prenume:</label>
+            <label for="uname" class="q-pb-sm block">{{ $t("Nume/Prenume:") }}</label>
             <q-input
               outlined
               type="text"
               v-model="userInfo.name"
-              placeholder="Nume/Prenume"
+              :placeholder="$t('Nume/Prenume')"
             />
           </div>
           <div class="cate-list cate-margin gender">
-            <label for="Gender">Gen:</label>
+            <label for="Gender">{{ $t("gender") }}</label>
             <div class="flex no- linear-btn-container">
               <q-btn
                 style="
@@ -104,7 +104,7 @@
                   margin-top: 0 !important;
                   margin-bottom: 0 !important;
                 "
-                label="Masculin"
+                :label="$t('masculin')"
               />
               <q-btn
                 style="
@@ -113,13 +113,13 @@
                   margin-top: 0 !important;
                   margin-bottom: 0 !important;
                 "
-                label="Feminin"
+                :label="$t('feminin')"
               />
             </div>
           </div>
 
           <div class="cate-list q-pl-sm right margin">
-            <label for="uname" class="block q-mt-sm">Data nașterii:</label>
+            <label for="uname" class="block q-mt-sm">{{ $t("dateofbirth") }}</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
@@ -141,7 +141,7 @@
                       <div class="row items-center justify-end">
                         <q-btn
                           v-close-popup
-                          label="Close"
+                          :label=" $t('close')"
                           color="primary"
                           flat
                         />
@@ -153,7 +153,7 @@
             </q-input>
           </div>
           <div class="cate-list left">
-            <label for="uname" class="block q-mb-sm">Mărimea tricou</label>
+            <label for="uname" class="block q-mb-sm">{{ $t("marimeaTricou") }}</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
           <!-- <div class="cate-list">
@@ -168,11 +168,11 @@
             <label
               for="uname"
               style="display: block; width: 20px; padding-left: 4px"
-              >Categoria</label
+              >{{ $t("categoria") }}</label
             >
             <div class="linear-btn-container flex">
               <q-btn
-                label="Licurici"
+                :label="$t('licurici')"
                 @click="userInfo.category = 'Licurici'"
                 class="q-my-none"
                 style="margin-top: 5px !important; margin-bottom: 0 !important"
@@ -182,7 +182,7 @@
                 v-model="userInfo.category"
                 val="Exploratori"
                 color="black"
-                label="Exploratori"
+                :label="$t('exploratori')"
                 @click="userInfo.category = 'Exploratori'"
                 class="q-my-none"
                 style="margin-top: 5px !important; margin-bottom: 0 !important"
@@ -192,7 +192,7 @@
                 v-model="userInfo.category"
                 val="Companioni"
                 color="black"
-                label="Companioni"
+                :label="$t('companioni') "
                 class="q-my-none"
                 style="margin-top: 5px !important; margin-bottom: 0 !important"
                 @click="userInfo.category = 'Companioni'"
@@ -201,45 +201,45 @@
             </div>
           </div>
           <div class="cate-list left">
-            <label for="uname" class="block q-mb-sm">Clubul</label>
+            <label for="uname" class="block q-mb-sm">{{ $t('clubul') }}</label>
             <q-input
               outlined
               type="text"
               v-model="userInfo.clubName"
-              placeholder="Denumirea clubului"
+              :placeholder="$t('denumireaClubului') "
             />
           </div>
           <div class="cate-list right">
-            <label for="uname" class="block q-mb-sm">Zonă</label>
+            <label for="uname" class="block q-mb-sm">{{ $t('Zona') }}</label>
             <q-input
               outlined
               type="text"
               v-model="userInfo.region"
-              placeholder="Zona în care activezi"
+              :placeholder="$t('zonaInCareActivezi')"
             />
           </div>
           <div class="cate-list">
-            <label for="uname" class="block q-mb-sm">Comunitate</label>
+            <label for="uname" class="block q-mb-sm">{{ $t('comunitate') }}</label>
             <q-input
               outlined
               type="text"
               v-model="userInfo.state"
-              placeholder="Comunitatea în care activezi"
+              :placeholder="$t('comunitateaInCareActivezi')"
             />
           </div>
           <div class="cate-list">
             <label for="uname" class="block q-mb-sm"
-              >Specializări pe care le poți preda</label
+              >{{ $t('specializari') }}</label
             >
             <q-input
               outlined
               type="text"
               v-model="tagsInput"
-              placeholder="Separați cu virgula"
+              :placeholder="$t('separatiCuVirgula')"
               name="tags"
             />
           </div>
-          <label for="uname" class="block q-mb-sm">Anii investiturii:</label>
+          <label for="uname" class="block q-mb-sm">{{ $t('aniiInvestiturii') }}</label>
           <div
             class="cate-list"
             style="
@@ -253,7 +253,7 @@
               outlined
               type="text"
               v-model="userInfo.Instructor"
-              placeholder="Instructor"
+              :placeholder="$t('instructor') "
               name="Instructor"
               mask="####"
             />
@@ -268,22 +268,22 @@
               outlined
               type="text"
               v-model="userInfo.Ghid"
-              placeholder="Ghid"
+              :placeholder="$t('Ghid')"
               mask="####"
             />
             <q-input
               outlined
               type="text"
               v-model="userInfo.masterGhid"
-              placeholder="Master Ghid"
+              :placeholder="$t('MasterGhid')"
               mask="####"
             />
           </div>
           <div class="cate-list cate-margin">
-            <label for="status" class="block q-mb-sm">Status:</label>
+            <label for="status" class="block q-mb-sm">{{ $t('status') }}</label>
             <div class="flex linear-btn-container">
               <q-btn
-                label="Activ"
+                :label="$t('activ')"
                 style="margin-top: 0 !important; margin-bottom: 0 !important"
                 @click="userInfo.status = true"
                 :class="userInfo.status === true ? 'selected' : ''"
@@ -292,7 +292,7 @@
                 v-model="userInfo.status"
                 :val="false"
                 color="black"
-                label="Inactiv"
+                :label=" $t('inactiv')"
                 @click="userInfo.status = false"
                 style="margin-top: 0 !important; margin-bottom: 0 !important"
                 :class="userInfo.status === false ? 'selected' : ''"
@@ -419,7 +419,7 @@
               :loading="isSubmitting"
               @click="submit"
               class="signupbtn"
-              >Trimite</q-btn
+              >{{ $t('trimite') }}</q-btn
             >
           </div>
         </form>
@@ -430,7 +430,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alertă</div>
+        <div class="text-h6">{{ $t('alertă') }}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -438,7 +438,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn flat :label="$t('ok')" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>

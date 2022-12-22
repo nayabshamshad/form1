@@ -40,11 +40,11 @@
               <span> {{ userData.etnic }}</span>
             </div> -->
             <div>
-              <h3>Gen:</h3>
+              <h3>{{ $t('gender') }}</h3>
               <span> {{ userData.gender }}</span>
             </div>
             <div>
-              <h3>Data nașterii:</h3>
+              <h3>{{ $t('dateofbirth') }}</h3>
               <span>
                 {{
                   userData.dateOfBirth
@@ -54,12 +54,12 @@
               >
             </div>
             <div>
-              <h3>Mărime tricou:</h3>
+              <h3>{{ $t('shirtsize') }}</h3>
               <span class="text-uppercase"> {{ userData.size }}</span>
             </div>
           </div>
           <div class="shadowed skills">
-            <h3>Specializări</h3>
+            <h3>{{ $t('specializări') }}</h3>
             <div>
               <p v-for="(item, i) in userData.tagList" :key="i">{{ item }}</p>
             </div>
@@ -70,40 +70,40 @@
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
           <div>
-            <h3>Categorie:</h3>
+            <h3>{{ $t('categorie') }}</h3>
             <!-- <p>Exploratori</p> -->
             <p>{{ userData.category }}</p>
           </div>
           <div>
-            <h3>Zonă:</h3>
+            <h3>{{ $t('zonă') }}</h3>
             <!-- <p>Brasov</p> -->
             <p>{{ userData.region }}</p>
           </div>
           <div>
-            <h3>Comunitate:</h3>
+            <h3>{{ $t('comunitate') }}</h3>
             <!-- <p>Betel</p> -->
             <p>{{ userData.state }}</p>
           </div>
           <div>
-            <h3>Clubul:</h3>
+            <h3>{{ $t('clubul') }}</h3>
             <!-- <p>Iosua</p> -->
             <p>{{ userData.clubName }}</p>
           </div>
           <div>
-            <h3>Anul investiturii ca:</h3>
+            <h3>{{ $t('anulinvestituriica') }}</h3>
             <div>
-              <span>Instructor:</span> <span>{{ userData.Instructor }}</span>
+              <span>{{ $t('instructor') }}</span> <span>{{ userData.Instructor }}</span>
             </div>
             <div>
-              <span>Ghid:</span> <span>{{ userData.Ghid }}</span>
+              <span>{{ $t('ghid') }}</span> <span>{{ userData.Ghid }}</span>
             </div>
             <div>
-              <span>Master Ghid:</span> <span>{{ userData.masterGhid }}</span>
+              <span>{{ $t('masterghid') }}</span> <span>{{ userData.masterGhid }}</span>
             </div>
           </div>
         </div>
         <div v-show="userData.status" class="shadowed q-mt-md">
-          <h2>Lista Copiilor</h2>
+          <h2>{{ $t('listacopiilor') }}</h2>
           <div class="children-list">
             <div v-for="(member, i) in teamListSorted" :key="i">
               <div class="section" :class="member.type ? 'special' : ''">
@@ -141,7 +141,7 @@
               class="flex"
               style="justify-content: flex-end; padding: 0 30%"
             ></div>
-            <div class="text-h6">Alertă</div>
+            <div class="text-h6">{{ $t('alertă') }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -149,7 +149,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="OK" color="primary" v-close-popup />
+            <q-btn flat :label="$t('ok')" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
       </q-dialog>

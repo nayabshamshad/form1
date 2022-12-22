@@ -124,9 +124,9 @@
               <table class="user-list-table approved">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -150,7 +150,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -186,7 +186,7 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <h5 class="showMobile">În așteptare</h5>
+              <h5 class="showMobile">{{ $t('Înașteptare') }}</h5>
               <div class="media-select">
                 <q-select
                   dense
@@ -201,10 +201,10 @@
               <table class="user-list-table pending">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
-                    <th>Acțiune</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
+                    <th>{{ $t('actiune') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -233,7 +233,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -268,7 +268,7 @@
                 color="green"
                 icon="download"
               ></q-btn>
-              <h5 class="showMobile">Refuzat</h5>
+              <h5 class="showMobile">{{ $t('Refuzat') }}</h5>
               <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
@@ -282,9 +282,9 @@
               <table class="user-list-table declined">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -308,7 +308,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -369,7 +369,7 @@
                 margin-bottom: 2rem;
               "
             >
-              <h5 class="showMobile">Conferințe</h5>
+              <h5 class="showMobile">{{ $t('Conferințe') }}</h5>
               <q-btn
                 no-caps
                 round
@@ -383,9 +383,9 @@
               <table class="user-list-table department">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>Conferința</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('conferinta') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -407,7 +407,7 @@
 
             <div class="q-mt-md inline-pagination">
               <div style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -437,7 +437,7 @@
           <q-card class="q-px-md q-py-lg center-card">
             <q-card-section class="text-center">
               <h5 class="q-mb-lg">
-                You can add department admins using this link
+                {{ $t('departmentLink') }}
               </h5>
               <p @click="copyLink" class="text-primary link-text cursor-pointer">
                 {{ departmentLink }}
@@ -447,7 +447,7 @@
               </q-card-actions>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
+              <q-btn rounded flat color="grey" v-close-popup>{{ $t('close') }}</q-btn>
             </q-card-actions>
           </q-card></q-dialog>
       </div>
