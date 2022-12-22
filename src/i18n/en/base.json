@@ -155,7 +155,6 @@
   "alreadyInUse": "Adresă de e-mail este deja folosită.",
   "weakPass": "Parola trebuie să aibă minim 6 caaractere.",
   "successMessage1": "Înregistrare reușită! Te rugăm să aștepți aprobarea unui administrator",
-  "wrongPass": "Te rugăm să introduci parola din nou."
-  ,
+  "wrongPass": "Te rugăm să introduci parola din nou.",
   "tooManyReq": "Prea multe încercări de logare eșuate. Contul a fost inchis temporar."
 }
