@@ -108,11 +108,11 @@
         </button>
       </span> -->
           <p class="paragraph">
-            Apăsând "Înregistrare", confirm că sunt de acord cu
+            {{$t('initialTextTerms')}}
             <span class="termsLink" @click="showTermsDialog = true">
-              Termenii și Condițiile
+              {{ $t('termsAndConditions') }}
             </span>
-            impuse de LEC.
+            {{ $t('afterTextTerms') }}
           </p>
         </form>
       </div>

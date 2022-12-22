@@ -156,5 +156,11 @@
   "weakPass": "Parola trebuie să aibă minim 6 caaractere.",
   "successMessage1": "Înregistrare reușită! Te rugăm să aștepți aprobarea unui administrator",
   "wrongPass": "Te rugăm să introduci parola din nou.",
-  "tooManyReq": "Prea multe încercări de logare eșuate. Contul a fost inchis temporar."
+  "tooManyReq": "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
+
+  "termsAndConditions": "Termenii și Condițiile",
+  "initialTextTerms": "Apăsând \"Înregistrare\", confirm că sunt de acord cu",
+  "afterTextTerms": "impuse de LEC.",
+  "dontHaveAccount": "Nu ai încă cont?",
+  "registerNow": "Înregistrează-te"
 }
