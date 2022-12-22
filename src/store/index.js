@@ -24,8 +24,7 @@ export default store(function () {
       filterList: {
         categoryFilter: "All",
         statusFilter: { label: "All", value: "All" },
-      gradeFilter: { label: "All", value: "all" },
-
+        gradeFilter: { label: "All", value: "all" },
       },
     },
     getters: {
@@ -38,8 +37,8 @@ export default store(function () {
       departmentName(state) {
         return state.departmentName;
       },
-      tabs(state){
-        return state.tabs
+      tabs(state) {
+        return state.tabs;
       },
       selectedUser(state) {
         return state.selectedUser;
@@ -79,10 +78,10 @@ export default store(function () {
         state.showFilters = payload;
       },
       setDepartment(state, payload) {
-        state.departmentName = payload
+        state.departmentName = payload;
       },
-      setTabs(state, payload){
-        state.tabs = payload
+      setTabs(state, payload) {
+        state.tabs = payload;
       },
       setSignedUp(state, payload) {
         state.signedUp = payload;
@@ -140,8 +139,8 @@ export default store(function () {
       setDepartment({ commit }, payload) {
         commit("setDepartment", payload);
       },
-      setTabs({commit}, payload){
-        commit("setTabs", payload)
+      setTabs({ commit }, payload) {
+        commit("setTabs", payload);
       },
       async finalizeReset({}, payload) {
         let error = { err: false };
@@ -209,7 +208,7 @@ export default store(function () {
 
         commit("setCurrentUser", null);
         commit("setUserData", null);
-        this.$router.push('/sign-in')
+        this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {
         // if (state.signedUp) {
@@ -517,7 +516,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", "Toate conferințele")
+        commit("setDepartment", this.$t("All"));
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

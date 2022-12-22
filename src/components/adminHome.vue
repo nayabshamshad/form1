@@ -18,7 +18,7 @@
           class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container">
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
-              <q-input dense label="Search Users" v-model="nameSearch" outlined />
+              <q-input dense :label="$t('searchUsers')" v-model="nameSearch" outlined />
             </div>
           </div>
           <div class="q-ml-auto"> 
@@ -54,7 +54,7 @@
                 <q-checkbox label="Show TLT only" v-model="tltFilter" left-label />
               </div>
               <div class="select-label-conferintele">
-                <q-select :options="departmentList" v-model="departmentName" label="Conferinte" dense
+                <q-select :options="departmentList" v-model="departmentName" :label="$t('Conferințe')" dense
                   outlined></q-select>
               </div>
 
@@ -63,7 +63,7 @@
                   dense
                   outlined
                   v-model="allFilters.categoryFilter"
-                  label="Category"
+                  :label="$t('Category')"
                   :options="categoryOptions"
                 />
  
@@ -78,14 +78,14 @@
                   dense
                   outlined
                   v-model="allFilters.statusFilter"
-                  label="Status"
+                  :label="$t('status')"
                   :options="statusOptions"
                 />
               </div>
 
               <div class="input-label-gard">
                 <q-select
-                  label="Grad"
+                  :label="$t('grad')"
                   dense
                   v-model="allFilters.gradeFilter"
                   outlined
@@ -109,7 +109,7 @@
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
                   @click="setShowFilters(!showFilters)"
                   no-caps
-                  >Filtre</q-btn
+                  >{{$t('Filtre')}}</q-btn
                 >
  
               </div>
@@ -514,7 +514,7 @@ export default {
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
-      departmentName: "Toate conferințele",
+      departmentName: this.$t('All'),
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
@@ -858,7 +858,7 @@ export default {
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate conferințele") {
+        if (this.departmentName == this.$t('All')) {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -892,7 +892,7 @@ export default {
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate conferințele") {
+        if (this.departmentName == this.$t('All')) {
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -926,7 +926,7 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate conferințele") {
+        if (this.departmentName == this.$t('All')) {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -966,7 +966,7 @@ export default {
         .map((x) => {
           return x.departmentName;
         });
-      arr.unshift("Toate conferințele");
+      arr.unshift(this.$t('All'));
       return arr;
     },
     dateList() {
@@ -977,7 +977,7 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate conferințele") {
+        if (this.departmentName == this.$t('All')) {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -996,7 +996,7 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "Toate conferințele") {
+        if (this.departmentName == this.$t('All')) {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
