@@ -75,7 +75,7 @@ export default {
       }
       if (this.newPass.length < 6) {
         this.$q.notify({
-          message: "Parola trebuie să aibă minim 6 caaractere.",
+          message: this.$t('passError'),
           color: "red",
         });
         return;
@@ -90,7 +90,7 @@ export default {
         return;
       } else {
         this.$q.notify({
-          message: "Parola a fost resetata, te rugăm să te autentifici.",
+          message: this.$t('resetError'),
           color: "green",
           icon: "report_gmailerrorred",
         });

@@ -348,8 +348,7 @@
               <div class="flex justify-center">
                 <q-date v-model="dateModel" range></q-date>
               </div>
-              <div class="flex" style="
-                  justify-content: flex-end;
+              <div class="flex" style="justify-content: flex-end;
                   width: 70%;
                   margin-top: 1rem;
                   min-width: 200px;
@@ -593,7 +592,7 @@ export default {
     copyLink() {
       navigator.clipboard.writeText(this.departmentLink);
       this.$q.notify({
-        message: "Text copied to clipboard",
+        message: this.$t('copyMessage'),
       });
     },
     mailUser(email) {
@@ -787,7 +786,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci corect data.",
+          message: this.$t('correctData'),
         });
         return;
       }

@@ -514,7 +514,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Te rog selectează o imagine potrivită",
+          message: this.$t('imgError3'),
         });
         this.isSubmitting = false;
         return;
@@ -597,7 +597,7 @@ export default {
       if (profile.status == "neither" && profile.reason == "") {
         this.$q.notify({
           color: "red",
-          message: "Please give detail",
+          message: this.$t('reasonError'),
         });
         this.isSubmitting = false;
         return;
@@ -610,7 +610,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Formatul anului introdus este incorect",
+          message: this.$t('ghidError2'),
         });
         this.isSubmitting = false;
         return;
@@ -630,8 +630,8 @@ export default {
         this.$q.notify({
           color: "red",
           message:
-            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
-        });
+          this.$t('ghidError')
+                   });
         this.isSubmitting = false;
         return;
       }

@@ -829,7 +829,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci corect data.",
+          message: this.$t('correctData'),
         });
         return;
       }

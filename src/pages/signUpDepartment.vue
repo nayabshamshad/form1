@@ -99,14 +99,14 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Please enter a valid name",
+          message: this.$t('validName'),
         });
         this.isSubmitting = false;
         return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-          message: "Phone Number must be formatted correctly",
+          message: this.$t('validNumber'),
           color: "red",
         });
         this.isSubmitting = false;
@@ -115,7 +115,7 @@ export default {
       if (this.departmentName === "") {
         this.$q.notify({
           color: "red",
-          message: "Please select a valid department",
+          message: this.$t('departmentError'),
         });
         this.isSubmitting = false;
         return;

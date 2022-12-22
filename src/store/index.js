@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
 import { Notify } from "quasar";
+import { translator } from "../boot/i18n";
 
 export default store(function () {
   const Store = createStore({
@@ -516,7 +517,9 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", this.$t("All"));
+        
+        commit("setDepartment", translator.global.t("All"));
+        return;
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

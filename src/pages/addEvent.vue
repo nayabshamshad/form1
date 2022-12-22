@@ -323,7 +323,7 @@ export default {
         this.$refs.imgInput.click();
       } else {
         this.$q.notify({
-          message: "Nu poți adauga mai mult de 3 (trei) fotografii.",
+          message: this.$t('imgError'),
           color: "red",
         });
       }
@@ -421,7 +421,7 @@ export default {
         this.localImageList.push(file);
       } else if (this.previewImages.length >= 3) {
         this.$q.notify({
-          message: "Nu poți incărca mai mult de 3 fotografii.",
+          message: this.$t('imgError2'),
           color: "red",
         });
       }

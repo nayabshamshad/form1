@@ -71,7 +71,7 @@ export default {
       } else {
         this.$q.notify({
           message:
-            "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
+           this.$t('resetMessage'),
           color: "green",
           icon: "report_gmailerrorred",
         });

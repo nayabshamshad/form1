@@ -269,7 +269,7 @@ export default {
         if (profile.phoneNumber.length !== 14) {
           this.$q.notify({
             color: "red",
-            message: "Te rugăm să introduci număr de telefon valid",
+            message: this.$t("telefonValid"),
           });
           this.isSubmitting = false;
           return;
@@ -329,7 +329,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: "Formatul anului introdus este incorect",
+          message: this.$t('esteIncorrect'),
         });
         this.isSubmitting = false;
         return;
@@ -348,7 +348,7 @@ export default {
         this.$q.notify({
           color: "red",
           message:
-            "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
+            this.$t('ghidError'),
         });
         this.isSubmitting = false;
         return;

@@ -154,14 +154,14 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci un nume valid.",
+          message: this.$t('validName'),
         });
         this.isSubmitting = false;
         return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-          message: "Te rugăm să introduci un număr de telefon valid.",
+          message: this.$t('validNumber'),
           color: "red",
         });
         this.isSubmitting = false;
@@ -169,7 +169,7 @@ export default {
       }
       if (this.departmentName === "") {
         this.$q.notify({
-          message: "Please select a department",
+          message: this.$t('departmentError'),
           color: "red",
         });
         this.isSubmitting = false;

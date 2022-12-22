@@ -132,5 +132,21 @@
   "Category": "Category",
   "grad": "Grad",
   "Filtre": "Filtre",
-  "All": "Toate conferințele"
+  "All": "Toate conferințele",
+  "copyMessage": "Text copied to clipboard",
+  "correctData": "Te rugăm să introduci corect data.",
+  "telefonValid": "Te rugăm să introduci număr de telefon valid",
+  "esteIncorrect": "Formatul anului introdus este incorect",
+  "ghidError": "Te rugăm să verifici ordinea investiturii ca Instructor, Ghid, Master Ghid.",
+  "imgError": "Nu poți adauga mai mult de 3 (trei) fotografii.",
+  "imgError2": "Nu poți incărca mai mult de 3 fotografii.",
+  "resetMessage": "E-mail pentru resetarea parolei a fost trimis, te rugăm să verifici și in folder-ul Spam.",
+  "imgError3": "Te rog selectează o imagine potrivită",
+  "reasonError": "Please give detail",
+  "ghidError2": "Formatul anului introdus este incorect",
+  "passError": "Parola trebuie să aibă minim 6 caaractere.",
+  "resetError": "Parola a fost resetata, te rugăm să te autentifici.",
+  "validName": "Te rugăm să introduci un nume valid.",
+  "validNumber": "Te rugăm să introduci un număr de telefon valid.",
+  "departmentError": "Please select a department"
 }
