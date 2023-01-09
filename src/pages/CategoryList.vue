@@ -86,7 +86,9 @@
             />
           </div> -->
           <div class="cate-list">
-            <label for="uname" class="q-pb-sm block">{{ $t("Nume/Prenume:") }}</label>
+            <label for="uname" class="q-pb-sm block">{{
+              $t("Nume/Prenume:")
+            }}</label>
             <q-input
               outlined
               type="text"
@@ -119,7 +121,9 @@
           </div>
 
           <div class="cate-list q-pl-sm right margin">
-            <label for="uname" class="block q-mt-sm">{{ $t("dateofbirth") }}</label>
+            <label for="uname" class="block q-mt-sm">{{
+              $t("dateofbirth")
+            }}</label>
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
@@ -141,7 +145,7 @@
                       <div class="row items-center justify-end">
                         <q-btn
                           v-close-popup
-                          :label=" $t('close')"
+                          :label="$t('close')"
                           color="primary"
                           flat
                         />
@@ -153,7 +157,9 @@
             </q-input>
           </div>
           <div class="cate-list left">
-            <label for="uname" class="block q-mb-sm">{{ $t("marimeaTricou") }}</label>
+            <label for="uname" class="block q-mb-sm">{{
+              $t("marimeaTricou")
+            }}</label>
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
           <!-- <div class="cate-list">
@@ -192,7 +198,7 @@
                 v-model="userInfo.category"
                 val="Companioni"
                 color="black"
-                :label="$t('companioni') "
+                :label="$t('companioni')"
                 class="q-my-none"
                 style="margin-top: 5px !important; margin-bottom: 0 !important"
                 @click="userInfo.category = 'Companioni'"
@@ -201,36 +207,46 @@
             </div>
           </div>
           <div class="cate-list left">
-            <label for="uname" class="block q-mb-sm">{{ $t('clubul') }}</label>
+            <label for="uname" class="block q-mb-sm">{{ $t("clubul") }}</label>
             <q-input
               outlined
               type="text"
               v-model="userInfo.clubName"
-              :placeholder="$t('denumireaClubului') "
+              :placeholder="$t('denumireaClubului')"
             />
           </div>
           <div class="cate-list right">
-            <label for="uname" class="block q-mb-sm">{{ $t('Zona') }}</label>
-            <q-input
+            <label for="uname" class="block q-mb-sm">{{ $t("Zona") }}</label>
+
+            <q-select outlined v-model="userInfo.region" :options="zones">
+            </q-select>
+            <!-- <q-input
               outlined
               type="text"
               v-model="userInfo.region"
               :placeholder="$t('zonaInCareActivezi')"
-            />
+            /> -->
           </div>
           <div class="cate-list">
-            <label for="uname" class="block q-mb-sm">{{ $t('comunitate') }}</label>
-            <q-input
+            <label for="uname" class="block q-mb-sm">{{
+              $t("comunitate")
+            }}</label>
+            <q-select
+              outlined
+              v-model="userInfo.state"
+              :options="communities"
+            />
+            <!-- <q-input
               outlined
               type="text"
               v-model="userInfo.state"
               :placeholder="$t('comunitateaInCareActivezi')"
-            />
+            /> -->
           </div>
           <div class="cate-list">
-            <label for="uname" class="block q-mb-sm"
-              >{{ $t('specializari') }}</label
-            >
+            <label for="uname" class="block q-mb-sm">{{
+              $t("specializari")
+            }}</label>
             <q-input
               outlined
               type="text"
@@ -239,7 +255,9 @@
               name="tags"
             />
           </div>
-          <label for="uname" class="block q-mb-sm">{{ $t('aniiInvestiturii') }}</label>
+          <label for="uname" class="block q-mb-sm">{{
+            $t("aniiInvestiturii")
+          }}</label>
           <div
             class="cate-list"
             style="
@@ -253,7 +271,7 @@
               outlined
               type="text"
               v-model="userInfo.Instructor"
-              :placeholder="$t('instructor') "
+              :placeholder="$t('instructor')"
               name="Instructor"
               mask="####"
             />
@@ -280,7 +298,7 @@
             />
           </div>
           <div class="cate-list cate-margin">
-            <label for="status" class="block q-mb-sm">{{ $t('status') }}</label>
+            <label for="status" class="block q-mb-sm">{{ $t("status") }}</label>
             <div class="flex linear-btn-container">
               <q-btn
                 :label="$t('activ')"
@@ -292,7 +310,7 @@
                 v-model="userInfo.status"
                 :val="false"
                 color="black"
-                :label=" $t('inactiv')"
+                :label="$t('inactiv')"
                 @click="userInfo.status = false"
                 style="margin-top: 0 !important; margin-bottom: 0 !important"
                 :class="userInfo.status === false ? 'selected' : ''"
@@ -419,7 +437,7 @@
               :loading="isSubmitting"
               @click="submit"
               class="signupbtn"
-              >{{ $t('trimite') }}</q-btn
+              >{{ $t("trimite") }}</q-btn
             >
           </div>
         </form>
@@ -430,7 +448,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">{{ $t('alertă') }}</div>
+        <div class="text-h6">{{ $t("alertă") }}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -445,11 +463,14 @@
 </template>
 <script>
 import { storage, deleter } from "../store/firebase.js";
+import data from "src/zones/index.json";
 export default {
   name: "CategoryListView",
   components: {},
   data() {
     return {
+      zones: [],
+      communities: [],
       userInfo: {
         teamList: [{ name: "" }],
         dateOfBirth: "2022/03/21",
@@ -480,6 +501,11 @@ export default {
     };
   },
   methods: {
+    regionChange() {
+      this.userInfo.state =''
+      var obj = data.filter((x) => x.Zone == this.userInfo.region);
+      this.communities = obj[0].Community;
+    },
     handleImageUpload(e) {
       const file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -514,7 +540,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: this.$t('imgError3'),
+          message: this.$t("imgError3"),
         });
         this.isSubmitting = false;
         return;
@@ -597,7 +623,7 @@ export default {
       if (profile.status == "neither" && profile.reason == "") {
         this.$q.notify({
           color: "red",
-          message: this.$t('reasonError'),
+          message: this.$t("reasonError"),
         });
         this.isSubmitting = false;
         return;
@@ -610,7 +636,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: this.$t('ghidError2'),
+          message: this.$t("ghidError2"),
         });
         this.isSubmitting = false;
         return;
@@ -629,9 +655,8 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message:
-          this.$t('ghidError')
-                   });
+          message: this.$t("ghidError"),
+        });
         this.isSubmitting = false;
         return;
       }
@@ -683,6 +708,11 @@ export default {
     },
   },
   mounted() {
+    var obj = [];
+    data.forEach((x) => {
+      obj.push(x.Zone);
+    });
+    this.zones = obj;
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
     } else if (this.$route.path == "/edit-profile") {
@@ -725,6 +755,11 @@ export default {
         ) {
           this.addMember();
         }
+      },
+    },
+    "userInfo.region": {
+      handler: function () {
+        this.regionChange();
       },
     },
   },
