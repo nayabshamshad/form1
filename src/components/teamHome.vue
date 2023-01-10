@@ -26,19 +26,26 @@
             </div>
           </div>
         </div>
-        <q-btn
-          round
-          v-show="dateContained"
-          @click="$router.push('/edit-profile')"
-          icon="edit_note"
-          class="edit-btn"
-        ></q-btn>
+
+        <div class="edit-div cursor-pointer">
+                <div v-if="isopen" class="edit-popup">
+                  <div 
+          v-show="dateContained" @click="$router.push('/edit-profile')">Edit Profile</div>
+                  
+                  <div>Download Id</div>
+                </div>
+                <q-btn
+                  round
+                  @click="isopen = !isopen"
+                  icon="settings"
+                  class="edit-btn"
+                ></q-btn>
+              </div>
+
+
         <div class="infoRow">
           <div class="shadowed">
-            <!-- <div>
-              <h3>Etnie:</h3>
-              <span> {{ userData.etnic }}</span>
-            </div> -->
+         
             <div>
               <h3>Gen:</h3>
               <span> {{ userData.gender }}</span>
@@ -360,7 +367,8 @@ export default {
     },
   },
   data() {
-    return {
+    return {      
+      isopen: false,
       isEdit: false,
       dataUser: {},
       dateContained: false,
