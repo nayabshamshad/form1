@@ -74,7 +74,6 @@
       </div>
     </q-card-section>
     <q-card-section class="full-width">
-    
       <div class="container">
         <form>
           <div class="flex btn1 no- linear-btn-container">
@@ -90,8 +89,8 @@
               "
               :style="
                 locale == 'en-US'
-                  ? ' background-color: #ffffff;'
-                  : '     color:#000000'
+                  ? ' background-color: #ffffff; color:#000000'
+                  : '     color:#FFFFFF'
               "
               @click="changeLanguage('en-US')"
               :label="$t('Romana')"
@@ -110,8 +109,8 @@
               "
               :style="
                 locale == 'en-GB'
-                  ? ' background-color: #ffffff;'
-                  : '     color:#000000'
+                  ? ' background-color: #ffffff; color:#000000'
+                  : '     color:#FFFFFF'
               "
               @click="changeLanguage('en-GB')"
               :label="$t('Maghiara')"
@@ -124,7 +123,7 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n"; 
+import { useI18n } from "vue-i18n";
 export default {
   data() {
     const { locale } = useI18n({ useScope: "global" });
@@ -145,8 +144,7 @@ export default {
       isPwd: true,
     };
   },
-  mounted() { 
-  },
+  mounted() {},
   methods: {
     async confirmReset() {
       const reset = await this.$store.dispatch("confirmReset", this.forgotCode);

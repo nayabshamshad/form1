@@ -201,8 +201,15 @@
   >
     <div class="flex justify-between">
       <div @click="showTerms = true">T&C</div>
-      <div @click="isopen = !isopen" style="padding: 1rem; position: relative" class="flex gap-2">
-        <div><q-icon name="flag" size="sm" /></div>
+      <div
+        @click="isopen = !isopen"
+        style="padding: 1rem; position: relative"
+        class="flex gap-2"
+      >
+        <div style="margin-right: 0.5rem; margin-top: 0.5rem">
+          <img v-if="localeLan == 'RO'" src="../assets/RO.svg" />
+          <img v-else src="../assets/HU.svg" />
+        </div>
         <div class="text-[1rem]">{{ localeLan }}</div>
         <div>
           <q-icon
@@ -211,7 +218,6 @@
             size="sm"
           />
         </div>
-        <!-- {{ new Date().getFullYear() }} -->
         <div
           v-if="isopen"
           style="top: -7.4rem; left: -1px; min-width: 6rem"
@@ -230,8 +236,9 @@
               :key="i"
               @click="changeLanguage(data)"
             >
-              <div style="margin-right: 5px">
-                <q-icon name="flag" size="sm" />
+              <div style="margin-right: 0.5rem; margin-top: 0.5rem">
+                <img v-if="data.label == 'RO'" src="../assets/RO.svg" />
+                <img v-else src="../assets/HU.svg" />
               </div>
               <div class="text-[1rem]">{{ data.label }}</div>
             </div>
@@ -262,7 +269,7 @@ export default defineComponent({
       isopen: false,
       localeLan: "EN",
       localeOptions: [
-        { value: "en-US", label: "EN" },
+        { value: "en-US", label: "RO" },
         { value: "en-GB", label: "HU" },
       ],
       showTerms: false,
