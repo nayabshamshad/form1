@@ -14,7 +14,7 @@
  
           </div>
         </div>
-        <div style="width: 87.5%; height: 3rem"
+        <div style="width: 87.5%;"
           class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container">
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
@@ -48,8 +48,8 @@
             <div
               v-show="showFilters && tabs !== 'departments'"
  
-              class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%; position: relative">
+              class="flex flex-nowrap for-media-mobile-width all-filter-container animate-popup"
+              style="width: 100%; position: relative;    gap: 1rem;">
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
                 <q-checkbox label="Show TLT only" v-model="tltFilter" left-label />
               </div>
