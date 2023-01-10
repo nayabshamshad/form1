@@ -211,21 +211,29 @@
           </div>
           <div class="cate-list right">
             <label for="uname" class="block q-mb-sm">Zonă</label>
-            <q-input
+            <q-select outlined v-model="userInfo.region" :options="zones">
+            </q-select>
+            <!-- <q-input
               outlined
               type="text"
               v-model="userInfo.region"
-              placeholder="Zona în care activezi"
-            />
+              :placeholder="$t('zonaInCareActivezi')"
+            /> -->
           </div>
           <div class="cate-list">
             <label for="uname" class="block q-mb-sm">Comunitate</label>
-            <q-input
+            <q-select
+              outlined
+              v-model="userInfo.state"
+              :options="communities"
+            />
+
+            <!-- <q-input
               outlined
               type="text"
               v-model="userInfo.state"
-              placeholder="Comunitatea în care activezi"
-            />
+              :placeholder="$t('comunitateaInCareActivezi')"
+            /> -->
           </div>
           <div class="cate-list">
             <label for="uname" class="block q-mb-sm"
@@ -445,11 +453,17 @@
 </template>
 <script>
 import { storage, deleter } from "../store/firebase.js";
+import muntenia from "src/zones/dep_muntenia.json";
+import dep_transilvania_de_nord from "src/zones/dep_transilvania_de_nord.json";
+import dep_transilvania_de_sud from "src/zones/dep_transilvania_de_sud.json";
 export default {
   name: "CategoryListView",
   components: {},
   data() {
     return {
+      zonesDepartment: {},
+      zones: [],
+      communities: [],
       userInfo: {
         teamList: [{ name: "" }],
         dateOfBirth: "2022/03/21",
@@ -480,6 +494,13 @@ export default {
     };
   },
   methods: {
+    regionChange() {
+      this.userInfo.state = "";
+      var obj = this.zonesDepartment.filter(
+        (x) => x.Zone == this.userInfo.region
+      );
+      this.communities = obj[0].Community;
+    },
     handleImageUpload(e) {
       const file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -683,6 +704,47 @@ export default {
     },
   },
   mounted() {
+    debugger;
+    var department = this.$store.getters.userData.department;
+    var obj = [];
+    if (department == "Banat") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Moldova") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Muntenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Oltenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Nord | HU" ||
+      department == "Transilvania de Nord | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_nord;
+      dep_transilvania_de_nord.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Sud | HU" ||
+      department == "Transilvania de Sud | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_sud;
+      dep_transilvania_de_sud.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    }
+    this.zones = obj;
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
     } else if (this.$route.path == "/edit-profile") {
@@ -725,6 +787,11 @@ export default {
         ) {
           this.addMember();
         }
+      },
+    },
+    "userInfo.region": {
+      handler: function () {
+        this.regionChange();
       },
     },
   },
