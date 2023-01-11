@@ -495,11 +495,12 @@ export default {
   },
   methods: {
     regionChange() {
-      this.userInfo.state = "";
-      var obj = this.zonesDepartment.filter(
-        (x) => x.Zone == this.userInfo.region
-      );
-      this.communities = obj[0].Community;
+      debugger
+      this.userInfo.state = ""; 
+        var obj = this.zonesDepartment.filter(
+          (x) => x.Zone == this.userInfo.region
+        );
+        this.communities = obj[0].Community; 
     },
     handleImageUpload(e) {
       const file = e.target.files[0];
@@ -706,6 +707,9 @@ export default {
   mounted() {
     debugger;
     var department = this.$store.getters.userData.department;
+    if(department == null || department == undefined){
+      department = this.$store.getters.selectedUser.department
+    }
     var obj = [];
     if (department == "Banat") {
       this.zonesDepartment = muntenia;
