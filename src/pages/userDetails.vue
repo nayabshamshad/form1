@@ -36,8 +36,36 @@
       >
         <q-tab-panel name="user">
           <div class="container">
-            <div class="container">
-              <div class="flex justify-end q-pr-sm"></div>
+            <div class="container"> 
+              <div
+                :style="isopen && checkScreen() ? 'margin-bottom:8rem' : ''"
+                class="flex justify-end q-pr-sm"
+              >
+                <div class="edit-div cursor-pointer">
+                  <div v-if="isopen" class="edit-popup">
+                    <div @click="$router.push('/edit-profile')">
+                      Edit Profile
+                    </div>
+                    <div>Download Id</div>
+                    <div
+                      style="
+                        background-color: #de2110;
+                        color: white;
+                        border: 0px;
+                      "
+                    >
+                      Delete Profile
+                    </div>
+                  </div>
+                  <q-btn
+                    round
+                    @click="isopen = !isopen"
+                    icon="settings"
+                    class="edit-btn"
+                  ></q-btn>
+                </div>
+              </div>
+
               <div class="flex no-wrap">
                 <div class="userImg">
                   <img
@@ -72,21 +100,6 @@
                     <p>{{ selectedUser.email }}</p>
                   </div>
                 </div>
-              </div>
-              <div class="edit-div cursor-pointer">
-                <div v-if="isopen" class="edit-popup">
-                  <div @click="$router.push('/edit-profile')">Edit Profile</div>
-                  <div style="background-color: red; color: white">
-                    Delete Profile
-                  </div>
-                  <div>Download Id</div>
-                </div>
-                <q-btn
-                  round
-                  @click="isopen = !isopen"
-                  icon="settings"
-                  class="edit-btn"
-                ></q-btn>
               </div>
               <div class="infoRow">
                 <div class="shadowed">
@@ -587,6 +600,9 @@ export default {
       let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
       let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
       this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     getBirthDate(val) {
       let date = new Date(val);

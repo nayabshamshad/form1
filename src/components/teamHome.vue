@@ -2,7 +2,24 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div class="flex justify-end"></div>
+        <div  :style="isopen && checkScreen() ? 'margin-bottom:8rem' : ''"
+                class="flex justify-end q-pr-sm">
+          <div class="edit-div cursor-pointer">
+                <div v-if="isopen" class="edit-popup">
+                  <div 
+          v-show="dateContained" @click="$router.push('/edit-profile')">Edit Profile</div>
+                  
+                  <div>Download Id</div>
+                </div>
+                <q-btn
+                  round
+                  @click="isopen = !isopen"
+                  icon="settings"
+                  class="edit-btn"
+                ></q-btn>
+              </div>
+        </div>
+        
         <div class="flex no-wrap">
           <div class="userImg">
             <img
@@ -27,20 +44,8 @@
           </div>
         </div>
 
-        <div class="edit-div cursor-pointer">
-                <div v-if="isopen" class="edit-popup">
-                  <div 
-          v-show="dateContained" @click="$router.push('/edit-profile')">Edit Profile</div>
-                  
-                  <div>Download Id</div>
-                </div>
-                <q-btn
-                  round
-                  @click="isopen = !isopen"
-                  icon="settings"
-                  class="edit-btn"
-                ></q-btn>
-              </div>
+      
+        
 
 
         <div class="infoRow">
@@ -224,6 +229,9 @@ export default {
     },
     addMember() {
       this.teamList.push({ name: "" });
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     removeMember(i) {
       if (this.teamList.length > 1) {
