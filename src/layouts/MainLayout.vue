@@ -204,7 +204,7 @@
       <div
         @click="isopen = !isopen"
         style="padding: 1rem; position: relative"
-        class="flex gap-2"
+        class="flex gap-2 language-btn"
       >
         <div style="margin-right: 0.5rem; margin-top: 0.5rem">
           <img v-if="localeLan == 'RO'" src="../assets/RO.svg" />
@@ -220,8 +220,8 @@
         </div>
         <div
           v-if="isopen"
-          style="top: -7.4rem; left: -1px; min-width: 6rem"
-          class="absolute"
+          style="top: -7.8rem; left: -1px; min-width: 6rem;background-color:#ffffff;"
+          class="absolute "
         >
           <div style="border: 2px solid #c4c4c4; border-bottom: 0" class="">
             <div
@@ -231,7 +231,7 @@
                 justify-content: center;
                 align-items: center;
               "
-              class="flex gap-2"
+              class="flex gap-2 language-btn"
               v-for="(data, i) in localeOptions"
               :key="i"
               @click="changeLanguage(data)"
@@ -296,3 +296,8 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+.language-btn:hover{ 
+  background-color:#C4C4C4 !important;
+}
+</style>

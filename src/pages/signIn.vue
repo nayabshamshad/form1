@@ -76,16 +76,18 @@
     <q-card-section class="full-width">
       <div class="container">
         <form>
-          <div class="flex btn1 no- linear-btn-container">
+          <div class="flex btn1 mb-3 no- linear-btn-container">
             <q-btn
               style="
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+                min-width: 140px;
                 width: 30% !important;
                 border: 1px solid rgb(130 117 117 / 47%) !important;
                 margin-top: 0 !important;
                 margin-bottom: 0 !important;
-                font-weight: 600;
+                font-size: 12px;
+                font-weight: 400;
               "
               :style="
                 locale == 'en-US'
@@ -98,14 +100,15 @@
             <q-btn
               style="
                 width: 30% !important;
+                min-width: 140px;
                 border: 1px solid rgba(0, 0, 0, 0.2) !important;
                 border-left: 0px;
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
                 margin-top: 0 !important;
                 margin-bottom: 0 !important;
-
-                font-weight: 600;
+                font-size: 12px;
+                font-weight: 400;
               "
               :style="
                 locale == 'en-GB'
@@ -171,3 +174,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.mb-3{
+  margin-bottom:3rem;
+}
+</style>
