@@ -194,22 +194,34 @@
             />
           </div>
           <div class="cate-list right">
-            <label for="uname">Zonă</label>
-            <q-input
+ 
+            <label for="uname" class="block q-mb-sm">Zonă</label>
+            <q-select outlined v-model="userInfo.region" :options="zones">
+            </q-select>
+            <!-- <q-input
+ 
               outlined
               type="text"
               v-model="userInfo.region"
-              placeholder="Zona în care activezi"
-            />
+              :placeholder="$t('zonaInCareActivezi')"
+            /> -->
           </div>
           <div class="cate-list">
-            <label for="uname">Comunitate</label>
-            <q-input
+ 
+            <label for="uname" class="block q-mb-sm">Comunitate</label>
+            <q-select
+ 
+              outlined
+              v-model="userInfo.state"
+              :options="communities"
+            />
+
+            <!-- <q-input
               outlined
               type="text"
               v-model="userInfo.state"
-              placeholder="Comunitatea în care activezi"
-            />
+              :placeholder="$t('comunitateaInCareActivezi')"
+            /> -->
           </div>
           <div class="cate-list">
             <label for="uname">Specializări pe care le poți preda</label>
@@ -434,16 +446,18 @@
 </template>
 <script>
 import { storage, deleter } from "../store/firebase.js";
+import muntenia from "src/zones/dep_muntenia.json";
+import dep_transilvania_de_nord from "src/zones/dep_transilvania_de_nord.json";
+import dep_transilvania_de_sud from "src/zones/dep_transilvania_de_sud.json";
 export default {
   name: "CategoryListView",
   components: {},
   data() {
-    return {
-      optionList: [
-        [0, 1, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12],
-      ],
+    return { 
+      zonesDepartment: {},
+      zones: [],
+      communities: [],
+ 
       userInfo: {
         teamList: [{ name: "", type: false, year: "", class: "0-4" }],
         reason: "",
@@ -475,6 +489,14 @@ export default {
     };
   },
   methods: {
+    regionChange() {
+      debugger
+      this.userInfo.state = ""; 
+        var obj = this.zonesDepartment.filter(
+          (x) => x.Zone == this.userInfo.region
+        );
+        this.communities = obj[0].Community; 
+    },
     handleImageUpload(e) {
       const file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
@@ -677,6 +699,50 @@ export default {
     },
   },
   mounted() {
+    debugger;
+    var department = this.$store.getters.userData.department;
+    if(department == null || department == undefined){
+      department = this.$store.getters.selectedUser.department
+    }
+    var obj = [];
+    if (department == "Banat") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Moldova") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Muntenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Oltenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Nord | HU" ||
+      department == "Transilvania de Nord | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_nord;
+      dep_transilvania_de_nord.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Sud | HU" ||
+      department == "Transilvania de Sud | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_sud;
+      dep_transilvania_de_sud.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    }
+    this.zones = obj;
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
     } else if (this.$route.path == "/edit-profile") {
@@ -747,15 +813,12 @@ export default {
         }
       },
     },
+    "userInfo.region": {
+      handler: function () {
+        this.regionChange();
+      },
+    },
   },
-};
+}; 
 </script>
-
-<style scoped lang="scss">
-div {
-  :deep(.q-input) {
-    border-top-left-radius: 8px;
-    overflow: hidden;
-  }
-}
-</style>
+ 
