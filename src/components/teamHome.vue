@@ -5,20 +5,57 @@
         <div class="flex justify-end"></div>
         <div class="flex no-wrap">
           <div class="userImg">
-            <img
-              v-if="userData.imgUrl !== ''"
-              :src="userData.imgUrl"
-              alt=""
-              @click="showProfilePicModal = true"
-            />
+            <template v-if="userData.imgUrl && userData.imgUrl !== ''">
+              <img
+                :src="userData.imgUrl"
+                alt=""
+                style="cursor: pointer"
+                @click="showProfilePicModal = true"
+              />
+              <div
+                style="
+                  position: absolute;
+                  right: 10px;
+                  bottom: 10px;
+                  display: block;
+                  border: unset;
+                  height: 20px;
+                  width: 20px;
+                "
+              >
+                <q-btn
+                  @click="downloadImg"
+                  round
+                  style="padding: 0.25rem; font-size: 6px"
+                  size="xs"
+                  color="green"
+                >
+                  <q-icon style="font-size: 1rem" name="download"></q-icon>
+                </q-btn>
+              </div>
+            </template>
             <div v-else>
               <q-icon class="text-grey" name="photo_camera"></q-icon>
             </div>
           </div>
           <div class="userInfoText">
             <h4>{{ userData.name }}</h4>
-            <p :style="userData.status ? 'color: green' : 'color: red'">
-              {{ userData.status ? "Activ" : "Inactiv" }}
+            <p
+              :style="
+                userData.status === true
+                  ? 'color: green'
+                  : userData.status === 'neither'
+                  ? 'color: #FFBD3C;'
+                  : 'color: red'
+              "
+            >
+              {{
+                userData.status === true
+                  ? "Activ"
+                  : userData.status === "neither"
+                  ? "Activ (Fără grupă)"
+                  : "Inactiv"
+              }}
             </p>
             <div>
               <p>{{ userData.phoneNumber }}</p>
@@ -102,7 +139,7 @@
             </div>
           </div>
         </div>
-        <div v-show="userData.status" class="shadowed q-mt-md">
+        <div v-show="userData.status === true" class="shadowed q-mt-md">
           <h2>Lista Copiilor</h2>
           <div class="children-list">
             <div v-for="(member, i) in teamListSorted" :key="i">
@@ -122,14 +159,13 @@
           style="padding-left: 2rem; padding-right: 2rem"
         >
           <h2>Detalii</h2>
-          <q-card
-            class="full-width q-mb-md"
-            style="min-height: unset; max-width: unset"
-          >
-            <q-card-section>
-              {{ userData.reason }}
-            </q-card-section>
-          </q-card>
+          <q-input
+            type="textarea"
+            input-style="resize: none;"
+            readonly
+            borderless
+            v-model="userData.reason"
+          ></q-input>
         </div>
       </div>
 

@@ -17,6 +17,11 @@
       <li>
         <q-btn flat color="black" @click="viewUsers('declined')">Refuzat</q-btn>
       </li>
+      <li v-show="$store.getters.userData.role == 'admin' ">
+        <q-btn flat color="black" @click="viewUsers('departments')">Conferinte</q-btn>
+
+
+      </li>
       <li v-show="$store.getters.userData.role == 'department'">
         <q-btn flat color="black" @click="viewUsers('date')">Data</q-btn>
       </li>

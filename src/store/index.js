@@ -7,9 +7,9 @@ import { Notify } from "quasar";
 export default store(function () {
   const Store = createStore({
     state: {
-      showFilters: false,
       currentUser: null,
       userData: null,
+      departmentName: "",
       selectedEvent: {
         name: "",
         date: "",
@@ -21,25 +21,13 @@ export default store(function () {
       userList: [],
       selectedUser: [],
       tabs: "user",
-      filterList: {
-        categoryFilter: "All",
-        statusFilter: { label: "All", value: "All" },
-      gradeFilter: { label: "All", value: "all" },
-
-      },
     },
     getters: {
-      filterList({ filterList }) {
-        return filterList;
-      },
-      showFilters(state) {
-        return state.showFilters;
-      },
       departmentName(state) {
         return state.departmentName;
       },
-      tabs(state){
-        return state.tabs
+      tabs(state) {
+        return state.tabs;
       },
       selectedUser(state) {
         return state.selectedUser;
@@ -72,17 +60,11 @@ export default store(function () {
       },
     },
     mutations: {
-      setFilterList(state, payload) {
-        state.filterList = payload;
-      },
-      setShowFilters(state, payload) {
-        state.showFilters = payload;
-      },
       setDepartment(state, payload) {
-        state.departmentName = payload
+        state.departmentName = payload;
       },
-      setTabs(state, payload){
-        state.tabs = payload
+      setTabs(state, payload) {
+        state.tabs = payload;
       },
       setSignedUp(state, payload) {
         state.signedUp = payload;
@@ -131,17 +113,11 @@ export default store(function () {
       },
     },
     actions: {
-      setFilterList({ commit }, payload) {
-        commit("setFilterList", payload);
-      },
-      setShowFilters({ commit }, payload) {
-        commit("setShowFilters", payload);
-      },
       setDepartment({ commit }, payload) {
         commit("setDepartment", payload);
       },
-      setTabs({commit}, payload){
-        commit("setTabs", payload)
+      setTabs({ commit }, payload) {
+        commit("setTabs", payload);
       },
       async finalizeReset({}, payload) {
         let error = { err: false };
@@ -209,7 +185,7 @@ export default store(function () {
 
         commit("setCurrentUser", null);
         commit("setUserData", null);
-        this.$router.push('/sign-in')
+        this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {
         // if (state.signedUp) {
@@ -517,7 +493,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", "Toate conferințele")
+        commit("setDepartment", "All");
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {
