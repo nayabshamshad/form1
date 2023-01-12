@@ -2,83 +2,62 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
-        <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
-          <div class=""> 
-            <q-btn
-              v-show="tabs !== 'departments'"
-              round
-              @click="exportFile(tabs)"
-              color="green"
-              icon="download"
-            ></q-btn>
- 
-          </div>
-        </div>
-        <div style="width: 87.5%; height: 3rem"
-          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container">
+        <div
+          style="width: 87.5%; height: 3rem"
+          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
+        >
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
+
               <q-input dense :label="$t('searchUsers')" v-model="nameSearch" outlined />
+
             </div>
           </div>
-          <div class="q-ml-auto"> 
-            <q-btn
-              no-caps
-              round
-              color="green"
-              size="small"
-              @click="showDepartmentDialog = true"
-              icon="add"
-              v-show="tabs === 'departments'"
-            />
-            <q-btn
-              class="q-mx-md"
-              v-show="tabs === 'departments'"
-              round
-              @click="exportFile(tabs)"
-              color="green"
-              icon="download"
-            ></q-btn>
-          </div>
           <div
-            v-show="tabs !== 'departments'"
             class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
             style="width: 100%"
           >
             <div
-              v-show="showFilters && tabs !== 'departments'"
- 
+              v-show="showFilters"
               class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%; position: relative">
+              style="width: 100%; position: relative"
+            >
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
-                <q-checkbox label="Show TLT only" v-model="tltFilter" left-label />
+                <q-checkbox
+                  label="Show TLT only"
+                  v-model="tltFilter"
+                  left-label
+                />
               </div>
               <div class="select-label-conferintele">
-                <q-select :options="departmentList" v-model="departmentName" :label="$t('Conferințe')" dense
+
+                <q-select v-if="$store.getters.userData.role == 'admin'" :options="departmentList" v-model="departmentName" :label="$t('Conferințe')" dense
                   outlined></q-select>
+
               </div>
 
-              <div class="input-label-category"> 
+              <div class="input-label-category">
                 <q-select
                   dense
                   outlined
                   v-model="allFilters.categoryFilter"
                   :label="$t('Category')"
+
                   :options="categoryOptions"
                 />
- 
               </div>
 
               <!-- </div> -->
 
               <!-- <div class="flex flex-btn "> -->
 
-              <div class="select-label-status"> 
+              <div class="select-label-status">
                 <q-select
                   dense
                   outlined
                   v-model="allFilters.statusFilter"
                   :label="$t('status')"
+
                   :options="statusOptions"
                 />
               </div>
@@ -87,11 +66,11 @@
                 <q-select
                   :label="$t('grad')"
                   dense
-                  v-model="allFilters.gradeFilter"
+                  v-model="gradeFilter"
                   outlined
+                  multiple
                   :options="gradeOptions"
                 />
- 
               </div>
             </div>
 
@@ -101,17 +80,26 @@
 
             <div
               class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
-              style="width: 17%">
-              <div class="flex flex-btn"> 
+              style="width: 17%"
+            >
+              <div class="q-mx-sm">
                 <q-btn
-                  v-show="tabs !== 'departments'"
+                  v-show="showFilters"
+                  round
+                  @click="exportFile(tabs)"
+                  color="green"
+                  icon="download"
+                ></q-btn>
+              </div>
+
+              <div class="flex flex-btn">
+                <q-btn
                   style="transition: 250ms"
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
-                  @click="setShowFilters(!showFilters)"
+                  @click="showFilters = !showFilters"
                   no-caps
                   >{{$t('Filtre')}}</q-btn
                 >
- 
               </div>
             </div>
           </div>
@@ -138,10 +126,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                   </tr>
@@ -160,11 +154,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPage"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPage"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -179,6 +187,7 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
+
             <div class="flex flex-btn">
               <q-btn
                 round
@@ -197,6 +206,7 @@
                 ></q-select>
               </div>
             </div>
+
             <div class="table-container">
               <table class="user-list-table pending">
                 <thead>
@@ -213,19 +223,40 @@
                     <td class="hideMobile" @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile hide-this" @click="callUser(user.phoneNumber)">
+                    <td
+                      class="showMobile hide-this"
+                      @click="callUser(user.phoneNumber)"
+                    >
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                     <td class="icon">
-                      <q-btn color="green" icon="check" size="xs" round @click="approveUser(user.uid)" />
-                      <q-btn @click="declineUser(user.uid)" color="red" size="xs" text-color="white" round
-                        icon="close"></q-btn>
+                      <q-btn
+                        color="green"
+                        icon="check"
+                        size="xs"
+                        round
+                        @click="approveUser(user.uid)"
+                      />
+                      <q-btn
+                        @click="declineUser(user.uid)"
+                        color="red"
+                        size="xs"
+                        text-color="white"
+                        round
+                        icon="close"
+                      ></q-btn>
                     </td>
                   </tr>
                 </tbody>
@@ -243,11 +274,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPagePending"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPagePending"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -261,6 +306,7 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
+
             <div class="flex flex-btn">
               <q-btn
                 round
@@ -278,6 +324,7 @@
                 ></q-select>
               </div>
             </div>
+
             <div class="table-container">
               <table class="user-list-table declined">
                 <thead>
@@ -296,10 +343,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email" />
                     </td>
                   </tr>
@@ -318,11 +371,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPageDeclined"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDeclined"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -348,18 +415,27 @@
               <div class="flex justify-center">
                 <q-date v-model="dateModel" range></q-date>
               </div>
+
               <div class="flex" style="justify-content: flex-end;
+
                   width: 70%;
                   margin-top: 1rem;
                   min-width: 200px;
-                ">
-                <q-btn round icon="check" color="green" :loading="dateSetting" @click="setDate"></q-btn>
+                "
+              >
+                <q-btn
+                  round
+                  icon="check"
+                  color="green"
+                  :loading="dateSetting"
+                  @click="setDate"
+                ></q-btn>
               </div>
             </div>
           </q-tab-panel>
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
-            <!-- <div
+            <div
               class="flex icon"
               style="
                 justify-content: flex-end;
@@ -369,6 +445,7 @@
               "
             >
               <h5 class="showMobile">{{ $t('Conferințe') }}</h5>
+
               <q-btn
                 no-caps
                 round
@@ -377,7 +454,7 @@
                 @click="showDepartmentDialog = true"
                 icon="add"
               />
-            </div> -->
+            </div>
             <div class="table-container">
               <table class="user-list-table department">
                 <thead>
@@ -416,11 +493,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPageDepartments"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDepartments"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -438,17 +529,23 @@
               <h5 class="q-mb-lg">
                 {{ $t('departmentLink') }}
               </h5>
-              <p @click="copyLink" class="text-primary link-text cursor-pointer">
+              <p
+                @click="copyLink"
+                class="text-primary link-text cursor-pointer"
+              >
                 {{ departmentLink }}
               </p>
               <q-card-actions align="right">
-                <q-btn @click="copyLink" no-caps color="secondary" flat>Copy to Clipboard</q-btn>
+                <q-btn @click="copyLink" no-caps color="secondary" flat
+                  >Copy to Clipboard</q-btn
+                >
               </q-card-actions>
             </q-card-section>
             <q-card-actions align="right">
               <q-btn rounded flat color="grey" v-close-popup>{{ $t('close') }}</q-btn>
             </q-card-actions>
-          </q-card></q-dialog>
+          </q-card></q-dialog
+        >
       </div>
     </q-card-section>
   </q-card>
@@ -459,14 +556,6 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
-    if (this.allFilters?.unset) {
-      this.allFilters = {
-        categoryFilter: this.filterList.categoryFilter,
-        statusFilter: this.filterList.statusFilter,
-        gradeFilter: this.filterList.gradeFilter,
-      };
-    }
-    console.log(this.filterList);
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -497,42 +586,34 @@ export default {
       tabs: "approved",
       tltFilter: false,
       gradeOptions: [
-        { label: "All", value: "all" },
         { label: "Instructor", value: "Instructor" },
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
       ],
+      showFilters: false,
+      gradeFilter: [],
       statusOptions: [
         { label: "All", value: "All" },
         { label: "Activ", value: true },
         { label: "InActiv", value: false },
         { label: "Activ, fără grupă", value: "neither" },
       ],
+      statusFilter: { label: "All", value: "All" },
       nameSearch: "",
+      categoryFilter: "All",
       categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
+
       departmentName: this.$t('All'),
+
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
-      allFilters: {
-        unset: true,
-      },
     };
   },
   watch: {
-    allFilters: {
-      handler: function () {
-        this.$store.dispatch("setFilterList", {
-          categoryFilter: this.allFilters.categoryFilter,
-          statusFilter: this.allFilters.statusFilter,
-          gradeFilter: this.allFilters.gradeFilter,
-        });
-      },
-      deep: true,
-    },
     departmentName: {
       handler: function () {
         this.currentPage = 1;
@@ -576,9 +657,6 @@ export default {
     },
   },
   methods: {
-    setShowFilters(x) {
-      this.$store.dispatch("setShowFilters", x);
-    },
     increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
@@ -611,7 +689,7 @@ export default {
       if (usersType === "departments") {
         users = this.departmentUsers.arrTotal;
       } else {
-        users = this[usersType + "Users"].arrTotal;
+        users = this[usersType + "Users"];
       }
 
       const header_row = [
@@ -685,7 +763,6 @@ export default {
         },
       ];
       let arr = [header_row];
-
       users.forEach((x) => {
         let newDate = "";
         if (x.dateOfBirth != "") {
@@ -799,14 +876,8 @@ export default {
     },
   },
   computed: {
-    filterList() {
-      return this.$store.getters.filterList;
-    },
-    showFilters() {
-      return this.$store.getters.showFilters;
-    },
     departmentUsers() {
-      const arr = this.$store.getters.userList.filter((x) => {
+      const arr = this.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -822,8 +893,8 @@ export default {
           this.currentPage == this.maxPageDepartments
             ? arr.length
             : this.currentPage > this.maxPageDepartments
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     userList() {
@@ -835,29 +906,42 @@ export default {
             x.name.toLowerCase().includes(this.nameSearch.toLowerCase())
           );
         });
-      } 
-      if (this.allFilters?.gradeFilter?.value !== "all") {
-        arr = arr.filter((item) => {
-          return item[this.allFilters?.gradeFilter?.value] !== "";
- 
+      }
+
+      if (this.gradeFilter.length > 0) {
+        this.gradeFilter.forEach((x, i) => {
+          arr = arr.filter((item) => {
+            return item[x.value] !== "";
+          });
         });
       }
-      if (this.allFilters.categoryFilter !== "All") {
+      if (this.categoryFilter !== "All") {
         arr = arr.filter((x) => {
-          return x.category == this.allFilters.categoryFilter;
+          return x.category == this.categoryFilter;
         });
-      } 
-      if (this.allFilters?.statusFilter?.value !== "All") {
+      }
+      if (this.statusFilter.value !== "All") {
         arr = arr.filter((x) => {
-          return x.status == this.allFilters?.statusFilter?.value;
- 
+          return x.status == this.statusFilter.value;
+        });
+      }
+
+      if (this.tltFilter) {
+        arr = arr.filter((item) => {
+          return (
+            item.teamList &&
+            item.teamList.length > 0 &&
+            item.teamList.filter((y) => y?.type).length > 0
+          );
         });
       }
       return arr;
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
+
         if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -885,13 +969,15 @@ export default {
           this.currentPage == this.maxPage
             ? arr.length
             : this.currentPage > this.maxPage
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
+
         if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -919,13 +1005,15 @@ export default {
           this.currentPage == this.maxPageDeclined
             ? arr.length
             : this.currentPage > this.maxPageDeclined
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
+
         if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -953,8 +1041,8 @@ export default {
           this.currentPage == this.maxPagePending
             ? arr.length
             : this.currentPage > this.maxPagePending
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     departmentList() {
@@ -966,6 +1054,7 @@ export default {
           return x.departmentName;
         });
       arr.unshift(this.$t('All'));
+
       return arr;
     },
     dateList() {
@@ -976,7 +1065,9 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
+
         if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -995,7 +1086,9 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
+
         if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1045,7 +1138,6 @@ export default {
 .new-checkbox {
   display: flex;
   justify-content: flex-end;
-
   @media (max-width: 1120px) {
     top: -50% !important;
   }

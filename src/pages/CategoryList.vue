@@ -89,6 +89,7 @@
             <label for="uname" class="q-pb-sm block">{{
               $t("Nume/Prenume:")
             }}</label>
+
             <q-input
               outlined
               type="text"
@@ -100,30 +101,28 @@
             <label for="Gender">{{ $t("gender") }}</label>
             <div class="flex no- linear-btn-container">
               <q-btn
-                style="
-                  width: 50% !important;
-                  border: 1px solid #ccc !important;
-                  margin-top: 0 !important;
-                  margin-bottom: 0 !important;
-                "
-                :label="$t('masculin')"
+ 
+                style="width: 50% !important; border: 1px solid #ccc !important"
+               :label="$t('masculin')"
+                :class="userInfo.gender === 'Masculin' ? 'selected' : ''"
+                @click="userInfo.gender = 'Masculin'"
               />
               <q-btn
-                style="
-                  width: 50% !important;
-                  border: 1px solid #ccc !important;
-                  margin-top: 0 !important;
-                  margin-bottom: 0 !important;
-                "
-                :label="$t('feminin')"
+                style="width: 50% !important; border: 1px solid #ccc !important"
+              :label="$t('feminin')"
+                @click="userInfo.gender = 'Feminin'"
+                :class="userInfo.gender === 'Feminin' ? 'selected' : ''"
+ 
               />
             </div>
           </div>
 
           <div class="cate-list q-pl-sm right margin">
+
             <label for="uname" class="block q-mt-sm">{{
               $t("dateofbirth")
             }}</label>
+
             <q-input v-model="dateOfBirth" mask="##/##/####" @focus="openModal">
               <template v-slot:append>
                 <q-icon
@@ -141,6 +140,7 @@
                     <q-date
                       v-model="userInfo.dateOfBirth"
                       @update:model-value="handleDateChange"
+                      default-view="Years"
                     >
                       <div class="row items-center justify-end">
                         <q-btn
@@ -157,9 +157,11 @@
             </q-input>
           </div>
           <div class="cate-list left">
+
             <label for="uname" class="block q-mb-sm">{{
               $t("marimeaTricou")
             }}</label>
+
             <q-select outlined v-model="userInfo.size" :options="sizeOptions" />
           </div>
           <!-- <div class="cate-list">
@@ -180,27 +182,24 @@
               <q-btn
                 :label="$t('licurici')"
                 @click="userInfo.category = 'Licurici'"
-                class="q-my-none"
-                style="margin-top: 5px !important; margin-bottom: 0 !important"
                 :class="userInfo.category === 'Licurici' ? 'selected' : ''"
               />
-              <q-radio
-                v-model="userInfo.category"
-                val="Exploratori"
-                color="black"
-                :label="$t('exploratori')"
+ 
+              <q-btn
+                 :label="$t('exploratori')"
+ 
                 @click="userInfo.category = 'Exploratori'"
-                class="q-my-none"
-                style="margin-top: 5px !important; margin-bottom: 0 !important"
+                val="Exploratori"
                 :class="userInfo.category === 'Exploratori' ? 'selected' : ''"
               />
-              <q-radio
-                v-model="userInfo.category"
+              <q-btn 
+ 
                 val="Companioni"
                 color="black"
                 :label="$t('companioni')"
                 class="q-my-none"
                 style="margin-top: 5px !important; margin-bottom: 0 !important"
+ 
                 @click="userInfo.category = 'Companioni'"
                 :class="userInfo.category === 'Companioni' ? 'selected' : ''"
               />
@@ -208,6 +207,7 @@
           </div>
           <div class="cate-list left">
             <label for="uname" class="block q-mb-sm">{{ $t("clubul") }}</label>
+
             <q-input
               outlined
               type="text"
@@ -221,6 +221,7 @@
             <q-select outlined v-model="userInfo.region" :options="zones">
             </q-select>
             <!-- <q-input
+
               outlined
               type="text"
               v-model="userInfo.region"
@@ -228,14 +229,17 @@
             /> -->
           </div>
           <div class="cate-list">
+
             <label for="uname" class="block q-mb-sm">{{
               $t("comunitate")
             }}</label>
             <q-select
+
               outlined
               v-model="userInfo.state"
               :options="communities"
             />
+
             <!-- <q-input
               outlined
               type="text"
@@ -244,9 +248,11 @@
             /> -->
           </div>
           <div class="cate-list">
+
             <label for="uname" class="block q-mb-sm">{{
               $t("specializari")
             }}</label>
+
             <q-input
               outlined
               type="text"
@@ -258,6 +264,7 @@
           <label for="uname" class="block q-mb-sm">{{
             $t("aniiInvestiturii")
           }}</label>
+
           <div
             class="cate-list"
             style="
@@ -298,6 +305,7 @@
             />
           </div>
           <div class="cate-list cate-margin">
+
             <label for="status" class="block q-mb-sm">{{ $t("status") }}</label>
             <div class="flex linear-btn-container">
               <q-btn
@@ -306,22 +314,17 @@
                 @click="userInfo.status = true"
                 :class="userInfo.status === true ? 'selected' : ''"
               />
-              <q-radio
-                v-model="userInfo.status"
+              <q-btn
                 :val="false"
                 color="black"
                 :label="$t('inactiv')"
+
                 @click="userInfo.status = false"
-                style="margin-top: 0 !important; margin-bottom: 0 !important"
                 :class="userInfo.status === false ? 'selected' : ''"
               />
               <q-btn
+                style="font-size: 85%"
                 val="neither"
-                style="
-                  font-size: 85%;
-                  margin-top: 0 !important;
-                  margin-bottom: 0 !important;
-                "
                 label="Activ (Fără Grupă)"
                 @click="userInfo.status = 'neither'"
                 :class="userInfo.status === 'neither' ? 'selected' : ''"
@@ -332,21 +335,21 @@
           <div
             v-if="userInfo.status === true"
             class="cate-list"
-            style="
-              max-width: 600px;
-              margin-left: auto;
-              margin-right: auto;
-              margin-top: 5px;
-            "
+            style="max-width: 600px; margin-left: auto; margin-right: auto"
           >
             <div class="add-member-button-container">
               <q-btn
-                icon="add"
                 @click="addMember"
-                class="team-member-btn"
                 type="button"
-                round
                 color="green"
+                label="Adauga Copil"
+              />
+              <q-btn
+                @click="addMemberSpecial"
+                type="button"
+                class="bg-linkcolor"
+                style="background: #8397cd"
+                label="Adauga TLT"
               />
             </div>
 
@@ -357,7 +360,7 @@
               style="
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: center;
               "
             >
               <div style="width: calc(100% - 60px)">
@@ -403,9 +406,6 @@
                     id=""
                     v-model="item.class"
                   >
-                    <option value="" disabled selected hidden>
-                      Please select class
-                    </option>
                     <template v-if="!item.type">
                       <option v-for="(option, i) in availableOptions" :key="i">
                         {{ option }}
@@ -423,13 +423,32 @@
               <q-btn
                 @click="removeMember(index)"
                 type="button"
-                round
                 color="red"
-                style="width: 35px; height: 35px"
+                style="
+                  width: 60px;
+                  height: 89px;
+                  border-radius: 0;
+                  border-top-right-radius: 0.7rem;
+                  border-bottom-right-radius: 0.7rem;
+                "
                 icon="remove"
                 class="remove-button"
               />
             </div>
+          </div>
+          <div v-else-if="userInfo.status == 'neither'" class="q-py-md">
+            <q-input
+              outlined
+              v-model="userInfo.reason"
+              type="textarea"
+              input-style="resize: none"
+              placeholder="Mentioneaza aici ce rol ai:
+              - ghid asistent;
+              - membru TLT;
+              - ajutor instructor;
+              - nu ai grupa dar poti preda specializarile;
+              - etc... "
+            ></q-input>
           </div>
           <div class="submit">
             <q-btn
@@ -463,16 +482,24 @@
 </template>
 <script>
 import { storage, deleter } from "../store/firebase.js";
-import data from "src/zones/index.json";
+
+import muntenia from "src/zones/dep_muntenia.json";
+import dep_transilvania_de_nord from "src/zones/dep_transilvania_de_nord.json";
+import dep_transilvania_de_sud from "src/zones/dep_transilvania_de_sud.json";
+
 export default {
   name: "CategoryListView",
   components: {},
   data() {
-    return {
+
+    return { 
+      zonesDepartment: {},
       zones: [],
       communities: [],
+ 
       userInfo: {
-        teamList: [{ name: "" }],
+        teamList: [{ name: "", type: false, year: "", class: "0-4" }],
+        reason: "",
         dateOfBirth: "2022/03/21",
         Instructor: "",
         Ghid: "",
@@ -502,9 +529,14 @@ export default {
   },
   methods: {
     regionChange() {
-      this.userInfo.state =''
-      var obj = data.filter((x) => x.Zone == this.userInfo.region);
-      this.communities = obj[0].Community;
+
+      debugger
+      this.userInfo.state = ""; 
+        var obj = this.zonesDepartment.filter(
+          (x) => x.Zone == this.userInfo.region
+        );
+        this.communities = obj[0].Community; 
+
     },
     handleImageUpload(e) {
       const file = e.target.files[0];
@@ -569,7 +601,6 @@ export default {
             this.userInfo.imgUrl = url;
           });
       }
-
       profile = { ...this.userInfo };
       if (this.tagsInput != "") {
         if (this.tagsInput.split(",").length > 5) {
@@ -582,14 +613,24 @@ export default {
       }
 
       profile.isUpdated = true;
-      if (!profile.status) {
+      if (profile.status !== true) {
         profile.teamList = [];
+      }
+      if (profile.status !== "neither") {
+        profile.reason = "";
       }
       // Checks before forwarding the request
       var err = false;
       if (profile.status) {
         profile.teamList.forEach((x) => {
-          if (x.name == "") {
+          if (
+            x.name == "" ||
+            !x.year ||
+            x.year.length != 4 ||
+            isNaN(x.year) ||
+            !x.class ||
+            x.class == ""
+          ) {
             err = true;
           }
         });
@@ -641,17 +682,16 @@ export default {
         this.isSubmitting = false;
         return;
       }
-
+      console.log(
+        profile.Instructor > profile.Ghid || profile.Ghid != "",
+        profile.Ghid > profile.masterGhid && profile.masterGhid != ""
+      );
       if (
-        (profile.Instructor > profile.Ghid &&
-          profile.Instructor != "" &&
-          profile.Ghid != "") ||
-        (profile.Ghid > profile.masterGhid &&
-          profile.Ghid != "" &&
-          profile.masterGhid != "") ||
-        (profile.Instructor > profile.masterGhid &&
-          profile.instructor != "" &&
-          profile.masterGhid != "")
+        (profile.Instructor == "" &&
+          (profile.Ghid != "" || profile.masterGhid != "")) ||
+        (profile.Ghid == "" && profile.masterGhid != "") ||
+        parseInt(profile.Instructor) > parseInt(profile.Ghid) ||
+        parseInt(profile.Ghid) > parseInt(profile.masterGhid)
       ) {
         this.$q.notify({
           color: "red",
@@ -686,7 +726,7 @@ export default {
       this.userInfo.teamList.push({
         name: "",
         year: "",
-        class: "",
+        class: "0-4",
         type: false,
       });
     },
@@ -694,7 +734,7 @@ export default {
       this.userInfo.teamList.push({
         name: "",
         year: "",
-        class: "",
+        class: "9-12",
         type: true,
       });
     },
@@ -708,10 +748,49 @@ export default {
     },
   },
   mounted() {
+
+    var department = this.$store.getters.userData.department;
+    if(department == null || department == undefined){
+      department = this.$store.getters.selectedUser.department
+    }
     var obj = [];
-    data.forEach((x) => {
-      obj.push(x.Zone);
-    });
+    if (department == "Banat") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Moldova") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Muntenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (department == "Oltenia") {
+      this.zonesDepartment = muntenia;
+      muntenia.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Nord | HU" ||
+      department == "Transilvania de Nord | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_nord;
+      dep_transilvania_de_nord.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    } else if (
+      department == "Transilvania de Sud | HU" ||
+      department == "Transilvania de Sud | RO"
+    ) {
+      this.zonesDepartment = dep_transilvania_de_sud;
+      dep_transilvania_de_sud.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    }
     this.zones = obj;
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
@@ -724,11 +803,26 @@ export default {
           JSON.stringify(this.$store.getters.userData)
         );
         this.tagsInput = this.userInfo.tagList.join(", ");
+        this.userInfo.teamList.forEach((x) => {
+          if (!x.year) {
+            x.year = "";
+            x.class = "";
+            x.type = false;
+          }
+        });
       } else {
         this.userInfo = JSON.parse(
           JSON.stringify(this.$store.getters.selectedUser)
         );
+
         this.tagsInput = this.userInfo.tagList.join(", ");
+        this.userInfo.teamList.forEach((x) => {
+          if (!x.year) {
+            x.year = "";
+            x.class = "";
+            x.type = false;
+          }
+        });
       }
     }
     if (this.userInfo?.dateOfBirth) {
@@ -742,6 +836,17 @@ export default {
     }
   },
   computed: {
+    availableOptions() {
+      let arr = [];
+      if (this.userInfo.category === "Licurici") {
+        arr = this.optionList[0];
+      } else if (this.userInfo.category === "Exploratori") {
+        arr = this.optionList[1];
+      } else if (this.userInfo.category === "Companioni") {
+        arr = this.optionList[2];
+      }
+      return arr;
+    },
     storeUserInfo() {
       return this.$store.getters.userData;
     },
@@ -763,5 +868,6 @@ export default {
       },
     },
   },
-};
+}; 
 </script>
+ 

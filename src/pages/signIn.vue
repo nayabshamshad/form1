@@ -31,6 +31,7 @@
               type="text"
               :placeholder="$t('adresadeE-mail')"
               name="uname"
+              @keypress.enter="loginUser"
             />
           </div>
           <div class="cate-list">
@@ -40,6 +41,7 @@
               :placeholder="$t('parola')"
               name="pwd"
               v-model="userPass"
+              @keypress.enter="loginUser"
               :type="isPwd ? 'password' : 'text'"
             >
               <template v-slot:append>

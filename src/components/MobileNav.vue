@@ -19,6 +19,7 @@
       </li>
       <li v-show="$store.getters.userData.role  == 'department'">
         <q-btn flat color="black" @click="viewUsers('date')">{{ $t('data') }}</q-btn>
+
       </li>
       <li>
         <q-btn

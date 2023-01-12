@@ -92,6 +92,20 @@
   > div {
     width: 47%;
     margin-bottom: 0.2rem;
+    > div:first-of-type {
+      position: relative;
+      overflow: hidden;
+      &.special::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 1rem;
+        background-color: $linkcolor;
+        opacity: 0.6;
+      }
+    }
     @media (min-width: 769px) {
       margin-bottom: 0.75rem;
     }
@@ -99,6 +113,25 @@
   @media (max-width: 768px) {
     > div {
       width: 90%;
+    }
+  }
+  .flex {
+    > div {
+      padding: 0.25rem 0 0.25rem 1.25rem;
+      background: rgba(196, 196, 196, 0.2);
+      border: 1px solid #c4c4c4;
+      width: 50%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 30px;
+
+      &:first-of-type {
+        border-radius: 0px 0 0 8px;
+      }
+      &:last-of-type {
+        border-radius: 0px 0px 8px 0px;
+      }
     }
   }
 }
@@ -181,32 +214,23 @@
 }
 
 .input-label-search {
-  @media(min-width: 1120px) {
-
-    width: 95%;
-  }
+  width: 95%;
 }
 
 .select-label-conferintele {
   width: 25%;
   max-width: 30%;
-  @media (min-width: 1120px) {
-    margin-right: 0.5rem;
-  }
+  margin-right: 0.5rem;
 }
 
 .input-label-category {
   width: 25%;
-  @media (min-width: 1120px) {
-    margin-right: 0.5rem;
-  }
+  margin-right: 0.5rem;
 }
 
 .select-label-status {
   width: 30%;
-  @media (min-width: 1120px) {
-    margin-right: 0.5rem;
-  }
+  margin-right: 0.5rem;
 }
 
 .input-label-gard {

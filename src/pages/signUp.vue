@@ -17,12 +17,16 @@
           </p>
 
           <div class="cate-list left">
+
             <label for="uname">{{ $t('nume') }}</label>
+
             <q-input
               v-model="firstName"
               type="text"
               name="F-name"
+
               :placeholder="$t('nume')"
+
               outlined
               label-color="black"
             />
@@ -154,7 +158,9 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
+
           message: this.$t('validName'),
+
         });
         this.isSubmitting = false;
         return;
