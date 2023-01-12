@@ -83,6 +83,7 @@
                 border-bottom-right-radius: 0;
                 min-width: 140px;
                 width: 30% !important;
+                max-width: 166px;
                 border: 1px solid rgb(130 117 117 / 47%) !important;
                 margin-top: 0 !important;
                 margin-bottom: 0 !important;
@@ -101,6 +102,7 @@
               style="
                 width: 30% !important;
                 min-width: 140px;
+                max-width: 166px;
                 border: 1px solid rgba(0, 0, 0, 0.2) !important;
                 border-left: 0px;
                 border-top-left-radius: 0;
