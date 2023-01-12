@@ -37,80 +37,72 @@
         <q-tab-panel name="user">
           <div class="container">
             <div class="container">
-              <div class="flex justify-end q-pr-sm"></div>
-              <div class="flex no-wrap">
-                <div class="userImg relative">
-                  <template
-                    v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-                  >
+              <div class="flex justify-between q-pr-sm relative">
+                <div
+                  class="flex no-wrap account-info-div"
+                  :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''"
+                >
+                  <div class="userImg">
                     <img
+                      v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
                       :src="selectedUser.imgUrl"
                       alt=""
                       style="cursor: pointer"
                       @click="showProfilePicModal = true"
                     />
-                    <div
-                      style="
-                        position: absolute;
-                        right: 10px;
-                        bottom: 10px;
-                        display: block;
-                        border: unset;
-                        height: 20px;
-                        width: 20px;
+
+                    <div v-else>
+                      <q-icon class="text-grey" name="photo_camera"></q-icon>
+                    </div>
+                  </div>
+                  <div class="userInfoText">
+                    <h4>{{ selectedUser.name }}</h4>
+                    <p
+                      :style="
+                        selectedUser.status || selectedUser.role == 'department'
+                          ? 'color: green'
+                          : 'color: red'
                       "
                     >
-                      <q-btn
-                        @click="downloadImg"
-                        round
-                        style="padding: 0.25rem; font-size: 6px"
-                        size="xs"
-                        color="green"
-                      >
-                        <q-icon
-                          style="font-size: 1rem"
-                          name="download"
-                        ></q-icon>
-                      </q-btn>
+                      {{
+                        selectedUser.status || selectedUser.role == "department"
+                          ? "Activ"
+                          : "Inactiv"
+                      }}
+                    </p>
+                    <div>
+                      <p>{{ selectedUser.phoneNumber }}</p>
+                      <p>{{ selectedUser.email }}</p>
                     </div>
-                  </template>
-
-                  <div v-else>
-                    <q-icon class="text-grey" name="photo_camera"></q-icon>
                   </div>
                 </div>
-                <div class="userInfoText">
-                  <h4>{{ selectedUser.name }}</h4>
-                  <p
-                    :style="
-                      selectedUser.status == true ||
-                      selectedUser.role == 'department'
-                        ? 'color: green'
-                        : selectedUser.status === 'neither'
-                        ? 'color: #FFBD3C;'
-                        : 'color: red'
-                    "
-                  >
-                    {{
-                      selectedUser.status === true
-                        ? "Activ"
-                        : selectedUser.status === "neither"
-                        ? "Activ (Fără Grupă)"
-                        : "Inactiv"
-                    }}
-                  </p>
-                  <div>
-                    <p>{{ selectedUser.phoneNumber }}</p>
-                    <p>{{ selectedUser.email }}</p>
+                <div class="edit-div cursor-pointer">
+                  <div v-if="isopen" class="edit-popup">
+                    <div @click="$router.push('/edit-profile')">
+                      Edit Profile
+                    </div>
+                    <div>Download Id</div>
+                    <div
+                      style="
+                        background-color: #de2110;
+                        color: white;
+                        border: 0px;
+                      "
+                      @click="deleteUser(selectedUser.uid)"
+                     
+                    >
+                      Delete Profile
+                    </div>
                   </div>
+                  <q-btn
+                    round
+                    @click="isopen = !isopen"
+                    icon="settings"
+                    class="edit-btn"
+                  ></q-btn>
                 </div>
               </div>
-              <q-btn
-                round
-                @click="$router.push('/edit-profile')"
-                icon="edit_note"
-                class="edit-btn"
-              ></q-btn>
+
               <div class="infoRow">
                 <div class="shadowed">
                   <!-- <div>
@@ -222,13 +214,14 @@
                 style="padding-left: 2rem; padding-right: 2rem"
               >
                 <h2>Detalii</h2>
-                <q-input
-                  outlined
-                  type="textarea"
-                  input-style="resize: none;"
-                  readonly
-                  v-model="selectedUser.reason"
-                ></q-input>
+                <q-card
+                  class="full-width q-mb-md"
+                  style="min-height: unset; max-width: unset"
+                >
+                  <q-card-section>
+                    {{ selectedUser.reason }}
+                  </q-card-section>
+                </q-card>
               </div>
               <q-btn
                 @click="$router.push('/')"
@@ -307,7 +300,13 @@
                 <h4 style="color: #233975">Lista întâlnirilor</h4>
                 <div class="eventlist">
                   <div
-                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
+                    class="
+                      q-mb-md
+                      download-button-event
+                      q-mt-sm
+                      flex
+                      justify-between
+                    "
                     style="width: 80%"
                   ></div>
                 </div>
@@ -456,11 +455,14 @@
 </template>
 <script>
 import writeXlsxFile from "write-excel-file";
+import { storage, deleter } from "../store/firebase.js";
 
 export default {
   data() {
     return {
+      isopen: false,
       tabs: "user",
+      deletingUser: false,
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       dateOfBirth: "",
       dataUser: {},
@@ -481,29 +483,18 @@ export default {
   },
   async mounted() {
     await this.pageSetup();
-
     if (this.$store.getters?.tabs) {
       this.tabs = this.$store.getters.tabs;
     }
   },
   methods: {
-    downloadImg() {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = "blob";
-      xhr.onload = () => {
-        const blob = xhr.response;
-        const b = document.createElement("a");
-        console.log(xhr.response);
-        b.setAttribute(
-          "download",
-          this.selectedUser.name + blob.type.replace("image/", ".")
-        );
-        b.setAttribute("href", URL.createObjectURL(blob));
-        b.click();
-        b.remove();
-      };
-      xhr.open("GET", this.selectedUser.imgUrl);
-      xhr.send();
+    deleteUser(id) {
+      if(this.deletingUser) {
+        return;
+      }
+      this.deletingUser = true;
+      this.$store.dispatch('deleteUser', id)
+      this.deletinguser = false;
     },
     removeImg() {
       this.previewImage = "";
@@ -617,6 +608,18 @@ export default {
       writeXlsxFile(arr, {
         fileName: fileName + ".xlsx",
       });
+    },
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+      this.$refs.dateIcon.$el.focus();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     getBirthDate(val) {
       let date = new Date(val);

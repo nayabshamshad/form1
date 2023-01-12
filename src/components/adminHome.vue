@@ -2,11 +2,30 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
-        <div
-          style="width: 87.5%; height: 3rem"
-          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
+        <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
+          <div class="">
+            <q-btn
+              v-show="tabs !== 'departments'"
+              round
+              @click="exportFile(tabs)"
+              color="green"
+              icon="download"
+            ></q-btn>
+          </div>
+        </div>
+        <div 
+        v-if="$store.getters.userData.role == 'admin'"
+          style="width: 87.5%"
+          class="
+            q-mx-auto
+            flex
+            justify-space-between
+            flex-nowrap
+            for-media-mobile-flex-cols
+            admin-topbar-container
+          "
         >
-          <div class="for-media-mobile-width" style="width: 25%">
+          <div  class="for-media-mobile-width" style="width: 25%; ">
             <div class="input-label-search">
               <q-input
                 dense
@@ -16,14 +35,30 @@
               />
             </div>
           </div>
+          <div class="q-ml-auto">
+         
+          
+          </div>
           <div
-            class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
+            v-show="tabs !== 'departments'"
+            class="
+              flex flex-nowrap
+              justify-space-between
+              for-media-mobile-flex-start
+              for-media-mobile-flex-cols-reverse
+              for-media-mobile-width
+            "
             style="width: 100%"
           >
             <div
-              v-show="showFilters"
-              class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%; position: relative"
+              v-show="showFilters && tabs !== 'departments'"
+              class="
+                flex flex-nowrap
+                for-media-mobile-width
+                all-filter-container
+                animate-popup
+              "
+              style="width: 100%; position: relative; gap: 1rem"
             >
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
                 <q-checkbox
@@ -34,7 +69,6 @@
               </div>
               <div class="select-label-conferintele">
                 <q-select
-                  v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
                   label="Conferinte"
@@ -47,7 +81,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="categoryFilter"
+                  v-model="allFilters.categoryFilter"
                   label="Category"
                   :options="categoryOptions"
                 />
@@ -61,7 +95,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="statusFilter"
+                  v-model="allFilters.statusFilter"
                   label="Status"
                   :options="statusOptions"
                 />
@@ -71,9 +105,8 @@
                 <q-select
                   label="Grad"
                   dense
-                  v-model="gradeFilter"
+                  v-model="allFilters.gradeFilter"
                   outlined
-                  multiple
                   :options="gradeOptions"
                 />
               </div>
@@ -84,24 +117,21 @@
             <!-- last buttons  -->
 
             <div
-              class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
+              class="
+                flex
+                justify-end
+                q-ml-auto
+                flex-nowrap
+                for-media-mobile-flex-row-reverse for-media-mobile-button-width
+              "
               style="width: 17%"
             >
-              <div class="q-mx-sm">
-                <q-btn
-                  v-show="showFilters"
-                  round
-                  @click="exportFile(tabs)"
-                  color="green"
-                  icon="download"
-                ></q-btn>
-              </div>
-
               <div class="flex flex-btn">
                 <q-btn
+                  v-show="tabs !== 'departments'"
                   style="transition: 250ms"
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
-                  @click="showFilters = !showFilters"
+                  @click="setShowFilters(!showFilters)"
                   no-caps
                   >Filtre</q-btn
                 >
@@ -192,6 +222,19 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
+            <div class="flex flex-btn">
+           
+              <h5 class="showMobile">În așteptare</h5>
+              <div class="media-select">
+                <q-select
+                  dense
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  class="bg-white"
+                ></q-select>
+              </div>
+            </div>
             <div class="table-container">
               <table class="user-list-table pending">
                 <thead>
@@ -291,6 +334,18 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
+            <div class="flex flex-btn">
+              
+              <h5 class="showMobile">Refuzat</h5>
+              <div class="media-select">
+                <q-select
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  dense
+                ></q-select>
+              </div>
+            </div>
             <div class="table-container">
               <table class="user-list-table declined">
                 <thead>
@@ -402,7 +457,7 @@
           </q-tab-panel>
           <!-- Departments Listing -->
           <q-tab-panel name="departments">
-            <div
+            <!-- <div
               class="flex icon"
               style="
                 justify-content: flex-end;
@@ -411,6 +466,7 @@
                 margin-bottom: 2rem;
               "
             >
+              <h5 class="showMobile">Conferințe</h5>
               <q-btn
                 no-caps
                 round
@@ -419,7 +475,7 @@
                 @click="showDepartmentDialog = true"
                 icon="add"
               />
-            </div>
+            </div> -->
             <div class="table-container">
               <table class="user-list-table department">
                 <thead>
@@ -521,6 +577,14 @@ import writeXlsxFile from "write-excel-file";
 
 export default {
   mounted() {
+    if (this.allFilters?.unset) {
+      this.allFilters = {
+        categoryFilter: this.filterList.categoryFilter,
+        statusFilter: this.filterList.statusFilter,
+        gradeFilter: this.filterList.gradeFilter,
+      };
+    }
+    console.log(this.filterList);
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -549,34 +613,45 @@ export default {
   data() {
     return {
       tabs: "approved",
+      
       tltFilter: false,
       gradeOptions: [
+        { label: "All", value: "all" },
         { label: "Instructor", value: "Instructor" },
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
       ],
-      showFilters: false,
-      gradeFilter: [],
       statusOptions: [
         { label: "All", value: "All" },
         { label: "Activ", value: true },
         { label: "InActiv", value: false },
         { label: "Activ, fără grupă", value: "neither" },
       ],
-      statusFilter: { label: "All", value: "All" },
       nameSearch: "",
-      categoryFilter: "All",
       categoryOptions: ["All", "Licurici", "Exploratori", "Companioni"],
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
-      departmentName: "All",
+      departmentName: "Toate conferințele",
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
+      allFilters: {
+        unset: true,
+      },
     };
   },
   watch: {
+    allFilters: {
+      handler: function () {
+        this.$store.dispatch("setFilterList", {
+          categoryFilter: this.allFilters.categoryFilter,
+          statusFilter: this.allFilters.statusFilter,
+          gradeFilter: this.allFilters.gradeFilter,
+        });
+      },
+      deep: true,
+    },
     departmentName: {
       handler: function () {
         this.currentPage = 1;
@@ -620,6 +695,9 @@ export default {
     },
   },
   methods: {
+    setShowFilters(x) {
+      this.$store.dispatch("setShowFilters", x);
+    },
     increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
@@ -652,7 +730,7 @@ export default {
       if (usersType === "departments") {
         users = this.departmentUsers.arrTotal;
       } else {
-        users = this[usersType + "Users"];
+        users = this[usersType + "Users"].arrTotal;
       }
 
       const header_row = [
@@ -726,6 +804,7 @@ export default {
         },
       ];
       let arr = [header_row];
+
       users.forEach((x) => {
         let newDate = "";
         if (x.dateOfBirth != "") {
@@ -811,9 +890,7 @@ export default {
     async declineUser(uid) {
       await this.$store.dispatch("declineUser", uid);
     },
-    async deleteUser(uid) {
-      await this.$store.dispatch("deleteUser", uid);
-    },
+   
     viewUser(user) {
       this.$store.dispatch("setSelectedUser", user);
       this.$store.dispatch("setTabs", "user");
@@ -839,8 +916,14 @@ export default {
     },
   },
   computed: {
+    filterList() {
+      return this.$store.getters.filterList;
+    },
+    showFilters() {
+      return this.$store.getters.showFilters;
+    },
     departmentUsers() {
-      const arr = this.userList.filter((x) => {
+      const arr = this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -862,6 +945,7 @@ export default {
     },
     userList() {
       let arr = this.$store.getters.userList;
+      arr = arr.filter((x) => x.status !== "deleted");
       if (this.nameSearch !== "") {
         arr = arr.filter((x, i) => {
           return (
@@ -870,39 +954,26 @@ export default {
           );
         });
       }
-
-      if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i) => {
-          arr = arr.filter((item) => {
-            return item[x.value] !== "";
-          });
-        });
-      }
-      if (this.categoryFilter !== "All") {
-        arr = arr.filter((x) => {
-          return x.category == this.categoryFilter;
-        });
-      }
-      if (this.statusFilter.value !== "All") {
-        arr = arr.filter((x) => {
-          return x.status == this.statusFilter.value;
-        });
-      }
-
-      if (this.tltFilter) {
+      if (this.allFilters?.gradeFilter?.value !== "all") {
         arr = arr.filter((item) => {
-          return (
-            item.teamList &&
-            item.teamList.length > 0 &&
-            item.teamList.filter((y) => y?.type).length > 0
-          );
+          return item[this.allFilters?.gradeFilter?.value] !== "";
+        });
+      }
+      if (this.allFilters.categoryFilter !== "All") {
+        arr = arr.filter((x) => {
+          return x.category == this.allFilters.categoryFilter;
+        });
+      }
+      if (this.allFilters?.statusFilter?.value !== "All") {
+        arr = arr.filter((x) => {
+          return x.status == this.allFilters?.statusFilter?.value;
         });
       }
       return arr;
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -936,7 +1007,7 @@ export default {
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -970,7 +1041,7 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1010,7 +1081,7 @@ export default {
         .map((x) => {
           return x.departmentName;
         });
-      arr.unshift("All");
+      arr.unshift("Toate conferințele");
       return arr;
     },
     dateList() {
@@ -1021,7 +1092,7 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -1040,7 +1111,7 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+        if (this.departmentName == "Toate conferințele") {
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1090,6 +1161,7 @@ export default {
 .new-checkbox {
   display: flex;
   justify-content: flex-end;
+
   @media (max-width: 1120px) {
     top: -50% !important;
   }

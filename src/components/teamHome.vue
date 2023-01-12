@@ -2,80 +2,57 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div class="flex justify-end"></div>
-        <div class="flex no-wrap">
-          <div class="userImg">
-            <template v-if="userData.imgUrl && userData.imgUrl !== ''">
-              <img
-                :src="userData.imgUrl"
-                alt=""
-                style="cursor: pointer"
-                @click="showProfilePicModal = true"
-              />
-              <div
-                style="
-                  position: absolute;
-                  right: 10px;
-                  bottom: 10px;
-                  display: block;
-                  border: unset;
-                  height: 20px;
-                  width: 20px;
-                "
-              >
-                <q-btn
-                  @click="downloadImg"
-                  round
-                  style="padding: 0.25rem; font-size: 6px"
-                  size="xs"
-                  color="green"
-                >
-                  <q-icon style="font-size: 1rem" name="download"></q-icon>
-                </q-btn>
+        <div  
+                class="flex justify-end q-pr-sm">
+          
+              <div :style="isopen && checkScreen() ? 'margin-top:7rem' : ''" 
+              class="flex user account-info-div no-wrap">
+                <div class="userImg">
+                  <img
+                    v-if="userData.imgUrl !== ''"
+                    :src="userData.imgUrl"
+                    alt=""
+                    @click="showProfilePicModal = true"
+                  />
+                  <div v-else>
+                    <q-icon class="text-grey" name="photo_camera"></q-icon>
+                  </div>
+                </div>
+                <div class="userInfoText">
+                  <h4>{{ userData.name }}</h4>
+                  <p :style="userData.status ? 'color: green' : 'color: red'">
+                    {{ userData.status ? "Activ" : "Inactiv" }}
+                  </p>
+                  <div>
+                    <p>{{ userData.phoneNumber }}</p>
+                    <p>{{ userData.email }}</p>
+                  </div>
+                </div>
               </div>
-            </template>
-            <div v-else>
-              <q-icon class="text-grey" name="photo_camera"></q-icon>
-            </div>
-          </div>
-          <div class="userInfoText">
-            <h4>{{ userData.name }}</h4>
-            <p
-              :style="
-                userData.status === true
-                  ? 'color: green'
-                  : userData.status === 'neither'
-                  ? 'color: #FFBD3C;'
-                  : 'color: red'
-              "
-            >
-              {{
-                userData.status === true
-                  ? "Activ"
-                  : userData.status === "neither"
-                  ? "Activ (Fără grupă)"
-                  : "Inactiv"
-              }}
-            </p>
-            <div>
-              <p>{{ userData.phoneNumber }}</p>
-              <p>{{ userData.email }}</p>
-            </div>
-          </div>
+              <div class="edit-div cursor-pointer">
+                <div v-if="isopen" class="edit-popup">
+                  <div 
+          v-show="true" @click="$router.push('/edit-profile')">Edit Profile</div>
+          <!-- v-show="dateContained" -->
+                  <div>Download Id</div>
+                </div>
+                <q-btn
+                  round
+                  @click="isopen = !isopen"
+                  icon="settings"
+                  class="edit-btn"
+                ></q-btn>
+              </div>
         </div>
-        <q-btn
-          round
-          v-show="dateContained"
-          @click="$router.push('/edit-profile')"
-          icon="edit_note"
-          class="edit-btn"
-        ></q-btn>
+        
+
+      
+        
+
+
         <div class="infoRow">
           <div class="shadowed">
-            <!-- <div>
-              <h3>Etnie:</h3>
-              <span> {{ userData.etnic }}</span>
-            </div> -->
+         
             <div>
               <h3>Gen:</h3>
               <span> {{ userData.gender }}</span>
@@ -139,7 +116,7 @@
             </div>
           </div>
         </div>
-        <div v-show="userData.status === true" class="shadowed q-mt-md">
+        <div v-show="userData.status" class="shadowed q-mt-md">
           <h2>Lista Copiilor</h2>
           <div class="children-list">
             <div v-for="(member, i) in teamListSorted" :key="i">
@@ -159,13 +136,14 @@
           style="padding-left: 2rem; padding-right: 2rem"
         >
           <h2>Detalii</h2>
-          <q-input
-            type="textarea"
-            input-style="resize: none;"
-            readonly
-            borderless
-            v-model="userData.reason"
-          ></q-input>
+          <q-card
+            class="full-width q-mb-md"
+            style="min-height: unset; max-width: unset"
+          >
+            <q-card-section>
+              {{ userData.reason }}
+            </q-card-section>
+          </q-card>
         </div>
       </div>
 
@@ -253,6 +231,9 @@ export default {
     },
     addMember() {
       this.teamList.push({ name: "" });
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     removeMember(i) {
       if (this.teamList.length > 1) {
@@ -396,7 +377,8 @@ export default {
     },
   },
   data() {
-    return {
+    return {      
+      isopen: false,
       isEdit: false,
       dataUser: {},
       dateContained: false,

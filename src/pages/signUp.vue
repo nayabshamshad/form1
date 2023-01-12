@@ -17,12 +17,12 @@
           </p>
 
           <div class="cate-list left">
-            <label for="uname">Nume de familie</label>
+            <label for="uname">Nume</label>
             <q-input
               v-model="firstName"
               type="text"
               name="F-name"
-              placeholder="Nume de familie"
+              placeholder="Nume"
               outlined
               label-color="black"
             />
@@ -154,7 +154,7 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci un nume de familie valid.",
+          message: "Te rugăm să introduci un nume valid.",
         });
         this.isSubmitting = false;
         return;
