@@ -24,8 +24,7 @@ export default store(function () {
       filterList: {
         categoryFilter: "All",
         statusFilter: { label: "All", value: "All" },
-      gradeFilter: { label: "All", value: "all" },
-
+        gradeFilter: { label: "All", value: "all" },
       },
     },
     getters: {
@@ -38,8 +37,8 @@ export default store(function () {
       departmentName(state) {
         return state.departmentName;
       },
-      tabs(state){
-        return state.tabs
+      tabs(state) {
+        return state.tabs;
       },
       selectedUser(state) {
         return state.selectedUser;
@@ -79,10 +78,10 @@ export default store(function () {
         state.showFilters = payload;
       },
       setDepartment(state, payload) {
-        state.departmentName = payload
+        state.departmentName = payload;
       },
-      setTabs(state, payload){
-        state.tabs = payload
+      setTabs(state, payload) {
+        state.tabs = payload;
       },
       setSignedUp(state, payload) {
         state.signedUp = payload;
@@ -131,6 +130,25 @@ export default store(function () {
       },
     },
     actions: {
+      async deleteUser({}, id) {
+        await firestore
+          .doc(id)
+          .update({ status: "deleted" })
+          .then(() => {
+            Notify.create({
+              message: "User deleted successfully",
+              color: "green",
+            });
+            this.$router.push("/");
+          })
+          .catch((e) => {
+            console.log(e);
+            Notify.create({
+              message: e.message ?? "Error deleting User",
+              color: "red",
+            });
+          });
+      },
       setFilterList({ commit }, payload) {
         commit("setFilterList", payload);
       },
@@ -140,8 +158,8 @@ export default store(function () {
       setDepartment({ commit }, payload) {
         commit("setDepartment", payload);
       },
-      setTabs({commit}, payload){
-        commit("setTabs", payload)
+      setTabs({ commit }, payload) {
+        commit("setTabs", payload);
       },
       async finalizeReset({}, payload) {
         let error = { err: false };
@@ -209,21 +227,22 @@ export default store(function () {
 
         commit("setCurrentUser", null);
         commit("setUserData", null);
-        this.$router.push('/sign-in')
+        this.$router.push("/sign-in");
       },
       async getUserData({ state, commit, dispatch }) {
-        // if (state.signedUp) {
-        //   return;
-        // }
-        // if (state.userData != null) {
-        //   return;
-        // }
         await firestore
           .doc(auth.currentUser.uid)
           .get()
           .then((res) => {
             commit("setCurrentUser", auth.currentUser);
             commit("setUserData", res.data());
+            if (res.data().status === "deleted") {
+              dispatch("signOutUser");
+              Notify.create({
+                color: "red",
+                message: "Your account has been deleted by the admins",
+              });
+            }
           });
         if (
           state.userData.role != "department" &&
@@ -517,7 +536,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", "Toate conferințele")
+        commit("setDepartment", "Toate conferințele");
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

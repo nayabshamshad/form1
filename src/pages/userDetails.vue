@@ -36,11 +36,46 @@
       >
         <q-tab-panel name="user">
           <div class="container">
-            <div class="container"> 
-              <div
-                :style="isopen && checkScreen() ? 'margin-bottom:8rem' : ''"
-                class="flex justify-end q-pr-sm"
-              >
+            <div class="container">
+              <div class="flex justify-between q-pr-sm relative">
+                <div
+                  class="flex no-wrap account-info-div"
+                  :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''"
+                >
+                  <div class="userImg">
+                    <img
+                      v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
+                      :src="selectedUser.imgUrl"
+                      alt=""
+                      style="cursor: pointer"
+                      @click="showProfilePicModal = true"
+                    />
+
+                    <div v-else>
+                      <q-icon class="text-grey" name="photo_camera"></q-icon>
+                    </div>
+                  </div>
+                  <div class="userInfoText">
+                    <h4>{{ selectedUser.name }}</h4>
+                    <p
+                      :style="
+                        selectedUser.status || selectedUser.role == 'department'
+                          ? 'color: green'
+                          : 'color: red'
+                      "
+                    >
+                      {{
+                        selectedUser.status || selectedUser.role == "department"
+                          ? "Activ"
+                          : "Inactiv"
+                      }}
+                    </p>
+                    <div>
+                      <p>{{ selectedUser.phoneNumber }}</p>
+                      <p>{{ selectedUser.email }}</p>
+                    </div>
+                  </div>
+                </div>
                 <div class="edit-div cursor-pointer">
                   <div v-if="isopen" class="edit-popup">
                     <div @click="$router.push('/edit-profile')">
@@ -53,6 +88,8 @@
                         color: white;
                         border: 0px;
                       "
+                      @click="deleteUser(selectedUser.uid)"
+                     
                     >
                       Delete Profile
                     </div>
@@ -66,41 +103,6 @@
                 </div>
               </div>
 
-              <div class="flex no-wrap">
-                <div class="userImg">
-                  <img
-                    v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-                    :src="selectedUser.imgUrl"
-                    alt=""
-                    style="cursor: pointer"
-                    @click="showProfilePicModal = true"
-                  />
-
-                  <div v-else>
-                    <q-icon class="text-grey" name="photo_camera"></q-icon>
-                  </div>
-                </div>
-                <div class="userInfoText">
-                  <h4>{{ selectedUser.name }}</h4>
-                  <p
-                    :style="
-                      selectedUser.status || selectedUser.role == 'department'
-                        ? 'color: green'
-                        : 'color: red'
-                    "
-                  >
-                    {{
-                      selectedUser.status || selectedUser.role == "department"
-                        ? "Activ"
-                        : "Inactiv"
-                    }}
-                  </p>
-                  <div>
-                    <p>{{ selectedUser.phoneNumber }}</p>
-                    <p>{{ selectedUser.email }}</p>
-                  </div>
-                </div>
-              </div>
               <div class="infoRow">
                 <div class="shadowed">
                   <!-- <div>
@@ -212,10 +214,10 @@
                 style="padding-left: 2rem; padding-right: 2rem"
               >
                 <h2>Detalii</h2>
-              <q-card
-                class="full-width q-mb-md"
-                style="min-height: unset; max-width: unset"
-              >
+                <q-card
+                  class="full-width q-mb-md"
+                  style="min-height: unset; max-width: unset"
+                >
                   <q-card-section>
                     {{ selectedUser.reason }}
                   </q-card-section>
@@ -298,7 +300,13 @@
                 <h4 style="color: #233975">Lista întâlnirilor</h4>
                 <div class="eventlist">
                   <div
-                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
+                    class="
+                      q-mb-md
+                      download-button-event
+                      q-mt-sm
+                      flex
+                      justify-between
+                    "
                     style="width: 80%"
                   ></div>
                 </div>
@@ -454,6 +462,7 @@ export default {
     return {
       isopen: false,
       tabs: "user",
+      deletingUser: false,
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       dateOfBirth: "",
       dataUser: {},
@@ -479,6 +488,14 @@ export default {
     }
   },
   methods: {
+    deleteUser(id) {
+      if(this.deletingUser) {
+        return;
+      }
+      this.deletingUser = true;
+      this.$store.dispatch('deleteUser', id)
+      this.deletinguser = false;
+    },
     removeImg() {
       this.previewImage = "";
     },

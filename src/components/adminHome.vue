@@ -3,7 +3,7 @@
     <q-card-section>
       <div class="container">
         <div class="q-mx-auto flex q-mb-sm" style="width: 87.5%">
-          <div class=""> 
+          <div class="">
             <q-btn
               v-show="tabs !== 'departments'"
               round
@@ -11,54 +11,73 @@
               color="green"
               icon="download"
             ></q-btn>
- 
           </div>
         </div>
-        <div style="width: 87.5%;"
-          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container">
-          <div class="for-media-mobile-width" style="width: 25%">
+        <div 
+        v-if="$store.getters.userData.role == 'admin'"
+          style="width: 87.5%"
+          class="
+            q-mx-auto
+            flex
+            justify-space-between
+            flex-nowrap
+            for-media-mobile-flex-cols
+            admin-topbar-container
+          "
+        >
+          <div  class="for-media-mobile-width" style="width: 25%; ">
             <div class="input-label-search">
-              <q-input dense label="Search Users" v-model="nameSearch" outlined />
+              <q-input
+                dense
+                label="Search Users"
+                v-model="nameSearch"
+                outlined
+              />
             </div>
           </div>
-          <div class="q-ml-auto"> 
-            <q-btn
-              no-caps
-              round
-              color="green"
-              size="small"
-              @click="showDepartmentDialog = true"
-              icon="add"
-              v-show="tabs === 'departments'"
-            />
-            <q-btn
-              class="q-mx-md"
-              v-show="tabs === 'departments'"
-              round
-              @click="exportFile(tabs)"
-              color="green"
-              icon="download"
-            ></q-btn>
+          <div class="q-ml-auto">
+         
+          
           </div>
           <div
             v-show="tabs !== 'departments'"
-            class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
+            class="
+              flex flex-nowrap
+              justify-space-between
+              for-media-mobile-flex-start
+              for-media-mobile-flex-cols-reverse
+              for-media-mobile-width
+            "
             style="width: 100%"
           >
             <div
               v-show="showFilters && tabs !== 'departments'"
- 
-              class="flex flex-nowrap for-media-mobile-width all-filter-container animate-popup"
-              style="width: 100%; position: relative;    gap: 1rem;">
+              class="
+                flex flex-nowrap
+                for-media-mobile-width
+                all-filter-container
+                animate-popup
+              "
+              style="width: 100%; position: relative; gap: 1rem"
+            >
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
-                <q-checkbox label="Show TLT only" v-model="tltFilter" left-label />
+                <q-checkbox
+                  label="Show TLT only"
+                  v-model="tltFilter"
+                  left-label
+                />
               </div>
               <div class="select-label-conferintele">
-                <q-select :options="departmentList" v-model="departmentName" label="Conferinte" dense
-                  outlined></q-select>
+                <q-select
+                  :options="departmentList"
+                  v-model="departmentName"
+                  label="Conferinte"
+                  dense
+                  outlined
+                ></q-select>
               </div>
 
-              <div class="input-label-category"> 
+              <div class="input-label-category">
                 <q-select
                   dense
                   outlined
@@ -66,14 +85,13 @@
                   label="Category"
                   :options="categoryOptions"
                 />
- 
               </div>
 
               <!-- </div> -->
 
               <!-- <div class="flex flex-btn "> -->
 
-              <div class="select-label-status"> 
+              <div class="select-label-status">
                 <q-select
                   dense
                   outlined
@@ -91,7 +109,6 @@
                   outlined
                   :options="gradeOptions"
                 />
- 
               </div>
             </div>
 
@@ -100,9 +117,16 @@
             <!-- last buttons  -->
 
             <div
-              class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
-              style="width: 17%">
-              <div class="flex flex-btn"> 
+              class="
+                flex
+                justify-end
+                q-ml-auto
+                flex-nowrap
+                for-media-mobile-flex-row-reverse for-media-mobile-button-width
+              "
+              style="width: 17%"
+            >
+              <div class="flex flex-btn">
                 <q-btn
                   v-show="tabs !== 'departments'"
                   style="transition: 250ms"
@@ -111,7 +135,6 @@
                   no-caps
                   >Filtre</q-btn
                 >
- 
               </div>
             </div>
           </div>
@@ -138,10 +161,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                   </tr>
@@ -160,11 +189,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPage"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPage"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -180,12 +223,7 @@
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
             <div class="flex flex-btn">
-              <q-btn
-                round
-                @click="exportFile(pendingUsers.arrTotal, 'Pending')"
-                color="green"
-                icon="download"
-              ></q-btn>
+           
               <h5 class="showMobile">În așteptare</h5>
               <div class="media-select">
                 <q-select
@@ -213,19 +251,40 @@
                     <td class="hideMobile" @click="callUser(user.phoneNumber)">
                       {{ user.phoneNumber }}
                     </td>
-                    <td class="showMobile hide-this" @click="callUser(user.phoneNumber)">
+                    <td
+                      class="showMobile hide-this"
+                      @click="callUser(user.phoneNumber)"
+                    >
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email"></q-icon>
                     </td>
                     <td class="icon">
-                      <q-btn color="green" icon="check" size="xs" round @click="approveUser(user.uid)" />
-                      <q-btn @click="declineUser(user.uid)" color="red" size="xs" text-color="white" round
-                        icon="close"></q-btn>
+                      <q-btn
+                        color="green"
+                        icon="check"
+                        size="xs"
+                        round
+                        @click="approveUser(user.uid)"
+                      />
+                      <q-btn
+                        @click="declineUser(user.uid)"
+                        color="red"
+                        size="xs"
+                        text-color="white"
+                        round
+                        icon="close"
+                      ></q-btn>
                     </td>
                   </tr>
                 </tbody>
@@ -243,11 +302,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPagePending"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPagePending"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -262,12 +335,7 @@
           <!-- Declined Users -->
           <q-tab-panel name="declined">
             <div class="flex flex-btn">
-              <q-btn
-                round
-                @click="exportFile(declinedUsers.arrTotal, 'Declined')"
-                color="green"
-                icon="download"
-              ></q-btn>
+              
               <h5 class="showMobile">Refuzat</h5>
               <div class="media-select">
                 <q-select
@@ -296,10 +364,16 @@
                     <td class="showMobile" @click="callUser(user.phoneNumber)">
                       <q-icon name="phone"></q-icon>
                     </td>
-                    <td @click="mailUser(user.email)" class="hideMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="hideMobile last hide-this"
+                    >
                       {{ user.email }}
                     </td>
-                    <td @click="mailUser(user.email)" class="showMobile last hide-this">
+                    <td
+                      @click="mailUser(user.email)"
+                      class="showMobile last hide-this"
+                    >
                       <q-icon name="email" />
                     </td>
                   </tr>
@@ -318,11 +392,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPageDeclined"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDeclined"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -348,13 +436,22 @@
               <div class="flex justify-center">
                 <q-date v-model="dateModel" range></q-date>
               </div>
-              <div class="flex" style="
+              <div
+                class="flex"
+                style="
                   justify-content: flex-end;
                   width: 70%;
                   margin-top: 1rem;
                   min-width: 200px;
-                ">
-                <q-btn round icon="check" color="green" :loading="dateSetting" @click="setDate"></q-btn>
+                "
+              >
+                <q-btn
+                  round
+                  icon="check"
+                  color="green"
+                  :loading="dateSetting"
+                  @click="setDate"
+                ></q-btn>
               </div>
             </div>
           </q-tab-panel>
@@ -417,11 +514,25 @@
               </div>
               <div>
                 <div class="pagination-buttons">
-                  <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                    :disabled="currentPage === 1"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    icon="chevron_left"
+                    no-caps
+                    @click="decreasePage"
+                    :disabled="currentPage === 1"
+                  ></q-btn>
                   <span> {{ currentPage }} </span>
-                  <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                    :disabled="currentPage >= maxPageDepartments"></q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    text-color="white"
+                    @click="increasePage"
+                    no-caps
+                    icon="chevron_right"
+                    :disabled="currentPage >= maxPageDepartments"
+                  ></q-btn>
                 </div>
               </div>
               <div>
@@ -439,17 +550,23 @@
               <h5 class="q-mb-lg">
                 You can add department admins using this link
               </h5>
-              <p @click="copyLink" class="text-primary link-text cursor-pointer">
+              <p
+                @click="copyLink"
+                class="text-primary link-text cursor-pointer"
+              >
                 {{ departmentLink }}
               </p>
               <q-card-actions align="right">
-                <q-btn @click="copyLink" no-caps color="secondary" flat>Copy to Clipboard</q-btn>
+                <q-btn @click="copyLink" no-caps color="secondary" flat
+                  >Copy to Clipboard</q-btn
+                >
               </q-card-actions>
             </q-card-section>
             <q-card-actions align="right">
               <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
             </q-card-actions>
-          </q-card></q-dialog>
+          </q-card></q-dialog
+        >
       </div>
     </q-card-section>
   </q-card>
@@ -496,6 +613,7 @@ export default {
   data() {
     return {
       tabs: "approved",
+      
       tltFilter: false,
       gradeOptions: [
         { label: "All", value: "all" },
@@ -772,9 +890,7 @@ export default {
     async declineUser(uid) {
       await this.$store.dispatch("declineUser", uid);
     },
-    async deleteUser(uid) {
-      await this.$store.dispatch("deleteUser", uid);
-    },
+   
     viewUser(user) {
       this.$store.dispatch("setSelectedUser", user);
       this.$store.dispatch("setTabs", "user");
@@ -823,12 +939,13 @@ export default {
           this.currentPage == this.maxPageDepartments
             ? arr.length
             : this.currentPage > this.maxPageDepartments
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     userList() {
       let arr = this.$store.getters.userList;
+      arr = arr.filter((x) => x.status !== "deleted");
       if (this.nameSearch !== "") {
         arr = arr.filter((x, i) => {
           return (
@@ -836,22 +953,20 @@ export default {
             x.name.toLowerCase().includes(this.nameSearch.toLowerCase())
           );
         });
-      } 
+      }
       if (this.allFilters?.gradeFilter?.value !== "all") {
         arr = arr.filter((item) => {
           return item[this.allFilters?.gradeFilter?.value] !== "";
- 
         });
       }
       if (this.allFilters.categoryFilter !== "All") {
         arr = arr.filter((x) => {
           return x.category == this.allFilters.categoryFilter;
         });
-      } 
+      }
       if (this.allFilters?.statusFilter?.value !== "All") {
         arr = arr.filter((x) => {
           return x.status == this.allFilters?.statusFilter?.value;
- 
         });
       }
       return arr;
@@ -886,8 +1001,8 @@ export default {
           this.currentPage == this.maxPage
             ? arr.length
             : this.currentPage > this.maxPage
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     declinedUsers() {
@@ -920,8 +1035,8 @@ export default {
           this.currentPage == this.maxPageDeclined
             ? arr.length
             : this.currentPage > this.maxPageDeclined
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     pendingUsers() {
@@ -954,8 +1069,8 @@ export default {
           this.currentPage == this.maxPagePending
             ? arr.length
             : this.currentPage > this.maxPagePending
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     departmentList() {

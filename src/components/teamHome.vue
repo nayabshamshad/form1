@@ -2,13 +2,38 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div  :style="isopen && checkScreen() ? 'margin-bottom:8rem' : ''"
+        <div  
                 class="flex justify-end q-pr-sm">
-          <div class="edit-div cursor-pointer">
+          
+              <div :style="isopen && checkScreen() ? 'margin-top:7rem' : ''" 
+              class="flex user account-info-div no-wrap">
+                <div class="userImg">
+                  <img
+                    v-if="userData.imgUrl !== ''"
+                    :src="userData.imgUrl"
+                    alt=""
+                    @click="showProfilePicModal = true"
+                  />
+                  <div v-else>
+                    <q-icon class="text-grey" name="photo_camera"></q-icon>
+                  </div>
+                </div>
+                <div class="userInfoText">
+                  <h4>{{ userData.name }}</h4>
+                  <p :style="userData.status ? 'color: green' : 'color: red'">
+                    {{ userData.status ? "Activ" : "Inactiv" }}
+                  </p>
+                  <div>
+                    <p>{{ userData.phoneNumber }}</p>
+                    <p>{{ userData.email }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="edit-div cursor-pointer">
                 <div v-if="isopen" class="edit-popup">
                   <div 
-          v-show="dateContained" @click="$router.push('/edit-profile')">Edit Profile</div>
-                  
+          v-show="true" @click="$router.push('/edit-profile')">Edit Profile</div>
+          <!-- v-show="dateContained" -->
                   <div>Download Id</div>
                 </div>
                 <q-btn
@@ -20,29 +45,6 @@
               </div>
         </div>
         
-        <div class="flex no-wrap">
-          <div class="userImg">
-            <img
-              v-if="userData.imgUrl !== ''"
-              :src="userData.imgUrl"
-              alt=""
-              @click="showProfilePicModal = true"
-            />
-            <div v-else>
-              <q-icon class="text-grey" name="photo_camera"></q-icon>
-            </div>
-          </div>
-          <div class="userInfoText">
-            <h4>{{ userData.name }}</h4>
-            <p :style="userData.status ? 'color: green' : 'color: red'">
-              {{ userData.status ? "Activ" : "Inactiv" }}
-            </p>
-            <div>
-              <p>{{ userData.phoneNumber }}</p>
-              <p>{{ userData.email }}</p>
-            </div>
-          </div>
-        </div>
 
       
         
