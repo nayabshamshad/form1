@@ -65,17 +65,12 @@ export default route(function ({ store }) {
     ),
   });
   Router.beforeEach((to, from, next) => {
-    if (to.name === "Card") {
-      next();
-      return;
-    }
     if (!store.getters.isAuthenticated) {
       if (
         to.path != "/sign-in" &&
         to.path != "/sign-up" &&
         to.path != "/reset_password" &&
-        to.name != "Create Department" &&
-        to.path != "/send-reset-link"
+        to.name != "Create Department" && to.path != '/send-reset-link'
       ) {
         next("/sign-in");
       } else {
@@ -86,6 +81,7 @@ export default route(function ({ store }) {
         to.path == "/sign-in" ||
         to.path == "/sign-up" ||
         to.name == "Create Department"
+
       ) {
         if (
           store.getters.userData?.isUpdated &&

@@ -5,11 +5,6 @@ const routes = [
     component: () => import("../pages/HomeView.vue"),
   },
   {
-    path: "user-card",
-    name: "Card",
-    component: () => import("../pages/UserCard.vue"),
-  },
-  {
     path: "/edit-profile",
     name: "Edit Profile",
     component: () => import("../pages/CategoryList.vue"),
