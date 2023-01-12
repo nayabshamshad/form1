@@ -5,13 +5,12 @@
         <h2 class="text-center text-weight-bold reset-lec">LEC</h2>
         <div class="q-my-lg reject-icon"><q-icon @click="logOut" class="cursor-pointer linkcolor" name="west" size="xl"></q-icon></div>
         <h3 class="text-weight-bold text-center q-py-lg q-mt-lg reject-h3">
-          Cerere respinsă
+          {{ $t('cerereRespinsă') }}
         </h3>
         <h6
           class="q-mx-auto  text-center reject-h6"
         >
-          Cererea ta a fost respinsă, dacă crezi ca este o greșeală, poți
-          retrimite o cerere administratorului.
+        {{ $t('cerereaTaaFost') }}
         </h6>
         <div class="q-pt-lg q-mt-lg flex items-center justify-center" style="gap: 1rem;">
           <q-btn
@@ -21,14 +20,14 @@
             :loading="isFetching"
             @click="logOut"
           >
-          ÎNAPOI
+          {{ $t('inapoi') }}
           </q-btn>
           <q-btn
             class="bg-linkcolor"
             :loading="isFetching"
             @click="requestReconsideration"
           >
-            Retrimite
+          {{ $t('inapretrimiteoi') }}
           </q-btn>
         </div>
       </q-card-section>

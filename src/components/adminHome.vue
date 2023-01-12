@@ -8,12 +8,9 @@
         >
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
-              <q-input
-                dense
-                label="Search Users"
-                v-model="nameSearch"
-                outlined
-              />
+
+              <q-input dense :label="$t('searchUsers')" v-model="nameSearch" outlined />
+
             </div>
           </div>
           <div
@@ -33,22 +30,19 @@
                 />
               </div>
               <div class="select-label-conferintele">
-                <q-select
-                  v-if="$store.getters.userData.role == 'admin'"
-                  :options="departmentList"
-                  v-model="departmentName"
-                  label="Conferinte"
-                  dense
-                  outlined
-                ></q-select>
+
+                <q-select v-if="$store.getters.userData.role == 'admin'" :options="departmentList" v-model="departmentName" :label="$t('Conferințe')" dense
+                  outlined></q-select>
+
               </div>
 
               <div class="input-label-category">
                 <q-select
                   dense
                   outlined
-                  v-model="categoryFilter"
-                  label="Category"
+                  v-model="allFilters.categoryFilter"
+                  :label="$t('Category')"
+
                   :options="categoryOptions"
                 />
               </div>
@@ -61,15 +55,16 @@
                 <q-select
                   dense
                   outlined
-                  v-model="statusFilter"
-                  label="Status"
+                  v-model="allFilters.statusFilter"
+                  :label="$t('status')"
+
                   :options="statusOptions"
                 />
               </div>
 
               <div class="input-label-gard">
                 <q-select
-                  label="Grad"
+                  :label="$t('grad')"
                   dense
                   v-model="gradeFilter"
                   outlined
@@ -103,7 +98,7 @@
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
                   @click="showFilters = !showFilters"
                   no-caps
-                  >Filtre</q-btn
+                  >{{$t('Filtre')}}</q-btn
                 >
               </div>
             </div>
@@ -117,9 +112,9 @@
               <table class="user-list-table approved">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -149,7 +144,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -192,14 +187,34 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
+
+            <div class="flex flex-btn">
+              <q-btn
+                round
+                @click="exportFile(pendingUsers.arrTotal, 'Pending')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <h5 class="showMobile">{{ $t('Înașteptare') }}</h5>
+              <div class="media-select">
+                <q-select
+                  dense
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  class="bg-white"
+                ></q-select>
+              </div>
+            </div>
+
             <div class="table-container">
               <table class="user-list-table pending">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
-                    <th>Acțiune</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
+                    <th>{{ $t('actiune') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -249,7 +264,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -291,13 +306,32 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
+
+            <div class="flex flex-btn">
+              <q-btn
+                round
+                @click="exportFile(declinedUsers.arrTotal, 'Declined')"
+                color="green"
+                icon="download"
+              ></q-btn>
+              <h5 class="showMobile">{{ $t('Refuzat') }}</h5>
+              <div class="media-select">
+                <q-select
+                  v-if="$store.getters.userData.role == 'admin'"
+                  :options="departmentList"
+                  v-model="departmentName"
+                  dense
+                ></q-select>
+              </div>
+            </div>
+
             <div class="table-container">
               <table class="user-list-table declined">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>E-mail</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('emails') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -327,7 +361,7 @@
             </div>
             <div class="q-mt-md inline-pagination">
               <div class="hide-pagination" style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -381,10 +415,9 @@
               <div class="flex justify-center">
                 <q-date v-model="dateModel" range></q-date>
               </div>
-              <div
-                class="flex"
-                style="
-                  justify-content: flex-end;
+
+              <div class="flex" style="justify-content: flex-end;
+
                   width: 70%;
                   margin-top: 1rem;
                   min-width: 200px;
@@ -411,6 +444,8 @@
                 margin-bottom: 2rem;
               "
             >
+              <h5 class="showMobile">{{ $t('Conferințe') }}</h5>
+
               <q-btn
                 no-caps
                 round
@@ -424,9 +459,9 @@
               <table class="user-list-table department">
                 <thead>
                   <tr>
-                    <th>Nume/Prenume</th>
-                    <th>Nr. de telefon</th>
-                    <th>Conferința</th>
+                    <th>{{ $t('Nume/Prenume') }}</th>
+                    <th>{{ $t('numbers') }}</th>
+                    <th>{{ $t('conferinta') }}</th>
                   </tr>
                 </thead>
                 <tbody class="table-row">
@@ -448,7 +483,7 @@
 
             <div class="q-mt-md inline-pagination">
               <div style="display: inline-flex">
-                <span>Întâlniri pe pagină</span>
+                <span>{{ $t('intalniriPePagina') }}</span>
                 <select class="paginationSelect" v-model="resultsPerPage">
                   <option :value="5">5</option>
                   <option :value="10">10</option>
@@ -492,7 +527,7 @@
           <q-card class="q-px-md q-py-lg center-card">
             <q-card-section class="text-center">
               <h5 class="q-mb-lg">
-                You can add department admins using this link
+                {{ $t('departmentLink') }}
               </h5>
               <p
                 @click="copyLink"
@@ -507,7 +542,7 @@
               </q-card-actions>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn rounded flat color="grey" v-close-popup>Close</q-btn>
+              <q-btn rounded flat color="grey" v-close-popup>{{ $t('close') }}</q-btn>
             </q-card-actions>
           </q-card></q-dialog
         >
@@ -570,7 +605,9 @@ export default {
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       loading: false,
       dateSetting: false,
-      departmentName: "All",
+
+      departmentName: this.$t('All'),
+
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
@@ -633,7 +670,7 @@ export default {
     copyLink() {
       navigator.clipboard.writeText(this.departmentLink);
       this.$q.notify({
-        message: "Text copied to clipboard",
+        message: this.$t('copyMessage'),
       });
     },
     mailUser(email) {
@@ -826,7 +863,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: "Te rugăm să introduci corect data.",
+          message: this.$t('correctData'),
         });
         return;
       }
@@ -902,7 +939,9 @@ export default {
     },
     approvedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+
+        if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -936,7 +975,9 @@ export default {
     },
     declinedUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+
+        if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == false &&
             x.role != "admin" &&
@@ -970,7 +1011,9 @@ export default {
     },
     pendingUsers() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+
+        if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&
@@ -1010,7 +1053,8 @@ export default {
         .map((x) => {
           return x.departmentName;
         });
-      arr.unshift("All");
+      arr.unshift(this.$t('All'));
+
       return arr;
     },
     dateList() {
@@ -1021,7 +1065,9 @@ export default {
     },
     maxPage() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+
+        if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == true &&
             x.role != "admin" &&
@@ -1040,7 +1086,9 @@ export default {
     },
     maxPagePending() {
       const arr = this.userList.filter((x) => {
-        if (this.departmentName == "All") {
+
+        if (this.departmentName == this.$t('All')) {
+
           return (
             x.isAuthorized == "pending" &&
             x.role != "admin" &&

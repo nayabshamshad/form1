@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import { auth, firestore } from "./firebase";
 import createPersistedState from "vuex-persistedstate";
 import { Notify } from "quasar";
+import { translator } from "../boot/i18n";
 
 export default store(function () {
   const Store = createStore({
@@ -21,6 +22,13 @@ export default store(function () {
       userList: [],
       selectedUser: [],
       tabs: "user",
+
+      filterList: {
+        categoryFilter: "All",
+        statusFilter: { label: "All", value: "All" },
+        gradeFilter: { label: "All", value: "all" },
+      },
+
     },
     getters: {
       departmentName(state) {
@@ -142,7 +150,7 @@ export default store(function () {
             error.err = true;
             Notify.create({
               message:
-                "Codul de resetare e invalid sau expirat. Vă rugăm să trimiteți din nou o cerere de resetare.",
+               translator.global.t('resetPassError'),
               color: "red",
             });
             this.$router.push("/");
@@ -161,12 +169,12 @@ export default store(function () {
             if (err.code == "auth/user-not-found") {
               console.log(err);
               Notify.create({
-                message: "Nu există utilizator cu aceasta adresa de e-mail.",
+                message: translator.global.t('emailNotFound'),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: "Te rugăm să introduci o adresa de e-mail validă.",
+                message: translator.global.t('invalidEmail'),
                 color: "red",
               });
             } else {
@@ -244,17 +252,17 @@ export default store(function () {
             error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
-                message: "Adresă de e-mail este deja folosită.",
+                message: translator.global.t('alreadyInUse'),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: "Te rugăm să introduci o adresa de e-mail validă.",
+                message: translator.global.t('invalidEmail'),
                 color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
-                message: "Parola trebuie să aibă minim 6 caaractere.",
+                message: translator.global.t('weakPass'),
                 color: "red",
               });
             } else {
@@ -359,7 +367,7 @@ export default store(function () {
         });
         Notify.create({
           message:
-            "Înregistrare reușită! Te rugăm să aștepți aprobarea unui administrator",
+           translator.global.t('successMessage1'),
           color: "green",
           icon: "report_gmailerrorred",
         });
@@ -377,17 +385,17 @@ export default store(function () {
             error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
-                message: "Email address already in use",
+                message: translator.global.t('alreadyInUse'),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: "Please enter a valid email address",
+                message: translator.global.t('invalidEmail'),
                 color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
-                message: "Password must be atleast 6 characters long",
+                message: translator.global.t('weakPass'),
                 color: "red",
               });
             } else {
@@ -493,7 +501,10 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-        commit("setDepartment", "All");
+
+        commit("setDepartment", translator.global.t("All"));
+        
+
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {
@@ -505,23 +516,23 @@ export default store(function () {
             if (err.code == "auth/wrong-password") {
               Notify.create({
                 color: "red",
-                message: "Te rugăm să introduci parola din nou.",
+                message: translator.global.t('wrongPass'),
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
                 color: "red",
-                message: "Te rugăm să introduci o adresa de e-mail validă.",
+                message: translator.global.t('invalidEmail'),
               });
             } else if (err.code == "auth/too-many-requests") {
               Notify.create({
                 color: "red",
                 message:
-                  "Prea multe încercări de logare eșuate. Contul a fost inchis temporar.",
+                  translator.global.t('tooManyReq'),
               });
             } else if (err.code == "auth/user-not-found") {
               Notify.create({
                 color: "red",
-                message: "Nu există utilizator cu aceasta adresa de e-mail.",
+                message: translator.global.t('emailNotFound'),
               });
             } else {
               Notify.create({

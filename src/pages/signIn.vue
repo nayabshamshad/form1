@@ -1,5 +1,8 @@
 <template>
-  <q-card class="my-card full-height sign-in">
+  <q-card
+    class="my-card full-height sign-in flex flex-col justify-between"
+    style="flex-direction: column"
+  >
     <q-card-section>
       <div class="container">
         <form @submit.prevent="loginUser" class="form" autocomplete="off">
@@ -13,29 +16,29 @@
             "
             src="../assets/lectin-mic.png"
           />
-          <h4>Autentificare</h4>
+          <h4>{{ $t("autentificare") }}</h4>
           <p>
-            Nu ai încă cont?
-            <router-link to="/sign-up" class="link"
-              >Înregistrează-te</router-link
-            >
+            {{ $t("dontHaveAccount") }}
+            <router-link to="/sign-up" class="link">{{
+              $t("registerNow")
+            }}</router-link>
           </p>
           <div class="cate-list">
-            <label for="uname"> E-mail</label>
+            <label for="uname"> {{ $t("emails") }}</label>
             <q-input
               outlined
               v-model="userEmail"
               type="text"
-              placeholder="Adresa de E-mail"
+              :placeholder="$t('adresadeE-mail')"
               name="uname"
               @keypress.enter="loginUser"
             />
           </div>
           <div class="cate-list">
-            <label for="pwd">Parola</label>
+            <label for="pwd">{{ $t("parola") }}</label>
             <q-input
               outlined
-              placeholder="Parola"
+              :placeholder="$t('parola')"
               name="pwd"
               v-model="userPass"
               @keypress.enter="loginUser"
@@ -56,7 +59,7 @@
               :loading="isSubmitting"
               class="q-btn-item"
               type="button"
-              >Conectare</q-btn
+              >{{ $t("conectare") }}</q-btn
             >
           </div>
           <span class="pwd">
@@ -66,9 +69,60 @@
               class="link"
               @click="forgotPassword"
             >
-              Am uitat parola
+              {{ $t("amUitatParola") }}
             </button>
           </span>
+        </form>
+      </div>
+    </q-card-section>
+    <q-card-section class="full-width">
+      <div class="container">
+        <form>
+          <div class="flex btn1 mb-3 no- linear-btn-container">
+            <q-btn
+              style="
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                min-width: 140px;
+                width: 30% !important;
+                max-width: 166px;
+                border: 1px solid rgb(130 117 117 / 47%) !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                font-size: 12px;
+                font-weight: 400;
+              "
+              :style="
+                locale == 'en-US'
+                  ? ' background-color: #ffffff; color:#000000'
+                  : '     color:#FFFFFF'
+              "
+              @click="changeLanguage('en-US')"
+              :label="$t('Romana')"
+            />
+            <q-btn
+              style="
+                width: 30% !important;
+                min-width: 140px;
+                max-width: 166px;
+                border: 1px solid rgba(0, 0, 0, 0.2) !important;
+                border-left: 0px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                font-size: 12px;
+                font-weight: 400;
+              "
+              :style="
+                locale == 'en-GB'
+                  ? ' background-color: #ffffff; color:#000000'
+                  : '     color:#FFFFFF'
+              "
+              @click="changeLanguage('en-GB')"
+              :label="$t('Maghiara')"
+            />
+          </div>
         </form>
       </div>
     </q-card-section>
@@ -76,9 +130,17 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 export default {
   data() {
+    const { locale } = useI18n({ useScope: "global" });
+
     return {
+      locale,
+      localeOptions: [
+        { value: "en-US", label: "English" },
+        { value: "en-GB", label: "German" },
+      ],
       userEmail: "",
       userPass: "",
       isSubmitting: false,
@@ -98,6 +160,9 @@ export default {
     forgotPassword() {
       this.$router.push("/send-reset-link");
     },
+    changeLanguage(OBJ) {
+      this.locale = OBJ;
+    },
     async loginUser() {
       this.forgotDialog = false;
       if (this.isSubmitting) {
@@ -113,3 +178,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.mb-3{
+  margin-bottom:3rem;
+}
+</style>

@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <h2>Sign Up</h2>
+    <h2>{{ $t("signUp") }}</h2>
     <form class="form" @submit.prevent="submit">
-      <p>Please fill in this form to create an account.</p>
+      <p>{{ $t("pleaseFillForm") }}</p>
       <div class="cate-list">
         <q-input
           type="text"
           v-model="emailInput"
-          placeholder="Enter Email"
+          :placeholder="$t('enterEmail')"
           name="email"
-          label="Email Address"
+          :label="$t('emailAddress')"
           label-color="black"
         />
       </div>
@@ -17,28 +17,28 @@
         <q-input
           v-model="firstName"
           type="text"
-          placeholder="Enter First Name"
+          :placeholder="$t('enterFirstName')"
           name="F-name"
-          label="First Name"
+          :label="$t('firstName')"
           label-color="black"
         />
       </div>
       <div class="cate-list">
         <q-input
           type="text"
-          label="Last Name"
+          :label="$t('lastName')"
           label-color="black"
           v-model="lastName"
-          placeholder="Enter Last Name"
+          :placeholder="$t('enterLastName')"
           name="L-name"
         />
       </div>
       <div class="cate-list">
         <q-input
           type="text"
-          label="Department-Name"
+          :label="$t('departmentName')"
           label-color="black"
-          placeholder="Enter Department-Name"
+          :placeholder="$t('enterDepartmentName')"
           name="Department-Name"
           v-model="departmentName"
         ></q-input>
@@ -47,7 +47,7 @@
         <q-input
           mask="+40 #### #####"
           color="black"
-          label="Phone Number"
+          :label="$t('phoneNumber')"
           label-color="black"
           v-model="phoneNumber"
         ></q-input>
@@ -55,8 +55,8 @@
       <div class="cate-list">
         <q-input
           type="password"
-          placeholder="Enter Password"
-          label="Password"
+          :placeholder="$t('enterPassword')"
+          :label="$t('password')"
           label-color="black"
           v-model="passInput"
           name="pwd"
@@ -69,7 +69,7 @@
           color="purple"
           @click="submit"
           type="button"
-          >Submit</q-btn
+          >{{ $t('submit') }}</q-btn
         >
       </div>
     </form>
@@ -99,14 +99,14 @@ export default {
       if (this.firstName == "" || this.lastName == "") {
         this.$q.notify({
           color: "red",
-          message: "Please enter a valid name",
+          message: this.$t('validName'),
         });
         this.isSubmitting = false;
         return;
       }
       if (this.phoneNumber.length !== 14) {
         this.$q.notify({
-          message: "Phone Number must be formatted correctly",
+          message: this.$t('validNumber'),
           color: "red",
         });
         this.isSubmitting = false;
@@ -115,7 +115,7 @@ export default {
       if (this.departmentName === "") {
         this.$q.notify({
           color: "red",
-          message: "Please select a valid department",
+          message: this.$t('departmentError'),
         });
         this.isSubmitting = false;
         return;

@@ -1,0 +1,186 @@
+
+  [  {
+      "Zone": "Alba",
+      "Community": [
+        "Aiud",
+        "Alba Iulia",
+        "Calnic",
+        "Campeni",
+        "Cugir",
+        "Galda de Jos",
+        "Lunca Ampoitei",
+        "Lunca Muresului",
+        "Ocna Mures",
+        "Sebes (gr.)",
+        "Teius"
+      ]
+    },
+    {
+      "Zone": "Bistrița-Năsăud",
+      "Community": [
+        "Baia Mare - B",
+        "Bistrita",
+        "Buza",
+        "Caila",
+        "Coltau",
+        "Fantanele",
+        "Fantanita",
+        "Geaca",
+        "Ilva Mare",
+        "Lesu",
+        "Livezile (gr.)",
+        "Lunca Ilvei",
+        "Monariu",
+        "Nuseni",
+        "Ocnita",
+        "Rebra",
+        "Rodna",
+        "Rustior",
+        "Sant",
+        "Slatinita",
+        "Soimus",
+        "Teaca",
+        "Viile Tecii",
+        "Viisoara (BN)"
+      ]
+    },
+    {
+      "Zone": "Cluj",
+      "Community": [
+        "Apahida",
+        "Aschileu (gr.)",
+        "Bagara",
+        "Berchiesu",
+        "Boian",
+        "Branistea",
+        "Caianu Mic (gr.)",
+        "Campia Turzii",
+        "Chesau",
+        "Ciresoaia",
+        "Cluj Central",
+        "Cluj Dynamis",
+        "Cluj Maranatha",
+        "Cluj Salem",
+        "Cluj Speranta",
+        "Cojocna",
+        "Coldau",
+        "Dej",
+        "Floresti (gr.)",
+        "Frata",
+        "Gherla",
+        "Huedin",
+        "Iacobeni (gr.)",
+        "Mociu",
+        "Naoiu",
+        "Nires",
+        "Palatca",
+        "Panic",
+        "Sanmarghita",
+        "SCRIND - HUEDIN",
+        "Sic",
+        "Suatu",
+        "Taga (gr.)",
+        "Triteni",
+        "Turda - Central",
+        "Turda - Speranta",
+        "Turea",
+        "Unguras",
+        "Vaida Camaras",
+        "Viisoara CJ",
+        "Vistea"
+      ]
+    },
+    {
+      "Zone": "Maramureş",
+      "Community": [
+        "Baia Mare - A",
+        "Beclean",
+        "Borsa",
+        "Campulung la Tisa",
+        "Cavnic",
+        "Crasna Viseului",
+        "Dealu Stefanitei",
+        "Desesti (gr.)",
+        "Glod",
+        "Gostila (gr.)",
+        "Leordina Centru",
+        "Leordina Dupa Rau",
+        "Moisei - Izvoru Dragos",
+        "Moisei \"Lunca de Jos\"",
+        "Moisei Centru",
+        "Negresti Oas",
+        "Petrova",
+        "Poienile de Sub Munte",
+        "Remeti",
+        "Repedea",
+        "Rogoz",
+        "Rona de Jos",
+        "Rozavlea",
+        "Ruscova",
+        "Salistea de Sus",
+        "Salsig (gr.)",
+        "Sapanta",
+        "Seini",
+        "Sieu",
+        "Sieu Sfantu (gr.)",
+        "Sighet",
+        "Telciu (gr.)",
+        "Valeni",
+        "Viseu de Jos",
+        "Viseu de Sus"
+      ]
+    },
+    {
+      "Zone": "Regiunea Transilvania de Nord",
+      "Community": ["Biserica Conferintei TN"]
+    },
+    {
+      "Zone": "Sălaj",
+      "Community": [
+        "Bilghez",
+        "Bozies",
+        "Buciumi (gr.)",
+        "Camar",
+        "Cehu Silvaniei",
+        "Crasna",
+        "Cristelec",
+        "Doba Mica",
+        "Ip",
+        "Ratin",
+        "Sag",
+        "Simleu Silvaniei",
+        "Ulciug",
+        "Verveghiu",
+        "Zalau",
+        "Zauan"
+      ]
+    },
+    {
+      "Zone": "Satu Mare",
+      "Community": [
+        "Baia Mare - C",
+        "Camarzana",
+        "Carei",
+
+        "Decebal",
+
+        "Dumbrava",
+
+        "Halmeu",
+
+        "Micula Noua",
+
+        "Remetea Oas (gr.)",
+
+        "Sacaseni",
+
+        "Satu Mare - B",
+
+        "Satu Mare - Horeb",
+
+        "Satu Mare - Râul Viu",
+
+        "Tasnad"
+      ]
+    }
+ ]

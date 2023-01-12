@@ -11,7 +11,7 @@
           ></q-btn>
         </div>
         <div style="width: 70%" class="text-center">
-          <h5 class="linkcolor text-weight-bold">Adăugare întâlnire</h5>
+          <h5 class="linkcolor text-weight-bold">{{ $t('adaugareIntalnire') }}</h5>
         </div>
         <div style="width: 15%">
           <q-btn
@@ -20,20 +20,20 @@
             @click="addEvent"
             color="secondary"
             :loading="isFetching"
-            >Salvare</q-btn
+            >{{ $t('salvare') }}</q-btn
           >
         </div>
       </div>
       <div class="row justify-between align-center">
         <div class="shadowed flex justify-between no-wrap" style="width: 63%">
-          <h6 style="width: 40%" class="linkcolor text-weight-bold">Titlul</h6>
+          <h6 style="width: 40%" class="linkcolor text-weight-bold">{{ $t('titlul') }}</h6>
           <div style="width: 55%">
             <q-input
               borderless
               v-model="eventName"
               type="text"
               color="blue"
-              placeholder="Titlul întâlnirii"
+              :placeholder="$t('titlulIntâlnirii')"
               input-class="linkcolor"
             />
           </div>
@@ -61,7 +61,7 @@
                 @update:model-value="handleDateChange"
               >
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup :label="$t('close')" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -71,10 +71,10 @@
         </div>
       </div>
       <div class="shadowed q-mt-lg add-event-textarea">
-        <h5 class="text-weight-bold linkcolor">Scurtă descriere:</h5>
+        <h5 class="text-weight-bold linkcolor">{{ $t('scurtaDescriere') }}</h5>
         <q-input
           v-model="eventDesc"
-          label="Adăugați text..."
+          :label="$t('adaugatiText')"
           type="text"
           autogrow
           input-class="linkcolor"
@@ -89,7 +89,7 @@
       </div>
       <div class="shadowed q-mt-lg">
         <h5 class="linkcolor text-center text-weight-bold q-pt-lg q-pb-md">
-          Prezența
+          {{ $t('prezenta') }}
         </h5>
         <div class="q-mb-lg add-event-checkboxes">
           <div
@@ -105,8 +105,8 @@
         </div>
       </div>
       <div class="shadowed q-mt-lg linkcolor">
-        <h5 class="text-weight-bold q-pt-lg">Fotografii:</h5>
-        <h6 class="text-weight-light q-mb-md">Adaugați max. 3 fotografii</h6>
+        <h5 class="text-weight-bold q-pt-lg">{{ $t('fotografii') }}</h5>
+        <h6 class="text-weight-light q-mb-md">{{ $t('adaugatiMax3Fotografii') }}</h6>
         <div class="flex justify-between no-wrap" style="gap: 3px">
           <div v-for="(img, i) in previewImages" :key="i" class="img-card">
             <q-btn
@@ -270,7 +270,7 @@
   <q-dialog v-model="errorDialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alertă</div>
+        <div class="text-h6">{{ $t('alertă') }}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -278,7 +278,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn flat :label=" $t('ok') " color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -323,7 +323,7 @@ export default {
         this.$refs.imgInput.click();
       } else {
         this.$q.notify({
-          message: "Nu poți adauga mai mult de 3 (trei) fotografii.",
+          message: this.$t('imgError'),
           color: "red",
         });
       }
@@ -421,7 +421,7 @@ export default {
         this.localImageList.push(file);
       } else if (this.previewImages.length >= 3) {
         this.$q.notify({
-          message: "Nu poți incărca mai mult de 3 fotografii.",
+          message: this.$t('imgError2'),
           color: "red",
         });
       }

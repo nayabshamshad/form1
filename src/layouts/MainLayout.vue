@@ -31,7 +31,7 @@
           class="btn"
           :class="$route.path === '/' ? 'add-border' : ''"
         >
-          Panou de bord
+          {{ $t("panouDeBord") }}
         </q-btn>
         <q-btn
           v-if="this.userData.status == true"
@@ -43,7 +43,7 @@
           class="btn"
           :class="$route.path === '/event-list' ? 'add-border' : ''"
         >
-          Întâlniri
+          {{ $t("Intalniri") }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -56,7 +56,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t("Deconectare") }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -94,7 +94,7 @@
               : ''
           "
         >
-          Aprobat
+          {{ $t("aprobat") }}
         </q-btn>
         <q-btn
           no-caps
@@ -105,7 +105,7 @@
           class="btn"
           :class="$route.fullPath === '/?q=pending' ? 'add-border' : ''"
         >
-          În așteptare
+          {{ $t("Înașteptare") }}
         </q-btn>
         <q-btn
           no-caps
@@ -116,7 +116,7 @@
           class="btn"
           :class="$route.fullPath === '/?q=declined' ? 'add-border' : ''"
         >
-          Refuzat
+          {{ $t("Refuzat") }}
         </q-btn>
         <q-btn
           no-caps
@@ -128,7 +128,7 @@
           v-show="userData.role === 'department'"
           :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
         >
-          Data
+          {{ $t("data") }}
         </q-btn>
         <q-btn
           no-caps
@@ -140,7 +140,7 @@
           v-show="userData.role === 'admin'"
           :class="$route.fullPath === '/?q=departments' ? 'add-border' : ''"
         >
-          Conferințe
+          {{ $t("Conferințe") }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -153,7 +153,7 @@
           @click="logOut"
           class="btn log-out"
           style="font-size: 12px; font-weight: 300"
-          >Deconectare
+          >{{ $t("Deconectare") }}
           <q-icon
             class="q-pl-md"
             style="font-size: 30px; color: rgba(150, 150, 150, 1)"
@@ -174,7 +174,7 @@
           @click="$router.push('/event-list')"
           class="btn"
         >
-          Întâlnirile
+          {{ $t("intâlnirile") }}
         </q-btn>
       </div>
     </div>
@@ -201,9 +201,53 @@
   >
     <div class="flex justify-between">
       <div @click="showTerms = true">T&C</div>
-      <div>
-        {{ new Date().getFullYear() }}
+      <div
+        @click="isopen = !isopen"
+        :style="isopen ? 'background:linear-gradient(to bottom left,rgb(217, 216, 216) 5%,rgb(196 196 196 / 0%));' : ''"
+        style="padding: 1rem 0.8rem;font-weight: 500; position: relative"
+        class="flex gap-2"
+      >
+        <div style="margin-right: 0.5rem; margin-top: 0.5rem">
+          <img v-if="localeLan == 'RO'" src="../assets/RO.svg" />
+          <img v-else src="../assets/HU.svg" />
+        </div>
+        <div class="text-[1rem]">{{ localeLan }}</div>
+        <div>
+          <q-icon
+            name="chevron_right"
+            :class="isopen ? 'rotate-270' : 'rotate-90'"
+            size="sm"
+          />
+        </div>
+        <div
+          v-if="isopen"
+          style="top: -7.8rem; left: -1px; min-width: 6rem;background-color:#ffffff;"
+          class="absolute"
+        >
+          <div style="border: 2px solid #c4c4c4; border-bottom: 0" class="">
+            <div
+              style="
+              
+                border-bottom: 2px solid #c4c4c4;
+                padding: 1rem;
+                justify-content: center;
+                align-items: center;
+              "
+              class="flex gap-2 language-btn"
+              v-for="(data, i) in localeOptions"
+              :key="i"
+              @click="changeLanguage(data)"
+            >
+              <div style="margin-right: 0.5rem; margin-top: 0.5rem">
+                <img v-if="data.label == 'RO'" src="../assets/RO.svg" />
+                <img v-else src="../assets/HU.svg" />
+              </div>
+              <div class="text-[1rem]">{{ data.label }}</div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div>&#x24B8; LEC</div>
     </div>
   </div>
@@ -215,17 +259,31 @@
 import { defineComponent } from "vue";
 import showTerms from "../components/termsAndConditions.vue";
 import MobileNav from "../components/MobileNav.vue";
+
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "MainLayout",
   components: { showTerms, MobileNav },
   data() {
+    const { locale } = useI18n({ useScope: "global" });
     return {
+      locale,
+      isopen: false,
+      localeLan: "EN",
+      localeOptions: [
+        { value: "en-US", label: "RO" },
+        { value: "en-GB", label: "HU" },
+      ],
       showTerms: false,
       showMenu: false,
       showMenuUser: false,
     };
   },
   methods: {
+    changeLanguage(OBJ) {
+      this.locale = OBJ.value;
+      this.localeLan = obj.label;
+    },
     logOut() {
       this.$store.dispatch("signOutUser");
     },
@@ -240,3 +298,9 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+
+.language-btn:hover{ 
+  background:linear-gradient(to bottom left,rgb(217, 216, 216) 5%,rgb(196 196 196 / 0%));
+}
+</style>
