@@ -194,11 +194,9 @@
               />
               <q-btn 
  
-                val="Companioni"
-                color="black"
+                val="Companioni" 
                 :label="$t('companioni')"
-                class="q-my-none"
-                style="margin-top: 5px !important; margin-bottom: 0 !important"
+                class="q-my-none" 
  
                 @click="userInfo.category = 'Companioni'"
                 :class="userInfo.category === 'Companioni' ? 'selected' : ''"
@@ -310,13 +308,12 @@
             <div class="flex linear-btn-container">
               <q-btn
                 :label="$t('activ')"
-                style="margin-top: 0 !important; margin-bottom: 0 !important"
-                @click="userInfo.status = true"
+              @click="userInfo.status = true"
+              :val="true"
                 :class="userInfo.status === true ? 'selected' : ''"
               />
               <q-btn
                 :val="false"
-                color="black"
                 :label="$t('inactiv')"
 
                 @click="userInfo.status = false"
@@ -496,7 +493,11 @@ export default {
       zonesDepartment: {},
       zones: [],
       communities: [],
- 
+      optionList: [
+        [0, 1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+      ],
       userInfo: {
         teamList: [{ name: "", type: false, year: "", class: "0-4" }],
         reason: "",

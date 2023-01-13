@@ -203,8 +203,12 @@
       <div @click="showTerms = true">T&C</div>
       <div
         @click="isopen = !isopen"
-        :style="isopen ? 'background:linear-gradient(to bottom left,rgb(217, 216, 216) 5%,rgb(196 196 196 / 0%));' : ''"
-        style="padding: 1rem 0.8rem;font-weight: 500; position: relative"
+        :style="
+          isopen
+            ? 'background:linear-gradient(to bottom left,rgb(217, 216, 216) 5%,rgb(196 196 196 / 0%));'
+            : ''
+        "
+        style="padding: 1rem 0.8rem; font-weight: 500; position: relative"
         class="flex gap-2"
       >
         <div style="margin-right: 0.5rem; margin-top: 0.5rem">
@@ -221,13 +225,17 @@
         </div>
         <div
           v-if="isopen"
-          style="top: -7.8rem; left: -1px; min-width: 6rem;background-color:#ffffff;"
+          style="
+            top: -7.8rem;
+            left: -1px;
+            min-width: 6rem;
+            background-color: #ffffff;
+          "
           class="absolute"
         >
           <div style="border: 2px solid #c4c4c4; border-bottom: 0" class="">
             <div
               style="
-              
                 border-bottom: 2px solid #c4c4c4;
                 padding: 1rem;
                 justify-content: center;
@@ -269,7 +277,7 @@ export default defineComponent({
     return {
       locale,
       isopen: false,
-      localeLan: "EN",
+      localeLan: "RO",
       localeOptions: [
         { value: "en-US", label: "RO" },
         { value: "en-GB", label: "HU" },
@@ -282,7 +290,7 @@ export default defineComponent({
   methods: {
     changeLanguage(OBJ) {
       this.locale = OBJ.value;
-      this.localeLan = obj.label;
+      this.localeLan = OBJ.label;
     },
     logOut() {
       this.$store.dispatch("signOutUser");
@@ -299,8 +307,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-
-.language-btn:hover{ 
-  background:linear-gradient(to bottom left,rgb(217, 216, 216) 5%,rgb(196 196 196 / 0%));
+.language-btn:hover {
+  background: linear-gradient(
+    to bottom left,
+    rgb(217, 216, 216) 5%,
+    rgb(196 196 196 / 0%)
+  );
 }
 </style>

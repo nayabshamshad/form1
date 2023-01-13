@@ -79,6 +79,7 @@
       <div class="container">
         <form>
           <div class="flex btn1 mb-3 no- linear-btn-container">
+        
             <q-btn
               style="
                 border-top-right-radius: 0;
@@ -92,11 +93,13 @@
                 font-size: 12px;
                 font-weight: 400;
               "
-              :style="
+               type="button"
+             
+              :class="
                 locale == 'en-US'
-                  ? ' background-color: #ffffff; color:#000000'
-                  : '     color:#FFFFFF'
-              "
+                  ? 'selected'
+                  : ''
+              " 
               @click="changeLanguage('en-US')"
               :label="$t('Romana')"
             />
@@ -114,11 +117,13 @@
                 font-size: 12px;
                 font-weight: 400;
               "
-              :style="
+               type="button"
+                
+              :class="
                 locale == 'en-GB'
-                  ? ' background-color: #ffffff; color:#000000'
-                  : '     color:#FFFFFF'
-              "
+                  ? 'selected'
+                  : ''
+              "  
               @click="changeLanguage('en-GB')"
               :label="$t('Maghiara')"
             />

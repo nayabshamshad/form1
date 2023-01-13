@@ -40,9 +40,8 @@
                 <q-select
                   dense
                   outlined
-                  v-model="allFilters.categoryFilter"
+                  v-model="categoryFilter"
                   :label="$t('Category')"
-
                   :options="categoryOptions"
                 />
               </div>
@@ -55,7 +54,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="allFilters.statusFilter"
+                  v-model="statusFilter"
                   :label="$t('status')"
 
                   :options="statusOptions"
