@@ -2,10 +2,13 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div class="flex justify-end"></div>
-        <div class="flex no-wrap">
-          <div class="userImg">
-            <template v-if="userData.imgUrl && userData.imgUrl !== ''">
+        <div  
+                class="flex justify-end q-pr-sm">
+          
+              <div :style="isopen && checkScreen() ? 'margin-top:7rem' : ''" 
+              class="flex user account-info-div no-wrap">
+                <div class="userImg">
+                  <template v-if="userData.imgUrl && userData.imgUrl !== ''">
               <img
                 :src="userData.imgUrl"
                 alt=""
@@ -34,48 +37,47 @@
                 </q-btn>
               </div>
             </template>
-            <div v-else>
-              <q-icon class="text-grey" name="photo_camera"></q-icon>
-            </div>
-          </div>
-          <div class="userInfoText">
-            <h4>{{ userData.name }}</h4>
-            <p
-              :style="
-                userData.status === true
-                  ? 'color: green'
-                  : userData.status === 'neither'
-                  ? 'color: #FFBD3C;'
-                  : 'color: red'
-              "
-            >
-              {{
-                userData.status === true
-                  ? "Activ"
-                  : userData.status === "neither"
-                  ? "Activ (Fără grupă)"
-                  : "Inactiv"
-              }}
-            </p>
-            <div>
-              <p>{{ userData.phoneNumber }}</p>
-              <p>{{ userData.email }}</p>
-            </div>
-          </div>
+                  <div v-else>
+                    <q-icon class="text-grey" name="photo_camera"></q-icon>
+                  </div>
+                </div>
+                <div class="userInfoText">
+                  <h4>{{ userData.name }}</h4>
+                  <p :style="userData.status ? 'color: green' : userData.status === 'neither'
+                  ? 'color: #FFBD3C;' : 'color: red'">
+                    {{ userData.status ? "Activ" : userData.status === "neither"
+                  ? "Activ (Fără grupă)": "Inactiv" }}
+                  </p>
+                  <div>
+                    <p>{{ userData.phoneNumber }}</p>
+                    <p>{{ userData.email }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="edit-div cursor-pointer">
+                <div v-if="isopen" class="edit-popup">
+                  <div 
+          v-show="true" @click="$router.push('/edit-profile')">Edit Profile</div>
+          <!-- v-show="dateContained" -->
+                  <div>Download Id</div>
+                </div>
+                <q-btn
+                  round
+                  @click="isopen = !isopen"
+                  icon="settings"
+                  class="edit-btn"
+                ></q-btn>
+              </div>
         </div>
-        <q-btn
-          round
-          v-show="dateContained"
-          @click="$router.push('/edit-profile')"
-          icon="edit_note"
-          class="edit-btn"
-        ></q-btn>
+        
+
+      
+        
+
+
         <div class="infoRow">
           <div class="shadowed">
-            <!-- <div>
-              <h3>Etnie:</h3>
-              <span> {{ userData.etnic }}</span>
-            </div> -->
+         
             <div>
               <h3>{{ $t('gender') }}</h3>
               <span> {{ userData.gender }}</span>
@@ -160,13 +162,14 @@
           style="padding-left: 2rem; padding-right: 2rem"
         >
           <h2>Detalii</h2>
-          <q-input
-            type="textarea"
-            input-style="resize: none;"
-            readonly
-            borderless
-            v-model="userData.reason"
-          ></q-input>
+          <q-card
+            class="full-width q-mb-md"
+            style="min-height: unset; max-width: unset"
+          >
+            <q-card-section>
+              {{ userData.reason }}
+            </q-card-section>
+          </q-card>
         </div>
       </div>
 
@@ -254,6 +257,9 @@ export default {
     },
     addMember() {
       this.teamList.push({ name: "" });
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     removeMember(i) {
       if (this.teamList.length > 1) {
@@ -397,7 +403,8 @@ export default {
     },
   },
   data() {
-    return {
+    return {      
+      isopen: false,
       isEdit: false,
       dataUser: {},
       dateContained: false,

@@ -2,9 +2,17 @@
   <q-card class="my-card new-card info">
     <q-card-section>
       <div class="container">
-        <div
-          style="width: 87.5%; height: 3rem"
-          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
+        <div 
+        v-if="$store.getters.userData.role == 'admin'"
+          style="width: 87.5%"
+          class="
+            q-mx-auto
+            flex
+            justify-space-between
+            flex-nowrap
+            for-media-mobile-flex-cols
+            admin-topbar-container
+          "
         >
           <div class="for-media-mobile-width" style="width: 25%">
             <div class="input-label-search">
@@ -14,7 +22,14 @@
             </div>
           </div>
           <div
-            class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
+            v-show="tabs !== 'departments'"
+            class="
+              flex flex-nowrap
+              justify-space-between
+              for-media-mobile-flex-start
+              for-media-mobile-flex-cols-reverse
+              for-media-mobile-width
+            "
             style="width: 100%"
           >
             <div
@@ -40,7 +55,7 @@
                 <q-select
                   dense
                   outlined
-                  v-model="categoryFilter"
+                  v-model="allFilters.categoryFilter"
                   :label="$t('Category')"
                   :options="categoryOptions"
                 />
@@ -54,9 +69,8 @@
                 <q-select
                   dense
                   outlined
-                  v-model="statusFilter"
+                  v-model="allFilters.statusFilter"
                   :label="$t('status')"
-
                   :options="statusOptions"
                 />
               </div>
@@ -65,9 +79,8 @@
                 <q-select
                   :label="$t('grad')"
                   dense
-                  v-model="gradeFilter"
+                  v-model="allFilters.gradeFilter"
                   outlined
-                  multiple
                   :options="gradeOptions"
                 />
               </div>
@@ -78,7 +91,13 @@
             <!-- last buttons  -->
 
             <div
-              class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
+              class="
+                flex
+                justify-end
+                q-ml-auto
+                flex-nowrap
+                for-media-mobile-flex-row-reverse for-media-mobile-button-width
+              "
               style="width: 17%"
             >
               <div class="q-mx-sm">
@@ -93,9 +112,10 @@
 
               <div class="flex flex-btn">
                 <q-btn
+                  v-show="tabs !== 'departments'"
                   style="transition: 250ms"
                   :class="showFilters ? 'bg-linkcolor' : 'linkcolor'"
-                  @click="showFilters = !showFilters"
+                  @click="setShowFilters(!showFilters)"
                   no-caps
                   >{{$t('Filtre')}}</q-btn
                 >
@@ -186,7 +206,6 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
-
             <div class="flex flex-btn">
               <q-btn
                 round
@@ -205,7 +224,6 @@
                 ></q-select>
               </div>
             </div>
-
             <div class="table-container">
               <table class="user-list-table pending">
                 <thead>
@@ -305,7 +323,6 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
-
             <div class="flex flex-btn">
               <q-btn
                 round
@@ -323,7 +340,6 @@
                 ></q-select>
               </div>
             </div>
-
             <div class="table-container">
               <table class="user-list-table declined">
                 <thead>
@@ -414,9 +430,10 @@
               <div class="flex justify-center">
                 <q-date v-model="dateModel" range></q-date>
               </div>
-
-              <div class="flex" style="justify-content: flex-end;
-
+              <div
+                class="flex"
+                style="
+                  justify-content: flex-end;
                   width: 70%;
                   margin-top: 1rem;
                   min-width: 200px;
@@ -552,9 +569,16 @@
 
 <script>
 import writeXlsxFile from "write-excel-file";
-
 export default {
   mounted() {
+    if (this.allFilters?.unset) {
+      this.allFilters = {
+        categoryFilter: this.filterList.categoryFilter,
+        statusFilter: this.filterList.statusFilter,
+        gradeFilter: this.filterList.gradeFilter,
+      };
+    }
+    console.log(this.filterList);
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -583,13 +607,14 @@ export default {
   data() {
     return {
       tabs: "approved",
+      
       tltFilter: false,
       gradeOptions: [
+        { label: "All", value: "all" },
         { label: "Instructor", value: "Instructor" },
         { label: "Ghid", value: "Ghid" },
         { label: "Master Ghid", value: "masterGhid" },
-      ],
-      showFilters: false,
+      ], 
       gradeFilter: [],
       statusOptions: [
         { label: "All", value: "All" },
@@ -610,16 +635,28 @@ export default {
       showDepartmentDialog: false,
       resultsPerPage: 20,
       currentPage: 1,
+      allFilters: {
+        unset: true,
+      },
     };
   },
   watch: {
+    allFilters: {
+      handler: function () {
+        this.$store.dispatch("setFilterList", {
+          categoryFilter: this.allFilters.categoryFilter,
+          statusFilter: this.allFilters.statusFilter,
+          gradeFilter: this.allFilters.gradeFilter,
+        });
+      },
+      deep: true,
+    },
     departmentName: {
       handler: function () {
         this.currentPage = 1;
         this.$store.dispatch("setDepartment", this.departmentName);
       },
     },
-
     resultsPerPage: {
       handler: function () {
         this.currentPage = 1;
@@ -656,6 +693,9 @@ export default {
     },
   },
   methods: {
+    setShowFilters(x) {
+      this.$store.dispatch("setShowFilters", x);
+    },
     increasePage() {
       if (this.currentPage < this.maxPage) {
         this.currentPage = this.currentPage + 1;
@@ -688,9 +728,8 @@ export default {
       if (usersType === "departments") {
         users = this.departmentUsers.arrTotal;
       } else {
-        users = this[usersType + "Users"];
+        users = this[usersType + "Users"].arrTotal;
       }
-
       const header_row = [
         {
           value: "Numele și prenumele",
@@ -784,7 +823,6 @@ export default {
           newDate = date.getDate() + " " + month + ", " + date.getFullYear();
         }
         let userArr = [];
-
         userArr.push(
           {
             value: x.name,
@@ -875,8 +913,14 @@ export default {
     },
   },
   computed: {
+    filterList() {
+      return this.$store.getters.filterList;
+    },
+    showFilters() {
+      return this.$store.getters.showFilters;
+    },
     departmentUsers() {
-      const arr = this.userList.filter((x) => {
+      const arr = this.$store.getters.userList.filter((x) => {
         return x.role == "department";
       });
       let firstItem = (this.currentPage - 1) * this.resultsPerPage;
@@ -898,6 +942,7 @@ export default {
     },
     userList() {
       let arr = this.$store.getters.userList;
+      arr = arr.filter((x) => x.status !== "deleted");
       if (this.nameSearch !== "") {
         arr = arr.filter((x, i) => {
           return (
@@ -906,26 +951,22 @@ export default {
           );
         });
       }
-
-      if (this.gradeFilter.length > 0) {
-        this.gradeFilter.forEach((x, i) => {
-          arr = arr.filter((item) => {
-            return item[x.value] !== "";
-          });
+      if (this.allFilters?.gradeFilter?.value !== "all") {
+        arr = arr.filter((item) => {
+          return item[this.allFilters?.gradeFilter?.value] !== "";
         });
       }
-      if (this.categoryFilter !== "All") {
+      if (this.allFilters.categoryFilter !== "All") {
         arr = arr.filter((x) => {
-          return x.category == this.categoryFilter;
+          return x.category == this.allFilters.categoryFilter;
         });
       }
       if (this.statusFilter.value !== "All") {
         arr = arr.filter((x) => {
-          return x.status == this.statusFilter.value;
+          return x.status == this.allFilters?.statusFilter?.value;
         });
       }
-
-      if (this.tltFilter) {
+        if (this.tltFilter) {
         arr = arr.filter((item) => {
           return (
             item.teamList &&
@@ -1132,7 +1173,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .new-checkbox {
   display: flex;

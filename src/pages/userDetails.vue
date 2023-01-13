@@ -37,10 +37,14 @@
         <q-tab-panel name="user">
           <div class="container">
             <div class="container">
-              <div class="flex justify-end q-pr-sm"></div>
-              <div class="flex no-wrap">
-                <div class="userImg relative">
-                  <template
+              <div class="flex justify-between q-pr-sm relative">
+                <div
+                  class="flex no-wrap account-info-div"
+                  :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''"
+                >
+                  <div class="userImg relative">
+
+                     <template
                     v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
                   >
                     <img
@@ -75,42 +79,62 @@
                     </div>
                   </template>
 
-                  <div v-else>
-                    <q-icon class="text-grey" name="photo_camera"></q-icon>
+                    <div v-else>
+                      <q-icon class="text-grey" name="photo_camera"></q-icon>
+                    </div>
+                  </div>
+                  <div class="userInfoText">
+                    <h4>{{ selectedUser.name }}</h4>
+                    <p
+                      :style="
+                        selectedUser.status || selectedUser.role == 'department'
+                          ? 'color: green' 
+                            : selectedUser.status === 'neither'
+                        ? 'color: #FFBD3C;'
+                          : 'color: red'
+                      "
+                    >
+                      {{
+                        selectedUser.status || selectedUser.role == "department"
+                          ? "Activ"
+                          : selectedUser.status === "neither"
+                        ? "Activ (Fără Grupă)"
+                          : "Inactiv"
+                      }}
+                    </p>
+                    <div>
+                      <p>{{ selectedUser.phoneNumber }}</p>
+                      <p>{{ selectedUser.email }}</p>
+                    </div>
                   </div>
                 </div>
-                <div class="userInfoText">
-                  <h4>{{ selectedUser.name }}</h4>
-                  <p
-                    :style="
-                      selectedUser.status == true ||
-                      selectedUser.role == 'department'
-                        ? 'color: green'
-                        : selectedUser.status === 'neither'
-                        ? 'color: #FFBD3C;'
-                        : 'color: red'
-                    "
-                  >
-                    {{
-                      selectedUser.status === true
-                        ? "Activ"
-                        : selectedUser.status === "neither"
-                        ? "Activ (Fără Grupă)"
-                        : "Inactiv"
-                    }}
-                  </p>
-                  <div>
-                    <p>{{ selectedUser.phoneNumber }}</p>
-                    <p>{{ selectedUser.email }}</p>
+                <div class="edit-div cursor-pointer">
+                  <div v-if="isopen" class="edit-popup">
+                    <div @click="$router.push('/edit-profile')">
+                      Edit Profile
+                    </div>
+                    <div>Download Id</div>
+                    <div
+                      style="
+                        background-color: #de2110;
+                        color: white;
+                        border: 0px;
+                      "
+                      @click="deleteUser(selectedUser.uid)"
+                     
+                    >
+                      Delete Profile
+                    </div>
                   </div>
+                  <q-btn
+                    round
+                    @click="isopen = !isopen"
+                    icon="settings"
+                    class="edit-btn"
+                  ></q-btn>
                 </div>
               </div>
-              <q-btn
-                round
-                @click="$router.push('/edit-profile')"
-                icon="edit_note"
-                class="edit-btn"
-              ></q-btn>
+
               <div class="infoRow">
                 <div class="shadowed">
                   <!-- <div>
@@ -458,11 +482,13 @@
 </template>
 <script>
 import writeXlsxFile from "write-excel-file";
-
+import { storage, deleter } from "../store/firebase.js";
 export default {
   data() {
     return {
+      isopen: false,
       tabs: "user",
+      deletingUser: false,
       dateModel: { from: "2020/07/08", to: "2020/07/17" },
       dateOfBirth: "",
       dataUser: {},
@@ -489,6 +515,14 @@ export default {
     }
   },
   methods: {
+    deleteUser(id) {
+      if(this.deletingUser) {
+        return;
+      }
+      this.deletingUser = true;
+      this.$store.dispatch('deleteUser', id)
+      this.deletinguser = false;
+    },
     downloadImg() {
       const xhr = new XMLHttpRequest();
       xhr.responseType = "blob";
@@ -603,7 +637,6 @@ export default {
           },
         ],
       ];
-
       this.listOfAttendance.forEach((x) => {
         arr.push([
           {
@@ -619,6 +652,18 @@ export default {
       writeXlsxFile(arr, {
         fileName: fileName + ".xlsx",
       });
+    },
+    openModal() {
+      this.$refs.dateIcon.$el.click();
+      this.$refs.dateIcon.$el.focus();
+    },
+    handleDateChange(e, d, c) {
+      let day = `${c.day}`.length == 1 ? "0" + c.day : c.day;
+      let month = `${c.month}`.length == 1 ? "0" + c.month : c.month;
+      this.dateOfBirth = day + "/" + month + "/" + c.year;
+    },
+    checkScreen() {
+      return window.screen.availWidth <= 1024;
     },
     getBirthDate(val) {
       let date = new Date(val);
@@ -638,11 +683,9 @@ export default {
         "Dec",
       ];
       const month = monthList[date.getMonth()];
-
       newDate = date.getDate() + " " + month + ", " + date.getFullYear();
       return newDate;
     },
-
     showEventDetails(x) {
       this.$store.dispatch("selectEvent", x);
     },
@@ -729,7 +772,6 @@ export default {
           }
         });
       });
-
       const sorted = arr.sort((a, b) => {
         if (a.name.toLowerCase() > b.name.toLowerCase()) {
           return 1;
