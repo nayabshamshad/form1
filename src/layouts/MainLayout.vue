@@ -226,14 +226,14 @@
         <div
           v-if="isopen"
           style="
-            top: -7.8rem;
+            top: -7.813rem;
             left: -1px;
             min-width: 6rem;
             background-color: #ffffff;
           "
-          class="absolute"
+          class="absolute change-language-div"
         >
-          <div style="border: 2px solid #c4c4c4; border-bottom: 0" class="">
+          <div style="border: 2px solid #c4c4c4; border-bottom: 0">
             <div
               style="
                 border-bottom: 2px solid #c4c4c4;
@@ -312,6 +312,9 @@ export default defineComponent({
     to bottom left,
     rgb(217, 216, 216) 5%,
     rgb(196 196 196 / 0%)
-  );
-}
+    );
+  }
+  .language-btn:last-child{
+    border-bottom:none !important;
+  }
 </style>

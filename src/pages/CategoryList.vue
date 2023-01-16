@@ -85,11 +85,10 @@
               v-model="userInfo.etnic"
             />
           </div> -->
-          <div class="cate-list">
+          <div v-if="this.$route.path != '/category-list'" class="cate-list">
             <label for="uname" class="q-pb-sm block">{{
               $t("Nume/Prenume:")
             }}</label>
-
             <q-input
               outlined
               type="text"
@@ -216,7 +215,8 @@
           <div class="cate-list right">
             <label for="uname" class="block q-mb-sm">{{ $t("Zona") }}</label>
 
-            <q-select outlined v-model="userInfo.region" :options="zones">
+            <q-select 
+              :placeholder="$t('zonaInCareActivezi')" outlined @onChange="changeZone" v-model="userInfo.region" :options="zones">
             </q-select>
             <!-- <q-input
 
@@ -367,7 +367,7 @@
                   v-model="item.name"
                   :style="
                     item.type
-                      ? 'background-color: rgba(131, 151, 205, 0.3)'
+                      ? 'background-color: rgba(131, 151, 205, 0.3);border-top-left-radius:9px;'
                       : ''
                   "
                   :placeholder="item.type ? 'TLT Name' : 'Nume copil'"
@@ -422,7 +422,7 @@
                 type="button"
                 color="red"
                 style="
-                  width: 60px;
+                 width: 60px;
                   height: 89px;
                   border-radius: 0;
                   border-top-right-radius: 0.7rem;
@@ -529,14 +529,21 @@ export default {
     };
   },
   methods: {
-    regionChange() {
-
-      debugger
-      this.userInfo.state = ""; 
+    changeZone(){
+      this.userInfo.state = "";
+    },
+    regionChange() { 
+     
+      if(this.zonesDepartment.length > 0){
         var obj = this.zonesDepartment.filter(
           (x) => x.Zone == this.userInfo.region
         );
-        this.communities = obj[0].Community; 
+        if(obj && obj.length > 0){
+          this.communities = obj[0].Community; 
+        }
+      }
+       
+     
 
     },
     handleImageUpload(e) {
@@ -792,10 +799,17 @@ export default {
         obj.push(x.Zone);
       });
     }
+    else{
+      this.zonesDepartment = dep_transilvania_de_sud;
+      dep_transilvania_de_sud.forEach((x) => {
+        obj.push(x.Zone);
+      });
+    }
     this.zones = obj;
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
     } else if (this.$route.path == "/edit-profile") {
+      debugger
       if (
         this.storeUserInfo.role != "department" &&
         this.storeUserInfo.role != "admin"

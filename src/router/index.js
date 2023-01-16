@@ -65,6 +65,10 @@ export default route(function ({ store }) {
     ),
   });
   Router.beforeEach((to, from, next) => {
+    if(to.name==="card-id"){
+      next();
+      return;
+    }
     if (!store.getters.isAuthenticated) {
       if (
         to.path != "/sign-in" &&

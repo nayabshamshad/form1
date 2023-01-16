@@ -3,7 +3,7 @@
     <q-card-section>
       <div class="container">
         <div  
-                class="flex justify-end q-pr-sm">
+                class="flex justify-between q-pr-sm">
           
               <div :style="isopen && checkScreen() ? 'margin-top:7rem' : ''" 
               class="flex user account-info-div no-wrap">

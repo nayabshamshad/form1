@@ -34,6 +34,11 @@ const routes = [
     component: () => import("../pages/userDetails"),
     name: "" /* User Details */,
   },
+  {
+    path:"/id-card",
+    component:() => import("../pages/card_id"),
+    name:"card-id" /* card-id */,
+  },
 
   // Always leave this as last one,
   // but you can also remove it
