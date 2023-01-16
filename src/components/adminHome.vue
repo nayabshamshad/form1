@@ -206,15 +206,15 @@
           <template> </template>
           <!-- Pending User Listing -->
           <q-tab-panel name="pending">
-            <div class="flex flex-btn">
-              <q-btn
+            <div class=" showMobile flex flex-btn">
+              <!-- <q-btn
                 round
                 @click="exportFile(pendingUsers.arrTotal, 'Pending')"
                 color="green"
                 icon="download"
-              ></q-btn>
+              ></q-btn> -->
               <h5 class="showMobile">{{ $t('Înașteptare') }}</h5>
-              <div class="media-select">
+              <!-- <div class="media-select">
                 <q-select
                   dense
                   v-if="$store.getters.userData.role == 'admin'"
@@ -222,7 +222,7 @@
                   v-model="departmentName"
                   class="bg-white"
                 ></q-select>
-              </div>
+              </div> -->
             </div>
             <div class="table-container">
               <table class="user-list-table pending">
@@ -323,22 +323,22 @@
 
           <!-- Declined Users -->
           <q-tab-panel name="declined">
-            <div class="flex flex-btn">
-              <q-btn
+            <div class="showMobile flex flex-btn">
+              <!-- <q-btn
                 round
                 @click="exportFile(declinedUsers.arrTotal, 'Declined')"
                 color="green"
                 icon="download"
-              ></q-btn>
+              ></q-btn> -->
               <h5 class="showMobile">{{ $t('Refuzat') }}</h5>
-              <div class="media-select">
+              <!-- <div class="media-select">
                 <q-select
                   v-if="$store.getters.userData.role == 'admin'"
                   :options="departmentList"
                   v-model="departmentName"
                   dense
                 ></q-select>
-              </div>
+              </div> -->
             </div>
             <div class="table-container">
               <table class="user-list-table declined">
