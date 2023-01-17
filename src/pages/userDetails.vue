@@ -113,7 +113,7 @@
                     <div @click="$router.push('/edit-profile')">
                       Edit Profile
                     </div>
-                    <div>Download Id</div>
+                    <div @click="viewUserCard">Download Id</div>
                     <div
                       style="
                         background-color: #de2110;
@@ -515,6 +515,9 @@ export default {
     }
   },
   methods: {
+    viewUserCard() {
+      this.$router.push('/id-card')
+    },
     deleteUser(id) {
       if(this.deletingUser) {
         return;

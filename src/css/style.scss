@@ -10,6 +10,7 @@ $grey: #c4c4c4;
 .linkcolor {
   color: $linkcolor;
 }
+
 .bg-linkcolor {
   background: $linkcolor;
   color: #fff;
@@ -28,6 +29,11 @@ $grey: #c4c4c4;
 @import "./components/__bottomBar";
 @import "./components/_waitingView";
 
+#q-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 body::after {
   content: "";
   @media (min-width: 769px) {
@@ -181,5 +187,26 @@ input {
     &.selected {
       background-color: $linkcolor;
     }
+  }
+}
+.department-types{
+  div{
+    div{
+    div{
+      width: 50%;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      .department-names{
+        font-size: 1.8rem;
+      }
+      span{
+        line-height: 1rem;
+        
+        &:first-of-type{
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
   }
 }

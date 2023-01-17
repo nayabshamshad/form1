@@ -2,88 +2,95 @@
   <q-card class="my-card info">
     <q-card-section>
       <div class="container">
-        <div  
-                class="flex justify-between q-pr-sm">
-          
-              <div :style="isopen && checkScreen() ? 'margin-top:7rem' : ''" 
-              class="flex user account-info-div no-wrap">
-                <div class="userImg">
-                  <template v-if="userData.imgUrl && userData.imgUrl !== ''">
-              <img
-                :src="userData.imgUrl"
-                alt=""
-                style="cursor: pointer"
-                @click="showProfilePicModal = true"
-              />
-              <div
-                style="
-                  position: absolute;
-                  right: 10px;
-                  bottom: 10px;
-                  display: block;
-                  border: unset;
-                  height: 20px;
-                  width: 20px;
+        <div class="flex justify-between q-pr-sm">
+          <div
+            :style="isopen && checkScreen() ? 'margin-top:7rem' : ''"
+            class="flex user account-info-div no-wrap"
+          >
+            <div class="userImg">
+              <template v-if="userData.imgUrl && userData.imgUrl !== ''">
+                <img
+                  :src="userData.imgUrl"
+                  alt=""
+                  style="cursor: pointer"
+                  @click="showProfilePicModal = true"
+                />
+                <div
+                  style="
+                    position: absolute;
+                    right: 10px;
+                    bottom: 10px;
+                    display: block;
+                    border: unset;
+                    height: 20px;
+                    width: 20px;
+                  "
+                >
+                  <q-btn
+                    @click="downloadImg"
+                    round
+                    style="padding: 0.25rem; font-size: 6px"
+                    size="xs"
+                    color="green"
+                  >
+                    <q-icon style="font-size: 1rem" name="download"></q-icon>
+                  </q-btn>
+                </div>
+              </template>
+              <div v-else>
+                <q-icon class="text-grey" name="photo_camera"></q-icon>
+              </div>
+            </div>
+            <div class="userInfoText">
+              <h4>{{ userData.name }}</h4>
+              <p
+                :style="
+                  userData.status
+                    ? 'color: green'
+                    : userData.status === 'neither'
+                    ? 'color: #FFBD3C;'
+                    : 'color: red'
                 "
               >
-                <q-btn
-                  @click="downloadImg"
-                  round
-                  style="padding: 0.25rem; font-size: 6px"
-                  size="xs"
-                  color="green"
-                >
-                  <q-icon style="font-size: 1rem" name="download"></q-icon>
-                </q-btn>
+                {{
+                  userData.status
+                    ? "Activ"
+                    : userData.status === "neither"
+                    ? "Activ (Fără grupă)"
+                    : "Inactiv"
+                }}
+              </p>
+              <div>
+                <p>{{ userData.phoneNumber }}</p>
+                <p>{{ userData.email }}</p>
               </div>
-            </template>
-                  <div v-else>
-                    <q-icon class="text-grey" name="photo_camera"></q-icon>
-                  </div>
-                </div>
-                <div class="userInfoText">
-                  <h4>{{ userData.name }}</h4>
-                  <p :style="userData.status ? 'color: green' : userData.status === 'neither'
-                  ? 'color: #FFBD3C;' : 'color: red'">
-                    {{ userData.status ? "Activ" : userData.status === "neither"
-                  ? "Activ (Fără grupă)": "Inactiv" }}
-                  </p>
-                  <div>
-                    <p>{{ userData.phoneNumber }}</p>
-                    <p>{{ userData.email }}</p>
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="edit-div cursor-pointer">
+            <div v-if="isopen" class="edit-popup">
+              <div v-show="true" @click="$router.push('/edit-profile')">
+                Edit Profile
               </div>
-              <div class="edit-div cursor-pointer">
-                <div v-if="isopen" class="edit-popup">
-                  <div 
-          v-show="true" @click="$router.push('/edit-profile')">Edit Profile</div>
-          <!-- v-show="dateContained" -->
-                  <div>Download Id</div>
-                </div>
-                <q-btn
-                  round
-                  @click="isopen = !isopen"
-                  icon="settings"
-                  class="edit-btn"
-                ></q-btn>
-              </div>
+              <!-- v-show="dateContained" -->
+              <!-- <div @click="viewUserCard">Download Id</div> -->
+            </div>
+            <q-btn
+              round
+              @click="isopen = !isopen"
+              icon="settings"
+              class="edit-btn"
+            ></q-btn>
+          </div>
         </div>
-        
-
-      
-        
-
 
         <div class="infoRow">
           <div class="shadowed">
-         
             <div>
-              <h3>{{ $t('gender') }}</h3>
+              <h3>{{ $t("gender") }}</h3>
               <span> {{ userData.gender }}</span>
             </div>
             <div>
-              <h3>{{ $t('dateofbirth') }}</h3>
+              <h3>{{ $t("dateofbirth") }}</h3>
               <span>
                 {{
                   userData.dateOfBirth
@@ -93,12 +100,12 @@
               >
             </div>
             <div>
-              <h3>{{ $t('shirtsize') }}</h3>
+              <h3>{{ $t("shirtsize") }}</h3>
               <span class="text-uppercase"> {{ userData.size }}</span>
             </div>
           </div>
           <div class="shadowed skills">
-            <h3>{{ $t('specializări') }}</h3>
+            <h3>{{ $t("specializări") }}</h3>
             <div>
               <p v-for="(item, i) in userData.tagList" :key="i">{{ item }}</p>
             </div>
@@ -109,40 +116,42 @@
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
           <div>
-            <h3>{{ $t('categorie') }}</h3>
+            <h3>{{ $t("categorie") }}</h3>
             <!-- <p>Exploratori</p> -->
             <p>{{ userData.category }}</p>
           </div>
           <div>
-            <h3>{{ $t('zonă') }}</h3>
+            <h3>{{ $t("zonă") }}</h3>
             <!-- <p>Brasov</p> -->
             <p>{{ userData.region }}</p>
           </div>
           <div>
-            <h3>{{ $t('comunitate') }}</h3>
+            <h3>{{ $t("comunitate") }}</h3>
             <!-- <p>Betel</p> -->
             <p>{{ userData.state }}</p>
           </div>
           <div>
-            <h3>{{ $t('clubul') }}</h3>
+            <h3>{{ $t("clubul") }}</h3>
             <!-- <p>Iosua</p> -->
             <p>{{ userData.clubName }}</p>
           </div>
           <div>
-            <h3>{{ $t('anulinvestituriica') }}</h3>
+            <h3>{{ $t("anulinvestituriica") }}</h3>
             <div>
-              <span>{{ $t('instructor') }}</span> <span>{{ userData.Instructor }}</span>
+              <span>{{ $t("instructor") }}</span>
+              <span>{{ userData.Instructor }}</span>
             </div>
             <div>
-              <span>{{ $t('ghid') }}</span> <span>{{ userData.Ghid }}</span>
+              <span>{{ $t("ghid") }}</span> <span>{{ userData.Ghid }}</span>
             </div>
             <div>
-              <span>{{ $t('masterghid') }}</span> <span>{{ userData.masterGhid }}</span>
+              <span>{{ $t("masterghid") }}</span>
+              <span>{{ userData.masterGhid }}</span>
             </div>
           </div>
         </div>
         <div v-show="userData.status" class="shadowed q-mt-md">
-          <h2>{{ $t('listacopiilor') }}</h2>
+          <h2>{{ $t("listacopiilor") }}</h2>
 
           <div class="children-list">
             <div v-for="(member, i) in teamListSorted" :key="i">
@@ -181,7 +190,7 @@
               class="flex"
               style="justify-content: flex-end; padding: 0 30%"
             ></div>
-            <div class="text-h6">{{ $t('alertă') }}</div>
+            <div class="text-h6">{{ $t("alertă") }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -372,7 +381,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message: this.$t('esteIncorrect'),
+          message: this.$t("esteIncorrect"),
         });
         this.isSubmitting = false;
         return;
@@ -390,8 +399,7 @@ export default {
       ) {
         this.$q.notify({
           color: "red",
-          message:
-            this.$t('ghidError'),
+          message: this.$t("ghidError"),
         });
         this.isSubmitting = false;
         return;
@@ -403,7 +411,7 @@ export default {
     },
   },
   data() {
-    return {      
+    return {
       isopen: false,
       isEdit: false,
       dataUser: {},

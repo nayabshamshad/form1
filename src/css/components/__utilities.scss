@@ -20,11 +20,17 @@
 .flex-row {
   flex-direction: row;
 }
+.flex-col{
+  flex-direction: column;
+}
 .flex-nowrap {
   flex-wrap: nowrap;
 }
 .mx-1 {
   margin: 0 0.5rem;
+}
+.width-50{
+  width:50%;
 }
 .mobile-center {
   @media (max-width: 768px) {

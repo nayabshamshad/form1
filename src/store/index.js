@@ -132,6 +132,7 @@ export default store(function () {
       },
     },
     actions: {
+      
       async deleteUser({}, id) {
         await firestore
           .doc(id)
