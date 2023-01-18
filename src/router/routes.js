@@ -30,12 +30,12 @@ const routes = [
     component: () => import("../pages/viewevent.vue"),
   },
   {
-    path: "/user-details",
+    path: "/user-details/:uid",
     component: () => import("../pages/userDetails"),
     name: "" /* User Details */,
   },
   {
-    path:"/id-card",
+    path:"/id-card/:uid",
     component:() => import("../pages/card_id"),
     name:"card-id" /* card-id */,
   },

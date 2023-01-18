@@ -15,7 +15,7 @@
           name="user"
           style="border: none; border-radius: 0 0 8px 0"
           :label="$t('informatiiUtilizator')"
-          ></q-tab>
+        ></q-tab>
         <q-tab
           v-if="
             selectedUser.status &&
@@ -27,7 +27,7 @@
           style="border: none; border-radius: 0 0 0 8px"
         ></q-tab>
         <q-tab name="date" v-if="selectedUser.role === 'department'">
-          {{ $t('data') }}</q-tab
+          {{ $t("data") }}</q-tab
         >
       </q-tabs>
       <q-tab-panels
@@ -43,41 +43,40 @@
                   :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''"
                 >
                   <div class="userImg relative">
-
-                     <template
-                    v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
-                  >
-                    <img
-                      :src="selectedUser.imgUrl"
-                      alt=""
-                      style="cursor: pointer"
-                      @click="showProfilePicModal = true"
-                    />
-                    <div
-                      style="
-                        position: absolute;
-                        right: 10px;
-                        bottom: 10px;
-                        display: block;
-                        border: unset;
-                        height: 20px;
-                        width: 20px;
-                      "
+                    <template
+                      v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
                     >
-                      <q-btn
-                        @click="downloadImg"
-                        round
-                        style="padding: 0.25rem; font-size: 6px"
-                        size="xs"
-                        color="green"
+                      <img
+                        :src="selectedUser.imgUrl"
+                        alt=""
+                        style="cursor: pointer"
+                        @click="showProfilePicModal = true"
+                      />
+                      <div
+                        style="
+                          position: absolute;
+                          right: 10px;
+                          bottom: 10px;
+                          display: block;
+                          border: unset;
+                          height: 20px;
+                          width: 20px;
+                        "
                       >
-                        <q-icon
-                          style="font-size: 1rem"
-                          name="download"
-                        ></q-icon>
-                      </q-btn>
-                    </div>
-                  </template>
+                        <q-btn
+                          @click="downloadImg"
+                          round
+                          style="padding: 0.25rem; font-size: 6px"
+                          size="xs"
+                          color="green"
+                        >
+                          <q-icon
+                            style="font-size: 1rem"
+                            name="download"
+                          ></q-icon>
+                        </q-btn>
+                      </div>
+                    </template>
 
                     <div v-else>
                       <q-icon class="text-grey" name="photo_camera"></q-icon>
@@ -88,9 +87,9 @@
                     <p
                       :style="
                         selectedUser.status || selectedUser.role == 'department'
-                          ? 'color: green' 
-                            : selectedUser.status === 'neither'
-                        ? 'color: #FFBD3C;'
+                          ? 'color: green'
+                          : selectedUser.status === 'neither'
+                          ? 'color: #FFBD3C;'
                           : 'color: red'
                       "
                     >
@@ -98,7 +97,7 @@
                         selectedUser.status || selectedUser.role == "department"
                           ? "Activ"
                           : selectedUser.status === "neither"
-                        ? "Activ (Fără Grupă)"
+                          ? "Activ (Fără Grupă)"
                           : "Inactiv"
                       }}
                     </p>
@@ -121,7 +120,6 @@
                         border: 0px;
                       "
                       @click="deleteUser(selectedUser.uid)"
-                     
                     >
                       Delete Profile
                     </div>
@@ -142,11 +140,11 @@
                     <span> {{ selectedUser.etnic }}</span>
                   </div> -->
                   <div>
-                    <h3>{{ $t('gender') }}</h3>
+                    <h3>{{ $t("gender") }}</h3>
                     <span> {{ selectedUser.gender }}</span>
                   </div>
                   <div>
-                    <h3>{{ $t('dateofbirth') }}</h3>
+                    <h3>{{ $t("dateofbirth") }}</h3>
                     <span>
                       {{
                         selectedUser.dateOfBirth
@@ -156,12 +154,12 @@
                     >
                   </div>
                   <div>
-                    <h3>{{ $t('shirtsize') }}</h3>
+                    <h3>{{ $t("shirtsize") }}</h3>
                     <span class="text-uppercase"> {{ selectedUser.size }}</span>
                   </div>
                 </div>
                 <div class="shadowed skills">
-                  <h3>{{ $t('specializări') }}</h3>
+                  <h3>{{ $t("specializări") }}</h3>
                   <div>
                     <p v-for="(item, i) in selectedUser.tagList" :key="i">
                       {{ item }}
@@ -171,30 +169,30 @@
               </div>
               <div class="shadowed user-details q-mt-md">
                 <div>
-                  <h3>{{ $t('categorie') }}</h3>
+                  <h3>{{ $t("categorie") }}</h3>
                   <p>{{ selectedUser.category }}</p>
                   <!-- <p>Exploratori</p> -->
                 </div>
                 <div>
-                  <h3>{{ $t('zonă') }}</h3>
+                  <h3>{{ $t("zonă") }}</h3>
 
                   <!-- <p>Brasov</p> -->
                   <p>{{ selectedUser.region }}</p>
                 </div>
                 <div>
-                  <h3>{{ $t('comunitate') }}</h3>
+                  <h3>{{ $t("comunitate") }}</h3>
                   <!-- <p>Betel</p> -->
                   <p>{{ selectedUser.state }}</p>
                 </div>
                 <div>
-                  <h3>{{ $t('clubul') }}</h3>
+                  <h3>{{ $t("clubul") }}</h3>
                   <!-- <p>Iosua</p> -->
                   <p>{{ selectedUser.clubName }}</p>
                 </div>
                 <div>
-                  <h3>{{ $t('anulinvestituriica') }}</h3>
+                  <h3>{{ $t("anulinvestituriica") }}</h3>
                   <div>
-                    <span>{{ $t('instructor') }}</span>
+                    <span>{{ $t("instructor") }}</span>
                     <span>
                       {{
                         selectedUser.Instructor !== ""
@@ -204,7 +202,7 @@
                     >
                   </div>
                   <div>
-                    <span>{{ $t('ghid') }}</span>
+                    <span>{{ $t("ghid") }}</span>
                     <span>
                       {{
                         selectedUser.Ghid !== "" ? selectedUser.Ghid : "-"
@@ -212,7 +210,7 @@
                     >
                   </div>
                   <div>
-                    <span>{{ $t('masterghid') }}</span>
+                    <span>{{ $t("masterghid") }}</span>
                     <span>
                       {{
                         selectedUser.masterGhid !== ""
@@ -245,16 +243,15 @@
                 class="shadowed q-my-lg"
                 style="padding-left: 2rem; padding-right: 2rem"
               >
-                <h2>{{$t('Detalii')}}</h2>
-              <q-card
-                class="full-width q-mb-md"
-                style="min-height: unset; max-width: unset"
-              >
+                <h2>{{ $t("Detalii") }}</h2>
+                <q-card
+                  class="full-width q-mb-md"
+                  style="min-height: unset; max-width: unset"
+                >
                   <q-card-section>
                     {{ selectedUser.reason }}
                   </q-card-section>
                 </q-card>
-
               </div>
               <q-btn
                 @click="$router.push('/')"
@@ -272,9 +269,9 @@
                 <table style="width: 100%" class="user-list-table">
                   <thead>
                     <tr>
-                      <th>{{ $t('name') }}</th>
-                      <th>{{ $t('phone') }}</th>
-                      <th>{{ $t('email') }}</th>
+                      <th>{{ $t("name") }}</th>
+                      <th>{{ $t("phone") }}</th>
+                      <th>{{ $t("email") }}</th>
                     </tr>
                   </thead>
                   <tbody class="table-row">
@@ -309,7 +306,7 @@
           <div class="container">
             <div class="attendance-container shadowed">
               <div class="attendance-summary">
-                <h4 style="color: #233975">{{ $t('prezenta') }}</h4>
+                <h4 style="color: #233975">{{ $t("prezenta") }}</h4>
                 <div v-for="(student, index) in listOfAttendance" :key="index">
                   <div
                     class="shadowed"
@@ -330,10 +327,16 @@
             </div>
             <div class="attendance-container shadowed">
               <div class="attendance-summary">
-                <h4 style="color: #233975">{{ $t('listaIntalnirilor') }}</h4>
+                <h4 style="color: #233975">{{ $t("listaIntalnirilor") }}</h4>
                 <div class="eventlist">
                   <div
-                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
+                    class="
+                      q-mb-md
+                      download-button-event
+                      q-mt-sm
+                      flex
+                      justify-between
+                    "
                     style="width: 80%"
                   ></div>
                 </div>
@@ -352,8 +355,10 @@
                   >
                     <thead>
                       <tr>
-                        <th>{{ $t('titlulIntâlnirii') }}</th>
-                        <th style="text-align: center">{{ $t('dataIntalnirii') }}</th>
+                        <th>{{ $t("titlulIntâlnirii") }}</th>
+                        <th style="text-align: center">
+                          {{ $t("dataIntalnirii") }}
+                        </th>
                       </tr>
                     </thead>
                     <tbody class="table-row">
@@ -379,13 +384,13 @@
                       class="text-weight-bold linkcolor text-left"
                       style="opacity: 0.5"
                     >
-                     {{ $t('nuExistaIntalniriInca') }}
+                      {{ $t("nuExistaIntalniriInca") }}
                     </h4>
                   </div>
                 </div>
                 <div class="q-mt-md inline-pagination">
                   <div style="display: inline-flex">
-                    <span>{{ $t('intalniriPePagina') }}</span>
+                    <span>{{ $t("intalniriPePagina") }}</span>
                     <select class="paginationSelect" v-model="resultsPerPage">
                       <option :value="5">5</option>
                       <option :value="10">10</option>
@@ -458,7 +463,7 @@
       <q-dialog v-model="errorDialog">
         <q-card>
           <q-card-section>
-            <div class="text-h6">{{ $t('alertă') }}</div>
+            <div class="text-h6">{{ $t("alertă") }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -466,7 +471,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat :label=" $t('ok')" color="primary" v-close-popup />
+            <q-btn flat :label="$t('ok')" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -508,22 +513,25 @@ export default {
     };
   },
   async mounted() {
-    await this.pageSetup();
-
+    console.log(process.env.PATH)
+    await this.pageSetup(); 
+    if(!this.$route?.params?.uid) {
+      this.$router.push('/')
+    }
     if (this.$store.getters?.tabs) {
       this.tabs = this.$store.getters.tabs;
     }
   },
   methods: {
     viewUserCard() {
-      this.$router.push('/id-card')
+      this.$router.push(`/id-card/${this.selectedUser.uid}`);
     },
     deleteUser(id) {
-      if(this.deletingUser) {
+      if (this.deletingUser) {
         return;
       }
       this.deletingUser = true;
-      this.$store.dispatch('deleteUser', id)
+      this.$store.dispatch("deleteUser", id);
       this.deletinguser = false;
     },
     downloadImg() {
@@ -598,7 +606,7 @@ export default {
       if (!this.dateModel) {
         this.$q.notify({
           color: "red",
-          message: this.$t('correctData'),
+          message: this.$t("correctData"),
         });
         return;
       }
@@ -755,6 +763,14 @@ export default {
       }
     },
     selectedUser() {
+      if (this.$route?.params?.uid) {
+        const item = this.$store.getters.userList.find(
+          (x) => x?.uid === this.$route.params.uid
+        );
+        if (item) {
+          return item;
+        }
+      }
       return this.$store.getters.selectedUser;
     },
     listOfAttendance() {

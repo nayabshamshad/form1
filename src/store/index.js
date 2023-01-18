@@ -132,7 +132,6 @@ export default store(function () {
       },
     },
     actions: {
-      
       async deleteUser({}, id) {
         await firestore
           .doc(id)
@@ -186,8 +185,7 @@ export default store(function () {
           .catch(() => {
             error.err = true;
             Notify.create({
-              message:
-               translator.global.t('resetPassError'),
+              message: translator.global.t("resetPassError"),
               color: "red",
             });
             this.$router.push("/");
@@ -206,12 +204,12 @@ export default store(function () {
             if (err.code == "auth/user-not-found") {
               console.log(err);
               Notify.create({
-                message: translator.global.t('emailNotFound'),
+                message: translator.global.t("emailNotFound"),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: translator.global.t('invalidEmail'),
+                message: translator.global.t("invalidEmail"),
                 color: "red",
               });
             } else {
@@ -277,7 +275,13 @@ export default store(function () {
           this.$router.currentRoute.value.path == "/send-reset-link" ||
           this.$router.currentRoute.value.path == "/reset_password"
         ) {
-          this.$router.push("/");
+          this.$router.push(
+            `${
+              this.$router?.currentRoute?.value?.query?.next
+                ? this.$router.currentRoute.value.query.next
+                : "/"
+            }`
+          );
         }
       },
       async signUp({ dispatch, commit }, payload) {
@@ -290,17 +294,17 @@ export default store(function () {
             error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
-                message: translator.global.t('alreadyInUse'),
+                message: translator.global.t("alreadyInUse"),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: translator.global.t('invalidEmail'),
+                message: translator.global.t("invalidEmail"),
                 color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
-                message: translator.global.t('weakPass'),
+                message: translator.global.t("weakPass"),
                 color: "red",
               });
             } else {
@@ -404,8 +408,7 @@ export default store(function () {
           imgUrl: payload.imgUrl,
         });
         Notify.create({
-          message:
-           translator.global.t('successMessage1'),
+          message: translator.global.t("successMessage1"),
           color: "green",
           icon: "report_gmailerrorred",
         });
@@ -423,17 +426,17 @@ export default store(function () {
             error = true;
             if (err.code == "auth/email-already-in-use") {
               Notify.create({
-                message: translator.global.t('alreadyInUse'),
+                message: translator.global.t("alreadyInUse"),
                 color: "red",
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
-                message: translator.global.t('invalidEmail'),
+                message: translator.global.t("invalidEmail"),
                 color: "red",
               });
             } else if (err.code == "auth/weak-password") {
               Notify.create({
-                message: translator.global.t('weakPass'),
+                message: translator.global.t("weakPass"),
                 color: "red",
               });
             } else {
@@ -539,9 +542,7 @@ export default store(function () {
       },
       async signInUser({ state, commit }, payload) {
         var error = false;
-
         commit("setDepartment", translator.global.t("All"));
-        
 
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
@@ -554,23 +555,22 @@ export default store(function () {
             if (err.code == "auth/wrong-password") {
               Notify.create({
                 color: "red",
-                message: translator.global.t('wrongPass'),
+                message: translator.global.t("wrongPass"),
               });
             } else if (err.code == "auth/invalid-email") {
               Notify.create({
                 color: "red",
-                message: translator.global.t('invalidEmail'),
+                message: translator.global.t("invalidEmail"),
               });
             } else if (err.code == "auth/too-many-requests") {
               Notify.create({
                 color: "red",
-                message:
-                  translator.global.t('tooManyReq'),
+                message: translator.global.t("tooManyReq"),
               });
             } else if (err.code == "auth/user-not-found") {
               Notify.create({
                 color: "red",
-                message: translator.global.t('emailNotFound'),
+                message: translator.global.t("emailNotFound"),
               });
             } else {
               Notify.create({

@@ -471,67 +471,103 @@
           <q-tab-panel name="departments">
             <div class="department-types">
               <h4 class="linkcolor">{{ $t("listaConferinte") }}</h4>
-
-              <div class="q-pt-lg">
-                <div class="flex q-pt-xl justify-evenly">
+              <!-- <div><q-btn round /></div> -->
+              <div class=" q-pt-xl q-mt-lg">
+                <div class="flex justify-space-between">
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Banat
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
 
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Moldova
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
-                </div>
 
-                <div class="flex q-pt-xl justify-evenly">
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Muntenia
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
 
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Oltenia
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
-                </div>
 
-                <div class="flex q-pt-xl justify-evenly">
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Transilvania Nord
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
 
                   <div class="column linkcolor">
-                    <h5 class="q-pb-lg department-names text-weight-bold">
+                    <h5 class="department-names text-weight-bold">
                       Transilvania Sud
                     </h5>
-                    <span class="text-weight-medium">Leader Name</span>
-                    <span class="text-weight-medium">Phone Number</span>
-                    <span class="text-weight-medium">Email</span>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
                   </div>
                 </div>
+
+                <!-- <div class="flex q-pt-xl q-mt-xl justify-between">
+                  <div class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">
+                      Muntenia
+                    </h5>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+
+                  <div class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">
+                      Oltenia
+                    </h5>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                </div> -->
+
+                <!-- <div class="flex q-pt-xl q-mt-xl justify-evenly">
+                  <div class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">
+                      Transilvania Nord
+                    </h5>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+
+                  <div class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">
+                      Transilvania Sud
+                    </h5>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                </div> -->
               </div>
             </div>
             <!-- <div
@@ -976,7 +1012,7 @@ export default {
     viewUser(user) {
       this.$store.dispatch("setSelectedUser", user);
       this.$store.dispatch("setTabs", "user");
-      this.$router.push("/user-details");
+      this.$router.push(`/user-details/${user.uid}`);
     },
     async setDate() {
       if (this.dateSetting) {

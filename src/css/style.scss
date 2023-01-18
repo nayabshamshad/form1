@@ -190,20 +190,69 @@ input {
   }
 }
 .department-types{
+  h4{
+    font-size:2rem !important;
+  }
+  @media (max-width:1023px) {
+    h4{
+      font-size:1.5rem !important;
+    }
+  }
   div{
+    @media (max-width:1023px) {
+      padding-top: 1.45rem;
+      margin-top: 0;
+    }
     div{
+      padding-left: 0.5rem;
+      @media (max-width:1023px) {
+        padding-top: 0;
+      }
     div{
       width: 50%;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      max-width: 500px;
+      padding-left: 0.49rem;
+      padding-right: 0.49rem;
+      padding-bottom: 4.5rem;
+
+      @media (max-width:1023px){
+        width: 100%;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+        padding-bottom: 2.68rem;
+      }
       .department-names{
         font-size: 1.8rem;
+        margin-bottom: 2.2rem;
+        
+        @media (max-width:1023px) {
+          font-size: 1.5rem;
+          padding-bottom: 0.3rem;
+          margin-right: 0px;
+          margin-bottom: 0;
+        }
+
+      }
+      h5{
+        @media (max-width:1023px) {
+          font-size: 1.4rem !important;
+        }
       }
       span{
-        line-height: 1rem;
+        line-height: 0.85rem;
+        font-weight: 600;
+        font-size: 0.7rem;
+        
+        @media (max-width:1023px) {
+          line-height: 0.88rem; 
+          font-size: 0.93rem;       
+        }
         
         &:first-of-type{
-          font-size: 1.1rem;
+          font-size: 0.9rem;
+          @media (max-width:1023px) {
+            font-size: 1.1rem;
+          }
         }
       }
     }
