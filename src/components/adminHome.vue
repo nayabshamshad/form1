@@ -471,40 +471,38 @@
           <q-tab-panel name="departments">
             <div class="department-types">
               <h4 class="linkcolor">{{ $t("listaConferinte") }}</h4>
-              <!-- <div><q-btn round /></div> -->
-              <div class=" q-pt-xl q-mt-lg">
+              <div class="flex justify-flex-end">
+                <div v-show="showdiv">showing</div>
+                <span class="q-mr-xs">ADD LEADER</span>
+                <q-btn round color="indigo" dense>
+                  <q-icon name="add" size="2rem"> </q-icon>
+                </q-btn>
+              </div>
+              <div class="q-pt-xl q-mt-lg">
                 <div class="flex justify-space-between">
-                  <div class="column linkcolor">
-                    <h5 class="department-names text-weight-bold">
-                      Banat
-                    </h5>
+                  <div v-for="user in departmentUsers.arr" :key="user.uid" @click="viewUser(user)" class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">{{user.departmentName}}</h5>
+                    <span>{{user.name}}</span>
+                    <span>{{user.phoneNumber}}</span>
+                    <span>{{user.email}}</span>
+                  </div>
+
+                  <!-- <div class="column linkcolor">
+                    <h5 class="department-names text-weight-bold">Moldova</h5>
                     <span>Leader Name</span>
                     <span>Phone Number</span>
                     <span>Email</span>
                   </div>
 
                   <div class="column linkcolor">
-                    <h5 class="department-names text-weight-bold">
-                      Moldova
-                    </h5>
+                    <h5 class="department-names text-weight-bold">Muntenia</h5>
                     <span>Leader Name</span>
                     <span>Phone Number</span>
                     <span>Email</span>
                   </div>
 
                   <div class="column linkcolor">
-                    <h5 class="department-names text-weight-bold">
-                      Muntenia
-                    </h5>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div>
-
-                  <div class="column linkcolor">
-                    <h5 class="department-names text-weight-bold">
-                      Oltenia
-                    </h5>
+                    <h5 class="department-names text-weight-bold">Oltenia</h5>
                     <span>Leader Name</span>
                     <span>Phone Number</span>
                     <span>Email</span>
@@ -526,7 +524,7 @@
                     <span>Leader Name</span>
                     <span>Phone Number</span>
                     <span>Email</span>
-                  </div>
+                  </div> -->
                 </div>
 
                 <!-- <div class="flex q-pt-xl q-mt-xl justify-between">

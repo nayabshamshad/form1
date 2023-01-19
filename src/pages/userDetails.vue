@@ -133,7 +133,7 @@
                 </div>
               </div>
 
-              <div class="infoRow">
+              <div v-show="selectedUser.role !== 'department'" class="infoRow">
                 <div class="shadowed">
                   <!-- <div>
                     <h3>Etnie:</h3>
@@ -167,7 +167,7 @@
                   </div>
                 </div>
               </div>
-              <div class="shadowed user-details q-mt-md">
+              <div v-show="selectedUser.role !== 'department'" class="shadowed user-details q-mt-md">
                 <div>
                   <h3>{{ $t("categorie") }}</h3>
                   <p>{{ selectedUser.category }}</p>
@@ -253,13 +253,73 @@
                   </q-card-section>
                 </q-card>
               </div>
+              <div v-show="selectedUser.role === 'department'">
+                <div class="row justify-between users-from-conferince-list">
+                  <div class="col column">
+                    <div class="row items-baseline">
+                      <h5>LICURICI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col column">
+                    <div class="row items-baseline">
+                      <h5>EXPLORATORI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col column">
+                    <div class="row items-baseline">
+                      <h5>COMPANIONI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+
+                  <!-- <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div> -->
+                  
+                </div>
+              </div>
               <q-btn
                 @click="$router.push('/')"
                 round
                 icon="chevron_left"
                 class="back-btn"
               ></q-btn>
-              <div
+              <!-- <div
                 v-if="
                   selectedUser.role === 'department' &&
                   departmentUserList.length > 0
@@ -298,7 +358,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
+              </div> -->
             </div>
           </div>
         </q-tab-panel>
