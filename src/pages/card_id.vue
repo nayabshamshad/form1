@@ -216,7 +216,7 @@ export default {
       return this.selectedUser.imgUrl && this.selectedUser.imgUrl !== "";
     },
     cardId() {
-      return this.departmentTypes[
+      const data = this.departmentTypes[
         this.selectedUser.department
           .replaceAll("| HU", "")
           .replaceAll("| RO", "")
@@ -228,7 +228,8 @@ export default {
               .replaceAll("| RO", "")
               .trim()
           ]
-        : "AA" + this.selectedUser.uid.substring(0, 6);
+        : "AA";
+      return data + this.selectedUser.uid.substring(0, 6);
     },
   },
   methods: {
@@ -267,7 +268,7 @@ img {
 .company-club-card {
   background-color: #ffffff;
   width: 890px;
-  height: 580px;
+  height: 554px;
 }
 .pattern-licu {
   background-image: url(../assets/card/bg-licu.png);

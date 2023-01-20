@@ -316,7 +316,6 @@ export default store(function () {
           });
         if (error) {
           commit("setSignedUp", false);
-
           return;
         }
         await auth.currentUser
@@ -332,17 +331,16 @@ export default store(function () {
           });
         if (error) {
           commit("setSignedUp", false);
-
           return;
         }
         await firestore
           .doc(auth.currentUser.uid)
           .set({
             name: payload.name,
-            isAuthorized: "pending",
+            isAuthorized: true,
             eventList: [],
             teamList: [],
-            role: "teamLead",
+            role: payload.category ? "categoryLead" : "teamLead",
             dateOfBirth: "",
             Instructor: "",
             Ghid: "",
@@ -354,10 +352,10 @@ export default store(function () {
             phoneNumber: payload.phoneNumber,
             tagList: [],
             clubName: "",
-            status: "",
-            category: "",
+            status: true,
+            category: payload.category,
             size: "",
-            isUpdated: false,
+            isUpdated: true,
             uid: auth.currentUser.uid,
             email: payload.email,
             department: payload.department,
@@ -543,7 +541,11 @@ export default store(function () {
       async signInUser({ state, commit }, payload) {
         var error = false;
         commit("setDepartment", translator.global.t("All"));
-
+        commit("setFilterList", {
+          categoryFilter: "All",
+          statusFilter: { label: "All", value: "All" },
+          gradeFilter: { label: "All", value: "all" },
+        });
         await auth
           .signInWithEmailAndPassword(payload.email, payload.password)
           .then((res) => {

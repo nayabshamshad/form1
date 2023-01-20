@@ -16,6 +16,7 @@
   "comunitate": "Gyülekezet:",
   "clubul": "Klub:",
   "anulinvestituriica": "Beiktatás éve, mint:",
+  "profile": "profile",
   "instructor": "Oktató:",
   "ghid": "Vezető:",
   "masterghid": "Mestervezető:",
@@ -164,6 +165,8 @@
   "dontHaveAccount": "Még nincs fiókod?",
   "registerNow": "Regisztrálj",
   "listaConferinte": "LISTĂ CONFERINȚE",
-  "NoUsersFound" : "No Users found with this category"
- 
+  "NoUsersFound": "No Users found with this category",
+  "categoryLeader": "Category Leader",
+  "categoryMsg": "Please follow the given link to create a category admin",
+  "categoryTitle": "Create Category Admin"
 }

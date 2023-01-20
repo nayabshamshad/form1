@@ -1,7 +1,12 @@
 <template>
   <div
     class="top-bar user-top"
-    v-if="isAuthenticated && userData?.role != 'admin'"
+    v-if="
+      isAuthenticated &&
+      userData?.role != 'admin' &&
+      userData.role != 'department' &&
+      userData?.role !== 'categoryLead'
+    "
   >
     <div class="menu-container flex justify-between">
       <div>
@@ -51,7 +56,7 @@
           class="btn"
           :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
         >
-      {{ $t('data') }}
+          {{ $t("data") }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -75,7 +80,7 @@
     </div>
   </div>
 
-  <div class="top-bar" v-else-if="isAuthenticated && userData?.role == 'admin'">
+  <div class="top-bar" v-else-if="isAuthenticated">
     <!-- Mobile Nav -->
     <mobile-nav @close="showMenu = false" v-show="showMenu" />
     <div class="hideMobile menu-container flex justify-between">
@@ -137,6 +142,18 @@
           type="button"
           color="black"
           flat
+          @click="$router.push('/?q=profile')"
+          class="btn"
+          v-show="userData?.role === 'department' || userData?.role === 'categoryLead'"
+          :class="$route.fullPath === '/?q=profile' ? 'add-border' : ''"
+        >
+          {{ $t("profile") }}
+        </q-btn>
+        <q-btn
+          no-caps
+          type="button"
+          color="black"
+          flat
           @click="$router.push('/?q=departments')"
           class="btn"
           v-show="userData.role === 'admin'"
@@ -171,7 +188,8 @@
             $route.path != '/event-list' &&
             userData?.status &&
             userData?.role != 'admin' &&
-            userData?.isAuthorized == true
+            userData?.isAuthorized == true &&
+            userData?.role != 'categoryLead'
           "
           @click="$router.push('/event-list')"
           class="btn"

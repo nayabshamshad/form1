@@ -20,7 +20,9 @@
           v-if="
             selectedUser.status &&
             selectedUser?.isUpdated &&
-            selectedUser.isAuthorized == true
+            selectedUser.isAuthorized == true &&
+            selectedUser.role !== 'department' &&
+            selectedUser.role !== 'categoryLead'
           "
           name="events"
           :label="$t('intâlnirile')"
@@ -112,6 +114,7 @@
                     <div @click="$router.push('/edit-profile')">
                       Edit Profile
                     </div>
+
                     <div
                       v-show="
                         selectedUser.role !== 'department' &&
@@ -268,10 +271,11 @@
                 <div class="row users-from-conferince-list">
                   <div class="col-12 col-md-4">
                     <div
+                      v-if="categoryLeaderList.licurici.length === 0"
                       @click="showUserData('LICURICI')"
                       class="q-px-md card-border q-py-md column"
                       :class="{
-                        active: selectedType === 'LICURICI'
+                        active: selectedType === 'LICURICI',
                       }"
                     >
                       <div class="flex items-baseline">
@@ -284,12 +288,34 @@
                       <span>Phone Number</span>
                       <span>Email</span>
                     </div>
+                    <template v-else>
+                      <div
+                        v-for="user in categoryLeaderList.licurici"
+                        :key="user.uid"
+                        @click="showUserData('LICURICI', user.uid)"
+                        class="q-px-md card-border q-py-md column"
+                        :class="{
+                          active: selectedUid === user.uid,
+                        }"
+                      >
+                        <div class="flex items-baseline">
+                          <h5 class="q-m-0">Exploratori</h5>
+                          <div class="flex flag-icon">
+                            <img src="../assets/RO.svg" alt="romainia flag" />
+                          </div>
+                        </div>
+                        <span>{{ user.name }}</span>
+                        <span>{{ user.phoneNumber }}</span>
+                        <span>{{ user.email }}</span>
+                      </div>
+                    </template>
                   </div>
                   <div class="col-12 col-md-4">
                     <div
+                      v-if="categoryLeaderList.exploratori.length === 0"
                       @click="showUserData('EXPLORATORI')"
                       class="q-px-md card-border q-py-md column"
-                      :class="{active: selectedType === 'EXPLORATORI'}"
+                      :class="{ active: selectedType === 'EXPLORATORI' }"
                     >
                       <div class="flex items-baseline">
                         <h5 class="q-m-0">EXPLORATORI</h5>
@@ -301,13 +327,35 @@
                       <span>Phone Number</span>
                       <span>Email</span>
                     </div>
+                    <template v-else>
+                      <div
+                        v-for="user in categoryLeaderList.exploratori"
+                        :key="user.uid"
+                        @click="showUserData('Exploratori', user.uid)"
+                        class="q-px-md card-border q-py-md column"
+                        :class="{
+                          active: selectedUid === user.uid,
+                        }"
+                      >
+                        <div class="flex items-baseline">
+                          <h5 class="q-m-0">Exploratori</h5>
+                          <div class="flex flag-icon">
+                            <img src="../assets/RO.svg" alt="romainia flag" />
+                          </div>
+                        </div>
+                        <span>{{ user.name }}</span>
+                        <span>{{ user.phoneNumber }}</span>
+                        <span>{{ user.email }}</span>
+                      </div>
+                    </template>
                   </div>
                   <div class="col-12 col-md-4">
                     <div
+                      v-if="categoryLeaderList.companioni.length === 0"
                       @click="showUserData('COMPANIONI')"
                       class="q-px-md card-border q-py-md column"
                       :class="{
-                        active: selectedType === 'COMPANIONI'
+                        active: selectedType === 'COMPANIONI',
                       }"
                     >
                       <div class="flex items-baseline">
@@ -320,6 +368,27 @@
                       <span>Phone Number</span>
                       <span>Email</span>
                     </div>
+                    <template v-else>
+                      <div
+                        v-for="user in categoryLeaderList.companioni"
+                        :key="user.uid"
+                        @click="showUserData('COMPANIONI', user.uid)"
+                        class="q-px-md card-border q-py-md column"
+                        :class="{
+                          active: selectedUid === user.uid,
+                        }"
+                      >
+                        <div class="flex items-baseline">
+                          <h5 class="q-m-0">COMPANIONI</h5>
+                          <div class="flex flag-icon">
+                            <img src="../assets/RO.svg" alt="romainia flag" />
+                          </div>
+                        </div>
+                        <span>{{ user.name }}</span>
+                        <span>{{ user.phoneNumber }}</span>
+                        <span>{{ user.email }}</span>
+                      </div>
+                    </template>
                   </div>
 
                   <!-- <div class="col-4 column">
@@ -416,15 +485,20 @@
                   </tbody>
                 </table>
               </div>
-            <div v-else>
-              <table style="width: 100%" class="user-list-table">
+              <div
+                v-else-if="
+                  selectedUser.role === 'department' &&
+                  departmentUserList.length === 0
+                "
+              >
+                <table style="width: 100%" class="user-list-table">
                   <div>
                     <div class="text-center">
-                      {{ $t('NoUsersFound') }}
+                      {{ $t("NoUsersFound") }}
                     </div>
                   </div>
-                  </table>
-            </div>
+                </table>
+              </div>
             </div>
           </div>
         </q-tab-panel>
@@ -456,13 +530,7 @@
                 <h4 style="color: #233975">{{ $t("listaIntalnirilor") }}</h4>
                 <div class="eventlist">
                   <div
-                    class="
-                      q-mb-md
-                      download-button-event
-                      q-mt-sm
-                      flex
-                      justify-between
-                    "
+                    class="q-mb-md download-button-event q-mt-sm flex justify-between"
                     style="width: 80%"
                   ></div>
                 </div>
@@ -637,9 +705,10 @@ export default {
       file: null,
       showProfilePicModal: false,
       selectedType: "LICURICI",
+      selectedUid: "",
     };
   },
-  async mounted() { 
+  async mounted() {
     await this.pageSetup();
     if (!this.$route?.params?.uid) {
       this.$router.push("/");
@@ -649,9 +718,13 @@ export default {
     }
   },
   methods: {
-    showUserData(type) {
+    showUserData(type, uid) {
       this.selectedType = type;
-       
+      if (uid) {
+        this.selectedUid = uid;
+      } else {
+        this.selectedUid = "";
+      }
     },
     viewUserCard() {
       this.$router.push(`/id-card/${this.selectedUser.uid}`);
@@ -885,15 +958,46 @@ export default {
     departmentUserList() {
       if (this.selectedUser.role === "department") {
         let arr = this.$store.getters.userList.filter((x) => {
-          return x.department && x.department === this.selectedUser.departmentName;
+          return (
+            x.department &&
+            x.department === this.selectedUser.departmentName &&
+            x?.role !== "categoryLead"
+          );
         });
-        arr = arr.filter(x=> x.status === true)
-        arr = arr.filter(x=> x.category && x.category.toLowerCase() === this.selectedType.toLowerCase())
+        arr = arr.filter((x) => x.status === true);
+        arr = arr.filter(
+          (x) =>
+            x.category &&
+            x.category.toLowerCase() === this.selectedType.toLowerCase()
+        );
         return arr;
-      } else {
-        return [];
       }
+      return [];
     },
+    categoryLeaderList() {
+      if (this.selectedUser?.role === "department") {
+        const arr = this.$store.getters.userList?.filter(
+          (x) => x?.role === "categoryLead"
+        );
+        return {
+          licurici: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "licurici"
+          ),
+          exploratori: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "exploratori"
+          ),
+          companioni: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "companioni"
+          ),
+        };
+      }
+      return {
+        licurici: [],
+        exploratori: [],
+        companioni: [],
+      };
+    },
+
     selectedUser() {
       if (this.$route?.params?.uid) {
         const item = this.$store.getters.userList.find(

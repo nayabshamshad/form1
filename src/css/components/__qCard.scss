@@ -132,7 +132,7 @@
   gap: 7px;
   background-color:white;
   @media (max-width: 1024px) {
-   
+
   }
   div {
     border: 2px solid #223874;
@@ -308,6 +308,11 @@
   }
 
   &.sign-up {
+    &.sign-up-container {
+      @media(min-width: 768px) {
+        min-width: 700px;
+      }
+    }
     label {
       font-weight: 500;
     }

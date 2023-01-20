@@ -3,16 +3,9 @@
     <q-card-section>
       <div class="container">
         <div
-          v-if="$store.getters.userData.role == 'admin'"
+          v-show="tabs !== 'date'"
           style="width: 87.5%"
-          class="
-            q-mx-auto
-            flex
-            justify-space-between
-            flex-nowrap
-            for-media-mobile-flex-cols
-            admin-topbar-container
-          "
+          class="q-mx-auto flex justify-space-between flex-nowrap for-media-mobile-flex-cols admin-topbar-container"
         >
           <div
             v-show="tabs !== 'departments'"
@@ -21,8 +14,8 @@
           >
             <div class="input-label-search">
               <q-input
-                dense
                 :label="$t('searchUsers')"
+                dense
                 v-model="nameSearch"
                 outlined
               />
@@ -30,24 +23,12 @@
           </div>
           <div
             v-show="tabs !== 'departments'"
-            class="
-              flex flex-nowrap
-              justify-space-between
-              for-media-mobile-flex-start
-              for-media-mobile-flex-cols-reverse
-              for-media-mobile-width
-            "
+            class="flex flex-nowrap justify-space-between for-media-mobile-flex-start for-media-mobile-flex-cols-reverse for-media-mobile-width"
             style="width: 100%"
           >
             <div
               v-show="showFilters"
-              class="
-                flex flex-nowrap
-                justify-evenly
-                for-media-mobile-width
-                all-filter-container
-                animate-popup
-              "
+              class="flex flex-nowrap justify-evenly for-media-mobile-width all-filter-container animate-popup"
               style="width: 100%; position: relative"
             >
               <div class="absolute new-checkbox" style="top: -100%; right: 0">
@@ -79,6 +60,7 @@
 
               <div class="input-label-category">
                 <q-select
+                  v-show="$store.getters.userData?.role !== 'categoryLead'"
                   dense
                   outlined
                   v-model="allFilters.categoryFilter"
@@ -117,13 +99,7 @@
             <!-- last buttons  -->
 
             <div
-              class="
-                flex
-                justify-end
-                q-ml-auto
-                flex-nowrap
-                for-media-mobile-flex-row-reverse for-media-mobile-button-width
-              "
+              class="flex justify-end q-ml-auto flex-nowrap for-media-mobile-flex-row-reverse for-media-mobile-button-width"
               style="width: 17%"
             >
               <div class="q-mx-sm">
@@ -765,7 +741,9 @@
                       <img src="../assets/card/camera.png" />
                     </div>
                     <div class="id-number-div fw-500">
-                      <span class="text-uppercase">{{ cardId }}</span>
+                      <span class="text-uppercase">{{
+                        cardId(selectedUser)
+                      }}</span>
                     </div>
                   </div>
                   <div class="cardholder-info column content-start">
@@ -816,6 +794,10 @@ export default {
         gradeFilter: this.filterList.gradeFilter,
       };
     }
+    if (this.$store.getters.userData?.role === "categoryLead") {
+      this.allFilters.categoryFilter = this.$store.getters.userData?.category;
+    }
+
     if (
       this.$store.getters?.departmentName &&
       this.$store.getters.userData.role == "admin"
@@ -931,6 +913,24 @@ export default {
     },
   },
   methods: {
+    cardId(user) {
+      const departmentTypes = {
+        Banat: "BN",
+        Moldova: "MD",
+        Muntenia: "MT",
+        Oltenia: "OT",
+        "Transilvania de Sud": "TS",
+        "Transilvania de Nord": "TN",
+      };
+      const data = departmentTypes[
+        user.department.replaceAll("| HU", "").replaceAll("| RO", "").trim()
+      ]
+        ? departmentTypes[
+            user.department.replaceAll("| HU", "").replaceAll("| RO", "").trim()
+          ]
+        : "AA";
+      return data + user.uid.substring(0, 6);
+    },
     handleProgress(e) {
       // handle progress - for later use
       // dont delete
@@ -1207,6 +1207,7 @@ export default {
     },
     userList() {
       let arr = this.$store.getters.userList;
+      arr = arr.filter((x) => x.role && x.role !== "categoryLead");
       arr = arr.filter((x) => x.status !== "deleted");
       if (this.nameSearch !== "") {
         arr = arr.filter((x, i) => {
@@ -1475,7 +1476,7 @@ img {
 .company-club-card {
   background-color: #ffffff;
   width: 890px;
-  height: 580px;
+  height: 554px;
 }
 .pattern-licu {
   background-image: url(../assets/card/bg-licu.png);

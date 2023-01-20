@@ -336,13 +336,19 @@ input {
       }
     }
     > div {
-      &:first-child {
+
         border-radius: 7px;
         transition: all 0.6s;
+        > *  {
+          margin: 1px 0;
+        }
+        &:not(:first-of-type) {
+          margin-top: 0.5rem
+        }
         &:hover,&.active{
           color: #ffff;
         }
-      }
+
       div {
         justify-content: space-between;
         @media (min-width: 769px) {

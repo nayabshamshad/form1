@@ -45,7 +45,9 @@
               <h4>{{ userData.name }}</h4>
               <p
                 :style="
-                  userData.status === true || userData.role === 'department'
+                  userData.status === true ||
+                  userData.role === 'department' ||
+                  userData.role === 'categoryLead'
                     ? 'color: green'
                     : userData.status === 'neither'
                     ? 'color: #FFBD3C;'
@@ -53,7 +55,9 @@
                 "
               >
                 {{
-                  userData.status === true || userData.role === "department"
+                  userData.status === true ||
+                  userData.role === "department" ||
+                  userData.role === "categoryLead"
                     ? "Activ"
                     : userData.status === "neither"
                     ? "Activ (Fără grupă)"
@@ -68,12 +72,22 @@
           </div>
           <div class="edit-div cursor-pointer">
             <div v-if="isopen" class="edit-popup">
-              <div v-show="true" @click="$router.push('/edit-profile')">
+              <div
+                v-show="dateContained"
+                @click="$router.push('/edit-profile')"
+              >
                 Edit Profile
+              </div>
+              <div
+                v-show="userData.role === 'department'"
+                class="flex items-center justify-center"
+                @click="createCategoryLeader"
+              >
+                <q-icon name="add" /> {{ $t("categoryLeader") }}
               </div>
             </div>
             <q-btn
-              v-show="userData.role !== 'department'"
+              v-show="dateContained || userData?.role === 'department'"
               round
               @click="isopen = !isopen"
               icon="settings"
@@ -85,6 +99,7 @@
           <div class="row users-from-conferince-list">
             <div class="col-12 col-md-4">
               <div
+                v-if="categoryLeaderList.licurici.length === 0"
                 @click="showUserData('LICURICI')"
                 class="q-px-md card-border q-py-md column"
                 :class="{
@@ -101,9 +116,31 @@
                 <span>Phone Number</span>
                 <span>Email</span>
               </div>
+              <template v-else>
+                <div
+                  v-for="user in categoryLeaderList.licurici"
+                  :key="user.uid"
+                  @click="showUserData('LICURICI', user.uid)"
+                  class="q-px-md card-border q-py-md column"
+                  :class="{
+                    active: selectedUid === user.uid,
+                  }"
+                >
+                  <div class="flex items-baseline">
+                    <h5 class="q-m-0">Exploratori</h5>
+                    <div class="flex flag-icon">
+                      <img src="../assets/RO.svg" alt="romainia flag" />
+                    </div>
+                  </div>
+                  <span>{{ user.name }}</span>
+                  <span>{{ user.phoneNumber }}</span>
+                  <span>{{ user.email }}</span>
+                </div>
+              </template>
             </div>
             <div class="col-12 col-md-4">
               <div
+                v-if="categoryLeaderList.exploratori.length === 0"
                 @click="showUserData('EXPLORATORI')"
                 class="q-px-md card-border q-py-md column"
                 :class="{ active: selectedType === 'EXPLORATORI' }"
@@ -118,9 +155,31 @@
                 <span>Phone Number</span>
                 <span>Email</span>
               </div>
+              <template v-else>
+                <div
+                  v-for="user in categoryLeaderList.exploratori"
+                  :key="user.uid"
+                  @click="showUserData('Exploratori', user.uid)"
+                  class="q-px-md card-border q-py-md column"
+                  :class="{
+                    active: selectedUid === user.uid,
+                  }"
+                >
+                  <div class="flex items-baseline">
+                    <h5 class="q-m-0">Exploratori</h5>
+                    <div class="flex flag-icon">
+                      <img src="../assets/RO.svg" alt="romainia flag" />
+                    </div>
+                  </div>
+                  <span>{{ user.name }}</span>
+                  <span>{{ user.phoneNumber }}</span>
+                  <span>{{ user.email }}</span>
+                </div>
+              </template>
             </div>
             <div class="col-12 col-md-4">
               <div
+                v-if="categoryLeaderList.companioni.length === 0"
                 @click="showUserData('COMPANIONI')"
                 class="q-px-md card-border q-py-md column"
                 :class="{
@@ -137,12 +196,83 @@
                 <span>Phone Number</span>
                 <span>Email</span>
               </div>
+              <template v-else>
+                <div
+                  v-for="user in categoryLeaderList.companioni"
+                  :key="user.uid"
+                  @click="showUserData('COMPANIONI', user.uid)"
+                  class="q-px-md card-border q-py-md column"
+                  :class="{
+                    active: selectedUid === user.uid,
+                  }"
+                >
+                  <div class="flex items-baseline">
+                    <h5 class="q-m-0">COMPANIONI</h5>
+                    <div class="flex flag-icon">
+                      <img src="../assets/RO.svg" alt="romainia flag" />
+                    </div>
+                  </div>
+                  <span>{{ user.name }}</span>
+                  <span>{{ user.phoneNumber }}</span>
+                  <span>{{ user.email }}</span>
+                </div>
+              </template>
             </div>
 
+            <!-- <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h5>EXPLORATORI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h5>COMPANIONI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div> -->
+
+            <!-- <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div> -->
           </div>
         </div>
         <div
-          v-if="userData.role === 'department' && departmentUserList.length > 0"
+          v-if="
+            (userData?.role === 'department' ||
+              userData?.role === 'categoryLead') &&
+            departmentUserList.length > 0
+          "
           class="table-container q-mt-lg"
         >
           <table style="width: 100%" class="user-list-table">
@@ -172,8 +302,27 @@
             </tbody>
           </table>
         </div>
-
-        <div v-show="userData.role !== 'department'" class="infoRow">
+        <div
+          v-else-if="
+            (userData?.role === 'department' ||
+              userData?.role === 'categoryLead') &&
+            departmentUserList.length === 0
+          "
+        >
+          <table style="width: 100%" class="user-list-table">
+            <div>
+              <div class="text-center">
+                {{ $t("NoUsersFound") }}
+              </div>
+            </div>
+          </table>
+        </div>
+        <div
+          v-show="
+            userData.role !== 'department' && userData?.role !== 'categoryLead'
+          "
+          class="infoRow"
+        >
           <div class="shadowed">
             <div>
               <h3>{{ $t("gender") }}</h3>
@@ -202,7 +351,9 @@
           </div>
         </div>
         <div
-          v-show="userData.role !== 'department'"
+          v-show="
+            userData.role !== 'department' && userData?.role !== 'categoryLead'
+          "
           class="shadowed q-mt-md user-details"
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
@@ -242,7 +393,11 @@
           </div>
         </div>
         <div
-          v-show="userData.status && userData.role !== 'department'"
+          v-show="
+            userData.status &&
+            userData.role !== 'department' &&
+            userData?.role !== 'categoryLead'
+          "
           class="shadowed q-mt-md"
         >
           <h2>{{ $t("listacopiilor") }}</h2>
@@ -305,16 +460,29 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+  <q-dialog no-backdrop-dismiss v-model="showCategoryCreation">
+    <category-creation-dialog-vue />
+  </q-dialog>
 </template>
 
 <script>
 import { auth, storage, deleter } from "../store/firebase";
+import CategoryCreationDialogVue from "./CategoryCreationDialog.vue";
 export default {
   name: "HomeView",
-  components: {},
+  components: { CategoryCreationDialogVue },
   methods: {
-    showUserData(type) {
+    createCategoryLeader() {
+      this.isopen = false;
+      this.showCategoryCreation = true;
+    },
+    showUserData(type, uid) {
       this.selectedType = type;
+      if (uid) {
+        this.selectedUid = uid;
+      } else {
+        this.selectedUid = "";
+      }
     },
     removeImg() {
       this.previewImage = "";
@@ -509,6 +677,8 @@ export default {
   },
   data() {
     return {
+      showCategoryCreation: false,
+      selectedUid: "",
       isopen: false,
       isEdit: false,
       dataUser: {},
@@ -528,12 +698,12 @@ export default {
       file: null,
       showProfilePicModal: false,
       selectedType: "LICURICI",
-      tabs: 'userData'
+      tabs: "userData",
     };
   },
   mounted() {
-    if (this.userData.role === "department" && this.$route?.query?.q) {
-      this.tabs = "date";
+    if (this.userData?.role === "categoryLead") {
+      this.selectedType = this.userData.category.toUpperCase();
     }
 
     if (
@@ -561,12 +731,11 @@ export default {
   },
   watch: {
     "$route.query.q": {
-      handler: function() {
-        if(this.$route?.query?.q) {
-          this.tabs = 'date'
-        }
-        else {
-          this.tabs = 'userData'
+      handler: function () {
+        if (this.$route?.query?.q) {
+          this.tabs = "date";
+        } else {
+          this.tabs = "userData";
         }
       },
       deep: true,
@@ -604,6 +773,33 @@ export default {
     },
   },
   computed: {
+    categoryLeaderList() {
+      if (this.userData?.role === "department") {
+        console.log(this.userData, "asd");
+        const arr = this.$store.getters.userList?.filter(
+          (x) =>
+            x?.role === "categoryLead" &&
+            x?.department === this.userData?.departmentName
+        );
+        return {
+          licurici: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "licurici"
+          ),
+          exploratori: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "exploratori"
+          ),
+          companioni: arr?.filter(
+            (x) => x?.category?.toLowerCase() === "companioni"
+          ),
+        };
+      }
+      return {
+        licurici: [],
+        exploratori: [],
+        companioni: [],
+      };
+    },
+
     teamListSorted() {
       let arr = [];
       let teamList = [];
@@ -642,7 +838,9 @@ export default {
         (x) =>
           x.status === true &&
           x.category &&
-          x.category.toLowerCase() === this.selectedType.toLowerCase()
+          x?.department === this.userData?.departmentName &&
+          x.category.toLowerCase() === this.selectedType.toLowerCase() &&
+          x?.role !== "categoryLead"
       );
       return arr;
     },
