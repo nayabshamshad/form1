@@ -213,15 +213,19 @@ export default {
       return this.selectedUser.imgUrl && this.selectedUser.imgUrl !== "";
     },
     cardId() {
-      console.log(this.departmentTypes);
-      console.log(this.selectedUser.department);
-      // return "ID NUMBER"
       return this.departmentTypes[
         this.selectedUser.department
-          .replace("| HU", "")
-          .replace("| RO", "")
+          .replaceAll("| HU", "")
+          .replaceAll("| RO", "")
           .trim()
-      ] + this.selectedUser.uid.substring(0,6);
+      ]
+        ? this.departmentTypes[
+            this.selectedUser.department
+              .replaceAll("| HU", "")
+              .replaceAll("| RO", "")
+              .trim()
+          ]
+        : "AA" + this.selectedUser.uid.substring(0, 6);
     },
   },
   methods: {
@@ -261,7 +265,6 @@ img {
   background-color: #ffffff;
   width: 890px;
   height: 580px;
-  // border-radius: 32px;
 }
 .pattern-licu {
   background-image: url(../assets/card/bg-licu.png);
@@ -273,24 +276,22 @@ img {
   background-image: url(../assets/card/bg-compa.png);
 }
 .exploration-logo {
-  // width: 7.4rem;
-  // top: 1.3rem;
-  // left: 2.4rem;
   width: 7.2rem;
-  top: 2.8rem;
+  top: 2.3rem;
   left: 4rem;
 }
 .category-name-div {
-  top: 1.7rem;
-  right: 8.2rem;
+  top: 1.9rem;
+  right: 10.2rem;
   font-weight: bold;
   color: #ffffff;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
+  letter-spacing: 1.2px;
 }
 .legitimate-text-div {
   top: 4.97rem;
-  right: 10.8rem;
-  letter-spacing: 0.92rem;
+  right: 11.8rem;
+  letter-spacing: 0.97rem;
 }
 .card-info-div {
   top: 11.5rem;
@@ -312,16 +313,16 @@ img {
   margin-left: 2rem;
   align-items: flex-start;
   line-height: 1.8rem;
-  //  margin-top: -20px;
 }
 .cardholder-info span:nth-child(odd) {
   font-size: 20px;
-  /* margin-bottom:-10px; */
-  font-weight: 600;
+  font-family: "Futura";
+  // background: RED;
+  font-weight: 300;
 }
 .cardholder-info span:nth-child(even) {
   margin-bottom: 0.3rem;
-  font-weight: bolder;
+  font-weight: 600;
   font-size: 2rem;
 }
 .id-number-div {

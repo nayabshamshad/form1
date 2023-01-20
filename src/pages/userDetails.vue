@@ -1,28 +1,59 @@
 <template>
-  <q-card class="my-card info sign-in user-details" style="padding-top: 0; padding-left: 0; padding-right: 0">
+  <q-card
+    class="my-card info sign-in user-details"
+    style="padding-top: 0; padding-left: 0; padding-right: 0"
+  >
     <q-card-section class="q-px-none q-pt-none">
-      <q-tabs indicator-color="transparent" active-class="remove-border" align="justify"
-        class="linkcolor q-mb-md admin-tabs user-detail-tab" v-model="tabs">
-        <q-tab name="user" style="border: none; border-radius: 0 0 8px 0" :label="$t('informatiiUtilizator')"></q-tab>
-        <q-tab v-if="
-          selectedUser.status &&
-          selectedUser?.isUpdated &&
-          selectedUser.isAuthorized == true
-        " name="events" :label="$t('intâlnirile')" style="border: none; border-radius: 0 0 0 8px"></q-tab>
+      <q-tabs
+        indicator-color="transparent"
+        active-class="remove-border"
+        align="justify"
+        class="linkcolor q-mb-md admin-tabs user-detail-tab"
+        v-model="tabs"
+      >
+        <q-tab
+          name="user"
+          style="border: none; border-radius: 0 0 8px 0"
+          :label="$t('informatiiUtilizator')"
+        ></q-tab>
+        <q-tab
+          v-if="
+            selectedUser.status &&
+            selectedUser?.isUpdated &&
+            selectedUser.isAuthorized == true
+          "
+          name="events"
+          :label="$t('intâlnirile')"
+          style="border: none; border-radius: 0 0 0 8px"
+        ></q-tab>
         <q-tab name="date" v-if="selectedUser.role === 'department'">
-          {{ $t("data") }}</q-tab>
+          {{ $t("data") }}</q-tab
+        >
       </q-tabs>
-      <q-tab-panels style="padding-left: 3rem; padding-right: 3rem" v-model="tabs">
+      <q-tab-panels
+        style="padding-left: 3rem; padding-right: 3rem"
+        v-model="tabs"
+      >
         <q-tab-panel name="user">
           <div class="container">
             <div class="container">
               <div class="flex justify-between q-pr-sm relative">
-                <div class="flex no-wrap account-info-div" :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''">
+                <div
+                  class="flex no-wrap account-info-div"
+                  :style="isopen && checkScreen() ? 'margin-top:10.5rem' : ''"
+                >
                   <div class="userImg relative">
-                    <template v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''">
-                      <img :src="selectedUser.imgUrl" alt="" style="cursor: pointer"
-                        @click="showProfilePicModal = true" />
-                      <div style="
+                    <template
+                      v-if="selectedUser.imgUrl && selectedUser.imgUrl !== ''"
+                    >
+                      <img
+                        :src="selectedUser.imgUrl"
+                        alt=""
+                        style="cursor: pointer"
+                        @click="showProfilePicModal = true"
+                      />
+                      <div
+                        style="
                           position: absolute;
                           right: 10px;
                           bottom: 10px;
@@ -30,10 +61,19 @@
                           border: unset;
                           height: 20px;
                           width: 20px;
-                        ">
-                        <q-btn @click="downloadImg" round style="padding: 0.25rem; font-size: 6px" size="xs"
-                          color="green">
-                          <q-icon style="font-size: 1rem" name="download"></q-icon>
+                        "
+                      >
+                        <q-btn
+                          @click="downloadImg"
+                          round
+                          style="padding: 0.25rem; font-size: 6px"
+                          size="xs"
+                          color="green"
+                        >
+                          <q-icon
+                            style="font-size: 1rem"
+                            name="download"
+                          ></q-icon>
                         </q-btn>
                       </div>
                     </template>
@@ -44,19 +84,21 @@
                   </div>
                   <div class="userInfoText">
                     <h4>{{ selectedUser.name }}</h4>
-                    <p :style="
-                      selectedUser.status || selectedUser.role == 'department'
-                        ? 'color: green'
-                        : selectedUser.status === 'neither'
+                    <p
+                      :style="
+                        selectedUser.status || selectedUser.role == 'department'
+                          ? 'color: green'
+                          : selectedUser.status === 'neither'
                           ? 'color: #FFBD3C;'
                           : 'color: red'
-                    ">
+                      "
+                    >
                       {{
                         selectedUser.status || selectedUser.role == "department"
                           ? "Activ"
                           : selectedUser.status === "neither"
-                            ? "Activ (Fără Grupă)"
-                            : "Inactiv"
+                          ? "Activ (Fără Grupă)"
+                          : "Inactiv"
                       }}
                     </p>
                     <div>
@@ -71,15 +113,23 @@
                       Edit Profile
                     </div>
                     <div @click="viewUserCard">Download Id</div>
-                    <div style="
+                    <div
+                      style="
                         background-color: #de2110;
                         color: white;
                         border: 0px;
-                      " @click="deleteUser(selectedUser.uid)">
+                      "
+                      @click="deleteUser(selectedUser.uid)"
+                    >
                       Delete Profile
                     </div>
                   </div>
-                  <q-btn round @click="isopen = !isopen" icon="settings" class="edit-btn"></q-btn>
+                  <q-btn
+                    round
+                    @click="isopen = !isopen"
+                    icon="settings"
+                    class="edit-btn"
+                  ></q-btn>
                 </div>
               </div>
 
@@ -100,7 +150,8 @@
                         selectedUser.dateOfBirth
                           ? formatTheDate(selectedUser.dateOfBirth)
                           : ""
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div>
                     <h3>{{ $t("shirtsize") }}</h3>
@@ -116,7 +167,10 @@
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.role !== 'department'" class="shadowed user-details q-mt-md">
+              <div
+                v-show="selectedUser.role !== 'department'"
+                class="shadowed user-details q-mt-md"
+              >
                 <div>
                   <h3>{{ $t("categorie") }}</h3>
                   <p>{{ selectedUser.category }}</p>
@@ -147,14 +201,16 @@
                         selectedUser.Instructor !== ""
                           ? selectedUser.Instructor
                           : "-"
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div>
                     <span>{{ $t("ghid") }}</span>
                     <span>
                       {{
                         selectedUser.Ghid !== "" ? selectedUser.Ghid : "-"
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                   <div>
                     <span>{{ $t("masterghid") }}</span>
@@ -163,11 +219,15 @@
                         selectedUser.masterGhid !== ""
                           ? selectedUser.masterGhid
                           : "-"
-                      }}</span>
+                      }}</span
+                    >
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.status === true" class="shadowed q-mt-md">
+              <div
+                v-show="selectedUser.status === true"
+                class="shadowed q-mt-md"
+              >
                 <h2>Lista Copiilor</h2>
                 <div class="children-list">
                   <div v-for="(member, i) in sortedTeam" :key="i">
@@ -181,29 +241,35 @@
                   </div>
                 </div>
               </div>
-              <div v-show="selectedUser.status === 'neither'" class="shadowed q-my-lg"
-                style="padding-left: 2rem; padding-right: 2rem">
+              <div
+                v-show="selectedUser.status === 'neither'"
+                class="shadowed q-my-lg"
+                style="padding-left: 2rem; padding-right: 2rem"
+              >
                 <h2>{{ $t("Detalii") }}</h2>
-                <q-card class="full-width q-mb-md" style="min-height: unset; max-width: unset">
+                <q-card
+                  class="full-width q-mb-md"
+                  style="min-height: unset; max-width: unset"
+                >
                   <q-card-section>
                     {{ selectedUser.reason }}
                   </q-card-section>
                 </q-card>
               </div>
               <div v-show="selectedUser.role === 'department'">
-
-
-
                 <div class="row users-from-conferince-list">
-
                   <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
+                    <div
+                      @click="showUserData('LICURICI')"
+                      class="q-px-md card-border q-py-md column"
+                      :class="{
+                        active: selectedType === 'LICURICI'
+                      }"
+                    >
                       <div class="flex items-baseline">
                         <h5 class="q-m-0">LICURICI</h5>
                         <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
+                          <img src="../assets/RO.svg" alt="romainia flag" />
                         </div>
                       </div>
                       <span>Leader Name</span>
@@ -212,13 +278,15 @@
                     </div>
                   </div>
                   <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
+                    <div
+                      @click="showUserData('EXPLORATORI')"
+                      class="q-px-md card-border q-py-md column"
+                      :class="{active: selectedType === 'EXPLORATORI'}"
+                    >
                       <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
+                        <h5 class="q-m-0">EXPLORATORI</h5>
                         <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
+                          <img src="../assets/RO.svg" alt="romainia flag" />
                         </div>
                       </div>
                       <span>Leader Name</span>
@@ -227,13 +295,17 @@
                     </div>
                   </div>
                   <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
+                    <div
+                      @click="showUserData('COMPANIONI')"
+                      class="q-px-md card-border q-py-md column"
+                      :class="{
+                        active: selectedType === 'COMPANIONI'
+                      }"
+                    >
                       <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
+                        <h5 class="q-m-0">COMPANIONI</h5>
                         <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
+                          <img src="../assets/RO.svg" alt="romainia flag" />
                         </div>
                       </div>
                       <span>Leader Name</span>
@@ -241,105 +313,6 @@
                       <span>Email</span>
                     </div>
                   </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-
-                    <div class="q-px-md  card-border q-py-md column">
-
-                      <div class="flex items-baseline">
-                        <h5 class="q-m-0">LICURICI</h5>
-                        <div class="flex flag-icon">
-                          <img src="../assets/RO.svg" alt="romainia flag">
-                        </div>
-                      </div>
-                      <span>Leader Name</span>
-                      <span>Phone Number</span>
-                      <span>Email</span>
-                    </div>
-                  </div>
-
-
-
-
-
-
-
-
-
 
                   <!-- <div class="col-4 column">
                     <div class="row items-baseline">
@@ -387,11 +360,15 @@
                     <span>Phone Number</span>
                     <span>Email</span>
                   </div> -->
-
                 </div>
               </div>
-              <q-btn @click="$router.push('/')" round icon="chevron_left" class="back-btn"></q-btn>
-              <!-- <div
+              <q-btn
+                @click="$router.push('/')"
+                round
+                icon="chevron_left"
+                class="back-btn"
+              ></q-btn>
+              <div
                 v-if="
                   selectedUser.role === 'department' &&
                   departmentUserList.length > 0
@@ -408,7 +385,7 @@
                   </thead>
                   <tbody class="table-row">
                     <tr v-for="(user, i) in departmentUserList" :key="i">
-                      <td>{{ user.name }}</td>
+                      <td>{{ user.category }}</td>
                       <td
                         class="hideMobile"
                         @click="callUser(user.phoneNumber)"
@@ -430,7 +407,8 @@
                     </tr>
                   </tbody>
                 </table>
-              </div> -->
+              </div>
+            
             </div>
           </div>
         </q-tab-panel>
@@ -440,7 +418,10 @@
               <div class="attendance-summary">
                 <h4 style="color: #233975">{{ $t("prezenta") }}</h4>
                 <div v-for="(student, index) in listOfAttendance" :key="index">
-                  <div class="shadowed" style="border-radius: 0.3rem; margin-top: 0.5rem">
+                  <div
+                    class="shadowed"
+                    style="border-radius: 0.3rem; margin-top: 0.5rem"
+                  >
                     <div class="flex justify-space-between">
                       <span>
                         {{ student.name }}
@@ -458,18 +439,30 @@
               <div class="attendance-summary">
                 <h4 style="color: #233975">{{ $t("listaIntalnirilor") }}</h4>
                 <div class="eventlist">
-                  <div class="
+                  <div
+                    class="
                       q-mb-md
                       download-button-event
                       q-mt-sm
                       flex
                       justify-between
-                    " style="width: 80%"></div>
+                    "
+                    style="width: 80%"
+                  ></div>
                 </div>
-                <q-btn size="md" color="green" icon="download" @click="exportFile('events')" round
-                  style="margin-bottom: 10px"></q-btn>
+                <q-btn
+                  size="md"
+                  color="green"
+                  icon="download"
+                  @click="exportFile('events')"
+                  round
+                  style="margin-bottom: 10px"
+                ></q-btn>
                 <div class="table-container">
-                  <table v-if="selectedUser.eventList.length > 0" class="user-list-table lista">
+                  <table
+                    v-if="selectedUser.eventList.length > 0"
+                    class="user-list-table lista"
+                  >
                     <thead>
                       <tr>
                         <th>{{ $t("titlulIntâlnirii") }}</th>
@@ -479,8 +472,12 @@
                       </tr>
                     </thead>
                     <tbody class="table-row">
-                      <tr class="shadowed tr" v-for="(item, i) in eventList.arr" :key="i"
-                        @click="showEventDetails(item)">
+                      <tr
+                        class="shadowed tr"
+                        v-for="(item, i) in eventList.arr"
+                        :key="i"
+                        @click="showEventDetails(item)"
+                      >
                         <td>{{ item.name }}</td>
                         <td class="event-date-td">
                           {{ getBirthDate(item.date) }}
@@ -488,8 +485,15 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div v-else class="shadowed q-mx-auto" style="border-radius: 8px; width: 100%">
-                    <h4 class="text-weight-bold linkcolor text-left" style="opacity: 0.5">
+                  <div
+                    v-else
+                    class="shadowed q-mx-auto"
+                    style="border-radius: 8px; width: 100%"
+                  >
+                    <h4
+                      class="text-weight-bold linkcolor text-left"
+                      style="opacity: 0.5"
+                    >
                       {{ $t("nuExistaIntalniriInca") }}
                     </h4>
                   </div>
@@ -506,11 +510,25 @@
                   </div>
                   <div>
                     <div class="pagination-buttons">
-                      <q-btn size="sm" round text-color="white" icon="chevron_left" no-caps @click="decreasePage"
-                        :disabled="currentPage === 1"></q-btn>
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        icon="chevron_left"
+                        no-caps
+                        @click="decreasePage"
+                        :disabled="currentPage === 1"
+                      ></q-btn>
                       <span> {{ currentPage }} </span>
-                      <q-btn size="sm" round text-color="white" @click="increasePage" no-caps icon="chevron_right"
-                        :disabled="currentPage >= maxPage"></q-btn>
+                      <q-btn
+                        size="sm"
+                        round
+                        text-color="white"
+                        @click="increasePage"
+                        no-caps
+                        icon="chevron_right"
+                        :disabled="currentPage >= maxPage"
+                      ></q-btn>
                     </div>
                   </div>
                   <div>
@@ -530,13 +548,22 @@
             <div class="flex justify-center">
               <q-date v-model="dateModel" range></q-date>
             </div>
-            <div class="flex" style="
+            <div
+              class="flex"
+              style="
                 justify-content: flex-end;
                 width: 70%;
                 margin-top: 1rem;
                 min-width: 200px;
-              ">
-              <q-btn round icon="check" color="green" :loading="dateSetting" @click="setDate"></q-btn>
+              "
+            >
+              <q-btn
+                round
+                icon="check"
+                color="green"
+                :loading="dateSetting"
+                @click="setDate"
+              ></q-btn>
             </div>
           </div>
         </q-tab-panel>
@@ -593,19 +620,23 @@ export default {
       previewImage: "",
       file: null,
       showProfilePicModal: false,
+      selectedType: "LICURICI",
     };
   },
-  async mounted() {
-    console.log(process.env.PATH)
+  async mounted() { 
     await this.pageSetup();
     if (!this.$route?.params?.uid) {
-      this.$router.push('/')
+      this.$router.push("/");
     }
     if (this.$store.getters?.tabs) {
       this.tabs = this.$store.getters.tabs;
     }
   },
   methods: {
+    showUserData(type) {
+      this.selectedType = type;
+       
+    },
     viewUserCard() {
       this.$router.push(`/id-card/${this.selectedUser.uid}`);
     },
@@ -827,8 +858,8 @@ export default {
           this.currentPage == this.maxPage
             ? this.selectedUser.eventList.length
             : this.currentPage > this.maxPage
-              ? 1
-              : firstItem + this.resultsPerPage,
+            ? 1
+            : firstItem + this.resultsPerPage,
       };
     },
     maxPage() {
@@ -837,9 +868,11 @@ export default {
     },
     departmentUserList() {
       if (this.selectedUser.role === "department") {
-        const arr = this.$store.getters.userList.filter((x) => {
+        let arr = this.$store.getters.userList.filter((x) => {
           return x.department === this.selectedUser.departmentName;
         });
+        arr = arr.filter(x=> x.status === true)
+        arr = arr.filter(x=> x.category && x.category.toLowerCase() === this.selectedType.toLowerCase())
         return arr;
       } else {
         return [];

@@ -1,11 +1,7 @@
 <template>
   <div
     class="top-bar user-top"
-    v-if="
-      isAuthenticated &&
-      userData?.role != 'admin' &&
-      userData?.role != 'department'
-    "
+    v-if="isAuthenticated && userData?.role != 'admin'"
   >
     <div class="menu-container flex justify-between">
       <div>
@@ -34,7 +30,7 @@
           {{ $t("panouDeBord") }}
         </q-btn>
         <q-btn
-          v-if="this.userData.status == true"
+          v-if="userData.status == true && userData.role !== 'department'"
           no-caps
           type="button"
           color="black"
@@ -44,6 +40,18 @@
           :class="$route.path === '/event-list' ? 'add-border' : ''"
         >
           {{ $t("Intalniri") }}
+        </q-btn>
+        <q-btn
+          v-if="userData.role === 'department'"
+          no-caps
+          type="button"
+          color="black"
+          flat
+          @click="$router.push('/event-list')"
+          class="btn"
+          :class="$route.path === '/event-list' ? 'add-border' : ''"
+        >
+      {{ $t('data') }}
         </q-btn>
       </div>
       <div class="hideMobile">
@@ -67,13 +75,7 @@
     </div>
   </div>
 
-  <div
-    class="top-bar"
-    v-else-if="
-      isAuthenticated &&
-      (userData?.role == 'admin' || userData?.role == 'department')
-    "
-  >
+  <div class="top-bar" v-else-if="isAuthenticated && userData?.role == 'admin'">
     <!-- Mobile Nav -->
     <mobile-nav @close="showMenu = false" v-show="showMenu" />
     <div class="hideMobile menu-container flex justify-between">
@@ -312,9 +314,9 @@ export default defineComponent({
     to bottom left,
     rgb(217, 216, 216) 5%,
     rgb(196 196 196 / 0%)
-    );
-  }
-  .language-btn:last-child{
-    border-bottom:none !important;
-  }
+  );
+}
+.language-btn:last-child {
+  border-bottom: none !important;
+}
 </style>

@@ -45,7 +45,7 @@
               <h4>{{ userData.name }}</h4>
               <p
                 :style="
-                  userData.status
+                  userData.status === true || userData.role === 'department'
                     ? 'color: green'
                     : userData.status === 'neither'
                     ? 'color: #FFBD3C;'
@@ -53,7 +53,7 @@
                 "
               >
                 {{
-                  userData.status
+                  userData.status === true || userData.role === "department"
                     ? "Activ"
                     : userData.status === "neither"
                     ? "Activ (Fără grupă)"
@@ -82,8 +82,154 @@
             ></q-btn>
           </div>
         </div>
+        <div v-show="userData.role === 'department'">
+          <div class="row users-from-conferince-list">
+            <div class="col-12 col-md-4">
+              <div
+                @click="showUserData('LICURICI')"
+                class="q-px-md card-border q-py-md column"
+                :class="{
+                  active: selectedType === 'LICURICI',
+                }"
+              >
+                <div class="flex items-baseline">
+                  <h5 class="q-m-0">LICURICI</h5>
+                  <div class="flex flag-icon">
+                    <img src="../assets/RO.svg" alt="romainia flag" />
+                  </div>
+                </div>
+                <span>Leader Name</span>
+                <span>Phone Number</span>
+                <span>Email</span>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div
+                @click="showUserData('EXPLORATORI')"
+                class="q-px-md card-border q-py-md column"
+                :class="{ active: selectedType === 'EXPLORATORI' }"
+              >
+                <div class="flex items-baseline">
+                  <h5 class="q-m-0">EXPLORATORI</h5>
+                  <div class="flex flag-icon">
+                    <img src="../assets/RO.svg" alt="romainia flag" />
+                  </div>
+                </div>
+                <span>Leader Name</span>
+                <span>Phone Number</span>
+                <span>Email</span>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div
+                @click="showUserData('COMPANIONI')"
+                class="q-px-md card-border q-py-md column"
+                :class="{
+                  active: selectedType === 'COMPANIONI',
+                }"
+              >
+                <div class="flex items-baseline">
+                  <h5 class="q-m-0">COMPANIONI</h5>
+                  <div class="flex flag-icon">
+                    <img src="../assets/RO.svg" alt="romainia flag" />
+                  </div>
+                </div>
+                <span>Leader Name</span>
+                <span>Phone Number</span>
+                <span>Email</span>
+              </div>
+            </div>
 
-        <div class="infoRow">
+            <!-- <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h5>EXPLORATORI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h5>COMPANIONI</h5>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div> -->
+
+            <!-- <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div>
+                  <div class="col-4 column">
+                    <div class="row items-baseline">
+                      <h4>LICURICI</h4>
+                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
+                    </div>
+                    <span>Leader Name</span>
+                    <span>Phone Number</span>
+                    <span>Email</span>
+                  </div> -->
+          </div>
+        </div>
+        <div
+                v-if="
+                  userData.role === 'department' &&
+                  departmentUserList.length > 0
+                "
+                class="table-container q-mt-lg"
+              >
+                <table style="width: 100%" class="user-list-table">
+                  <thead>
+                    <tr>
+                      <th>{{ $t("name") }}</th>
+                      <th>{{ $t("phone") }}</th>
+                      <th>{{ $t("email") }}</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-row">
+                    <tr v-for="(user, i) in departmentUserList" :key="i">
+                      <td>{{ user.category }}</td>
+                      <td
+                        class="hideMobile"
+                        @click="callUser(user.phoneNumber)"
+                      >
+                        {{ user.phoneNumber }}
+                      </td>
+                      <td
+                        class="showMobile"
+                        @click="callUser(user.phoneNumber)"
+                      >
+                        <q-icon name="phone"></q-icon>
+                      </td>
+                      <td @click="mailUser(user.email)" class="hideMobile last">
+                        {{ user.email }}
+                      </td>
+                      <td @click="mailUser(user.email)" class="showMobile last">
+                        <q-icon name="email"></q-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            
+        <div v-show="userData.role !== 'department'" class="infoRow">
           <div class="shadowed">
             <div>
               <h3>{{ $t("gender") }}</h3>
@@ -112,6 +258,7 @@
           </div>
         </div>
         <div
+          v-show="userData.role !== 'department'"
           class="shadowed q-mt-md user-details"
           style="display: inline-flex; width: 100%; gap: 10%; padding: 1.5rem"
         >
@@ -150,7 +297,10 @@
             </div>
           </div>
         </div>
-        <div v-show="userData.status" class="shadowed q-mt-md">
+        <div
+          v-show="userData.status && userData.role !== 'department'"
+          class="shadowed q-mt-md"
+        >
           <h2>{{ $t("listacopiilor") }}</h2>
 
           <div class="children-list">
@@ -219,6 +369,9 @@ export default {
   name: "HomeView",
   components: {},
   methods: {
+    showUserData(type) {
+      this.selectedType = type;
+    },
     removeImg() {
       this.previewImage = "";
     },
@@ -430,6 +583,7 @@ export default {
       previewImage: "",
       file: null,
       showProfilePicModal: false,
+      selectedType: "LICURICI"
     };
   },
   mounted() {
@@ -522,6 +676,10 @@ export default {
     dateList() {
       return this.$store.getters.dateList;
     },
+    departmentUserList() {
+      let arr = this.$store.getters.userList.filter(x=> x.status === true && x.category && x.category.toLowerCase() === this.selectedType.toLowerCase())
+      return arr
+    }
   },
 };
 </script>
