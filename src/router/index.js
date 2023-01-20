@@ -73,7 +73,11 @@ export default route(function ({ store }) {
         to.name != "Create Department" &&
         to.path != "/send-reset-link"
       ) {
-        next(`/sign-in?next=${to.path}`);
+        if (to.path !== "/") {
+          next(`/sign-in?next=${to.path}`);
+        } else {
+          next('/sign-in');
+        }
       } else {
         next();
       }

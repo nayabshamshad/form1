@@ -25,7 +25,7 @@
           type="button"
           @click="$router.push('/')"
           class="btn"
-          :class="$route.path === '/' ? 'add-border' : ''"
+          :class="$route.fullPath === '/' ? 'add-border' : ''"
         >
           {{ $t("panouDeBord") }}
         </q-btn>
@@ -47,9 +47,9 @@
           type="button"
           color="black"
           flat
-          @click="$router.push('/event-list')"
+          @click="$router.push('/?q=date')"
           class="btn"
-          :class="$route.path === '/event-list' ? 'add-border' : ''"
+          :class="$route.fullPath === '/?q=date' ? 'add-border' : ''"
         >
       {{ $t('data') }}
         </q-btn>

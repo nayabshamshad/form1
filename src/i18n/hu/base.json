@@ -163,6 +163,7 @@
   "afterTextTerms": "A LEC által előírtak.",
   "dontHaveAccount": "Még nincs fiókod?",
   "registerNow": "Regisztrálj",
-  "listaConferinte": "LISTĂ CONFERINȚE"
+  "listaConferinte": "LISTĂ CONFERINȚE",
+  "NoUsersFound" : "No Users found with this category"
  
 }

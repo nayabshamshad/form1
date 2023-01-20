@@ -112,7 +112,15 @@
                     <div @click="$router.push('/edit-profile')">
                       Edit Profile
                     </div>
-                    <div @click="viewUserCard">Download Id</div>
+                    <div
+                      v-show="
+                        selectedUser.role !== 'department' &&
+                        selectedUser.status === true
+                      "
+                      @click="viewUserCard"
+                    >
+                      Download Id
+                    </div>
                     <div
                       style="
                         background-color: #de2110;
@@ -385,7 +393,7 @@
                   </thead>
                   <tbody class="table-row">
                     <tr v-for="(user, i) in departmentUserList" :key="i">
-                      <td>{{ user.category }}</td>
+                      <td>{{ user.name }}</td>
                       <td
                         class="hideMobile"
                         @click="callUser(user.phoneNumber)"
@@ -408,7 +416,15 @@
                   </tbody>
                 </table>
               </div>
-            
+            <div v-else>
+              <table style="width: 100%" class="user-list-table">
+                  <div>
+                    <div class="text-center">
+                      {{ $t('NoUsersFound') }}
+                    </div>
+                  </div>
+                  </table>
+            </div>
             </div>
           </div>
         </q-tab-panel>
@@ -869,7 +885,7 @@ export default {
     departmentUserList() {
       if (this.selectedUser.role === "department") {
         let arr = this.$store.getters.userList.filter((x) => {
-          return x.department === this.selectedUser.departmentName;
+          return x.department && x.department === this.selectedUser.departmentName;
         });
         arr = arr.filter(x=> x.status === true)
         arr = arr.filter(x=> x.category && x.category.toLowerCase() === this.selectedType.toLowerCase())

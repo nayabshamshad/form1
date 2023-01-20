@@ -15,82 +15,85 @@
         :float-layout="true"
         :enable-download="true"
         :preview-modal="false"
-        :paginate-elements-by-height="1000"
         :filename="selectedUser.name"
         :pdf-quality="2"
-        :manual-pagination="false"
-        pdf-format="letter"
+        :manual-pagination="true"
         pdf-orientation="landscape"
-        pdf-content-width="400px"
         ><template #pdf-content>
           <div
-            class="company-club-card"
-            :class="
-              selectedUser.category === 'Licurici'
-                ? 'pattern-licu'
-                : selectedUser.category === 'Exploratori'
-                ? 'pattern-ecplo'
-                : 'pattern-compa'
-            "
+            style="width: 297mm; height: 210mm"
+            class="flex justify-center align-center"
           >
-            <div class="relative">
-              <div class="absolute">
-                <div class="relative">
-                  <!-- <img src="../assets/card/vector-1.png" /> -->
-                  <img src="../assets/card/Vector-up.png" />
-                  <div class="absolute exploration-logo">
-                    <img src="../assets/card/exploration-logo.png" />
-                  </div>
-                  <div class="absolute category-name-div">
-                    <span
-                      >Asociatia "{{ selectedUser.category }} pentru
-                      viitor!"</span
-                    >
+            <div
+              style="transform: scale(1.225)"
+              class="company-club-card"
+              :class="
+                selectedUser.category === 'Licurici'
+                  ? 'pattern-licu'
+                  : selectedUser.category === 'Exploratori'
+                  ? 'pattern-ecplo'
+                  : 'pattern-compa'
+              "
+            >
+              <div class="relative">
+                <div class="absolute">
+                  <div class="relative">
+                    <!-- <img src="../assets/card/vector-1.png" /> -->
+                    <img src="../assets/card/Vector-up.png" />
+                    <div class="absolute exploration-logo">
+                      <img src="../assets/card/exploration-logo.png" />
+                    </div>
+                    <div class="absolute category-name-div">
+                      <span
+                        >Asociatia "{{ selectedUser.category }} pentru
+                        viitor!"</span
+                      >
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="absolute legitimate-text-div fw-500 fs-1">
-                <span>LEGITIMATIE</span>
-              </div>
-              <div class="absolute card-info-div">
-                <div class="relative row">
-                  <div>
-                    <div v-if="isImage" class="upload-img">
-                      <img :src="selectedUser.imgUrl" />
+                <div class="absolute legitimate-text-div fw-500 fs-1">
+                  <span>LEGITIMATIE</span>
+                </div>
+                <div class="absolute card-info-div">
+                  <div class="relative row">
+                    <div>
+                      <div v-if="isImage" class="upload-img">
+                        <img :src="selectedUser.imgUrl" />
+                      </div>
+                      <div
+                        v-else
+                        class="cursor-pointer upload-img-icon bg-lightgray"
+                      >
+                        <img src="../assets/card/camera.png" />
+                      </div>
+                      <div class="id-number-div fw-500">
+                        <span class="text-uppercase">{{ cardId }}</span>
+                      </div>
                     </div>
-                    <div
-                      v-else
-                      class="cursor-pointer upload-img-icon bg-lightgray"
-                    >
-                      <img src="../assets/card/camera.png" />
+                    <div class="cardholder-info column content-start">
+                      <span>NUME/PRENUME</span>
+                      <span>{{ selectedUser.name }}</span>
+                      <span>FUNCTIE</span>
+                      <span>INSTRUCTOR</span>
+                      <span>JUDET</span>
+                      <span>{{ selectedUser.region }}</span>
+                      <span>LOCALITATE</span>
+                      <span>{{ selectedUser.state }}</span>
                     </div>
-                    <div class="id-number-div fw-500">
-                      <span>{{ cardId }}</span>
-                    </div>
-                  </div>
-                  <div class="cardholder-info column content-start">
-                    <span>NUME/PRENUME</span>
-                    <span>{{ selectedUser.name }}</span>
-                    <span>FUNCTIE</span>
-                    <span>INSTRUCTOR</span>
-                    <span>JUDET</span>
-                    <span>{{ selectedUser.region }}</span>
-                    <span>LOCALITATE</span>
-                    <span>{{ selectedUser.state }}</span>
                   </div>
                 </div>
-              </div>
-              <div class="absolute card-bottom-vector">
-                <div class="relative">
-                  <img src="../assets/card/vector-down.png" alt="" />
-                  <div class="absolute tin-logo">
-                    <img src="../assets/card/logo.png" alt="" />
-                  </div>
-                  <div class="absolute church-logo">
-                    <img src="../assets/card/church-logo.png" alt="" />
-                  </div>
-                  <div class="absolute qr-code">
-                    <qrcode-vue margin="4" :value="cardUrl"></qrcode-vue>
+                <div class="absolute card-bottom-vector">
+                  <div class="relative">
+                    <img src="../assets/card/Vector-down.png" alt="" />
+                    <div class="absolute tin-logo">
+                      <img src="../assets/card/logo.png" alt="" />
+                    </div>
+                    <div class="absolute church-logo">
+                      <img src="../assets/card/church-logo.png" alt="" />
+                    </div>
+                    <div class="absolute qr-code">
+                      <qrcode-vue margin="4" :value="cardUrl"></qrcode-vue>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -136,7 +139,7 @@
                   <img src="../assets/card/camera.png" />
                 </div>
                 <div class="id-number-div fw-500">
-                  <span>{{ cardId }}</span>
+                  <span class="text-uppercase">{{ cardId }}</span>
                 </div>
               </div>
               <div class="cardholder-info column content-start">
@@ -153,7 +156,7 @@
           </div>
           <div class="absolute card-bottom-vector">
             <div class="relative">
-              <img src="../assets/card/vector-down.png" alt="" />
+              <img src="../assets/card/Vector-down.png" alt="" />
               <div class="absolute tin-logo">
                 <img src="../assets/card/logo.png" alt="" />
               </div>

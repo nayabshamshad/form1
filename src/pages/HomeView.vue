@@ -1,6 +1,7 @@
 <template>
+  
   <teamHome
-    v-if="userData?.role !== 'admin'"
+    v-if="userData?.role !== 'admin' && $route.query?.q !== 'date'"
   />
   <adminHome v-else />
 </template>

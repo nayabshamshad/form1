@@ -29,12 +29,12 @@ $grey: #c4c4c4;
 @import "./components/__bottomBar";
 @import "./components/_waitingView";
 @font-face {
-  font-family: 'Futura';
+  font-family: "Futura";
   src: url("./font-family/futura/futura\ medium\ bt.ttf");
   font-weight: 600;
 }
 @font-face {
-  font-family: 'Futura';
+  font-family: "Futura";
   src: url("./font-family/futura/futura\ light\ bt.ttf");
   font-weight: 300;
 }
@@ -65,8 +65,7 @@ body::after {
 }
 .company-club-card {
   * {
-
-    font-family: 'Futura';
+    font-family: "Futura";
     font-weight: 600;
   }
 }

@@ -71,10 +71,9 @@
               <div v-show="true" @click="$router.push('/edit-profile')">
                 Edit Profile
               </div>
-              <!-- v-show="dateContained" -->
-              <!-- <div @click="viewUserCard">Download Id</div> -->
             </div>
             <q-btn
+              v-show="userData.role !== 'department'"
               round
               @click="isopen = !isopen"
               icon="settings"
@@ -140,95 +139,40 @@
               </div>
             </div>
 
-            <!-- <div class="col-4 column">
-                    <div class="row items-baseline">
-                      <h5>EXPLORATORI</h5>
-                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
-                    </div>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div>
-                  <div class="col-4 column">
-                    <div class="row items-baseline">
-                      <h5>COMPANIONI</h5>
-                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
-                    </div>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div> -->
-
-            <!-- <div class="col-4 column">
-                    <div class="row items-baseline">
-                      <h4>LICURICI</h4>
-                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
-                    </div>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div>
-                  <div class="col-4 column">
-                    <div class="row items-baseline">
-                      <h4>LICURICI</h4>
-                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
-                    </div>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div>
-                  <div class="col-4 column">
-                    <div class="row items-baseline">
-                      <h4>LICURICI</h4>
-                      <div><img src="../assets/RO.svg" alt="romainia flag"></div>
-                    </div>
-                    <span>Leader Name</span>
-                    <span>Phone Number</span>
-                    <span>Email</span>
-                  </div> -->
           </div>
         </div>
         <div
-                v-if="
-                  userData.role === 'department' &&
-                  departmentUserList.length > 0
-                "
-                class="table-container q-mt-lg"
-              >
-                <table style="width: 100%" class="user-list-table">
-                  <thead>
-                    <tr>
-                      <th>{{ $t("name") }}</th>
-                      <th>{{ $t("phone") }}</th>
-                      <th>{{ $t("email") }}</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-row">
-                    <tr v-for="(user, i) in departmentUserList" :key="i">
-                      <td>{{ user.category }}</td>
-                      <td
-                        class="hideMobile"
-                        @click="callUser(user.phoneNumber)"
-                      >
-                        {{ user.phoneNumber }}
-                      </td>
-                      <td
-                        class="showMobile"
-                        @click="callUser(user.phoneNumber)"
-                      >
-                        <q-icon name="phone"></q-icon>
-                      </td>
-                      <td @click="mailUser(user.email)" class="hideMobile last">
-                        {{ user.email }}
-                      </td>
-                      <td @click="mailUser(user.email)" class="showMobile last">
-                        <q-icon name="email"></q-icon>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            
+          v-if="userData.role === 'department' && departmentUserList.length > 0"
+          class="table-container q-mt-lg"
+        >
+          <table style="width: 100%" class="user-list-table">
+            <thead>
+              <tr>
+                <th>{{ $t("name") }}</th>
+                <th>{{ $t("phone") }}</th>
+                <th>{{ $t("email") }}</th>
+              </tr>
+            </thead>
+            <tbody class="table-row">
+              <tr v-for="(user, i) in departmentUserList" :key="i">
+                <td>{{ user.name }}</td>
+                <td class="hideMobile" @click="callUser(user.phoneNumber)">
+                  {{ user.phoneNumber }}
+                </td>
+                <td class="showMobile" @click="callUser(user.phoneNumber)">
+                  <q-icon name="phone"></q-icon>
+                </td>
+                <td @click="mailUser(user.email)" class="hideMobile last">
+                  {{ user.email }}
+                </td>
+                <td @click="mailUser(user.email)" class="showMobile last">
+                  <q-icon name="email"></q-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div v-show="userData.role !== 'department'" class="infoRow">
           <div class="shadowed">
             <div>
@@ -583,10 +527,15 @@ export default {
       previewImage: "",
       file: null,
       showProfilePicModal: false,
-      selectedType: "LICURICI"
+      selectedType: "LICURICI",
+      tabs: 'userData'
     };
   },
   mounted() {
+    if (this.userData.role === "department" && this.$route?.query?.q) {
+      this.tabs = "date";
+    }
+
     if (
       new Date(this.dateList?.from).getTime() <= new Date().getTime() &&
       new Date(this.dateList?.to).getTime() >= new Date().getTime()
@@ -611,6 +560,18 @@ export default {
     }
   },
   watch: {
+    "$route.query.q": {
+      handler: function() {
+        if(this.$route?.query?.q) {
+          this.tabs = 'date'
+        }
+        else {
+          this.tabs = 'userData'
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
     userData: {
       handler: function () {
         if (this.$store.getters.userData?.isUpdated == false) {
@@ -677,9 +638,14 @@ export default {
       return this.$store.getters.dateList;
     },
     departmentUserList() {
-      let arr = this.$store.getters.userList.filter(x=> x.status === true && x.category && x.category.toLowerCase() === this.selectedType.toLowerCase())
-      return arr
-    }
+      let arr = this.$store.getters.userList.filter(
+        (x) =>
+          x.status === true &&
+          x.category &&
+          x.category.toLowerCase() === this.selectedType.toLowerCase()
+      );
+      return arr;
+    },
   },
 };
 </script>
