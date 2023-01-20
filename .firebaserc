@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "lecweb"
-  }
+    "default": "lecweb",
+    "dev": "attendace-project-2"
+  },
+  "targets": {},
+  "etags": {}
 }

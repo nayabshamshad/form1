@@ -100,24 +100,21 @@
             <label for="Gender">{{ $t("gender") }}</label>
             <div class="flex no- linear-btn-container">
               <q-btn
- 
                 style="width: 50% !important; border: 1px solid #ccc !important"
-               :label="$t('masculin')"
+                :label="$t('masculin')"
                 :class="userInfo.gender === 'Masculin' ? 'selected' : ''"
                 @click="userInfo.gender = 'Masculin'"
               />
               <q-btn
                 style="width: 50% !important; border: 1px solid #ccc !important"
-              :label="$t('feminin')"
+                :label="$t('feminin')"
                 @click="userInfo.gender = 'Feminin'"
                 :class="userInfo.gender === 'Feminin' ? 'selected' : ''"
- 
               />
             </div>
           </div>
 
           <div class="cate-list q-pl-sm right margin">
-
             <label for="uname" class="block q-mt-sm">{{
               $t("dateofbirth")
             }}</label>
@@ -156,7 +153,6 @@
             </q-input>
           </div>
           <div class="cate-list left">
-
             <label for="uname" class="block q-mb-sm">{{
               $t("marimeaTricou")
             }}</label>
@@ -183,20 +179,17 @@
                 @click="userInfo.category = 'Licurici'"
                 :class="userInfo.category === 'Licurici' ? 'selected' : ''"
               />
- 
+
               <q-btn
-                 :label="$t('exploratori')"
- 
+                :label="$t('exploratori')"
                 @click="userInfo.category = 'Exploratori'"
                 val="Exploratori"
                 :class="userInfo.category === 'Exploratori' ? 'selected' : ''"
               />
-              <q-btn 
- 
-                val="Companioni" 
+              <q-btn
+                val="Companioni"
                 :label="$t('companioni')"
-                class="q-my-none" 
- 
+                class="q-my-none"
                 @click="userInfo.category = 'Companioni'"
                 :class="userInfo.category === 'Companioni' ? 'selected' : ''"
               />
@@ -215,8 +208,13 @@
           <div class="cate-list right">
             <label for="uname" class="block q-mb-sm">{{ $t("Zona") }}</label>
 
-            <q-select 
-              :placeholder="$t('zonaInCareActivezi')" outlined @onChange="changeZone" v-model="userInfo.region" :options="zones">
+            <q-select
+              :placeholder="$t('zonaInCareActivezi')"
+              outlined
+              @onChange="changeZone"
+              v-model="userInfo.region"
+              :options="zones"
+            >
             </q-select>
             <!-- <q-input
 
@@ -227,12 +225,10 @@
             /> -->
           </div>
           <div class="cate-list">
-
             <label for="uname" class="block q-mb-sm">{{
               $t("comunitate")
             }}</label>
             <q-select
-
               outlined
               v-model="userInfo.state"
               :options="communities"
@@ -246,7 +242,6 @@
             /> -->
           </div>
           <div class="cate-list">
-
             <label for="uname" class="block q-mb-sm">{{
               $t("specializari")
             }}</label>
@@ -303,19 +298,17 @@
             />
           </div>
           <div class="cate-list cate-margin">
-
             <label for="status" class="block q-mb-sm">{{ $t("status") }}</label>
             <div class="flex linear-btn-container">
               <q-btn
                 :label="$t('activ')"
-              @click="userInfo.status = true"
-              :val="true"
+                @click="userInfo.status = true"
+                :val="true"
                 :class="userInfo.status === true ? 'selected' : ''"
               />
               <q-btn
                 :val="false"
                 :label="$t('inactiv')"
-
                 @click="userInfo.status = false"
                 :class="userInfo.status === false ? 'selected' : ''"
               />
@@ -422,7 +415,7 @@
                 type="button"
                 color="red"
                 style="
-                 width: 60px;
+                  width: 60px;
                   height: 89px;
                   border-radius: 0;
                   border-top-right-radius: 0.7rem;
@@ -488,8 +481,7 @@ export default {
   name: "CategoryListView",
   components: {},
   data() {
-
-    return { 
+    return {
       zonesDepartment: {},
       zones: [],
       communities: [],
@@ -529,22 +521,18 @@ export default {
     };
   },
   methods: {
-    changeZone(){
+    changeZone() {
       this.userInfo.state = "";
     },
-    regionChange() { 
-     
-      if(this.zonesDepartment.length > 0){
+    regionChange() {
+      if (this.zonesDepartment.length > 0) {
         var obj = this.zonesDepartment.filter(
           (x) => x.Zone == this.userInfo.region
         );
-        if(obj && obj.length > 0){
-          this.communities = obj[0].Community; 
+        if (obj && obj.length > 0) {
+          this.communities = obj[0].Community;
         }
       }
-       
-     
-
     },
     handleImageUpload(e) {
       const file = e.target.files[0];
@@ -756,10 +744,9 @@ export default {
     },
   },
   mounted() {
-
     var department = this.$store.getters.userData.department;
-    if(department == null || department == undefined){
-      department = this.$store.getters.selectedUser.department
+    if (department == null || department == undefined) {
+      department = this.$store.getters.selectedUser.department;
     }
     var obj = [];
     if (department == "Banat") {
@@ -798,8 +785,7 @@ export default {
       dep_transilvania_de_sud.forEach((x) => {
         obj.push(x.Zone);
       });
-    }
-    else{
+    } else {
       this.zonesDepartment = dep_transilvania_de_sud;
       dep_transilvania_de_sud.forEach((x) => {
         obj.push(x.Zone);
@@ -809,7 +795,6 @@ export default {
     if (this.$route.path == "/category-list" && this.storeUserInfo?.isUpdated) {
       this.$router.push("/");
     } else if (this.$route.path == "/edit-profile") {
-      debugger
       if (
         this.storeUserInfo.role != "department" &&
         this.storeUserInfo.role != "admin"
@@ -883,6 +868,5 @@ export default {
       },
     },
   },
-}; 
+};
 </script>
- 
