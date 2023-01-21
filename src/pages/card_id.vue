@@ -213,6 +213,7 @@ export default {
       return this.$store.getters.selectedUser;
     },
     isImage() {
+      return false;
       return this.selectedUser.imgUrl && this.selectedUser.imgUrl !== "";
     },
     cardId() {
@@ -303,7 +304,8 @@ img {
 }
 .upload-img-icon {
   width: 12.9rem;
-  padding: 6.27rem 4rem;
+  padding: 6.27rem 4rem 5rem 4rem;
+
 }
 .upload-img {
   width: 12.9rem;
