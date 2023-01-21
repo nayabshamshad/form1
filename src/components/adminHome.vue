@@ -923,10 +923,10 @@ export default {
         "Transilvania de Nord": "TN",
       };
       const data = departmentTypes[
-        user.department.replaceAll("| HU", "").replaceAll("| RO", "").trim()
+        user.department?.replace("| HU", "")?.replace("| RO", "")?.trim()
       ]
         ? departmentTypes[
-            user.department.replaceAll("| HU", "").replaceAll("| RO", "").trim()
+            user.department.replace("| HU", "").replace("| RO", "").trim()
           ]
         : "AA";
       return data + user.uid.substring(0, 6);
@@ -1125,8 +1125,7 @@ export default {
       if (this.fetchingPdf) {
         return;
       }
-      let users;
-      users = this[usersType + "Users"].arr;
+      const users = this[usersType + "Users"].arr;
       this.cardUsers = users;
 
       // this.cardUsers = this.$store.getters.userList
@@ -1511,7 +1510,7 @@ img {
 }
 .upload-img-icon {
   width: 12.9rem;
-  padding: 6.27rem 4rem;
+  padding: 6.27rem 4rem 5rem 4rem;
 }
 .upload-img {
   width: 12.9rem;
